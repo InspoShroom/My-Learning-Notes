@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的学习笔记空间</title>
+  <!-- 网页标题-->
+  <title>InspoShroom的笔记站</title>
   <style>
+    /* 定义全局 CSS 变量，方便统一修改配色和质感 */
     :root {
-      --bg-color: #0b0f19;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --card-bg: rgba(17, 24, 39, 0.7);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --accent-blue: #3b82f6;
-      --accent-glow: rgba(59, 130, 246, 0.15);
+      --bg-color: #0b0c10;       /* 网页背景：曜石碳黑，比之前略深以增强对比 */
+      --text-main: #f4f4f5;      /* 主要文字：纯净纸张白 */
+      --text-muted: #8e9096;     /* 辅助文字：哑光中灰，用于描述信息 */
+      --card-bg: rgba(28, 30, 39, 0.75); /* 卡片背景：稍浅且带冷调的灰黑色，大幅度提升与背景的区分度 */
+      --card-border: rgba(255, 255, 255, 0.07); /* 卡片边框：稍微加亮，使边缘轮廓更清晰明显 */
+      --accent-blue: #a5b4fc;    /* 强调色：温柔、低饱和度的莫兰迪蓝紫 */
+      --accent-glow: rgba(165, 180, 252, 0.08); /* 鼠标悬浮时卡片四周的淡雅紫蓝色微光 */
     }
 
+    /* 基础样式重置，消除浏览器默认间距，确保在所有浏览器上排版一致 */
     * {
-      box-sizing: border-box;
+      box-sizing: border-box; /* 让 border 和 padding 包含在 width 和 height 内 */
       margin: 0;
       padding: 0;
     }
@@ -24,35 +28,43 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
+      /* 使用系统默认的无衬线字体，在移动端和电脑端均能获得极佳的渲染清晰度 */
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       min-height: 100vh;
       line-height: 1.5;
+      /* 核心背景：由配合标题的“橙红-蓝-紫”三色极弱氛围聚光灯与“设计点状网格画布”叠加而成，彻底消除纯黑的单调 */
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(147, 51, 234, 0.08) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(255, 138, 101, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 60%),
+        radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px;
+      background-repeat: no-repeat, repeat;
       background-attachment: fixed;
     }
 
+    /* 限制内容最大宽度为 1100px，在大屏显示器上居中，并在两侧保留内边距 */
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 60px 20px;
     }
 
-    /* 头部设计 */
+    /* 头部区域设计 */
     header {
       text-align: center;
       margin-bottom: 50px;
     }
 
+    /* 头部大标题：调试为精美的“橙红-蓝-紫”四色平滑线性渐变，非常亮眼且充满内涵 */
     header h1 {
       font-size: 2.5rem;
-      font-weight: 800;
+      font-weight: 800; /* 调粗字重，使渐变色过渡效果更饱满 */
       letter-spacing: -0.025em;
       margin-bottom: 12px;
-      background: linear-gradient(to right, #3b82f6, #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: linear-gradient(135deg, #ff8a65 0%, #ff5252 35%, #3b82f6 70%, #a855f7 100%);
+      -webkit-background-clip: text; /* 将背景裁剪到文字轮廓内 */
+      -webkit-text-fill-color: transparent; /* 将文字填充设为透明，露出背后的渐变色 */
     }
 
     header p {
@@ -60,98 +72,98 @@
       font-size: 1.1rem;
     }
 
-    /* 搜索栏 */
+    /* 搜索栏外层容器 */
     .search-container {
       max-width: 500px;
       margin: 0 auto 50px auto;
       position: relative;
     }
 
+    /* 搜索输入框样式：圆形药丸形状，带平滑焦点过渡动效 */
     .search-input {
       width: 100%;
       padding: 14px 20px;
-      border-radius: 9999px;
-      background-color: rgba(17, 24, 39, 0.8);
+      border-radius: 9999px; /* 超大圆角形成胶囊形状 */
+      background-color: rgba(28, 30, 39, 0.85); /* 极简半透背景，与卡片底色呼应 */
       border: 1px solid var(--card-border);
       color: var(--text-main);
       font-size: 1rem;
-      transition: all 0.3s ease;
+      transition: all 0.3s ease; /* 边框平滑过渡 */
       outline: none;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
+    /* 搜索框聚焦（点击/输入）时的亮化效果 */
     .search-input:focus {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 15px var(--accent-glow);
+      border-color: rgba(165, 180, 252, 0.25); /* 莫兰迪蓝紫微边框高亮 */
+      background-color: rgba(35, 38, 50, 0.95); /* 背景微亮 */
     }
 
-    /* 分类板块 */
+    /* 分类板块容器 */
     .category-section {
       margin-bottom: 40px;
     }
 
+    /* 每个分类的标题行（例如：“计算机系统底座”） */
     .category-title {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.15rem; /* 字号略调小，显得更加严谨 */
+      font-weight: 600;
       margin-bottom: 20px;
       display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #93c5fd;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      align-items: center; /* 图标和文字垂直居中 */
+      gap: 10px; /* 图标与文字间距 */
+      color: #c7d2fe; /* 浅淡银紫文字，极其雅致 */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* 极细分界线 */
       padding-bottom: 8px;
     }
 
+    /* 响应式网格布局：利用 CSS Grid 自动排列卡片，当宽度小于 300px 时自动换行 */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
     }
 
-    /* 卡片设计 */
+    /* 笔记卡片样式：核心的 Grayscale 极简设计 */
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 12px; /* 调整为更精炼的 12px 圆角 */
       padding: 24px;
-      text-decoration: none;
-      color: inherit;
+      text-decoration: none; /* 去除 a 标签自带的下划线 */
+      color: inherit; /* 继承 body 的白色文字颜色 */
       display: flex;
-      flex-direction: column;
-      height: 100%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(8px);
+      flex-direction: column; /* 纵向弹性盒，使内部元素垂直排列 */
+      height: 100%; /* 高度占满 grid 单元格，使同一行的卡片整齐对齐 */
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s, border-color 0.25s, box-shadow 0.25s; /* 极其克制的过渡曲线 */
+      backdrop-filter: blur(12px); /* 毛玻璃模糊效果，与背景网格完美叠加 */
+      -webkit-backdrop-filter: blur(12px);
       position: relative;
       overflow: hidden;
     }
 
+    /* 移除卡片顶部的彩色条效果，恢复极简纯净 */
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, #3b82f6, #60a5fa);
-      opacity: 0;
-      transition: opacity 0.3s;
+      display: none;
     }
 
-    .card:hover::before {
-      opacity: 1;
-    }
-
+    /* 卡片悬浮状态：微上浮 2.5 像素并微幅放大，背景色和边框微微变亮，产生实体黑曜石浮空感 */
     .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(59, 130, 246, 0.4);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px var(--accent-glow);
+      transform: translateY(-2.5px) scale(1.008); /* 极其克制的微浮动与缩放 */
+      background-color: rgba(35, 38, 50, 0.9); /* 悬浮时卡片背景微亮并更实色 */
+      border-color: rgba(165, 180, 252, 0.25); /* 边框微微变亮 */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(165, 180, 252, 0.01); /* 柔和暗色阴影 */
     }
 
+    /* 卡片上的图标容器：带 5% 透明度的温和蓝紫背景色，去色化 */
     .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background-color: rgba(59, 130, 246, 0.1);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background-color: rgba(165, 180, 252, 0.05); /* 仅用5%紫蓝，形成细微区块感 */
+      border: 1px solid rgba(165, 180, 252, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -160,50 +172,67 @@
     }
 
     .card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      font-weight: 600;
       margin-bottom: 8px;
     }
 
     .card-desc {
       color: var(--text-muted);
       font-size: 0.9rem;
-      flex-grow: 1;
+      flex-grow: 1; /* 让描述部分占据所有剩余空间，挤压“开始阅读”行到底部对齐 */
       margin-bottom: 16px;
     }
 
+    /* “开始阅读”操作行 */
     .card-meta {
       font-size: 0.8rem;
-      color: #60a5fa;
+      color: #a1a1aa; /* 默认哑光灰 */
       display: flex;
       align-items: center;
       font-weight: 500;
+      transition: color 0.2s ease;
     }
 
+    /* 悬浮时，操作文字和箭头变亮白/淡紫 */
+    .card:hover .card-meta {
+      color: #c7d2fe;
+    }
+
+    /* 箭头 SVG 图标 */
     .card-meta svg {
       margin-left: 4px;
-      transition: transform 0.2s;
+      transition: transform 0.2s; /* 箭头移动的平滑过渡 */
     }
 
+    /* 鼠标浮于卡片上时，卡片内的小箭头自动向右滑移 4px */
     .card:hover .card-meta svg {
       transform: translateX(4px);
     }
 
+    /* 网页页脚样式 */
     footer {
       text-align: center;
       margin-top: 60px;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.2);
       font-size: 0.85rem;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
+    <!-- 页眉区域 -->
     <header>
-      <h1>📚 我的知识笔记空间</h1>
-      <p>记录关于计算机体系结构、数据库与程序设计的探索与思考</p>
+      <h1>InspoShroom的笔记站</h1>
+      <!-- 
+      动态显示一个随机名言 
+      其中分别定义了: 段落ID,上外边距,字体样式,文字颜色,字号大小,最小高度(防止抖动),不透明度,过渡动画.
+      -->
+      <p id="quote" style="margin-top: 12px; font-style: italic; font-weight: 400; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.92); font-size: 0.95rem; min-height: 1.5em; opacity: 0; transition: opacity 0.5s ease-in-out; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: rgba(255, 255, 255, 0.35);"></p>
     </header>
 
+    <!-- 检索框 -->
     <div class="search-container">
       <input type="text" id="searchInput" class="search-input" placeholder="搜索笔记或关键字...">
     </div>
@@ -211,19 +240,31 @@
     <!-- 计算机核心 -->
     <div class="category-section">
       <div class="category-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        <!-- 分类图标：设置图标 -->
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        </svg>
         计算机系统底座
       </div>
       <div class="grid">
-        <a href="./CA_Note/" class="card" data-title="计算机体系结构 ca notes">
+        <!-- 笔记卡片：计算机体系结构 -->
+        <!-- data-title 内置用于 JS 筛选的关联关键词（拼音和英文） -->
+        <a href="./CA_Note/" class="card" data-title="计算机体系结构 ca notes jsjtxjg hardware cpu">
           <div class="card-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+            <!-- 芯片微架构 SVG 矢量图 -->
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+              <path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
+            </svg>
           </div>
           <h2 class="card-title">计算机体系结构 (CA)</h2>
           <p class="card-desc">关于计算机硬件层面的微架构设计、流水线优化、指令集以及存储层次结构的深入笔记。</p>
           <div class="card-meta">
-            开始阅读 
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            开始阅读
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </div>
         </a>
       </div>
@@ -232,19 +273,30 @@
     <!-- 数据与存储 -->
     <div class="category-section">
       <div class="category-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+        <!-- 分类图标：数据库叠加柱状图 -->
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path
+            d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
+        </svg>
         数据与存储管理
       </div>
       <div class="grid">
-        <a href="./DB_Note/" class="card" data-title="数据库系统 db notes">
+        <!-- 笔记卡片：数据库系统 -->
+        <a href="./DB_Note/" class="card" data-title="数据库系统 db notes sjk relational sql mysql">
           <div class="card-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+            <!-- 数据库存储圆柱 SVG -->
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path
+                d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
+            </svg>
           </div>
           <h2 class="card-title">数据库系统 (DB)</h2>
           <p class="card-desc">关系型数据库原理，包含 SQL 查询优化、ACID 事务机制、索引结构以及并发控制技术。</p>
           <div class="card-meta">
-            开始阅读 
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            开始阅读
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </div>
         </a>
       </div>
@@ -253,57 +305,103 @@
     <!-- 程序设计与开发 -->
     <div class="category-section">
       <div class="category-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <!-- 分类图标：代码大括号/斜杠 -->
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+        </svg>
         程序设计与架构
       </div>
       <div class="grid">
-        <a href="./OOP_Note/" class="card" data-title="面向对象程序设计 oop notes">
+        <!-- 笔记卡片：面向对象程序设计 -->
+        <a href="./OOP_Note/" class="card" data-title="面向对象程序设计 oop notes mxdx cpp design patterns">
           <div class="card-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <!-- 多层叠加方块（象征面向对象的封装多态层次） SVG -->
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
           </div>
           <h2 class="card-title">面向对象程序设计 (OOP)</h2>
           <p class="card-desc">深入分析类与对象、封装继承多态机制，探究 C++ 内存模型、异常处理以及经典设计模式的实践案例。</p>
           <div class="card-meta">
-            开始阅读 
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            开始阅读
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </div>
         </a>
       </div>
     </div>
 
+    <!-- 底部页脚 -->
     <footer>
       <p>© 2026 Powered by MkDocs & Material Theme</p>
     </footer>
   </div>
 
+  <!-- 轻量级实时筛选检索 JS 脚本 -->
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.card');
+    const searchInput = document.getElementById('searchInput'); // 获取搜索框 DOM 对象
+    const cards = document.querySelectorAll('.card');           // 获取页面所有的卡片 DOM
 
-    searchInput.addEventListener('input', function(e) {
+    // 为输入框绑定 input 输入监听事件（用户输入、删除、粘贴均会实时触发）
+    searchInput.addEventListener('input', function (e) {
+      // 提取输入文本：转为小写并剔除两端多余空格
       const query = e.target.value.toLowerCase().trim();
-      
+
+      // 1. 遍历每一张笔记卡片，核对是否匹配
       cards.forEach(card => {
-        const title = card.getAttribute('data-title');
-        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
-        
+        const title = card.getAttribute('data-title'); // 获取卡片上的筛选预设关键词
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase(); // 获取卡片的描述段落文本
+
+        // 如果用户查询词在标题关键词或描述内容中存在，则显示卡片，否则隐藏
         if (title.includes(query) || desc.includes(query)) {
-          card.style.display = 'flex';
-          card.closest('.category-section').style.display = 'block';
+          card.style.display = 'flex'; // 以 flex 布局渲染显示
+          card.closest('.category-section').style.display = 'block'; // 保证卡片上一级的“分类大板块”处于显示状态
         } else {
-          card.style.display = 'none';
+          card.style.display = 'none'; // 隐藏卡片
         }
       });
 
+      // 2. 优化空白分区：如果某分类下的卡片被全部过滤隐藏了，则把该分类的“标题”也一并隐藏，避免标题光秃秃地挂着
       document.querySelectorAll('.category-section').forEach(section => {
+        // 查找当前分类大板块下，依然处于“显示状态”的卡片
         const visibleCards = section.querySelectorAll('.card[style="display: flex;"]');
+        
+        // 如果显示卡片数量为 0，且当前确实存在搜索词，就把整个分类分区隐藏起来
         if (visibleCards.length === 0 && query !== '') {
           section.style.display = 'none';
         } else {
-          section.style.display = 'block';
+          section.style.display = 'block'; // 否则（没有搜索词或有匹配项目）显示分类分区
         }
       });
     });
+
+   
+
+    // 首页随机名言展示
+    const quotes = [
+      "“程序必须是写给人读的，只是顺便给机器执行。” —— Abelson & Sussman",
+      "“你写下的每一行代码，都是在向未来的自己低语。”",
+      "“每一个优秀的系统背后，都有无数个被咖啡照亮的深夜。”",
+      "“计算机科学只与计算机有关，就像天文学只与望远镜有关一样。” —— Edsger W. Dijkstra",
+      "“简单是复杂的极致。” —— Leonardo da Vinci",
+      "“好的代码本身就是最好的说明文档。”",
+      "“Talk is cheap. Show me the code.” —— Linus Torvalds",
+      "“生命太短暂，不要去写没有灵魂的代码。”",
+      "“正确的算法加上正确的数据结构，就是程序的灵魂。”"
+    ];
+
+    const quoteElement = document.getElementById('quote');
+    if (quoteElement) {
+      // 随机选择一句名言
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      quoteElement.textContent = quotes[randomIndex];
+      // 延迟 100ms 触发渐显，让过渡动画更自然
+      setTimeout(() => {
+        quoteElement.style.opacity = '0.85';
+      }, 100);
+    }
   </script>
 </body>
+
 </html>
