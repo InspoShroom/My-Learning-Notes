@@ -1,0 +1,75 @@
+site_name: CA Note
+site_url: http://127.0.0.1:8000/
+theme:
+  name: material
+  language: zh
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black   
+      accent: black   
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: black
+      toggle:
+        icon: material/brightness-4
+        name: Switch to bright mode
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+
+nav:
+  - 目录: index.md
+  - 知识地图: Knowledge_Map.md
+  - 第一章 引言: Introduction.md
+  - 第二章 计算机设计基础-基础篇: Fundamentals_Basics.md
+  - 第三章 趋势与性能评测: Trends_Performance.md
+  - 第四章 存储层次结构基础: Memory_Basics.md
+  - 第五章 存储层次结构高级篇: Memory_Advances.md
+  - 第六章 指令级并行与静态调度: ILP_Static.md
+  - 第七章 指令级并行与动态调度: ILP_Dynamic.md
+  - 第八章 硬件级并行发掘: ILP_Exploitation.md
+  - 第九章 数据级并行与矢量/GPU架构: DLP_Architecture.md
+  - 第十章 数据级并行发掘: DLP_Exploitation.md
+  - 第十一章 线程级并行与缓存一致性: TLP_Coherence.md
+  - 第十二章 线程级并行与内存一致性: TLP_Consistency.md
+  - 第十三章 线程级并行发掘: TLP_Exploitation.md
+  - 第十四章 课程期末复习: Course_Review.md
+  - QiaNote (对齐笔记): QiaNote.md
+  - 考试复习与 Cheat Sheet: CheatPaper.md
