@@ -1,0 +1,71 @@
+site_name: OOP Note
+site_url: http://127.0.0.1:8000/
+theme:
+  name: material
+  language: zh
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black   
+      accent: black   
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: black
+      toggle:
+        icon: material/brightness-4
+        name: Switch to bright mode
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+
+nav:
+  - 目录: index.md
+  - 导论: Introduction.md
+  - 使用类与对象: Using_Objects.md
+  - 类与封装: Class.md
+  - 构造、清理与对象交互: Object_Interactive.md
+  - 拷贝构造、静态成员与命名空间: Copy_constructor.md
+  - 内联函数、对象组合与继承基础: Inheritance.md
+  - 多态: Polymorphism.md
+  - 运算符重载与类型转换: Overloaded_Operators.md
+  - 异常处理: Exceptions.md
+  - 模板: Template.md
+  - 迭代器: Iterators.md
+  - 程序设计/架构设计: Design.md
+  - 设计模式: Patterns_Design-Case_Study.md

@@ -1,0 +1,157 @@
+/* 自定义 CSS 样式 */
+:root {
+  /* 加粗字体 */
+  --custom-bold-color: #de7272;
+  /* ``中的代码 */
+  --custom-inline-code-color: #e67e22;
+  /* ``中的背景色 */
+  --custom-inline-code-bg: #fff5eb;
+  /* 斜体字 */
+  --custom-italic-color: #563c61;
+  /* 高亮标记 */
+  --custom-mark-bg: #ffe082;
+  /* 高亮标记字体 */
+  --custom-mark-color: #5d4037;
+
+  /* 标题颜色与修饰 */
+  --custom-h2-color: #0f172a;
+  --custom-h3-color: #1e293b;
+  --custom-h3-border: #000000;
+  --custom-h4-color: #000000;
+}
+
+[data-md-color-scheme="slate"] {
+  /* 暗黑模式 (slate) 自定义颜色变量与灰黑色背景覆盖 */
+  --md-default-bg-color: #292724;
+  /* 主背景色：灰黑色 (VS Code风格) */
+  --md-default-bg-color--light: #252525;
+  /* 侧边栏、卡片背景色：深灰色 */
+  --md-code-bg-color: #2d2d2d;
+  /* 代码块背景色：更深灰黑色 */
+  --md-footer-bg-color: #1a1a1a;
+  /* 页脚背景色 */
+  --md-footer-bg-color--dark: #121212;
+  /* 页脚底部背景色 */
+
+  /*与deault的内容相同*/
+  --custom-bold-color: #c66363;
+  --custom-inline-code-color: #e67e22;
+  --custom-inline-code-bg: #322820;
+  --custom-italic-color: #ffffff;
+  --custom-mark-bg: #ffd54f;
+  --custom-mark-color: #263238;
+
+  /* 标题颜色与修饰 */
+  --custom-h2-color: #f8fafc;
+  --custom-h3-color: #e0e0e0;
+  --custom-h3-border: #ffffff;
+  --custom-h4-color: #e0e0e0;
+}
+
+/* ==================== 0. 标题与结构化排版 ==================== */
+.md-typeset h2 {
+  color: var(--custom-h2-color);
+  font-weight: 700;
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+  padding-bottom: 0.3em;
+}
+
+.md-typeset h3 {
+  color: var(--custom-h3-color);
+  font-weight: 700;
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
+  border-left: 4px solid var(--custom-h3-border);
+  padding-left: 0.6em;
+}
+
+.md-typeset h4 {
+  color: var(--custom-h4-color);
+  font-weight: 700;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+  font-size: 1.05em;
+}
+
+/* ==================== 1. 文本排版样式 ==================== */
+
+/* 加粗字体样式 */
+strong,
+b {
+  color: var(--custom-bold-color);
+  font-weight: 700;
+}
+
+/* 行内代码样式 (`` 包裹的内容) */
+:not(pre)>code {
+  color: var(--custom-inline-code-color) !important;
+  background-color: var(--custom-inline-code-bg) !important;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em !important;
+  padding: 0.15em 0.35em !important;
+  border-radius: 4px;
+  border: 1px solid rgba(230, 126, 34, 0.15);
+  /* 淡淡的橙色边框 */
+  word-break: break-word;
+}
+
+/* 黑暗模式下微调行内代码的边框颜色 */
+[data-md-color-scheme="slate"] :not(pre)>code {
+  border: 1px solid rgba(255, 159, 67, 0.15);
+}
+
+/* 高亮文本 (==highlight==) */
+mark {
+  background-color: var(--custom-mark-bg) !important;
+  color: var(--custom-mark-color) !important;
+  padding: 0.1em 0.25em;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* 斜体文本 (*italic*) */
+em,
+i {
+  color: var(--custom-italic-color);
+  font-style: italic;
+}
+
+
+/* ==================== 2. 提示框与折叠块的高级感设计 ==================== */
+
+/* 对 admonition (提示框) 和 details (折叠提示框) 的卡片化修饰 */
+.admonition,
+details.note,
+details.example,
+details.warning,
+details.info {
+  border-radius: 6px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s ease;
+  border-left-width: 4px !important;
+}
+
+/* 鼠标悬停时的动态微阴影效果，提升可交互感 */
+.admonition:hover,
+details:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==================== 3. 滚动条定制 (暗黑模式下更好看) ==================== */
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 4px;
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb:hover {
+  background-color: #616161;
+}
