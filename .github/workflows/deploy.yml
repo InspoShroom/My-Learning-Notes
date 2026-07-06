@@ -1,0 +1,55 @@
+name: Deploy Multi-Project MkDocs
+
+on:
+  push:
+    branches:
+      - main  # 当你向 main 分支推送代码时触发自动构建
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build all MkDocs projects
+        run: |
+          # 1. 创建用于合并最终发布静态网页的临时文件夹
+          mkdir -p public
+          
+          # 2. 分别构建各科笔记到对应的子目录中
+          if [ -d "CA_Note" ]; then
+            cd CA_Note && mkdocs build -d ../public/CA_Note && cd ..
+          fi
+          
+          if [ -d "DB_Note" ]; then
+            cd DB_Note && mkdocs build -d ../public/DB_Note && cd ..
+          fi
+          
+          if [ -d "OOP_Note" ]; then
+            cd OOP_Note && mkdocs build -d ../public/OOP_Note && cd ..
+          fi
+          
+          # 3. 将我们刚刚写好的 index.html 网页拷贝到发布目录的根目录，作为最外层的首页
+          if [ -f "index.html" ]; then
+            cp index.html public/
+          fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
