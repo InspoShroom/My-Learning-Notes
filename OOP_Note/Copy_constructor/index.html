@@ -1,0 +1,1257 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Copy_constructor/">
+      
+      
+        <link rel="prev" href="../Object_Interactive/">
+      
+      
+        <link rel="next" href="../Inheritance/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>拷贝构造、静态成员与命名空间 - OOP Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OOP Note" class="md-header__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OOP Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              拷贝构造、静态成员与命名空间
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OOP Note" class="md-nav__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OOP Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Using_Objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用类与对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    类与封装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Object_Interactive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    构造、清理与对象交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拷贝构造、静态成员与命名空间
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拷贝构造、静态成员与命名空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝构造函数与深浅拷贝
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="拷贝构造函数与深浅拷贝">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#most-vexing-parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最令人头疼的解析陷阱（Most Vexing Parse）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝构造函数（Copy Constructor）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memberwise-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        默认拷贝构造与逐成员拷贝（Memberwise Initialization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针成员与深浅拷贝陷阱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝优化与禁止拷贝
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delegating-constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        委托构造函数（Delegating Constructor）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static 静态特性的进阶语义
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="static 静态特性的进阶语义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态局部对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全局变量/全局对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        类静态成员
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命名空间（Namespace）进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命名空间（Namespace）进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        派生类中的 using 函数引入
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内联函数、对象组合与继承基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Polymorphism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Overloaded_Operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运算符重载与类型转换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    异常处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Iterators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    迭代器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    程序设计/架构设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Patterns_Design-Case_Study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设计模式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝构造函数与深浅拷贝
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="拷贝构造函数与深浅拷贝">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#most-vexing-parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最令人头疼的解析陷阱（Most Vexing Parse）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝构造函数（Copy Constructor）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memberwise-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        默认拷贝构造与逐成员拷贝（Memberwise Initialization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针成员与深浅拷贝陷阱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拷贝优化与禁止拷贝
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delegating-constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        委托构造函数（Delegating Constructor）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static 静态特性的进阶语义
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="static 静态特性的进阶语义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态局部对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全局变量/全局对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        类静态成员
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命名空间（Namespace）进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命名空间（Namespace）进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        派生类中的 using 函数引入
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">拷贝构造、静态成员与命名空间</h1>
+<p>第五节统剖析了 C++ 拷贝构造函数（Copy Constructor）的原理与深浅拷贝陷阱、委托构造函数、静态（<code>static</code>）特性的多重语义与静态初始化依赖难题、以及命名空间（<code>namespace</code>）的进阶用法。</p>
+<hr />
+<h3 id="_2">拷贝构造函数与深浅拷贝</h3>
+<h4 id="most-vexing-parse">最令人头疼的解析陷阱（Most Vexing Parse）</h4>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">Stash</span><span class="w"> </span><span class="n">students</span><span class="p">();</span><span class="w"> </span><span class="c1">// 究竟是创建对象还是声明函数？</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span></code></pre></div>
+</details>
+<ul>
+<li><strong>编译器行为</strong>：编译器会将此语句解析为<strong>一个函数原型声明</strong>——该函数名为 <code>students</code>，不接受参数，返回值类型为 <code>Stash</code>。</li>
+<li><strong>正确写法</strong>：<ul>
+<li>使用无括号定义：<code>Stash students;</code></li>
+<li>使用现代化列表初始化（推荐）：<code>Stash students{};</code>（同时可防范类型窄化转换，如 <code>int x{3.14}</code> 会报错，而 <code>int x = 3.14</code> 会被截断）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="copy-constructor">拷贝构造函数（Copy Constructor）</h4>
+<ul>
+<li><strong>触发场景</strong>：<ol>
+<li><strong>按值传递对象</strong>：调用函数时，形参对象通过拷贝实参进行构造。</li>
+<li><strong>按值返回对象</strong>：从函数返回一个临时对象时（若未被 RVO 优化）。</li>
+<li><strong>显式初始化</strong>：如 <code>Person baby_b = baby_a;</code> 或 <code>Person baby_c(baby_a);</code>。</li>
+</ol>
+</li>
+<li><strong>签名规范</strong>：<code>T::T(const T&amp;)</code>。</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">为什么必须是引用传递（<code>&amp;</code>）？</p>
+<p>如果拷贝构造函数的形参是按值传递的（如 <code>T::T(T)</code>），那么为了向拷贝构造函数传递参数，系统又需要调用拷贝构造函数，这会导致<strong>无限递归调用</strong>，最终导致栈溢出。</p>
+</div>
+<h4 id="memberwise-initialization">默认拷贝构造与逐成员拷贝（Memberwise Initialization）</h4>
+<ul>
+<li>如果未定义拷贝构造函数，编译器会自动合成一个默认拷贝构造函数。</li>
+<li><strong>默认拷贝构造函数行为</strong>：逐个拷贝每个数组成员、内置类型成员；对于类对象成员，会<strong>递归调用</strong>其所属类的拷贝构造函数。</li>
+<li><strong>当类成员皆为行为良好的对象</strong>（如 <code>std::string</code>、<code>std::vector</code>）时，默认生成的拷贝构造函数已足够安全。</li>
+</ul>
+<h4 id="_3">指针成员与深浅拷贝陷阱</h4>
+<p>当类中包含指针成员并涉及动态内存管理时，默认的逐成员拷贝（浅拷贝）会引发灾难：</p>
+<pre class="mermaid"><code>graph TD
+    subgraph 浅拷贝 Shallow Copy
+        obj1[对象1 name指针] --&gt; shared_mem[堆内存: 'Some Text']
+        obj2[对象2 name指针] --&gt; shared_mem
+    end
+    subgraph 深拷贝 Deep Copy
+        objA[对象A name指针] --&gt; memA[堆内存: 'Some Text']
+        objB[对象B name指针] --&gt; memB[独立堆内存: 'Some Text']
+    end</code></pre>
+<ul>
+<li><strong>浅拷贝（Shallow Copy）</strong>：仅复制指针地址。导致两个对象的指针指向同一块堆内存。<ul>
+<li><strong>危害</strong>：其中一个对象修改内容，另一个随之改变；析构时会对同一个指针释放两次（<strong>Double Free</strong>），直接导致程序崩溃。</li>
+</ul>
+</li>
+<li>
+<p><strong>深拷贝（Deep Copy）</strong>：在堆上重新开辟一块相同大小的内存，将原内存中的数据拷贝过去。两个对象完全独立。</p>
+<p>举例：一个C-Style 字符串深拷贝实现：</p>
+</li>
+</ul>
+<details class="example">
+<summary>点击查看 C++ 字符串深拷贝代码实现</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// 构造函数</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">Person</span><span class="o">::</span><span class="n">Person</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w"> </span><span class="c1">// 加上结束符 \0 的位置</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">// 析构函数</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">Person</span><span class="o">::~</span><span class="n">Person</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">// 拷贝构造函数（深拷贝）</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">Person</span><span class="o">::</span><span class="n">Person</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Person</span><span class="o">&amp;</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span><span class="n">w</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">}</span>
+</span></code></pre></div>
+</details>
+<h4 id="_4">拷贝优化与禁止拷贝</h4>
+<ul>
+<li>返回值优化（RVO）：现代编译器会自动优化多余的拷贝。在返回匿名临时对象时（如 <code>return Person(who);</code>），直接在外部接收者的内存空间内构造对象，完全跳过拷贝构造。</li>
+<li>禁止拷贝：如果不希望类对象被拷贝，可将拷贝构造函数声明在 <code>private</code> 作用域中，且无需提供定义。</li>
+</ul>
+<hr />
+<h3 id="delegating-constructor">委托构造函数（Delegating Constructor）</h3>
+<ul>
+<li><strong>定义</strong>：允许在一个构造函数中调用同类的另一个构造函数，减少冗余代码。</li>
+<li>
+<p><strong>语法要求</strong>：调用动作必须放在<strong>初始化列表</strong>中。</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Player</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="c1">// 核心构造函数</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">Player</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">name</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">hp</span><span class="p">(</span><span class="n">h</span><span class="p">),</span><span class="w"> </span><span class="n">level</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="c1">// 委托构造函数</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="n">Player</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Player</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="n">Player</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Player</span><span class="p">(</span><span class="s">&quot;未知玩家&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">};</span>
+</span></code></pre></div>
+</details>
+<ul>
+<li><strong>注意</strong>：委托构造函数的初始化列表中<strong>不能</strong>再对其他成员变量进行单独初始化。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="static">static 静态特性的进阶语义</h3>
+<p><code>static</code> 关键字具有两大核心语义：<strong>静态存储性</strong>（生命周期贯穿整个程序）与<strong>内部链接性</strong>（限制名字仅在当前文件内可见）。</p>
+<h4 id="_5">静态局部对象</h4>
+<ul>
+<li><strong>构造时机</strong>：只有在代码首次运行到其定义点时才进行构造。</li>
+<li><strong>析构时机</strong>：仅在整个程序退出时被销毁。</li>
+<li><strong>销毁顺序</strong>：遵循<strong>后进先出（LIFO）</strong>原则，即后构造的静态对象先被析构。</li>
+<li><em>注：可以利用 <code>if</code> 分支条件构造静态局部对象，避免不必要的性能开销。</em></li>
+</ul>
+<h4 id="_6">全局变量/全局对象</h4>
+<ul>
+<li><strong>构造时机</strong>：全局对象的构造函数在 <code>main()</code> 函数执行之前就已经运行了！</li>
+<li><strong>析构时机</strong>：在 <code>main()</code> 退出或调用 <code>exit()</code> 时。</li>
+<li><strong>静态初始化依赖难题（Static Initialization Order Fiasco）</strong>：<ul>
+<li>问题：在同一 <code>.cpp</code> 文件内，全局/静态对象的构造顺序与其定义顺序一致。但是，<strong>不同文件之间的全局静态对象的构造顺序是未定义的</strong>。如果 <code>FileB.cpp</code> 中的全局对象构造函数依赖于 <code>FileA.cpp</code> 中的全局对象，且 <code>FileB</code> 恰好先初始化，会导致读取到未初始化脏数据甚至程序崩溃。</li>
+<li>解决方案：避免全局静态变量之间的初始化相互依赖；或者将相互依赖的全局变量定义在同一个源文件内，确保正确的代码物理先后顺序。</li>
+</ul>
+</li>
+</ul>
+<h4 id="_7">类静态成员</h4>
+<ul>
+<li><strong>静态成员变量</strong>：<u>不属于某个具体的对象实例，而是属于整个类。</u>它在没有任何对象创建前就已存在。<ul>
+<li>定义与初始化：在 <code>.h</code> 头文件内进行声明，<strong>必须在 <code>.cpp</code> 源文件中进行物理定义和初始化</strong>（在 <code>.cpp</code> 中定义时<strong>不能</strong>再带 <code>static</code> 关键字）。</li>
+</ul>
+</li>
+<li><strong>静态成员函数</strong>：<ul>
+<li><strong>没有 <code>this</code> 指针</strong>，不与任何实例绑定。</li>
+<li><strong>访问限制</strong>：只能访问类的静态成员变量或静态成员函数，禁止访问普通成员变量。</li>
+<li><strong>不能声明为虚函数（<code>virtual</code>）</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="namespace">命名空间（Namespace）进阶</h3>
+<p>命名空间用于在逻辑上对类、函数、变量进行分组，消除全局命名冲突。</p>
+<ul>
+<li>
+<p><strong>语法规则</strong>：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Math</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span><span class="w"> </span><span class="c1">// 注意：右大括号后面不需要加分号！</span>
+</span></code></pre></div>
+</details>
+</li>
+<li>
+<p><strong>使用方式</strong>：</p>
+<ol>
+<li>完全限定名：<code>Math::abs(-5.0)</code>。</li>
+<li>using 声明：<code>using Math::abs; abs(-5.0);</code>，只引入特定名字，避免命名空间污染。</li>
+<li>using 指令：<code>using namespace Math;</code>，将命名空间内的所有名字全部拉入当前作用域。若与当前作用域同名名字冲突，只在使用时（如调用同名函数）引发二义性编译错误。</li>
+</ol>
+</li>
+<li><strong>别名控制</strong>：可以使用 <code>namespace alias_name = long_name;</code> 缩短长命名空间名称。</li>
+<li><strong>组合与选择</strong>：可以在新空间内使用 <code>using</code> 声明将多个其他空间的部分类/函数进行挑选组合。</li>
+<li><strong>命名空间是开放的</strong>：可以在不同的文件中多次续写同名 <code>namespace</code>，编译器会自动将它们合并为一个整体。</li>
+</ul>
+<h4 id="using">派生类中的 using 函数引入</h4>
+<p>在继承关系中，如果子类重写了父类的某个重载函数，父类中其他的同名重载函数在子类中会被默认“隐藏”。</p>
+<ul>
+<li><strong>解决方法</strong>：在子类中使用 <code>using Base::func;</code>，将父类的重载版本拉入子类作用域，解决隐藏难题，实现跨作用域的函数重载。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

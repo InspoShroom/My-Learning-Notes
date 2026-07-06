@@ -1,0 +1,1938 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ILP_Static/">
+      
+      
+        <link rel="prev" href="../Memory_Advances/">
+      
+      
+        <link rel="next" href="../ILP_Dynamic/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第六章 指令级并行与静态调度 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ilp" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第六章 指令级并行与静态调度
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流水线回顾
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多周期浮点流水线
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多周期浮点流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        延迟与重复间隔
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冒险处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID阶段进行冲突检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        乱序写回中的异常处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mips-r4000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超流水线架构：MIPS R4000 示例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ilpinstruction-level-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ILP——Instruction-Level Parallelism
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        依赖关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态调度与循环展开
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="静态调度与循环展开">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态调度经典示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        迹调度与超块
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分支冲突静态解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="分支冲突静态解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四种静态分支策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深流水线下分支预测对性能的制约
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lec06-ppt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课件（lec06）核心复习重点与 PPT 页码对照清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="课件（lec06）核心复习重点与 PPT 页码对照清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-slide-4-slide-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 流水线核心物理规律（Slide 4 - Slide 9）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-slide-15-slide-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 浮点多周期流水线结构与延时参数（Slide 15 - Slide 30）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-hazards-slide-31-slide-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多周期流水线 Hazards 检测与处理机制（Slide 31 - Slide 47）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mips-r4000-slide-49-slide-69" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. MIPS R4000 超流水线架构分析（Slide 49 - Slide 69）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-slide-73-slide-91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 相关性理论与重排约束（Slide 73 - Slide 91）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-slide-94-slide-113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 编译器静态调度与循环展开大题（Slide 94 - Slide 113）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tracesuperblockslide-115-slide-125" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 迹调度（Trace）与超块（Superblock）（Slide 115 - Slide 125）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-slide-126-slide-144" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 静态分支预测与深流水线惩罚（Slide 126 - Slide 144）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流水线回顾
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多周期浮点流水线
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多周期浮点流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        延迟与重复间隔
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冒险处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID阶段进行冲突检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        乱序写回中的异常处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mips-r4000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超流水线架构：MIPS R4000 示例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ilpinstruction-level-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ILP——Instruction-Level Parallelism
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        依赖关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态调度与循环展开
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="静态调度与循环展开">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态调度经典示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        迹调度与超块
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分支冲突静态解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="分支冲突静态解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四种静态分支策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深流水线下分支预测对性能的制约
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lec06-ppt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课件（lec06）核心复习重点与 PPT 页码对照清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="课件（lec06）核心复习重点与 PPT 页码对照清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-slide-4-slide-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 流水线核心物理规律（Slide 4 - Slide 9）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-slide-15-slide-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 浮点多周期流水线结构与延时参数（Slide 15 - Slide 30）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-hazards-slide-31-slide-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多周期流水线 Hazards 检测与处理机制（Slide 31 - Slide 47）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mips-r4000-slide-49-slide-69" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. MIPS R4000 超流水线架构分析（Slide 49 - Slide 69）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-slide-73-slide-91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 相关性理论与重排约束（Slide 73 - Slide 91）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-slide-94-slide-113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 编译器静态调度与循环展开大题（Slide 94 - Slide 113）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tracesuperblockslide-115-slide-125" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 迹调度（Trace）与超块（Superblock）（Slide 115 - Slide 125）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-slide-126-slide-144" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 静态分支预测与深流水线惩罚（Slide 126 - Slide 144）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ilp">第六章 ILP与静态调度</h1>
+<p>本章探讨了指令级并行（Instruction-Level Parallelism, ILP）的基本概念，多周期浮点流水线的执行延迟与冲突检测机制，分析了超流水线架构（MIPS R4000）特征，以及利用编译器进行静态调度与分支处理的高级技术。</p>
+<hr />
+<h2 id="_1">流水线回顾</h2>
+<p>经典流水线总是满足以下几个基本规律：</p>
+<ol>
+<li>一项任务包含一系列阶段</li>
+<li>任务之间存在依赖关系</li>
+<li>同时使用不同的资源来加快速度</li>
+<li>最慢的阶段决定了完成时间</li>
+<li>单个任务的完成时间并没有发生缩减，反而是整个任务的平均执行时间大幅缩短了</li>
+<li>在理想状态下，即Balanced Pipeline，均衡流水线，每个阶段的持续时间都相等，k级流水线的最大加速比为k。</li>
+</ol>
+<hr />
+<h2 id="_2">多周期浮点流水线</h2>
+<p>由于浮点（Floating-Point, FP）的运算耗时更长，无法在单个时钟周期内完成。所以我们要为浮点运算做出一些改变：</p>
+<ol>
+<li>允许更长的延迟：承认浮点指令在EX阶段需要超过一个周期的时间</li>
+<li>重复执行阶段：浮点指令默认占用多个执行周期，可以将执行单元设计成多级的子流水线来实现</li>
+<li>使用多个浮点功能单元：比如FP Adder，FP Divider等</li>
+</ol>
+<h3 id="_3">延迟与重复间隔</h3>
+<p>在流水线设计中，有两个核心性能指标：</p>
+<ul>
+<li>
+<p><strong>延迟（Latency）</strong>：产生运算结果的指令与使用该结果的指令之间，必须间隔的最小时钟周期数。它等于执行流水线深度减 1。ALU 的延迟时间就是0，因为其结果可以在下一时钟周期内直接使用一个核心公式是：</p>
+<p><span class="arithmatex">\(流水线延迟 = 执行流水线深度 - 1\)</span></p>
+</li>
+<li>
+<p><strong>重复间隔（Initiation/Repeat Interval/II）</strong>：指连续发射两个同类型操作之间必须经过的周期数。若功能单元是完全流水线化的，则重复间隔为 1</p>
+</li>
+</ul>
+<p>对于典型的处理器单元，它的指标对应如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">执行单元</th>
+<th style="text-align: center;">延迟（Latency）</th>
+<th style="text-align: center;">重复间隔（Initiation/Repeat Interval）</th>
+<th style="text-align: left;">是否流水线化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">整数 ALU</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">是</td>
+</tr>
+<tr>
+<td style="text-align: left;">主存 Load</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">是（有 1 周期 Load 延迟槽）</td>
+</tr>
+<tr>
+<td style="text-align: left;">FP 加法器</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">是</td>
+</tr>
+<tr>
+<td style="text-align: left;">FP乘法器</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">是</td>
+</tr>
+<tr>
+<td style="text-align: left;">FP 除法器</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: left;">否</td>
+</tr>
+</tbody>
+</table>
+<details class="example" open="open">
+<summary>常见访存与指令依赖延迟</summary>
+<ol>
+<li>整数 ADD <span class="arithmatex">\(\to\)</span> 整数 ADD（整数ALU指令）：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ADD R3, R1, R2
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ADD R5, R3, R4
+</span></code></pre></div><ul>
+<li>Latency: 0 周期。因为 Forwarding 可直接将 EX 级输出送回 EX 级输入。</li>
+<li>Initiation Interval: 1 周期。后一条指令在下一周期紧随发射。</li>
+</ul>
+</li>
+<li>Load <span class="arithmatex">\(\to\)</span> 整数 ADD（Load-Use冲突）：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Load R2, 0(R1)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ADD  R3, R2, R1
+</span></code></pre></div><ul>
+<li>Latency: 1 周期。因为 Load 数据在 MEM 级结束才就绪，而 ADD 在 EX 级就需要操作数，必须插入 1 周期 Stalls。</li>
+<li>Initiation Interval: 1 周期。</li>
+</ul>
+</li>
+<li>Load <span class="arithmatex">\(\to\)</span> Load（独立同类型指令）：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Load R2, 0(R1)
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Load R3, 0(R1)
+</span></code></pre></div><ul>
+<li>Initiation Interval: 1 周期。由于 Load 单元是完全流水线化的，第二条 Load 可以紧接着发射。</li>
+</ul>
+</li>
+<li>Load <span class="arithmatex">\(\to\)</span> Load（相关同类型指令）：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Load R2, 0(R1)
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Load R3, 0(R2)
+</span></code></pre></div><ul>
+<li>Latency: 1 周期。第二条 Load 必须等第一条 Load 的值 <code>R2</code> 读出后才能计算有效地址。停顿是因为 hazard，而不是访存单元忙碌。</li>
+<li>Initiation Interval: 1 周期。</li>
+</ul>
+</li>
+</ol>
+</details>
+<h3 id="_4">冒险处理</h3>
+<ul>
+<li>Structural Hazard：<ul>
+<li>成因：<ol>
+<li>非流水线化部键：例如浮点除法器通常不是流水线化的，这样同一时间就只能有一条除法指令在里面。</li>
+<li>写端口竞争：因为不同指令（整数、加法、乘法、除法）的运行周期不同，可能会出现多条指令在同一个时钟周期试图写回寄存器堆的情况。</li>
+</ol>
+</li>
+<li>解决方法——互锁机制：Interlock 联锁检测的两种硬件实现：<ul>
+<li><em>译码阶段检测（Method 1）</em>：使用一个<strong>移位寄存器（Shift Register）</strong>记录未来各个周期已被占用的写端口。新指令在译码阶段查询该移位寄存器，若预测到写回周期冲突，则在 ID 阶段暂停发射。</li>
+<li><em>写回阶段检测（Method 2）</em>：允许指令发射，但在指令尝试进入 MEM/WB 写回冲突时进行暂停。当发生冲突时，<strong>优先放行执行延迟较长、流水级更深的指令</strong>（因为长延迟指令已经在流水线中消耗了更多硬件资源，将其挂起的代价远比挂起一条刚发射的短指令高）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Data Hazard：<ul>
+<li>RAW：写后读，真数据依赖。由于浮点操作的执行时间显著增长，因等待写回导致的数据冲突与流水线暂停会大幅增加。</li>
+<li>WAW：写后写，要保证寄存器最终的结果是最新的。短延迟指令在长延迟指令之后发射，但可能比其提前写回同一个寄存器，从而发生覆写错误。<ul>
+<li><em>解决办法 1</em>：检测到与在执行指令有相同的目标寄存器，则在 ID 级延缓后续短延迟指令的发射。</li>
+<li><em>解决办法 2</em>：在长延迟指令到达写回时，由硬件关闭其写控制信号直接丢弃其已失效的过时写回结果，使后发射的短指令结果生效。</li>
+</ul>
+</li>
+<li>WAR：读后写，在顺序发射的流水线中不会发生该冲突。</li>
+</ul>
+</li>
+</ul>
+<h3 id="id">ID阶段进行冲突检测</h3>
+<p>在指令进入 EX 之前，必须在ID级由中心化逻辑进行以下三项危险检测：</p>
+<ol>
+<li>Structural Hazard：检查目标功能单元是否空闲；并通过写端口移位寄存器，确保该指令需要 WB 的那个时钟周期写端口未被预占。</li>
+<li>RAW：检查当前指令的源寄存器是否与流水线中任何已发射但未写回的目标寄存器重名。若有且无法前递，则暂停。</li>
+<li>WAW：检查是否有任何已在 A1–A4、D、M1–M7 中执行的指令，其目标寄存器与当前 ID 级的指令的目标寄存器相同。若有，则在 ID 级暂停发射。</li>
+</ol>
+<h3 id="_5">乱序写回中的异常处理</h3>
+<p>由于浮点指令的乱序写回（Out-of-Order Completion），前发射的指令（如 DIV）在后发射的指令（如 ADD）发生异常时可能尚未完成，这破坏了精准异常（Precise Exception）。硬件有四种解决策略：</p>
+<ol>
+<li>忽略问题（Ignore）：不保证精准异常，异常发生时软硬件状态不一致。简单但难以调试。</li>
+<li>结果缓冲（Buffer results）：将运算结果进行缓存，直到所有在它之前发射的指令都顺利执行完毕，才按顺序写回寄存器（即顺序提交，如 ROB 机制）。</li>
+<li>历史日志/未来文件（History/Future file）：通过历史寄存器记录修改前的旧值，在异常发生时回滚到精准状态。</li>
+<li>发射前安全判定（Issue checking）：只有确定在当前指令之前的所有指令都绝不会发生异常时，才允许当前指令发射（例如必须等待除法指令安全越过异常易发期）。</li>
+</ol>
+<hr />
+<h2 id="mips-r4000">超流水线架构：MIPS R4000 示例</h2>
+<p>MIPS R4000 将经典的 5 阶段流水线细分为 8 阶段的超流水线（Superpipelining）结构，通过切细流水段来拉高处理器工作频率（因为 Cache 访问是时钟频率的关键瓶颈，超流水线通过分解 Cache 访存来提升主频）：</p>
+<ul>
+<li>八个流水级的物理动作：<ol>
+<li>IF（Instruction Fetch 1）：取指第一半。选择 PC，启动指令 Cache（I-Cache）访问。</li>
+<li>IS（Instruction Fetch 2）：取指第二半。完成指令 Cache 访问并读出指令。</li>
+<li>RF（Register Fetch）：译码与读寄存器。进行译码、读取寄存器堆，并执行 ID 级的中心化 Hazard 检查，同时进行 I-Cache 的 Tag 命中检测。</li>
+<li>EX（Execution）：执行级。进行 ALU 整数运算、浮点地址计算，以及分支指令的目标地址计算与条件判定。</li>
+<li>DF（Data Fetch 1）：数据访存第一半。启动数据 Cache（D-Cache）访问。</li>
+<li>DS（Data Fetch 2）：数据访存第二半。完成 D-Cache 访问，数据读出就绪。</li>
+<li>TC（Tag Check）：标签比对。比对 D-Cache 的 Tag，判断数据访问是否命中（Hit）。</li>
+<li>WB（Write Back）：写回级。将 Load 或寄存器-寄存器操作的值写回目标寄存器。</li>
+</ol>
+</li>
+<li>八级流水线下的 Hazards 惩罚分析：
+    在深流水线中常常会见到这两种延迟<ul>
+<li>Load Latency：加载延迟。因为数据直到 DS 级末尾才真正从 Cache 读出就绪。EX 级需要使用 Load 数据的后续指令，必须从 DS 级末尾或 TC 级前推，产生 2 周期空载延迟（Load Stall）。</li>
+<li>Branch Delay：分支延迟。采用 Predicted-Not-Taken 静态策略。由于分支的目标 PC 计算和条件判定都在 EX 级完成：<ul>
+<li><em>若分支实际 Taken（跳转）</em>：指令已经在流水线中流过了 IF, IS, RF 三级，这三条投机获取的指令必须被冲刷（Flush）成 no-op。产生 3 周期分支惩罚。</li>
+<li><em>若分支实际 Untaken（不跳转）</em>：下一条顺序指令已经在流水级中流过，仅有极短暂重打或不产生额外清除。产生 1 周期分支惩*。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="ilpinstruction-level-parallelism">ILP——Instruction-Level Parallelism</h2>
+<h2 id="_6">依赖关系</h2>
+<p>Dependence</p>
+<p>指令之间的依赖关系决定了指令能否并行执行。下面我们始终假定指令 i 在指令 j 之前发射。</p>
+<ol>
+<li><strong>数据依赖（Data Dependence）</strong>：当指令 j 需要读取指令 i 的计算结果时，发生数据依赖。同时，数据依赖是有传递关系的，所以多条指令之间可能有一条依赖链。这是真依赖，会引起 RAW 冲突。</li>
+<li><strong>名称依赖（Name Dependence）</strong>：两条指令使用相同的寄存器名，但彼此没有真正的数据流动。可再细分为两类：<ul>
+<li><strong>反依赖（Antidependence）</strong>：指令 j 写，指令 i 读（易引起 WAR 冲突）。</li>
+<li><strong>输出依赖（Output Dependence）</strong>：指令 i 和指令 j 均向同一个寄存器写入（易引起 WAW 冲突）。</li>
+<li><em>消除方法</em>：<strong>寄存器重命名（Register Renaming）</strong>，重新分配无关的空闲寄存器名以解除冲突。</li>
+</ul>
+</li>
+<li><strong>控制依赖（Control Dependence）</strong>：指令的执行受制于分支跳转指令。</li>
+<li>指令重排约束（Property Constraints）：编译器在重排指令时，必须遵守以下两条物理底线，不得随意调动指令：<ul>
+<li>
+<p><strong>异常行为约束（Exception Behavior）</strong>：指令执行顺序的任何改变，都绝不能引入程序原本不会触发的新异常。</p>
+<details class="example" open="open">
+<summary>异常行为约束违背实例（内存保护异常）</summary>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>add x2, x3, x4
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>beq x2, x0, L1    ; 分支指令
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ld  x1, 0(x2)     ; 读内存指令，控制依赖于 beq
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>L1: ...
+</span></code></pre></div>
+</details>
+<ul>
+<li>分析：如果 <code>x2</code> 包含的地址是非法地址（如空指针），原本程序在 <code>beq</code> 跳转时会直接绕过 <code>ld</code>，不引发任何异常。但如果编译器强行将 <code>ld</code> 指令重排（提升）到分支 <code>beq</code> 之前以提前加载数据，就会<strong>无中生有地触发一个内存访问保护异常（Page Fault）</strong>，导致程序非法崩溃。<ul>
+<li><strong>数据流约束（Data Flow）</strong>：分支指令会使得同一个寄存器的来源变得动态且不确定，重排必须确保数据从“生产者”指令正确流向“消费者”指令，不能改变其依赖的动态流向。
+  ???+ example "数据流约束违背实例（动态数据流向）"
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>add x1, x2, x3
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>beq x4, x0, L
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sub x1, x5, x6
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>L: ...
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>or  x7, x1, x8    ; x1 依赖于 beq 分支是否跳转
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><em>分析</em>：<code>or</code> 指令所消费的 <code>x1</code> 的值，取决于分支 <code>beq</code> 是否发生（可能来自 <code>add</code>，也可能来自 <code>sub</code>）。如果把 <code>or</code> 提到 <code>beq</code> 之前，就会破坏这一动态数据流路径，导致 <code>or</code> 读取到错误的 <code>x1</code> 版本。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="_7">静态调度与循环展开</h2>
+<p><em>Scheduling &amp; Loop Unrolling</em></p>
+<h3 id="_8">静态调度经典示例</h3>
+<p>对于以下 RISC-V 循环体：
+<code>for (i = 999; i &gt;= 0; i--) x[i] = x[i] + s;</code></p>
+<ul>
+<li>
+<p><strong>版本一：无调度时</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Loop: fld f0, 0(x1)
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>      ; [Stall 1 CC] 等待 fld 结果写入 f0
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>      fadd.d f4, f0, f2
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>      ; [Stall 2 CC] 等待 fadd.d 结果写入 f4
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>      fsd f4, 0(x1)
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>      addi x1, x1, -8
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>      bne x1, x2, Loop  ; 若未对齐，addi 到 bne 可能还需暂停
+</span></code></pre></div></p>
+<ul>
+<li>耗时：5 条指令 + 3 周期暂停 = 8 周期/次。</li>
+</ul>
+</li>
+<li>
+<p><strong>版本二：流水线静态调度优化</strong>
+  利用无关指令 <code>addi</code> 填补 <code>fld</code> 的延迟槽，并调整 <code>fsd</code> 的寻址偏移量：
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Loop: fld f0, 0(x1)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>      addi x1, x1, -8
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>      fadd.d f4, f0, f2
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      ; [Stall 2 CC] 等待 f4 写回
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>      fsd f4, 8(x1)     ; 偏移量调整为 8
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>      bne x1, x2, Loop
+</span></code></pre></div></p>
+<ul>
+<li>耗时：5 条指令 + 2 周期暂停 = 7 周期/次（实际做功指令仅 3 条，其余为循环开销）。</li>
+</ul>
+</li>
+<li>
+<p><strong>版本三：仅循环展开但未调度</strong>
+  仅将循环体展开 4 次并进行寄存器重命名（避免 WAW/WAR 冲突），但保持原指令顺序，不进行重排：
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Loop: fld f0, 0(x1)
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>      ; [Stall 1 CC] 等待 fld
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>      fadd.d f4, f0, f2
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>      ; [Stall 2 CC] 等待 fadd.d
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>      fsd f4, 0(x1)
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>      fld f6, -8(x1)
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>      ; [Stall 1 CC]
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>      fadd.d f8, f6, f2
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>      ; [Stall 2 CC]
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>      fsd f8, -8(x1)
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>      fld f10, -16(x1)
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>      ; [Stall 1 CC]
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>      fadd.d f12, f10, f2
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>      ; [Stall 2 CC]
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>      fsd f12, -16(x1)
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>      fld f14, -24(x1)
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>      ; [Stall 1 CC]
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>      fadd.d f16, f14, f2
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>      ; [Stall 2 CC]
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>      fsd f16, -24(x1)
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>      addi x1, x1, -32
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>      bne x1, x2, Loop
+</span></code></pre></div></p>
+<ul>
+<li>耗时分析：包含 14 条指令。每次迭代仍有 3 周期 Stall（1 周期 Load 延迟 + 2 周期 FP Add 延迟），共 <span class="arithmatex">\(4 \times 3 = 12\)</span> 周期 Stall。总周期数 = 14 条指令 + 12 周期 Stall = <strong>26 周期/4次迭代</strong>，均摊每次迭代 <strong>6.5 周期</strong>（仅通过平摊循环控制开销获得了微小提升）。</li>
+</ul>
+</li>
+<li>
+<p><strong>版本四：循环展开并进行静态调度</strong>
+  为了获得最大性能，编译器在展开 4 次的基础上进行<strong>指令重排（Scheduling）</strong>，利用不相关的指令交错填充所有延迟槽：
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Loop: fld f0, 0(x1)
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>      fld f6, -8(x1)      ; 寄存器重命名 f0 -&gt; f6
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      fld f10, -16(x1)    ; 寄存器重命名 f0 -&gt; f10
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>      fld f14, -24(x1)    ; 寄存器重命名 f0 -&gt; f14
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>      fadd.d f4, f0, f2
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      fadd.d f8, f6, f2   ; 寄存器重命名 f4 -&gt; f8
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      fadd.d f12, f10, f2 ; 寄存器重命名 f4 -&gt; f12
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>      fadd.d f16, f14, f2 ; 寄存器重命名 f4 -&gt; f16
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>      fsd f4, 0(x1)
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>      fsd f8, -8(x1)
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>      fsd f12, -16(x1)
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>      addi x1, x1, -32    ; 一次性递减指针
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>      fsd f16, 8(x1)      ; 调整最后一次写入的偏移量
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>      bne x1, x2, Loop
+</span></code></pre></div></p>
+<ul>
+<li>耗时：所有指令延迟槽均被无关的并行操作填充，没有发生任何暂停。14 条指令共耗时 14 周期，均摊每次迭代仅需 <strong>3.5 周期/次</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_9">迹调度与超块</h3>
+<p>对于存在大量分支跳转的非结构化代码，编译器可以通过全局指令重排进行优化：</p>
+<ul>
+<li><strong>迹调度（Trace Scheduling）</strong>：识别程序中发生概率极高（如 99%）的一条热路径（称为 Trace），并将其视为无分支的长基本块进行重排。包含三个核心步骤：<ol>
+<li>迹选择（Trace Selection）：通过静态预测或运行时 Profile 找出发生频率最高的长基本块序列（热路径）。</li>
+<li>迹压缩（Trace Compaction）：在假设分支不发生的情况下，对热路径上的指令进行跨块重排与并行压缩，填入 VLIW 的指令槽中以提高吞吐。</li>
+<li>修复代码（Fixup / Compensation Code）：在热路径中分支跳转移出（Side-exit）或流回（Side-entrance）的接口处，插入特殊的补偿代码，用以确保当代码流偏离热路径时的逻辑与寄存器状态正确。</li>
+</ol>
+</li>
+<li><strong>超块（Superblock）</strong>：<ul>
+<li>起因：由于迹调度在热路径中保留了多个侧入口（Side-entrance），使得生成修复代码和跟踪数据流的复杂度极高。</li>
+<li>解决（尾复制 Tail Duplication）：超块通过复制侧入口下游的所有指令块，并把侧入口的跳转点重定向到这些克隆出来的块上，从而消除了超块内部的所有侧入口。超块转变为<strong>“单入口、多出口（Single-entry, Multiple-exits）”</strong>的网格结构，极大地简化了编译器做全局调度和去除公共子表达式的难度。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="_10">分支冲突静态解决方法</h2>
+<h3 id="_11">四种静态分支策略</h3>
+<ol>
+<li>流水线冻结/冲刷（Freeze/Flush）：分支指令译码后，冻结所有后继指令获取，直到跳转目标确定。产生固定开销。</li>
+<li>预测不跳转（Predicted Not-Taken）：默认继续获取 <code>PC+4</code> 的指令。若实际跳转，则将流水线中已获取的指令冲刷为 no-op，并从目标地址重新取指。</li>
+<li>预测跳转（Predicted Taken，Slide 133-134）：默认分支跳转发生并从目标地址取指。<ul>
+<li><em>适用限制</em>：该策略在经典 5 级流水线中无效（因为分支在 ID 级完成，判定结果与目标地址同时得出，无提前预测空间）。它仅适用于分支目标地址比判定结果更早获知的流水线（例如条件在 EX 级用 ALU 计算，但目标地址在 ID 级已算出，此时可提前 1 周期按预测的 Target 取指）。</li>
+</ul>
+</li>
+<li>
+<p><strong>延迟分支（Delayed Branch）</strong>：分支指令后紧随的一条指令空间称为<strong>分支延迟槽（Branch Delay Slot）</strong>。无论分支实际跳转与否，延迟槽中的指令必定会被执行，编译器常用与分支无关的指令填充该槽来消除暂停。</p>
+<details class="info" open="open">
+<summary>分支延迟槽的三种静态填充策略</summary>
+<p>编译器填充延迟槽时有以下三种典型策略：</p>
+<ul>
+<li>
+<p>策略 A：从分支前填充（From Before）</p>
+<ul>
+<li>做法：选择一条原本就在分支指令之前的、与分支判断无关的独立指令，将其移动到延迟槽中。</li>
+<li>适用性：最安全、最推荐。无论分支是否发生跳转，被移动的指令都必须执行，没有任何副作用。</li>
+</ul>
+</li>
+<li>
+<p>策略 B：从跳转目标处填充（From Target）</p>
+<ul>
+<li>做法：从分支跳转的目标基本块（Target Block）头部复制一条指令填入延迟槽，并将分支跳转目标修正为该指令的下一条。</li>
+</ul>
+<details class="note">
+<summary>基本块</summary>
+<p>它是一段小规模的代码序列，既满足没有分支进入到它这里（除非它是入口），也保证没有分支从它这里出去（除非它是出口）。</p>
+</details>
+<ul>
+<li>适用性：适合<strong>分支跳转概率高（Taken）</strong>的场景。如果分支最终未跳转，延迟槽中的指令必须对后续无影响（或硬件支持在未跳转时取消该指令的写回）。</li>
+</ul>
+</li>
+<li>
+<p>策略 C：从顺序后继处填充（From Fall-Through）</p>
+<ul>
+<li>做法：从分支不跳转时的顺序后继基本块（Fall-Through Block）头部复制一条指令填入延迟槽。</li>
+<li>适用性：适合<strong>分支跳转概率低（Not-Taken）</strong>的场景。如果分支最终发生了跳转，延迟槽中的指令必须对跳转目标路径无副作用。</li>
+</ul>
+</li>
+</ul>
+</details>
+</li>
+</ol>
+<h3 id="_12">深流水线下分支预测对性能的制约</h3>
+<ul>
+<li>条件：取指级深度为 20 周期（即预测错误惩罚为 20 周期），程序中平均每 5 条指令含 1 个分支。</li>
+<li>不同预测准确率下的 500 条指令取指周期计算：<ul>
+<li>100% 准确度：不需要任何惩罚周期，耗时 = <span class="arithmatex">\(500 \text{ 周期}\)</span>。</li>
+<li>99% 准确度：500条指令包含 100 个分支，预测错误 1 次。耗时 = <span class="arithmatex">\(500 + 20 \times 1 = 520 \text{ 周期}\)</span>。</li>
+<li>90% 准确度：预测错误 10 次。耗时 = <span class="arithmatex">\(500 + 20 \times 10 = 700 \text{ 周期}\)</span>（性能退化达 40%）。</li>
+</ul>
+</li>
+<li>结论：流水线越深，分支预测准确率的微小提升对性能的增益就越关键。</li>
+</ul>
+<hr />
+<h2 id="lec06-ppt">课件（lec06）核心复习重点与 PPT 页码对照清单</h2>
+<p>为了便于您结合课件 PPT 中的图片进行针对性复习，以下梳理了本章期末考试最核心的知识清单与 PPT 页码对照：</p>
+<h3 id="1-slide-4-slide-9">1. 流水线核心物理规律（Slide 4 - Slide 9）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解烘衣服实例（Ann, Brian, Cathy, Dave），深刻体会流水线的“吞吐率提高”与“单次延迟不缩短”特征。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 5</strong>：Pipelined Laundry 时空图（展示各阶段重叠与最慢级 Bottleneck 决定总时间）。</li>
+<li><strong>Slide 9</strong>：Balanced Pipeline 理想状态下加速比等于流水级数 <span class="arithmatex">\(k\)</span> 的物理对齐图。</li>
+</ul>
+</li>
+<li>
+<div class="admonition tip">
+<p class="admonition-title">复习提示</p>
+记住公式：流水线加速比 = 未流水线化总时间 / 流水线化总时间。如果流水段不平衡（Unbalanced），时钟周期由最慢的一段决定，这会显著降低实际加速比。</div>
+</li>
+</ul>
+<h3 id="2-slide-15-slide-30">2. 浮点多周期流水线结构与延时参数（Slide 15 - Slide 30）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解为什么浮点 EX 需要多周期，掌握各种依赖下 Latency 与 Repeat/Initiation Interval 的周期推算。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 19</strong>：MIPS 浮点流水线结构图（展示不同功能单元并行的 EX 阶段，如 FP Add/Subtract, FP multiplier, FP/Integer divider）。</li>
+<li><strong>Slide 29</strong>：广义浮点流水线时空重叠图（斜体代表需要操作数，粗体代表结果就绪）。</li>
+</ul>
+</li>
+<li>
+<div class="admonition warning">
+<p class="admonition-title">常考易混点</p>
+<ul>
+<li>延迟（Latency）的定义是：产生结果的指令与使用结果的指令之间<strong>必须空闲</strong>的周期数（即执行深度 - 1）。</li>
+<li>重复间隔（Initiation Interval）的定义是：发射两条同类型指令之间<strong>必须间隔</strong>的周期数。如果单元是完全流水线化的，间隔为 1。</li>
+</ul>
+</div>
+</li>
+</ul>
+<h3 id="3-hazards-slide-31-slide-47">3. 多周期流水线 Hazards 检测与处理机制（Slide 31 - Slide 47）</h3>
+<ul>
+<li><strong>核心内容</strong>：<ul>
+<li><strong>结构冲突</strong>：非流水线化单元（Divider）、写端口冲突。掌握移位寄存器法与写回冲突的挂起优先级。</li>
+<li><strong>WAW 冲突</strong>：短延迟写覆盖长延迟写。掌握“延迟发射”与“Zero write control（写控制信号置 0）”两种解法。</li>
+<li><strong>异常处理</strong>：理解乱序写回（Out-of-order Completion）破坏精准异常，掌握 Ignore, Buffer, History/Future log, Issue checking 四种硬件解法。</li>
+</ul>
+</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 33</strong>：写端口冲突实例图（多条指令在同一周期到达 WB）。</li>
+<li><strong>Slide 36-37</strong>：WAW 冲突产生与消除的流水线图。</li>
+<li><strong>Slide 46</strong>：OOO Completion 实例图（ADD/SUB 在 DIV 之前完成）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-mips-r4000-slide-49-slide-69">4. MIPS R4000 超流水线架构分析（Slide 49 - Slide 69）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握 8 级流水级（IF, IS, RF, EX, DF, DS, TC, WB）的各自物理任务。理解其 Load 延迟（2周期）与分支延迟（Predicted-not-taken 下 Taken 为 3 周期，Untaken 为 1 周期）的推导。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 59</strong>：2-cycle Load 延迟的前推/前推数据流向图。</li>
+<li><strong>Slide 61</strong>：Branch 延迟时空图（Taken 时冲刷 IF/IS/RF 3个气泡；Untaken 时无气泡）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-slide-73-slide-91">5. 相关性理论与重排约束（Slide 73 - Slide 91）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解真数据相关（RAW）、反相关（WAR）、输出相关（WAW）的区别；掌握寄存器重命名的静态与动态实现；理解异常行为约束（不能引入新异常）与数据流约束。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 89</strong>：内存访问保护的异常行为约束违背实例代码。</li>
+<li><strong>Slide 91</strong>：动态分支数据流向约束违背实例代码。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-slide-94-slide-113">6. 编译器静态调度与循环展开大题（Slide 94 - Slide 113）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握不调度（8 CC）、仅调度（7 CC）、仅展开未调度（26 CC）、展开并调度（14 CC / 均摊 3.5 CC）的完整周期推算和汇编改写。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 98</strong>：未优化循环的 Stalls 位置标注。</li>
+<li><strong>Slide 101</strong>：调度优化后的流水线无 Stall 对齐。</li>
+<li><strong>Slide 108</strong>：仅展开无调度的 Stalls 重叠周期图。</li>
+<li><strong>Slide 112</strong>：展开并静态重排后的完美对齐图。</li>
+</ul>
+</li>
+<li>
+<div class="admonition danger">
+<p class="admonition-title">期末必考大题套路</p>
+做循环展开静态调度大题时，第一步写 <code>fld</code> 系列，第二步写 <code>fadd.d</code> 系列，第三步写 <code>fsd</code> 系列，第四步放 <code>addi</code>，最后放 <code>fsd</code> 的尾巴和 <code>bne</code>。这能保证指令交错开，彻底消灭所有 Stall。</div>
+</li>
+</ul>
+<h3 id="7-tracesuperblockslide-115-slide-125">7. 迹调度（Trace）与超块（Superblock）（Slide 115 - Slide 125）</h3>
+<ul>
+<li><strong>核心内容</strong>：迹调度的 Trace Selection, Trace Compaction 和 Fixup Code；超块如何利用 <strong>尾复制（Tail Duplication）</strong> 消除侧入口以实现单入口多出口。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 119</strong>：迹调度中的 Trace exit, Trace entrance 与侧接口示意图。</li>
+<li><strong>Slide 121</strong>：修复代码（Compensation/Fixup Code）的流向与克隆。</li>
+<li><strong>Slide 122</strong>：超块的基本逻辑图。</li>
+<li><strong>Slide 124</strong>：尾复制（Tail Duplication）消除侧入口前后的结构演进图。</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-slide-126-slide-144">8. 静态分支预测与深流水线惩罚（Slide 126 - Slide 144）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握 Freeze/Flush, Predicted-not-taken, Predicted-taken, Delayed branch 4 种方案。理解 Predicted-taken 不适用于 MIPS 5级流水线的原因。掌握深流水线下分支预测准确率对性能的非线性制约计算。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 144</strong>：Fetch 阶段融合分支目标缓冲（BTB）与方向预测器（Direction Predictor）的硬件逻辑通路拓扑图。</li>
+</ul>
+</li>
+<li>
+<div class="admonition warning">
+<p class="admonition-title">考试避坑</p>
+在计算“500条指令取指周期”这类大题时，错误预测次数 = 指令数 / 5 * 错误率。惩罚周期数 = 错误预测次数 * 分支惩罚（如 20 周期）。总时间 = 基础指令数 + 惩罚周期数。</div>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

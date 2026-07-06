@@ -1,0 +1,1461 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Using_Objects/">
+      
+      
+        <link rel="prev" href="../Introduction/">
+      
+      
+        <link rel="next" href="../Class/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>使用类与对象 - OOP Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OOP Note" class="md-header__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OOP Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              使用类与对象
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OOP Note" class="md-nav__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OOP Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用类与对象
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用类与对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        标准库类型与文件输入输出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="标准库类型与文件输入输出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stdstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字符串类 std::string
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-fstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件 I/O (&lt;fstream&gt;)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C++ 内存布局与变量分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C++ 内存布局与变量分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static 关键字的特殊规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针与动态内存分配
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="指针与动态内存分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针操作对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动态内存分配 new 与 delete
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="引用（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        声明与规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针 vs 引用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用限制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        const 常量
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="const 常量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译时常量与运行时常量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针与 const 的结合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针的 const 转换（权限缩小规则）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按值传递/返回 vs 按地址传递/返回 const
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    类与封装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Object_Interactive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    构造、清理与对象交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Copy_constructor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拷贝构造、静态成员与命名空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内联函数、对象组合与继承基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Polymorphism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Overloaded_Operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运算符重载与类型转换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    异常处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Iterators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    迭代器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    程序设计/架构设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Patterns_Design-Case_Study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设计模式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        标准库类型与文件输入输出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="标准库类型与文件输入输出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stdstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字符串类 std::string
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-fstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件 I/O (&lt;fstream&gt;)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C++ 内存布局与变量分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C++ 内存布局与变量分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static 关键字的特殊规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针与动态内存分配
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="指针与动态内存分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针操作对象
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动态内存分配 new 与 delete
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="引用（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        声明与规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针 vs 引用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用限制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        const 常量
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="const 常量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译时常量与运行时常量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针与 const 的结合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指针的 const 转换（权限缩小规则）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按值传递/返回 vs 按地址传递/返回 const
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">使用类与对象</h1>
+<p>​   第二节涵盖了 C++ 中常用的内置类型（如 <code>std::string</code> 与文件 I/O）、内存模型与变量分类、动态内存分配、引用（References）以及 <code>const</code> 常量的深度解析。</p>
+<hr />
+<h2 id="_2">标准库类型与文件输入输出</h2>
+<h3 id="stdstring">字符串类 <code>std::string</code></h3>
+<p>C++ 的 <code>std::string</code> 相比 C 语言的 <code>char[]</code> 提供了更安全、更友好的接口。</p>
+<ul>
+<li>
+<p>定义与初始化：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">string</span><span class="w"> </span><span class="n">str1</span><span class="p">;</span><span class="w">              </span><span class="c1">// 默认初始化为空字符串 &quot;&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">string</span><span class="w"> </span><span class="n">str5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;good&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1">// 显式调用构造函数</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">string</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span><span class="w">    </span><span class="c1">// 字面量初始化</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">string</span><span class="w"> </span><span class="nf">str3</span><span class="p">(</span><span class="n">str2</span><span class="p">);</span><span class="w">        </span><span class="c1">// 拷贝构造</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">string</span><span class="w"> </span><span class="n">str4</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;a&#39;</span><span class="p">);</span><span class="w">      </span><span class="c1">// 构造为 &quot;aaaaa&quot;</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<p>​ 关于第二、三这两种初始化方式，如果只想初始化一个字符，写成<code>('s')</code> 是错误的，使用双引号 <code>("s")</code> 才可以。实际上这也是双引号和单引号的区别，单引号括起来的是字符字面量，而双引号括住的是字符串字面量。</p>
+<ul>
+<li>常用操作：<ul>
+<li><strong>赋值与拼接</strong>：支持直接通过 <code>=</code> 赋值（C 语言中对字符数组赋值非法），支持通过 <code>+</code> 或 <code>+=</code> 进行拼接。</li>
+<li><strong>子串提取</strong>：<code>substr(pos, len)</code> 返回从 <code>pos</code> 开始、长度为 <code>len</code> 的子串。</li>
+<li><strong>修改字符串</strong>：提供 <code>assign()</code>、<code>insert()</code>、<code>erase()</code>、<code>append()</code>、<code>replace()</code> 等成员函数。</li>
+<li><strong>查找</strong>：<code>find(target)</code> 返回目标字符串在原串中首次出现的位置，若未找到则返回 <code>string::npos</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="io-fstream">文件 I/O (<code>&lt;fstream&gt;</code>)</h3>
+<p>C++ 使用文件流对象来读写文件：</p>
+<ul>
+<li><code>ifstream</code>（输入文件流）：用于从文件中读取数据。</li>
+<li><code>ofstream</code>（输出文件流）：用于向文件中写入数据。</li>
+</ul>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// 写入文件</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="w"> </span><span class="n">File1</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">test.txt&quot;</span><span class="p">);</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">File1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello world&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">File1</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">// 读取文件</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="n">File2</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">test.txt&quot;</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="p">;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">File2</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w"> </span><span class="c1">// 默认以空格或换行符分割读取</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">File2</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</span></code></pre></div>
+</details>
+<p>我们可以对比理解读写过程: </p>
+<ol>
+<li><code>ofstream</code> 和 <code>ifstream</code> 实际上都是在创造一个流对象, 并与目标文件进行绑定.</li>
+<li>使用操作符流输出<code>&lt;&lt;</code>以及流插入<code>&gt;&gt;</code> 进行读写时, 类似于将文本进行了"重定向", 用平常的<code>cout &lt;&lt; "Hello World"</code> 做对比. 这里的<code>cout</code>就是对应到终端/控制台/console的流对象。同样的，<code>cerr</code>对应到错误输出流对象。</li>
+</ol>
+<hr />
+<h2 id="c">C++ 内存布局与变量分类</h2>
+<p>C++ 程序在运行时，内存会被划分为不同的物理区域，以便高效管理数据存取：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">内存区域</th>
+<th style="text-align: left;">存储的数据类型</th>
+<th style="text-align: left;">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>栈（Stack）</strong></td>
+<td style="text-align: left;">局部变量、函数形参、函数调用上下文</td>
+<td style="text-align: left;">由编译器自动分配和释放。空间较小，速度极快。遵循后进先出（LIFO）原则。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>堆（Heap）</strong></td>
+<td style="text-align: left;">动态分配的变量（如通过 <code>new</code> 或 <code>malloc</code> 申请的内存）</td>
+<td style="text-align: left;">程序员手动申请和释放（如果不释放会导致内存泄漏）。空间极大，访问速度稍慢。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全局数据区/静态区（Global Data/Static Area）</strong></td>
+<td style="text-align: left;">全局变量、静态全局变量、静态局部变量</td>
+<td style="text-align: left;">在程序编译时就已分配好，在程序运行的整个生命周期内都有效。</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>如果全局变量要在其他文件中使用，那么其<code>.h</code>文件中声明时，需要用到<code>extern</code>关键字。</li>
+<li><code>extern</code>关键字仅用来声明，不负责定义，定义是在<code>.cpp</code>文件中完成的。按照定义的判断条件，必须发生内存分配才叫定义</li>
+<li>其他文件使用时只需要包含那个<code>.h</code>文件即可。</li>
+</ol>
+<h3 id="static">static 关键字的特殊规则</h3>
+<p><code>static</code> 修饰符在全局和局部变量中具有截然不同的作用语义：</p>
+<ul>
+<li><strong>局部事物（静态局部变量）</strong>：实现<strong>持久性（Persistence）</strong>。静态局部变量在多次调用该函数之间保持其值，只在第一次被访问时进行初始化，生存期延长至整个程序结束。</li>
+<li><strong>全局事物（静态全局变量/静态函数）</strong>：实现<strong>访问限制（Access Restriction）</strong>。静态全局变量/函数只在当前 <code>.cpp</code> 编译单元可见，禁止来自外部编译单元的访问，防止全局命名污染。</li>
+</ul>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// 示例：extern 与 static 链接性</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// file1.cpp</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">int</span><span class="w"> </span><span class="n">global_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w">        </span><span class="c1">// 全局变量定义</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">static_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span><span class="w"> </span><span class="c1">// 静态全局变量（仅在 file1.cpp 内可见）</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// file2.cpp</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">extern</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_val</span><span class="p">;</span><span class="w">       </span><span class="c1">// 声明外部定义的 global_val</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">// extern int static_val;    // 错误！static_val 无法跨文件访问</span>
+</span></code></pre></div>
+</details>
+<hr />
+<h2 id="_3">指针与动态内存分配</h2>
+<h3 id="_4">指针操作对象</h3>
+<ul>
+<li><code>&amp;</code> 运算符获取对象的内存地址。</li>
+<li><code>*</code> 运算符解引用以获取指针指向的对象本身。</li>
+<li><code>-&gt;</code> 运算符用于通过指针访问对象的成员函数或变量（例如 <code>ps-&gt;length()</code> 等价于 <code>(*ps).length()</code>）。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">空指针与野指针</p>
+<p><code>string s;</code> 声明并默认构造了一个合法的空字符串。
+<code>string *ps;</code> 仅定义了一个指针变量，其值是随机的内存地址（野指针）。在未将有效地址赋值给它（或通过 <code>new</code> 申请内存）之前解引用野指针，会导致程序崩溃。</p>
+</div>
+<h3 id="new-delete">动态内存分配 <code>new</code> 与 <code>delete</code></h3>
+<p><code>new</code> 和 <code>delete</code> 是 C++ 中的运算符，相比 C 语言的 <code>malloc</code> 和 <code>free</code>，它们会自动调用类对象的构造函数与析构函数。</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// 单个对象分配与释放</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w">          </span><span class="c1">// 堆上分配 4 字节 int</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">delete</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 释放</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">Student</span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">();</span><span class="c1">// 申请空间并自动调用构造函数</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">delete</span><span class="w"> </span><span class="n">q</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 自动调用析构函数并释放</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">// 动态数组分配与释放</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w">      </span><span class="c1">// 堆上分配 10 个 int 空间</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">                </span><span class="c1">// 释放整个数组</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">Student</span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w">                </span><span class="c1">// 自动对数组中的每个对象调用析构函数，再释放内存</span>
+</span></code></pre></div>
+</details>
+<div class="admonition info">
+<p class="admonition-title">new/delete 的配对黄金法则</p>
+<ul>
+<li>必须保证通过 <code>new</code> 申请的内存最终通过 <code>delete</code> 释放，防止内存泄漏。</li>
+<li>如果申请时使用了 <code>[]</code>（如 <code>new Type[]</code>），释放时<strong>必须</strong>使用 <code>delete[]</code>。如果混用（如使用 <code>delete r;</code> 释放数组），编译器将只析构数组的第一个元素，从而导致后续元素析构函数未执行，甚至引发堆内存损坏。</li>
+<li>对空指针（<code>nullptr</code>）执行 <code>delete</code> 操作是安全的，不会发生任何事情。</li>
+</ul>
+</div>
+<hr />
+<h2 id="references">引用（References）</h2>
+<p>引用是 C++ 引入的全新数据类型，它本质上是为一个已存在的变量起<strong>别名（Alias）</strong>。</p>
+<h3 id="_5">声明与规则</h3>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">47</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">;</span><span class="w"> </span><span class="c1">// Y 是 X 的引用，它们共同指向同一块内存空间</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span><span class="w">     </span><span class="c1">// 修改 Y，X 也会被修改为 18</span>
+</span></code></pre></div>
+</details>
+<ol>
+<li><strong>必须初始化</strong>：引用在声明时必须绑定到一个已存在的变量，不能写 <code>int&amp; y;</code>。</li>
+<li><strong>绑定不可更改</strong>：引用一旦建立绑定，在运行时就永远指向该对象，无法改指其他对象（这与指针可以随意更改指向不同）。</li>
+<li><strong>目标必须有明确位置（左值）</strong>：引用不能直接绑定到临时计算结果（右值）上。例如 <code>void func(int &amp;); func(i * 3);</code> 是非法的。<blockquote>
+<ul>
+<li>左值：拥有明确的内存地址，可以使用 <code>&amp;</code> 来取地址。</li>
+<li>右值：一个临时的值，生命周期短，表达式结束就被摧毁，不能用 <code>&amp;</code> 取地址。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h3 id="vs">指针 vs 引用</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特性</th>
+<th style="text-align: left;">指针（Pointer）</th>
+<th style="text-align: left;">引用（Reference）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>是否可为空</strong></td>
+<td style="text-align: left;">可以为 <code>nullptr</code></td>
+<td style="text-align: left;">必须绑定有效对象，不能为空</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>独立性</strong></td>
+<td style="text-align: left;">是一个独立的变量（保存地址值）</td>
+<td style="text-align: left;">只是被引用变量的别名，不占用独立物理存储</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>可重新赋值</strong></td>
+<td style="text-align: left;">可以随时改变指向的地址</td>
+<td style="text-align: left;">绑定关系终身不变</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">引用限制</h3>
+<ul>
+<li><strong>不存在“引用的引用”</strong>（例如 <code>int&amp;&amp;</code> 在 C++11 中被定义为右值引用，但不能建立引用的引用逻辑别名）。</li>
+<li><strong>不存在“指向引用的指针”</strong>（例如 <code>int&amp;* p;</code> 非法），但“指针的引用”是合法的（例如 <code>int*&amp; p;</code>）。</li>
+<li><strong>不能定义“引用数组”</strong>（例如 <code>int&amp; arr[10];</code> 是非法的，因为数组元素必须是独立且连续排布的实体）。</li>
+</ul>
+<hr />
+<h2 id="const">const 常量</h2>
+<h3 id="_7">编译时常量与运行时常量</h3>
+<ul>
+<li><strong>编译时常量</strong>：例如 <code>const int bufsize = 1024;</code>。编译器在编译期将符号表中的值直接替换，不为其分配内存。其值必须在声明时初始化。</li>
+<li><strong>运行时常量</strong>：例如通过输入获取的 <code>const int size = x;</code>。虽然 <code>size</code> 也是 <code>const</code>（无法修改），但其值在编译期未知，因此在标准 C++ 中无法用来作为普通静态数组的长度（如 <code>double arr[size]</code> 非法）。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">聚合类型的 const</p>
+<p>对于数组或结构体等聚合类型，使用 <code>const</code> 修饰时（例如 <code>const int i[] = {1, 2, 3};</code>），系统<strong>会</strong>为其分配内存空间。因为其内容保存在内存中，编译器在编译期无法直接查询其值，因此其元素同样不能作为编译时常量使用（如 <code>float f[i[2]];</code> 非法）。</p>
+</div>
+<h3 id="const_1">指针与 const 的结合</h3>
+<p>通过观察 <code>const</code> 关键字在 <code>*</code> 的哪一侧，可以清晰区分常量指针与指针常量：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 1. 常量指针（指向常量的指针）</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">// const 在 * 左侧，修饰指向的字符数据。</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">p</span><span class="o">++</span><span class="p">;</span><span class="w">                    </span><span class="c1">// OK：指针本身的指向可以改</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="p">;</span><span class="w">               </span><span class="c1">// ERROR：指向的内容不能改</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 2. 指针常量（指针本身是常量）</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">// const 在 * 右侧，修饰指针变量 q。</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="o">*</span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;c&#39;</span><span class="p">;</span><span class="w">               </span><span class="c1">// OK：允许修改指向的字符数据</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">q</span><span class="o">++</span><span class="p">;</span><span class="w">                    </span><span class="c1">// ERROR：不能修改指针 q 本身的值（指向的地址）</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1">// 同理：</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">*</span><span class="w"> </span><span class="n">ps</span><span class="p">;</span><span class="w">       </span><span class="c1">// 指向 const string 的指针，等价于 string const* ps</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">string</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ps</span><span class="p">;</span><span class="w">       </span><span class="c1">// 指向 string 的 const 指针</span>
+</span></code></pre></div>
+</details>
+<h3 id="const_2">指针的 const 转换（权限缩小规则）</h3>
+<p>在传递指针或引用时，C++ 遵循<strong>权限可缩小、不可放大</strong>的原则：</p>
+<ul>
+<li>可以将非 <code>const</code> 变量的地址赋给指向 <code>const</code> 的指针（隐式安全转换）。</li>
+<li>
+<p><strong>绝对不允许</strong>将 <code>const</code> 变量的地址赋给普通非 <code>const</code> 指针。例如下例：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span><span class="w"> </span><span class="c1">// ERROR！否则可以通过 *ip = 5 修改常量 ci 的值，破坏 const 约束。</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<h3 id="vs-const">按值传递/返回 vs 按地址传递/返回 const</h3>
+<ul>
+<li><strong>按值传递/返回 const</strong>：</li>
+<li>形参 <code>void f(const int i)</code>：限制在函数体内部无法修改参数副本，但对于外部实参没有实质安全性改善。</li>
+<li>返回值 <code>const int f()</code>：对于内置类型而言几乎无意义，因为返回值是以临时右值形式拷贝出去的。</li>
+<li><strong>按地址（指针或引用）传递/返回 const</strong>：</li>
+<li>性能优化的核心方案。如果函数需要访问一个大型对象，直接按值传递会带来巨大的构造/拷贝开销；传递指针或引用只需要 8 字节（64位系统）。</li>
+<li>
+<p>为了防止函数内部意外篡改传入的对象，应当尽可能使用 <code>const</code> 限制：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">printLargeObject</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">MyLargeClass</span><span class="o">&amp;</span><span class="w"> </span><span class="n">obj</span><span class="p">);</span><span class="w"> </span><span class="c1">// 既高效又安全</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

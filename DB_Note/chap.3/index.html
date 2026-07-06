@@ -1,0 +1,1740 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.3/">
+      
+      
+        <link rel="prev" href="../chap.2/">
+      
+      
+        <link rel="next" href="../chap.4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第三章 SQL简介 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sql" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第三章 SQL简介
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 简介
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL 简介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-domain-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 中的域类型(Domain Types)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表(Table)/关系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表(Table)/关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的创建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表的创建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建表的指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主键与外键定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用完整性(外键对于数据的一致性维护)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本查询结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本查询结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SELECT 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WHERE 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROM 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自然连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重命名(Rename)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字符串操作(String Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        输出排序(Ordering)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        集合运算符(Set Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空值(Null)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        聚合函数(Aggregate Functions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 简介
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL 简介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-domain-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 中的域类型(Domain Types)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表(Table)/关系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表(Table)/关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的创建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表的创建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建表的指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主键与外键定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用完整性(外键对于数据的一致性维护)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表的更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本查询结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本查询结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SELECT 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WHERE 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FROM 子句
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自然连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重命名(Rename)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字符串操作(String Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        输出排序(Ordering)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        集合运算符(Set Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空值(Null)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        聚合函数(Aggregate Functions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第三章 SQL简介</h1>
+
+<h2 id="sql">SQL 简介</h2>
+<h3 id="sql-domain-types">SQL 中的域类型(Domain Types)</h3>
+<ul>
+<li><strong>char(n):</strong> 定长字符串</li>
+<li><strong>varchar(n):</strong> 变长字符串, 最长为 n</li>
+<li><strong>int:</strong> 整数类型</li>
+<li><strong>smallint/bigint:</strong> 短整数/长整数</li>
+<li><strong>numeric(p, d):</strong> 定点数类型. 其中 p 是总位数/总精度, d 是小数点后保留的位数</li>
+<li><strong>float(n):</strong> 指定精度为 n 的浮点数(精度就是有效数字)</li>
+<li><strong>real, double precision:</strong> 浮点数和双精度浮点数</li>
+</ul>
+<h3 id="table">表(Table)/关系</h3>
+<h4 id="_1">表的定义</h4>
+<blockquote>
+<p>一个表/关系是由拥有关系模式所指定的属性的 <strong>元组的多重集</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>列表, 集合与多重集</strong></p>
+<ul>
+<li>
+<p><strong>list</strong>: 普通列表, 有序, 允许重复;</p>
+</li>
+<li>
+<p><strong>set</strong>: 普通集合, 无序, 去重;</p>
+</li>
+<li>
+<p><strong>multiset</strong>: 多重集, 无序, 允许重复;</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>常见术语</strong></p>
+<ul>
+<li>field: 字段--某个单元格的值</li>
+<li>row -- tuple -- record: 行--元组--记录</li>
+<li>column -- attribute: 列--属性/特性</li>
+<li>cardinality(基数): the number of tuples; 集合的势</li>
+<li>arity(元数): the number of columns; </li>
+</ul>
+</li>
+</ul>
+<h4 id="_2">表的创建</h4>
+<h5 id="_3">创建表的指令</h5>
+<details class="example" open="open">
+<summary>创建一个表</summary>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">instructor</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">            </span><span class="n">ID</span><span class="w">            </span><span class="nb">char</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">            </span><span class="n">name</span><span class="w">        </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">            </span><span class="n">dept_name</span><span class="w">     </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">            </span><span class="n">salary</span><span class="w">        </span><span class="nb">numeric</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">ID</span><span class="p">),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">            </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dept_name</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">department</span><span class="w">        </span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">            </span><span class="p">);</span>
+</span></code></pre></div>
+</details>
+<p>创建时涉及到完整性约束(Integrity Constraints), 包括</p>
+<ul>
+<li>
+<p>主键约束(PK)</p>
+</li>
+<li>
+<p>外键约束(FK)</p>
+</li>
+<li>
+<p>非空约束(not null)</p>
+</li>
+</ul>
+<p>其中, 未满足完整性约束的数据库更新会被拒绝; 而属性声明的 PK 会自动满足 not null 条件</p>
+<h5 id="_4">主键与外键定义</h5>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- 列级约束(Column-level): 一次只能定义一个主键, 多了会报错</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">student</span><span class="p">(</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">sid</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">);</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- 表级约束(Table-level): 定义复合主键(Composite PK)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">taken</span><span class="p">(</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="n">sid</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="n">cid</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span><span class="n">cid</span><span class="p">),</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">-- 外键定义与主键同理</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">taken</span><span class="p">(</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">sid</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="n">student</span><span class="p">(</span><span class="n">sid</span><span class="p">),</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">);</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">taken</span><span class="p">(</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">sid</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">sid</span><span class="p">,...)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="p">(</span><span class="n">sid</span><span class="p">,...),</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="p">);</span>
+</span></code></pre></div>
+<blockquote>
+<p>A refers to B: A 指向 B</p>
+<p>B is referenced by A: B 被 A 引用</p>
+<p>其中 B 是主表, A 是从表</p>
+</blockquote>
+<h5 id="_5">引用完整性(外键对于数据的一致性维护)</h5>
+<ul>
+<li>
+<p><strong>向子表插入不存在的记录</strong></p>
+<ul>
+<li>结果: 拒绝</li>
+</ul>
+</li>
+<li>
+<p><strong>删除父表的一条记录</strong></p>
+<ul>
+<li>
+<p>禁止删除(rejected)</p>
+</li>
+<li>
+<p>级联删除(<strong>cascade</strong>)</p>
+</li>
+<li>置为空值(null)</li>
+</ul>
+</li>
+</ul>
+<h4 id="_6">表的更新</h4>
+<ul>
+<li><strong>Insert</strong></li>
+</ul>
+<blockquote>
+<p>向表中插入一条新记录</p>
+<p><strong>insert into 表名称 values(‘属性 1 的值’, ‘属性 2 的值’, ...)</strong></p>
+</blockquote>
+<ul>
+<li><strong>Delete</strong></li>
+</ul>
+<blockquote>
+<p>删除表中的所有记录</p>
+<p><strong>Delete from 表名称</strong></p>
+</blockquote>
+<ul>
+<li><strong>Drop Table</strong></li>
+</ul>
+<blockquote>
+<p>删除整个表</p>
+<p><strong>Drop table 表名称</strong></p>
+</blockquote>
+<ul>
+<li><strong>Alter</strong></li>
+</ul>
+<blockquote>
+<p>修改表结构</p>
+<p><strong>Add(添加列): alter table 表名称 add 新属性名 数据类型</strong></p>
+<p><strong>Drop(删除列): drop table 表名称 属性名</strong></p>
+</blockquote>
+<h3 id="_7">基本查询结构</h3>
+<ul>
+<li><strong>经典的 SQL 查询语句</strong></li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="err">属性</span><span class="mi">1</span><span class="p">,</span><span class="err">属性</span><span class="mi">2</span><span class="p">,...</span><span class="err">属性</span><span class="n">n</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">FROM</span><span class="w"> </span><span class="err">表</span><span class="mi">1</span><span class="p">,</span><span class="err">表</span><span class="mi">2</span><span class="p">,...,</span><span class="err">表</span><span class="n">n</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="err">谓词</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>等价的关系代数表达式为:  $<span class="arithmatex">\(\Pi_{A_1, A_2, \dots, A_n} (\sigma_P(r_1 \times r_2 \times \dots \times r_m))\)</span>$​</strong></p>
+<ul>
+<li>关于 SQL 的两个基本常识<ul>
+<li>结果仍然是一个关系——闭包性(Closure)</li>
+<li>SQL 对于大小写不敏感, 但建议关键字大写</li>
+</ul>
+</li>
+</ul>
+<h4 id="select">SELECT 子句</h4>
+<ul>
+<li><strong>重复值处理(Duplicates)</strong><ul>
+<li><strong>distinct</strong>: 强制删除重复的行, 并且作用于后面所有的列. 即: 当有多个属性/列时, 去除的实际上是它们的 <strong>重复组合</strong></li>
+<li><strong>all</strong>: 明确指定不删除重复项. SQL 默认保留重复, 所以 all 一般很少显式地写出来</li>
+</ul>
+</li>
+<li><strong>通配符和字面常量</strong><ul>
+<li><strong>星号 <code>*</code> (asterisk):</strong> 返回表中的所有列</li>
+<li>常量(literal)<ul>
+<li><strong>不带 from:</strong>  返回一个一行一列的单元值. 注: Oracle 不支持</li>
+<li><strong>带 from:</strong>  行数等于表的总行数, 列数为一的表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>算术运算和列重命名</strong></p>
+<ul>
+<li><strong>算数表达式:</strong>  select 子句中可以使用+, -, *, /进行计算</li>
+<li><strong>AS 重命名:</strong>  使用‘AS’关键字给列进行重命名</li>
+</ul>
+</li>
+<li>
+<p>SQL 示例</p>
+</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="err">列名称</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="err">表名称</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="err">列名称</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="err">表名称</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="err">表名称</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;100&#39;</span><span class="w"> </span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;100&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="err">表名称</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="n">salary</span><span class="o">*</span><span class="mi">1</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">increased_salary</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span>
+</span></code></pre></div>
+<h4 id="where">WHERE 子句</h4>
+<ul>
+<li>
+<p><strong>作用:</strong>  筛选符合条件的元组</p>
+</li>
+<li>
+<p><strong>数学对应:</strong>  关系代数中的选择(selection, <span class="arithmatex">\(\sigma\)</span>​​​)</p>
+</li>
+<li><strong>谓词 P</strong><ul>
+<li><strong>逻辑连接符:</strong>  and, or, not</li>
+<li><strong>比较运算符:</strong>  &gt;, &lt;, &gt; =, &lt;=, &lt;&gt;(不等于), =, BETWEEN...AND...</li>
+<li><strong>元组比较:</strong>  允许将多个属性打包成一个元组进行一次性比较</li>
+</ul>
+</li>
+</ul>
+<p>SQL 示例</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">dept_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SCI&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">salary</span><span class="o">=</span><span class="mi">10000</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">-- 元组比较</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">instructor</span><span class="p">.</span><span class="n">ID</span><span class="p">,</span><span class="n">dept_name</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="n">teachers</span><span class="p">.</span><span class="n">ID</span><span class="p">,</span><span class="s1">&#39;Biology&#39;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">-- 等价于:WHERE instructor.ID = teaches.ID AND dept_name = &#39;Biology&#39;</span>
+</span></code></pre></div>
+<h4 id="from">FROM 子句</h4>
+<ul>
+<li><strong>数学对应:</strong>  关系代数中的笛卡尔积</li>
+<li><strong>执行逻辑:</strong>  嵌套循环(Nested Loops), 如果需要满足条件的拼接则把一行放入结果集</li>
+<li><strong>点号表示法:</strong>  加入两表都有 ID 属性, 为了区分, 写为 A.ID 和 B.ID </li>
+<li>
+<p><strong>使用 WHERE 子句添加条件:</strong>  连接条件进行笛卡尔积的筛选, 使得结果更有意义</p>
+</li>
+<li>
+<p>SQL 示例</p>
+</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="n">course_id</span><span class="w"> </span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="p">,</span><span class="n">teachers</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">instructor</span><span class="p">.</span><span class="n">ID</span><span class="o">=</span><span class="n">teachers</span><span class="p">.</span><span class="n">ID</span>
+</span></code></pre></div>
+<h4 id="_8">自然连接</h4>
+<ul>
+<li>
+<p><strong>特点</strong></p>
+<ul>
+<li><strong>自动匹配:</strong>  不需要写 WHERE 条件</li>
+<li><strong>去重:</strong>  结果中的同名属性只保留一份</li>
+<li><strong>本质:</strong>  笛卡尔积+筛选</li>
+</ul>
+</li>
+<li>
+<p><strong>易错点</strong></p>
+<ul>
+<li>
+<p>强制匹配所有同名属性</p>
+<blockquote>
+<p><strong>一个很经典的例子:</strong></p>
+<p>假设我们要查 "老师名字" 和 "他教的课程标题 (title)":</p>
+<ul>
+<li><code>instructor</code> 表有属性: <code>ID</code>, <code>name</code>, <code>dept_name</code>, <code>salary</code></li>
+<li><code>course</code> 表有属性: <code>course_id</code>, <code>title</code>, <code>dept_name</code>, <code>credits</code></li>
+</ul>
+<p>如果你写: <code>from instructor natural join teaches natural join course</code></p>
+<ul>
+<li><strong>后果:</strong> 系统不仅会匹配 <code>instructor.ID = teaches.ID</code>, 还会因为 <code>instructor</code> 和 <code>course</code> 都有 <code>dept_name</code> 这一列, 而强制要求 <code>instructor.dept_name = course.dept_name</code>.</li>
+<li><strong>逻辑错误:</strong> 这意味着你只能查到 "老师在 <strong>自己所属的系</strong> 教课" 的情况. 如果一个生物系的老师去计算机系教一门课, 这条记录就会被 <strong>漏掉</strong>, 因为他们的 <code>dept_name</code> 不相等.</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>
+<p><strong>使用 join ... using(属性 1,...)</strong></p>
+<blockquote>
+<p>它只会在指定的属性上进行连接, 从而忽略掉其他的同名列</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>SQL 示例</p>
+</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="n">title</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">teachers</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="n">title</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">teachers</span><span class="p">,</span><span class="n">course</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">teachers</span><span class="p">.</span><span class="n">coursel_id</span><span class="o">=</span><span class="n">course_id</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="n">title</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">course_id</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="rename">重命名(Rename)</h4>
+<ul>
+<li>
+<p><strong>特点</strong></p>
+<ul>
+<li>列重命名</li>
+<li>表重命名</li>
+<li>关键字‘AS’可省略<ul>
+<li>注: Oracle 中必须省略</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>处理多表查询的属性歧义</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><strong>假设</strong>: Person 表和 Company 表都有 name 和 address 列. </p>
+<div class="language-text highlight"><pre><span></span><code>&gt; - 解决方案 A(全称法): 在属性前带上表名, 如 Person.name.
+&gt; - 解决方案 B(别名法 - 更常用): 给表起个短别名, 如 Person p, Company c, 然后写 p.name. 这让代码更简洁易读.
+</code></pre></div>
+</blockquote>
+<ul>
+<li>
+<p><strong>关于自连接</strong></p>
+</li>
+<li>
+<p>最经典的用法: 处理层级结构</p>
+<p><img alt="image-20260421105512105" src="../figures/chap3/image-20260421105512105.png" width="50%" /></p>
+</li>
+<li>
+<p>SQL 示例</p>
+</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">name</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">S</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">salary</span><span class="o">&gt;</span><span class="n">S</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">dept_name</span><span class="o">=</span><span class="s1">&#39;Comp.Sci&#39;</span>
+</span></code></pre></div>
+<h4 id="string-operations">字符串操作(String Operations)</h4>
+<ul>
+<li><strong>字符串表示</strong><ul>
+<li>SQL 的字符串要用 单引号 <code>'</code> 包裹. 如果要把单引号看作是普通字符的话, 那就用双引号将其包裹</li>
+</ul>
+</li>
+<li><strong>模糊匹配</strong><ul>
+<li>百分号‘%’: 匹配/代替任意长度的字符串</li>
+<li>下划线‘_’: 匹配/代替一个字符</li>
+</ul>
+</li>
+<li>转义字符<ul>
+<li>如果内容本身带%或者_, 那么可以使用反斜杠 + %的方式书写</li>
+</ul>
+</li>
+<li>大小写敏感<ul>
+<li>大多数标准 SQL 中, 字符串匹配区分大小写, 但是有例外, 比如:  MySQL 和 SQL Server</li>
+</ul>
+</li>
+<li>其他常用字符串函数<ul>
+<li><strong>拼接(Concatenation):</strong>  使用‘||’将两个字符串连接起来. (MySQL 中使用 concat()函数, 写法有区别)</li>
+<li>大小写转换: upper()转大写, lower()转小写</li>
+<li>其他: length()找长度, substring()提取字符串</li>
+</ul>
+</li>
+<li>SQL 示例</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%dar%&#39;</span><span class="w"> </span><span class="c1">-- 即字符串中包含了dar</span>
+</span></code></pre></div>
+<h4 id="ordering">输出排序(Ordering)</h4>
+<ul>
+<li>如果要对结果排序, 则必须使用关键字 <strong><code>ORDER BY</code></strong></li>
+</ul>
+<blockquote>
+<p>注意: 如果不使用 <strong><code>ORDER BY</code></strong>, 输出结果的顺序是 **未定义的</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>升序:</strong>  使用关键字 <strong><code>ASC</code></strong>, 默认情况下都是升序</p>
+</li>
+<li>
+<p><strong>降序:</strong>  使用关键字 <strong><code>DESC</code></strong></p>
+</li>
+<li>
+<p>SQL 示例</p>
+</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">name</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">instructor</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">DESC</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">dept_name</span><span class="p">,</span><span class="n">name</span>
+</span></code></pre></div>
+<h3 id="set-operations">集合运算符(Set Operations)</h3>
+<ul>
+<li>表示<ul>
+<li><strong><code>UNION</code>:</strong>  相当于 or</li>
+<li><strong><code>INTERSECT</code>:</strong>  相当于 and</li>
+<li><strong><code>EXPECT</code>:</strong>  相当于 not</li>
+</ul>
+</li>
+<li><strong>自动去重:</strong>  使用这些运算符会自动去重, 如果需要保留则需要在关键字后面加 <strong>ALL</strong></li>
+<li>数据库系统的实现<ul>
+<li>在 Oracle 中, 可以使用 <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code>, <code>MINUS</code>, 但是没有 <code>INTERSECT ALL</code> 和 <code>MINUS ALL</code></li>
+<li>在 SQL Server 2000 中, 仅支持 <code>UNION</code> 和 <code>UNION ALL</code></li>
+<li>MySQL 不支持 <code>INTERSECT</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="null">空值(Null)</h3>
+<ul>
+<li>
+<p><strong>含义:</strong>  unknown 或者 not exist</p>
+</li>
+<li>
+<p>含 NULL 的运算</p>
+<ul>
+<li>
+<p><strong>比较运算:</strong>  均被判定为 unknown</p>
+<blockquote>
+<p>除了 <code>IS NULL</code> 和 <code>IS NOT NULL</code>, 它们可以用来检测空值和非空值</p>
+</blockquote>
+</li>
+<li>
+<p><strong>逻辑运算:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260421140023263" src="../figures/chap3/image-20260421140023263.png" width="67%" /></p>
+</li>
+<li>
+<p>如果 WHERE 子句 的谓词结果是 unknown, 则结果会被视为 false</p>
+</li>
+</ul>
+<h3 id="aggregate-functions">聚合函数(Aggregate Functions)</h3>
+<p><strong>聚合函数</strong>(aggregate functions) 将一组(集合 / 多重集)值作为输入, 然后返回单个值. SQL 提供以下五种标准的内建聚合函数: </p>
+<ul>
+<li><code>AVG(col)</code>: 平均值</li>
+<li><code>MIN(col)</code>: 最小值</li>
+<li><code>MAX(col)</code>: 最大值</li>
+<li><code>SUM(col)</code>: 求和</li>
+<li><code>COUNT(col)</code>: 计数(值的个数)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

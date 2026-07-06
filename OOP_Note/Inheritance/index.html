@@ -1,0 +1,1660 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Inheritance/">
+      
+      
+        <link rel="prev" href="../Copy_constructor/">
+      
+      
+        <link rel="next" href="../Polymorphism/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>内联函数、对象组合与继承基础 - OOP Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OOP Note" class="md-header__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OOP Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              内联函数、对象组合与继承基础
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OOP Note" class="md-nav__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OOP Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Using_Objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用类与对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    类与封装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Object_Interactive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    构造、清理与对象交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Copy_constructor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拷贝构造、静态成员与命名空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内联函数、对象组合与继承基础
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内联函数、对象组合与继承基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inline-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内联函数（Inline Functions）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内联函数（Inline Functions）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数调用的系统开销（Overhead）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内联的运行机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间与时间的权衡（Tradeoff）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对象组合（Composition）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="对象组合（Composition）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#has-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        组合的概念与 "Has-A" 关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delegation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        构造初始化与任务委托（Delegation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        类继承基础（Inheritance）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="类继承基础（Inheritance）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承的概念与 "Is-A" 关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DoME 多媒体数据库案例批判
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承与访问控制权限
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承中的构造与析构链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无法被继承的类成员
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-hiding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承下的名称隐藏（Name Hiding）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承类型对可访问性的影响（三种继承方式）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-stl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C++ 常用容器与 STL 基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C++ 常用容器与 STL 基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用容器与核心语法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用容器与核心语法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 动态数组 Vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ② 映射表 Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ③ 双向链表 List
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        迭代器（Iterators）与算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-stl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. STL 容器对自定义类型的要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 性能分析与工程实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 常见编译错误与其它数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Polymorphism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Overloaded_Operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运算符重载与类型转换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    异常处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Iterators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    迭代器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    程序设计/架构设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Patterns_Design-Case_Study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设计模式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inline-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内联函数（Inline Functions）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内联函数（Inline Functions）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数调用的系统开销（Overhead）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内联的运行机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间与时间的权衡（Tradeoff）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对象组合（Composition）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="对象组合（Composition）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#has-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        组合的概念与 "Has-A" 关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delegation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        构造初始化与任务委托（Delegation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        类继承基础（Inheritance）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="类继承基础（Inheritance）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承的概念与 "Is-A" 关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DoME 多媒体数据库案例批判
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承与访问控制权限
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承中的构造与析构链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无法被继承的类成员
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-hiding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承下的名称隐藏（Name Hiding）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        继承类型对可访问性的影响（三种继承方式）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-stl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C++ 常用容器与 STL 基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C++ 常用容器与 STL 基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用容器与核心语法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用容器与核心语法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 动态数组 Vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ② 映射表 Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ③ 双向链表 List
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        迭代器（Iterators）与算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-stl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. STL 容器对自定义类型的要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 性能分析与工程实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 常见编译错误与其它数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">内联函数、对象组合与继承基础</h1>
+<p>第六节系统阐述了 C++ 代码复用的三种核心机制：内联函数（Inline）、对象组合（Composition）与类继承（Inheritance）的基本语法、构造/析构链及访问控制规则。</p>
+<hr />
+<h3 id="inline-functions">内联函数（Inline Functions）</h3>
+<h4 id="overhead">函数调用的系统开销（Overhead）</h4>
+<p>在 C++ 中，普通函数调用会带来一定的系统级时间与空间开销：</p>
+<ol>
+<li>参数压栈（Push parameters）。</li>
+<li>保存返回地址（Push return address）。</li>
+<li>执行跳转指令，开辟函数栈帧并执行函数体。</li>
+<li>清理栈帧，恢复调用处上下文（Pop all pushed）。</li>
+</ol>
+<h4 id="_2">内联的运行机制</h4>
+<p><strong>内联函数</strong>在编译时，由编译器将函数体直接在调用处原地展开<u>（类似宏替换）</u>，从而彻底消除函数调用的跳转与压栈开销。</p>
+<ul>
+<li><strong>定义规则</strong>：内联函数的定义/实现必须放在<strong>头文件</strong>中。</li>
+<li><strong>底层原理</strong>：在 C++ 中，多处定义同名普通函数会导致链接器抛出“重定义（Multiple Definition）”错误。但 <code>inline</code> 关键字会向链接器发出特殊指示：“此函数为内联展开，如果在多个 <code>.obj</code> 文件中看到其函数体，请视作同一份，不要报错。”</li>
+</ul>
+<h4 id="tradeoff">空间与时间的权衡（Tradeoff）</h4>
+<ul>
+<li><strong>优点</strong>：消除函数调用开销，提高运行速度。且与宏相比，内联是真正的函数，拥有严格的类型检查（Type Checking）并遵循类作用域规则，非常安全。</li>
+<li><strong>缺点</strong>：会导致<strong>代码膨胀（Code Bloat）</strong>。若内联函数体较长并在多处调用，会显著增大可执行程序（<code>.exe</code>）的体积。</li>
+<li><strong>编译器可能拒绝内联</strong>：<code>inline</code> 只是对编译器的建议，而非强制命令。如果函数体过大（如超过 20 行）、包含循环/复杂的 <code>switch</code> 分支，或者是递归函数，编译器会自动拒绝内联。</li>
+<li><strong>自动内联</strong>：<u>在类声明内部直接编写函数体的成员函数，会被编译器自动视作内联函数。</u></li>
+</ul>
+<hr />
+<h3 id="composition">对象组合（Composition）</h3>
+<h4 id="has-a">组合的概念与 "Has-A" 关系</h4>
+<p>组合是指在新类中嵌入已存在类的对象作为成员变量，以构建更复杂的对象。它表达的是 <strong>"Has-A"（拥有）</strong> 的逻辑关系（例如：汽车拥有引擎与轮胎）。</p>
+<ul>
+<li><strong>包含方式</strong>：<ul>
+<li>完全包含（Fully）：子对象是新类的一部分，生命周期完全受控于新类。</li>
+<li>引用/指针包含（By reference）：新类仅保存子对象的指针或引用，可以实现多个类对象共享同一子对象。</li>
+</ul>
+</li>
+</ul>
+<h4 id="delegation">构造初始化与任务委托（Delegation）</h4>
+<ul>
+<li><strong>嵌入对象初始化</strong>：嵌入的成员对象必须被初始化。如果不在新类的初始化列表中显式指定其构造参数，编译器将自动调用其默认构造函数（无默认构造函数将报错）。</li>
+<li>
+<p><strong>效率对比（初始化 vs 赋值）</strong>：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 1. 效率低下：在构造函数体内赋值（m_saver 已经先经历了一次默认构造）</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">SavingsAccount</span><span class="o">::</span><span class="n">SavingsAccount</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cents</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">m_saver</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">m_balance</span><span class="p">.</span><span class="n">set_cents</span><span class="p">(</span><span class="n">cents</span><span class="p">);</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">// 2. 高效：在初始化列表中直接构造（只经历一次带参构造，更安全且快）</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">SavingsAccount</span><span class="o">::</span><span class="n">SavingsAccount</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cents</span><span class="p">)</span><span class="w"> </span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">m_saver</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">m_balance</span><span class="p">(</span><span class="n">cents</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span></code></pre></div>
+</details>
+</li>
+<li>
+<p><strong>任务委托</strong>：大对象在执行操作时，通常将具体动作委派给其内部的嵌入对象执行（如调用 <code>SavingsAccount::print()</code> 实则在内部调用 <code>m_saver.print()</code>）。</p>
+</li>
+</ul>
+<hr />
+<h3 id="inheritance">类继承基础（Inheritance）</h3>
+<h4 id="is-a">继承的概念与 "Is-A" 关系</h4>
+<p>继承允许子类/派生类（Derived Class）克隆并扩展基类（Base Class）的属性、方法和接口。它表达的是 <strong>"Is-A"（是一个）</strong> 的逻辑关系（例如：学生是一个人；圆形是一个图形）。</p>
+<ul>
+<li><strong>超集（Superset）</strong>：从集合论角度，子类包含了父类的所有属性和行为，并在此基础上进行了扩充，因此<strong>子类是父类的超集</strong>。</li>
+</ul>
+<h4 id="dome">DoME 多媒体数据库案例批判</h4>
+<ul>
+<li>重构前设计：CD 类与 DVD 类作为独立类并排存在，它们有 80% 的字段（标题、时长、备注、got-it）和打印函数完全重复。管理它们的 Database 类中也充斥着双份的容器列表、双份的 <code>add</code> 方法和双份的循环打印。</li>
+<li>带来的问题：代码大量冗余，不易维护，添加新媒体类型（如 VideoGame）时需要对系统进行大改，极易引入 Bug。</li>
+<li>继承重构方案：提取出通用的基类 <code>Item</code>，将公共属性（title, playingTime 等）和 <code>print()</code> 接口移入其中。让 CD 和 DVD 继承 <code>Item</code>，数据库只需维护 <code>ArrayList&lt;Item&gt;</code>，从而完全消除了冗余，提高了系统的可扩展性。</li>
+</ul>
+<h4 id="_3">继承与访问控制权限</h4>
+<p>C++ 提供了三种成员访问控制修饰符：
+1. <code>public</code>：对外部客户端和子类均可见。
+2. <code>protected</code>：对外部客户端隐藏，但<strong>对子类可见</strong>（留给子类的家族遗产）。
+3. <code>private</code>：仅对当前类自身可见，子类亦无法直接访问。</p>
+<div class="admonition tip">
+<p class="admonition-title">Protected 的安全隐患</p>
+<p><code>protected</code> 虽然为子类访问父类数据提供了便利，但它对于所有派生类来说等同于 <code>public</code>，如果派生类行为不端，极易破坏父类的数据封装。因此，在工业界开发中，通常推荐<strong>将成员变量保持为 <code>private</code>，而将成员函数/接口声明为 <code>protected</code></strong>。</p>
+</div>
+<h4 id="_4">继承中的构造与析构链</h4>
+<ul>
+<li><strong>构造顺序</strong>：<strong>基类（父类）总是最先被构造</strong>，然后构造子类的特有部分。</li>
+<li>子类构造函数必须在<strong>初始化列表</strong>中显式调用基类构造函数（如 <code>Manager::Manager(...) : Employee(name, ssn), m_title(title) {}</code>）。若未写明，编译器将尝试调用基类的默认无参构造函数。</li>
+<li><strong>析构顺序</strong>：析构的顺序与构造<strong>完全相反</strong>——先析构子类，再自动析构父类。</li>
+</ul>
+<h4 id="_5">无法被继承的类成员</h4>
+<p>以下类成员<strong>不会</strong>被子类自动继承，必须由子类自行实现或显式调用：</p>
+<ol>
+<li>构造函数与析构函数。</li>
+<li>拷贝构造函数与拷贝赋值运算符（<code>operator=</code>）。</li>
+</ol>
+<hr />
+<h3 id="name-hiding">继承下的名称隐藏（Name Hiding）</h3>
+<ul>
+<li><strong>定义</strong>：如果在派生类中重新定义了与基类同名的成员函数，那么<strong>基类中所有其他同名重载函数在子类作用域中都将变得不可直接访问</strong>。</li>
+<li>
+<p><strong>案例分析</strong>：</p>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Employee</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"> </span><span class="c1">// 重载版本</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">};</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">Manager</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"> </span><span class="c1">// 仅重定义了无参数消息的 print</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">};</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">Manager</span><span class="w"> </span><span class="n">bill</span><span class="p">;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">bill</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Message:&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// ERROR！Employee::print(ostream&amp;, const string&amp;) 已在子类作用域被隐藏</span>
+</span></code></pre></div>
+</details>
+<ul>
+<li><strong>解决隐藏的方法</strong>：在派生类中使用 <code>using Employee::print;</code> 声明，显式将父类同名重载函数引入子类作用域。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="_6">继承类型对可访问性的影响（三种继承方式）</h3>
+<p>派生类在声明继承时（如 <code>class B : public A</code>），不同的继承修饰符会改变基类成员在派生类中的最终访问级别：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">基类成员访问修饰符</th>
+<th style="text-align: left;">公有继承（<code>public</code>）后的访问级别</th>
+<th style="text-align: left;">保护继承（<code>protected</code>）后的访问级别</th>
+<th style="text-align: left;">私有继承（<code>private</code>，默认）后的访问级别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>public</code></strong></td>
+<td style="text-align: left;"><code>public</code> (对外部和子类可见)</td>
+<td style="text-align: left;"><code>protected</code> (仅子类及子孙类可见)</td>
+<td style="text-align: left;"><code>private</code> (仅子类内部可见)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>protected</code></strong></td>
+<td style="text-align: left;"><code>protected</code> (仅子类可见)</td>
+<td style="text-align: left;"><code>protected</code> (仅子类及子孙类可见)</td>
+<td style="text-align: left;"><code>private</code> (仅子类内部可见)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>private</code></strong></td>
+<td style="text-align: left;"><code>hidden</code> (隐藏，子类不可访问)</td>
+<td style="text-align: left;"><code>hidden</code> (隐藏，子类不可访问)</td>
+<td style="text-align: left;"><code>hidden</code> (隐藏，子类不可访问)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="c-stl">C++ 常用容器与 STL 基础</h3>
+<p>在后半部分，专门对 C++ 中的标准模板库（STL）常用容器、迭代器、常见算法及性能陷阱进行了详细讲解。</p>
+<h4 id="_7">常用容器与核心语法</h4>
+<h5 id="1-vector">① 动态数组 Vector</h5>
+<ul>
+<li><strong>概念</strong>：连续内存存储的动态数组，支持随机访问。</li>
+<li><strong>两种常用方式</strong>：<ul>
+<li>预分配（Preallocate）：<code>vector&lt;int&gt; v(100);</code>。提前分好空间，可通过下标直接修改元素。注意：下标访问必须在已分配范围内（如访问 <code>v[200]</code> 会造成越界）。</li>
+<li>尾部动态增长：<code>vector&lt;int&gt; v2;</code>。初始为空，使用 <code>push_back(val)</code> 动态向尾部追加，容器会自动按需扩容。</li>
+</ul>
+</li>
+<li><strong>经典陷阱</strong>：对空 vector 直接通过下标赋值 <code>v[100] = 1;</code> 属于<strong>越界访问（Undefined Behavior）</strong>。必须使用 <code>push_back()</code> 或提前调用 <code>reserve()</code> / <code>resize()</code>。</li>
+</ul>
+<h5 id="2-map">② 映射表 Map</h5>
+<ul>
+<li><strong>概念</strong>：提供键-值对（Key-Value）映射的关联容器，内部基于红黑树实现，键值有序。</li>
+<li>
+<p><strong>语法示例</strong>：</p>
+<details class="example">
+<summary>点击查看 Map 基础使用代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;map&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">price</span><span class="p">[</span><span class="s">&quot;snapple&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.75</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">price</span><span class="p">[</span><span class="s">&quot;coke&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.50</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">price</span><span class="p">[</span><span class="n">item</span><span class="p">];</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">}</span>
+</span></code></pre></div>
+</details>
+</li>
+<li>
+<p><strong>隐式插入陷阱</strong>：在 Map 中，使用 <code>price["bob"]</code> 访问一个<strong>不存在的键</strong>时，Map 会<strong>自动且默默地插入</strong>该键并将其值初始化为默认值（如 <code>0.0</code>）。</p>
+</li>
+<li>
+<p><strong>解决方案</strong>：如果只想查找或验证键是否存在，而不希望改变 Map，应使用 <code>count()</code> 方法进行预检：</p>
+<details class="example">
+<summary>点击查看 Map 安全查询代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">price</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;bob&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">price</span><span class="p">[</span><span class="s">&quot;bob&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<h5 id="3-list">③ 双向链表 List</h5>
+<ul>
+<li><strong>概念</strong>：双向链表，支持在任意位置进行快速插入与删除，不支持随机访问。</li>
+<li><strong>元素删除</strong>：<code>L.erase(++L.begin());</code> 可删除链表中的第二个元素。</li>
+<li>
+<p><strong>高效打印（<code>std::copy</code> 与流迭代器）</strong>：</p>
+<details class="example">
+<summary>点击查看 List 操作及高级打印代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;list&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iterator&gt;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">L</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="n">L</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">// 删除第二个元素（即数字 2）</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">L</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="o">++</span><span class="n">L</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1">// 使用 std::copy 将链表数据直接拷贝到标准输出流 ostream_iterator，每个数字后跟一个逗号分隔符</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">));</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1">// 最终输出: 1,3,4,5,</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<h4 id="iterators">迭代器（Iterators）与算法</h4>
+<ul>
+<li><strong>迭代器的本质</strong>：迭代器可以看作是“智能指针”，是容器与算法之间的桥梁。</li>
+<li><code>L.begin()</code> 返回指向容器中第一个元素的迭代器。</li>
+<li><code>L.end()</code> 返回指向容器<strong>最后一个元素之后</strong>位置的迭代器（哨兵位置，不可解引用）。</li>
+<li>通过 <code>++li</code> 递增指向下一元素；通过 <code>*li</code> 解引用来读取或修改数据。</li>
+<li>
+<p><strong>算法跨容器操作</strong>：STL 算法不直接操作容器，而是接受迭代器范围。例如：</p>
+<details class="example">
+<summary>点击查看跨容器拷贝代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">L</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">V</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// 通过迭代器将 list 里的全部数据复制到 vector 中</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">V</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+</span></code></pre></div>
+</details>
+</li>
+<li>
+<p><strong>迭代器失效陷阱</strong>：擦除元素后，指向被擦除位置的迭代器将失效，此时对其执行 <code>++</code> 或解引用会导致崩溃。</p>
+<details class="example">
+<summary>点击查看迭代器擦除避坑代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// ❌ 错误做法：li 被删除后失效，++li 会导致崩溃</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">L</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">li</span><span class="p">);</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="o">++</span><span class="n">li</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1">// ✅ 正确做法：利用 erase 的返回值（返回指向被删除元素下一个位置的有效迭代器）</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">li</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">li</span><span class="p">);</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<h4 id="3-stl">3. STL 容器对自定义类型的要求</h4>
+<p>如果您想把自定义的 <code>struct</code> 或 <code>class</code> 存入 STL 容器中，必须满足以下条件：</p>
+<ul>
+<li><strong>基础要求</strong>：自定义类型必须支持<strong>默认构造函数</strong>（用于容器内部元素创建）与<strong>赋值运算符 <code>operator=</code></strong>（用于拷贝和移动）。</li>
+<li>
+<p><strong>有序容器要求（如 Map, Set）</strong>：容器需要对元素进行排序，因此自定义类型<strong>必须重载小于运算符 <code>operator&lt;</code></strong>。</p>
+<details class="example">
+<summary>点击查看自定义排序结构体代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">full_name</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">first</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">last</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="c1">// 重载小于运算符</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">full_name</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">first</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">};</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">full_name</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">phonebook</span><span class="p">;</span>
+</span></code></pre></div>
+</details>
+</li>
+</ul>
+<h4 id="4">4. 性能分析与工程实践</h4>
+<ul>
+<li>手写实现 vs STL 容器：<ul>
+<li>案例 1（Deque 双端队列）：虽然手写优化的“循环缓冲区数组”在特定场景下可能比 STL 的 <code>std::deque</code> 快约 40%，但手写会耗费数天时间用于调试和处理复杂的边界问题。在现代开发中，非极端场景通常<strong>不值得</strong>手写。</li>
+<li>案例 2（List 链表）：手写“侵入式链表”（Intrusive List，即指针 <code>next</code> 直接写在结构体内部）通常比 <code>std::list</code> 快 5% 左右，且减少了内存分配次数。但侵入式链表有一个致命缺陷：<strong>一个对象节点同一时间只能被加入到一个链表中</strong>，而 STL 容器允许同一对象存在于多个不同列表中。</li>
+</ul>
+</li>
+<li>判断容器为空的效率陷阱：<ul>
+<li>❌ 错误写法：<code>if (my_list.size() == 0)</code>。在某些老旧的 C++ 编译器和标准库实现中，<code>size()</code> 需要遍历整个链表，时间复杂度是 <span class="arithmatex">\(O(N)\)</span>。</li>
+<li><strong>✅ 正确写法</strong>：<code>if (my_list.empty())</code>。在所有 C++ 标准和所有容器中，<code>empty()</code> 的复杂度始终是固定的 <strong><span class="arithmatex">\(O(1)\)</span></strong>，速度极快。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5">5. 常见编译错误与其它数据结构</h4>
+<ul>
+<li><strong>双层模板嵌套的空格问题（C++11 之前）</strong>：<ul>
+<li>在老版本 C++ 编译器中，<code>vector&lt;vector&lt;int&gt;&gt;</code> 尾部的两个 <code>&gt;</code> 会被词法分析器误当成右移运算符 <code>&gt;&gt;</code> 从而报错。必须写成 <code>vector&lt;vector&lt;int&gt; &gt;</code>（中间加空格）。<em>注：C++11 及以后的标准已彻底修复此问题。</em></li>
+</ul>
+</li>
+<li><strong>其它常用 STL 数据结构</strong>：<ul>
+<li><strong>关联容器</strong>：<code>set</code>（集合）、<code>multiset</code>（允许重复元素的集合）、<code>multimap</code>（允许一个 Key 映射多个 Value）。</li>
+<li><strong>容器适配器</strong>：<code>queue</code>（普通队列）、<code>priority_queue</code>（优先队列，底层为堆）、<code>stack</code>（栈）。</li>
+<li><strong>特殊容器</strong>：<code>deque</code>（双端队列）、<code>bitset</code>（高效二进制位操作位图）、<code>valarray</code>（用于数学向量的高效科学计算数组）。</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

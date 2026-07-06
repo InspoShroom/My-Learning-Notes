@@ -1,0 +1,1771 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.11/">
+      
+      
+        <link rel="prev" href="../chap.10/">
+      
+      
+        <link rel="next" href="../chap.12/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第十一章 查询处理 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十一章 查询处理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询处理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="查询处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询处理的基本步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measures-of-query-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询代价度量 (Measures of Query Cost)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选择操作 (Selection Operation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="选择操作 (Selection Operation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-linear-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1. 线性搜索 (Linear Search / 无索引)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-a4-selections-using-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2 ~ A4. 基于索引的等值选择 (Selections Using Indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-a6-sigma_a-ge-vr-sigma_a-le-vr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A5 ~ A6. 比较操作选择 (\(\sigma_{A \ge V}(r)\) 或 \(\sigma_{A \le V}(r)\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-selections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复杂条件选择 (Complex Selections)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitmap-index-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位图索引扫描 (Bitmap Index Scan)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-sort-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外部排序归并 (External Sort-Merge)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="外部排序归并 (External Sort-Merge)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        算法步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外排代价计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接操作 (Join Operation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="连接操作 (Join Operation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 嵌套循环连接 (Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-block-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 块嵌套循环连接 (Block Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-indexed-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 索引嵌套循环连接 (Indexed Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-merge-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 归并连接 (Merge-Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-hash-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 散列连接 (Hash-Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他算子的物理实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-of-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表达式求值 (Evaluation of Expressions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表达式求值 (Evaluation of Expressions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-materialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 物化法 (Materialization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pipelining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 流水线法 (Pipelining)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-conscious-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存数据库与缓存意识优化 (Cache Conscious Algorithms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询处理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="查询处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询处理的基本步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measures-of-query-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询代价度量 (Measures of Query Cost)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选择操作 (Selection Operation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="选择操作 (Selection Operation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-linear-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1. 线性搜索 (Linear Search / 无索引)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-a4-selections-using-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2 ~ A4. 基于索引的等值选择 (Selections Using Indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-a6-sigma_a-ge-vr-sigma_a-le-vr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A5 ~ A6. 比较操作选择 (\(\sigma_{A \ge V}(r)\) 或 \(\sigma_{A \le V}(r)\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-selections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复杂条件选择 (Complex Selections)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitmap-index-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位图索引扫描 (Bitmap Index Scan)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-sort-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外部排序归并 (External Sort-Merge)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="外部排序归并 (External Sort-Merge)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        算法步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外排代价计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接操作 (Join Operation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="连接操作 (Join Operation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 嵌套循环连接 (Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-block-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 块嵌套循环连接 (Block Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-indexed-nested-loop-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 索引嵌套循环连接 (Indexed Nested-Loop Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-merge-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 归并连接 (Merge-Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-hash-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 散列连接 (Hash-Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他算子的物理实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-of-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        表达式求值 (Evaluation of Expressions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表达式求值 (Evaluation of Expressions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-materialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 物化法 (Materialization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pipelining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 流水线法 (Pipelining)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-conscious-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存数据库与缓存意识优化 (Cache Conscious Algorithms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第十一章 查询处理</h1>
+
+<h2 id="_1">查询处理</h2>
+<p><strong>Chapter 15: Query Processing</strong></p>
+<h3 id="_2">查询处理的基本步骤</h3>
+<blockquote>
+<p>查询处理指的是从数据库中提取数据所涉及的活动。包括 SQL 语句的翻译、优化以及物理执行。</p>
+</blockquote>
+<pre class="mermaid"><code>graph TD
+    SQL[SQL 查询] --&gt; Parse[1. 语法分析与翻译&lt;br&gt;Parser &amp; Translator]
+    Parse --&gt; RA[关系代数表达式]
+    RA --&gt; Optimize[2. 优化器&lt;br&gt;Optimizer]
+    Catalog[(数据库目录信息)] --&gt; Optimize
+    Optimize --&gt; Plan[查询执行计划&lt;br&gt;Execution Plan]
+    Plan --&gt; Engine[3. 执行引擎&lt;br&gt;Execution Engine]
+    Engine --&gt; Results[查询结果]</code></pre>
+<ol>
+<li>
+<p><strong>语法分析与翻译 (Parsing &amp; Translation)</strong></p>
+<ul>
+<li>检查 SQL 的语法正确性，验证关系和属性是否存在。</li>
+<li>将 SQL 查询转换为内部表示——<strong>关系代数表达式</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>优化 (Optimization)</strong></p>
+<ul>
+<li>关系代数表达式通常有多种等价形式（例如选择操作可以下推）。</li>
+<li>每个关系代数算子可以用不同的物理算法实现。</li>
+<li>优化器利用<strong>数据库目录 (Catalog)</strong> 中的统计信息，估算各执行计划的代价，选择<strong>代价最低的执行计划 (Evaluation Plan)</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>执行 (Evaluation)</strong></p>
+<ul>
+<li>执行引擎接受选定的执行计划，执行计划中的具体算法，并返回最终结果。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="measures-of-query-cost">查询代价度量 (Measures of Query Cost)</h3>
+<ul>
+<li><strong>影响时间代价的因素:</strong>  磁盘访问 (Disk access)、CPU 运算、网络通信。</li>
+<li>
+<p><strong>度量指标:</strong>  在共享的数据库系统中，通常以<strong>总资源消耗</strong>来衡量查询性能。在磁盘数据库中，由于磁盘 I/O 速度远慢于内存，因此<strong>磁盘访问次数</strong>是主要的考量指标。</p>
+<ul>
+<li>本章公式中默认<strong>忽略 CPU 代价</strong>（实际系统会考虑）。</li>
+<li>不计入<strong>最终结果写回磁盘的代价</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>磁盘代价计算公式</strong></p>
+</li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = b \cdot t_T + S \cdot t_S\)</span>$</p>
+<div class="language-text highlight"><pre><span></span><code>- $b$: 传输的物理块数 (block transfers)。
+- $S$: 磁头寻道次数 (disk seeks)。
+- $t_T$: 传输一个物理块的时间 (Time to transfer one block)。
+    - 对于 4 KB 大小的块，高性能机械硬盘 $t_T \approx 0.1 \text{ ms}$；固态硬盘 (SSD) $t_T \approx 2 \sim 10 \ \mu\text{s}$。
+- $t_S$: 磁头定位寻道时间 (Time for one seek)。
+    - 机械硬盘 $t_S \approx 4 \text{ ms}$；固态硬盘 (SSD) $t_S \approx 20 \sim 90 \ \mu\text{s}$。
+    - **注:** $1 \text{ ms} = 1000 \ \mu\text{s}$。
+</code></pre></div>
+<ul>
+<li><strong>缓存与估计的简化:</strong>  在实际运行中，部分数据块可能已经缓存在内存缓冲区，从而减少实际 I/O。为简化估计，本章的公式通常采用<strong>最坏情况估计 (Worst-case estimate)</strong>：假设初始内存中无缓存，仅提供算法所需的最小内存大小。</li>
+</ul>
+<hr />
+<h3 id="selection-operation">选择操作 (Selection Operation)</h3>
+<h4 id="a1-linear-search">A1. 线性搜索 (Linear Search / 无索引)</h4>
+<ul>
+<li><strong>逻辑:</strong>  扫描文件中的每一个数据块，检查所有元组是否满足选择条件。</li>
+<li><strong>代价公式:</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = b_r \cdot t_T + 1 \cdot t_S\)</span>$</p>
+<div class="language-text highlight"><pre><span></span><code>- $b_r$: 存储关系 $r$ 的文件物理块总数。
+</code></pre></div>
+<blockquote>
+<p><strong>特殊情况:</strong> 若选择条件是在主键/候选键上进行等值查询，只要在文件中找到了匹配的记录就可以停止扫描，平均查找半个文件：</p>
+<div class="arithmatex">\[\text{Cost} = \left(\frac{b_r}{2}\right) \cdot t_T + 1 \cdot t_S\]</div>
+</blockquote>
+<ul>
+<li><strong>特点:</strong>  线性搜索最为通用，适用于任何选择条件、无序存储文件或无索引的情况。</li>
+</ul>
+<h4 id="a2-a4-selections-using-indices">A2 ~ A4. 基于索引的等值选择 (Selections Using Indices)</h4>
+<blockquote>
+<p>设主索引或辅助索引的 B⁺ 树高度为 <span class="arithmatex">\(h_i\)</span>。</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>A2 (主索引/聚集索引，候选键等值查找):</strong></p>
+<ul>
+<li>逻辑: 树上导航查到叶节点，叶节点指向唯一一条记录。</li>
+<li>代价: 需要访问 <span class="arithmatex">\(h_i\)</span> 个索引节点及 1 个数据块。</li>
+<li>
+<div class="arithmatex">\[\text{Cost} = (h_i + 1) \cdot (t_T + t_S)\]</div>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>A3 (主索引/聚集索引，非候选键等值查找):</strong></p>
+<ul>
+<li>逻辑: 满足条件的记录在物理磁盘上是连续存放的。</li>
+<li>设匹配的记录占据了 <span class="arithmatex">\(b\)</span> 个连续物理块。</li>
+<li>代价: </li>
+</ul>
+<div class="arithmatex">\[\text{Cost} = h_i \cdot (t_T + t_S) + 1 \cdot t_S + b \cdot t_T\]</div>
+</li>
+<li>
+<p><strong>A4 (辅助索引/非聚集索引，等值查找):</strong></p>
+<ul>
+<li><strong>若是唯一候选键:</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = (h_i + 1) \cdot (t_T + t_S)\)</span>$</p>
+<ul>
+<li>
+<p><strong>若非唯一键 (匹配记录数为 <span class="arithmatex">\(n\)</span>):</strong>  由于是辅助索引，这 <span class="arithmatex">\(n\)</span> 条匹配记录在磁盘上通常是<strong>乱序随机存放</strong>的，每一条记录都可能需要一次独立的磁头寻道。</p>
+<ul>
+<li>代价: </li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = (h_i + n) \cdot (t_T + t_S)\)</span>$</p>
+<ul>
+<li><strong>警告:</strong> 当 <span class="arithmatex">\(n\)</span> 很大时，辅助索引等值查询的代价会非常高，甚至远慢于直接进行全表线性扫描。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="a5-a6-sigma_a-ge-vr-sigma_a-le-vr">A5 ~ A6. 比较操作选择 (<span class="arithmatex">\(\sigma_{A \ge V}(r)\)</span> 或 <span class="arithmatex">\(\sigma_{A \le V}(r)\)</span>)</h4>
+<ul>
+<li><strong>A5 (主索引/聚集索引，比较操作):</strong>  由于数据本已按排序存储：<ul>
+<li>对于 <span class="arithmatex">\(A \ge V\)</span>: 用索引找到第一个 <span class="arithmatex">\(\ge V\)</span> 的元组，接着往后顺序扫描。</li>
+<li>对于 <span class="arithmatex">\(A \le V\)</span>: 直接从开头顺序读取，直到遇到第一个 <span class="arithmatex">\(&gt; V\)</span> 即可，完全不需要使用索引。</li>
+</ul>
+</li>
+<li><strong>A6 (辅助索引，比较操作):</strong><ul>
+<li>从辅助索引中找到第一个边界项，然后顺着索引叶节点遍历指针获取记录。</li>
+<li>同样，由于记录在磁盘上无序，每次获取记录都可能消耗 1 次随机寻道。当结果记录数多时，线性文件扫描更便宜。</li>
+</ul>
+</li>
+</ul>
+<h4 id="complex-selections">复杂条件选择 (Complex Selections)</h4>
+<ul>
+<li>
+<p><strong>析取 (Conjunction - 且 <code>AND</code>):</strong> <span class="arithmatex">\(\sigma_{\theta_1 \land \theta_2 \land \dots \land \theta_n}(r)\)</span></p>
+<ul>
+<li><strong>A7 (单索引配合内存过滤):</strong>  选择其中代价最小的一个条件 <span class="arithmatex">\(\theta_i\)</span> 用索引查出数据，其余条件在内存中用 CPU 逐一测试。</li>
+<li><strong>A8 (复合索引):</strong>  如果建立了多属性组合索引 (如组合键)，直接进行多键索引检索。</li>
+<li><strong>A9 (指针交集算法):</strong>  对每个条件分别查索引，取得符合条件的元组 ID/指针集合，在内存中求<strong>交集</strong>，最后再去磁盘读取元组。</li>
+</ul>
+</li>
+<li>
+<p><strong>合取 (Disjunction - 或 <code>OR</code>):</strong> <span class="arithmatex">\(\sigma_{\theta_1 \lor \theta_2 \lor \dots \lor \theta_n}(r)\)</span></p>
+<ul>
+<li><strong>A10 (指针并集算法):</strong>  要求<strong>每一项</strong>都有可用索引。对每个条件查索引得到指针集，求<strong>并集</strong>后去磁盘读元组。</li>
+<li><strong>注意:</strong> 只要有一项没有索引，就必须退化为线性全表扫描。</li>
+</ul>
+</li>
+<li>
+<p><strong>非 (Negation - 非 <code>NOT</code>):</strong> <span class="arithmatex">\(\sigma_{\neg \theta}(r)\)</span></p>
+<ul>
+<li>默认采用线性扫描。如果在很少的数据满足条件的情况下，且 <span class="arithmatex">\(\theta\)</span> 上有索引，可以先用索引找出符合 <span class="arithmatex">\(\theta\)</span> 的元组，再在内存中做求补。</li>
+</ul>
+</li>
+</ul>
+<h4 id="bitmap-index-scan">位图索引扫描 (Bitmap Index Scan)</h4>
+<blockquote>
+<p>常见于 PostgreSQL。为了解决辅助索引扫描中“不知道有多少匹配项”以及“磁头频繁随机跳转”的问题。</p>
+</blockquote>
+<ul>
+<li><strong>实现机制:</strong><ol>
+<li>先通过辅助索引扫描获取匹配记录的物理页面 ID。</li>
+<li>在内存中建立一个位图 (每一位对应数据文件中的一个 Page)。将包含匹配记录的 Page 对应的位设为 1。</li>
+<li>顺序地从磁盘读取位图为 1 的物理页面，在内存中过滤具体行。</li>
+</ol>
+</li>
+<li><strong>效果:</strong>  匹配行数少时表现接近索引扫描，多时接近顺序扫描，规避了辅助索引扫描的最坏情况。</li>
+</ul>
+<hr />
+<h3 id="external-sort-merge">外部排序归并 (External Sort-Merge)</h3>
+<blockquote>
+<p>当关系大小超出内存容量时，无法使用快速排序等内存排序方法，必须依靠外排。</p>
+</blockquote>
+<h4 id="_3">算法步骤</h4>
+<ol>
+<li>
+<p><strong>创建有序段 (Create Sorted Runs):</strong></p>
+<ul>
+<li>设内存容量为 <span class="arithmatex">\(M\)</span> 块。</li>
+<li>循环读取关系 <span class="arithmatex">\(r\)</span> 的 <span class="arithmatex">\(M\)</span> 块数据到内存中，对其在内存中排序，写回到一个临时有序段文件 <span class="arithmatex">\(R_i\)</span>。</li>
+<li>最终产生 <span class="arithmatex">\(N = \lceil b_r / M \rceil\)</span> 个有序段文件。</li>
+</ul>
+</li>
+<li>
+<p><strong>归并段 (Merge Runs):</strong></p>
+<ul>
+<li>设 <span class="arithmatex">\(N &lt; M\)</span>。把 <span class="arithmatex">\(N\)</span> 个有序段的第一个块同时读入内存缓冲页中，预留 1 块作为输出缓冲。</li>
+<li>比较各输入块中的第一条记录，选出最小者输出到输出缓冲。</li>
+<li>当某输入块被读完，立即从其对应的有序段文件中读取下一块；当输出缓冲满了，将其写回磁盘。</li>
+<li>如此重复直到全部归并完毕，这被称为 <strong><span class="arithmatex">\(N\)</span> 路归并 (N-way Merge)</strong>。</li>
+</ul>
+</li>
+</ol>
+<pre class="mermaid"><code>graph TD
+    Data[大文件关系 r] --&gt; RunGen[段生成阶段: 每次读 M 块在内存排序]
+    RunGen --&gt; R1[有序段 R1]
+    RunGen --&gt; R2[有序段 R2]
+    RunGen --&gt; Rn[有序段 Rn]
+    R1 --&gt; Merge[归并阶段: M-1 路合并]
+    R2 --&gt; Merge
+    Rn --&gt; Merge
+    Merge --&gt; Sorted[最终有序文件]</code></pre>
+<ul>
+<li><strong>多趟归并 (Multiple Passes):</strong> <ul>
+<li>若有序段的个数 <span class="arithmatex">\(N \ge M\)</span>（内存装不下所有有序段的缓冲页），则需要分多趟进行归并。</li>
+<li>在每一趟中，每次读入 <span class="arithmatex">\(M-1\)</span> 个段进行归并，产生一个更大的有序段。</li>
+<li>每一趟将有序段的数量减少为原来的 <span class="arithmatex">\(\frac{1}{M-1}\)</span>。如此重复多趟，直到最后只剩下一个有序段。</li>
+</ul>
+</li>
+</ul>
+<h4 id="_4">外排代价计算</h4>
+<ul>
+<li>设每次磁盘 I/O 读写 <span class="arithmatex">\(b_b\)</span> 个块以提高性能。</li>
+<li>此时单次归并的通道数为 <span class="arithmatex">\(\lfloor M / b_b \rfloor - 1\)</span>。</li>
+<li><strong>总归并趟数 (Merge Passes):</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Passes} = \left\lceil \log_{\lfloor M / b_b \rfloor - 1} (b_r / M) \right\rceil\)</span>$</p>
+<ul>
+<li><strong>块传输次数 (Block Transfers):</strong><ul>
+<li>每次读写都需要 <span class="arithmatex">\(2 b_r\)</span> 的开销（除了最后一趟不需要重新写回磁盘）。</li>
+</ul>
+</li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{transfer}} = b_r \cdot \left( 2 \cdot \text{Passes} + 1 \right)\)</span>$</p>
+<ul>
+<li><strong>磁头寻道次数 (Seeks):</strong><ul>
+<li>在有序段创建阶段：读 <span class="arithmatex">\(b_r/M\)</span> 次，写同样次数，共 <span class="arithmatex">\(2 \lceil b_r / M \rceil\)</span> 次寻道。</li>
+<li>在归并阶段：每一趟归并中，每读写 <span class="arithmatex">\(b_b\)</span> 块需要一次寻道。</li>
+</ul>
+</li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{seek}} = 2 \lceil b_r / M \rceil + \lceil b_r / b_b \rceil \cdot (2 \cdot \text{Passes} - 1)\)</span>$</p>
+<hr />
+<h3 id="join-operation">连接操作 (Join Operation)</h3>
+<blockquote>
+<p>介绍常见的几种 Join 实现算法。以两表关联为例：
+- 关系 <span class="arithmatex">\(r\)</span> (Outer relation，外表)，块数 <span class="arithmatex">\(b_r\)</span>，记录数 <span class="arithmatex">\(n_r\)</span>。
+- 关系 <span class="arithmatex">\(s\)</span> (Inner relation，内表)，块数 <span class="arithmatex">\(b_s\)</span>，记录数 <span class="arithmatex">\(n_s\)</span>。</p>
+</blockquote>
+<h4 id="1-nested-loop-join">1. 嵌套循环连接 (Nested-Loop Join)</h4>
+<ul>
+<li><strong>逻辑:</strong>  双重 <code>for</code> 循环。对 <span class="arithmatex">\(r\)</span> 的每一个元组 <span class="arithmatex">\(t_r\)</span>，遍历一遍 <span class="arithmatex">\(s\)</span> 中的所有元组 <span class="arithmatex">\(t_s\)</span>，测试连接条件。</li>
+<li><strong>最坏情况代价 (内存只能容纳每张表 1 个物理块):</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = (n_r \cdot b_s + b_r) \cdot t_T + (n_r + b_r) \cdot t_S\)</span>$</p>
+<ul>
+<li><strong>缺点:</strong>  开销极大，相当于把内表 <span class="arithmatex">\(s\)</span> 扫描了 <span class="arithmatex">\(n_r\)</span> 遍。</li>
+</ul>
+<h4 id="2-block-nested-loop-join">2. 块嵌套循环连接 (Block Nested-Loop Join)</h4>
+<ul>
+<li><strong>逻辑:</strong>  按块进行嵌套配对。对于外表 <span class="arithmatex">\(r\)</span> 的每个物理块 <span class="arithmatex">\(B_r\)</span>，读取内表 <span class="arithmatex">\(s\)</span> 的每个块 <span class="arithmatex">\(B_s\)</span>，再在内存中作元组级配对。</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">Br</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="n">Bs</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="n">tr</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Br</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="n">ts</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Bs</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="n">satisfy</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span><span class="w"> </span><span class="n">ts</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">end</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="k">end</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="k">end</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">end</span>
+</span></code></pre></div>
+<ul>
+<li><strong>最坏情况代价 (内存只能容纳两表各 1 块时):</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{transfer}} = b_r \cdot b_s + b_r\)</span>$</p>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{seek}} = 2 b_r\)</span>$</p>
+<ul>
+<li>
+<p><strong>改进: 利用 <span class="arithmatex">\(M-2\)</span> 块缓冲外表</strong></p>
+<ul>
+<li>如果内存容量为 <span class="arithmatex">\(M\)</span> 块，用 <span class="arithmatex">\(M-2\)</span> 块作为缓冲载入外表 <span class="arithmatex">\(r\)</span> 的数据，剩下的 1 块缓冲内表 <span class="arithmatex">\(s\)</span>，1 块做输出缓冲。</li>
+<li>代价公式改善为：</li>
+</ul>
+<div class="arithmatex">\[\text{Cost}_{\text{transfer}} = \lceil b_r / (M - 2) \rceil \cdot b_s + b_r\]</div>
+<div class="arithmatex">\[\text{Cost}_{\text{seek}} = 2 \lceil b_r / (M - 2) \rceil\]</div>
+</li>
+</ul>
+<h4 id="3-indexed-nested-loop-join">3. 索引嵌套循环连接 (Indexed Nested-Loop Join)</h4>
+<ul>
+<li><strong>适用前提:</strong>  等值或自然连接，且<strong>内层关系</strong>的连接属性上有可用索引。</li>
+<li><strong>逻辑:</strong>  对物理外表 <span class="arithmatex">\(r\)</span> 里的每一个元组 <span class="arithmatex">\(t_r\)</span>，利用内表 <span class="arithmatex">\(s\)</span> 的索引快速检索与之匹配的 <span class="arithmatex">\(s\)</span> 元组，无需全表扫描 <span class="arithmatex">\(s\)</span>。</li>
+<li><strong>代价公式:</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost} = b_r \cdot t_T + n_r \cdot c\)</span>$</p>
+<div class="language-text highlight"><pre><span></span><code>- $c$: 在内表 $s$ 上单次利用索引检索匹配项的 I/O 开销。
+</code></pre></div>
+<ul>
+<li><strong>注意:</strong>  如果两表都有索引，应选<strong>记录数较少</strong>的表作为外表。</li>
+</ul>
+<h4 id="4-merge-join">4. 归并连接 (Merge-Join)</h4>
+<ul>
+<li><strong>适用前提:</strong>  仅适用于等值连接或自然连接。</li>
+<li><strong>逻辑:</strong>  如果两表未在连接属性上排序，则先分别排序。排序后，使用双指针方法进行合并。对相同连接属性值的多个重复元组，进行笛卡尔积式匹配。</li>
+<li><strong>代价公式 (假定数据已排序且可用内存充足):</strong></li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{transfer}} = b_r + b_s\)</span>$</p>
+<p>$<span class="arithmatex">\(\text{Cost}_{\text{seek}} = \lceil b_r / b_b \rceil + \lceil b_s / b_b \rceil\)</span>$</p>
+<ul>
+<li><strong>混合归并连接 (Hybrid Merge-Join):</strong>  若一个表已排序，另一个表在此属性上有辅助 B⁺ 树索引。则可以将已排序表与 B⁺ 树的叶子结点指针归并，按地址排序后再去提取未排序表的物理记录。</li>
+</ul>
+<h4 id="5-hash-join">5. 散列连接 (Hash-Join)</h4>
+<ul>
+<li><strong>适用前提:</strong>  仅适用于等值连接或自然连接。</li>
+<li><strong>步骤:</strong><ol>
+<li><strong>分区阶段 (Partition Phase):</strong> 用散列函数 <span class="arithmatex">\(h\)</span> 对 <span class="arithmatex">\(r\)</span> 和 <span class="arithmatex">\(s\)</span> 进行划分。落入相同散列值的元组必定在对应的分区中 (例如 <span class="arithmatex">\(r_i\)</span> 只与 <span class="arithmatex">\(s_i\)</span> 进行配对)。</li>
+<li><strong>建立与探测阶段 (Build &amp; Probe):</strong> 对每个分区 <span class="arithmatex">\(i\)</span>：<ul>
+<li>将 <span class="arithmatex">\(s_i\)</span> (称为 Build Input) 装入内存，用<strong>另一个</strong>散列函数构建内存哈希索引。</li>
+<li>逐条读入 <span class="arithmatex">\(r_i\)</span> (称为 Probe Input) 的元组，探测内存哈希索引以查找匹配元组并输出。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<pre class="mermaid"><code>graph TD
+    R[关系 r] --&gt;|Hash h| Rp[划分分区 r0...rn]
+    S[关系 s] --&gt;|Hash h| Sp[划分分区 s0...sn]
+    Sp --&gt;|小分区 si 装入内存| Build[构建内存哈希索引]
+    Rp --&gt;|大分区 ri 逐条输入| Probe[探测哈希匹配]
+    Build --&gt; Probe --&gt; Res[输出关联元组]</code></pre>
+<ul>
+<li><strong>哈希溢出与倾斜 (Skew):</strong>  如果分区 <span class="arithmatex">\(s_i\)</span> 的大小超出了内存容量，即发生了下溢。可以通过使用不同的哈希函数进行<strong>递归分区 (Recursive Partitioning)</strong>。</li>
+<li><strong>混合哈希连接 (Hybrid Hash-Join):</strong>  当内存足够大时，将第 0 个分区直接缓存在内存中。在对 <span class="arithmatex">\(r\)</span> 划分分区的同时，就可以直接探测 <span class="arithmatex">\(s_0\)</span> 并输出结果，省去了将 <span class="arithmatex">\(r_0\)</span> 和 <span class="arithmatex">\(s_0\)</span> 写回再读取磁盘的代价。</li>
+</ul>
+<hr />
+<h3 id="_5">其他算子的物理实现</h3>
+<ul>
+<li><strong>重复值消除 (Duplicate Elimination):</strong><ul>
+<li><strong>排序实现:</strong>  排序后重复元组彼此相邻，保留第一个，删除其余。优化：在外部归并的 Runs 生成和段归并时就可以直接进行去重。</li>
+<li><strong>哈希实现:</strong>  将元组哈希到不同的桶中，在桶内进行局部去重。</li>
+</ul>
+</li>
+<li><strong>投影 (Projection):</strong><ul>
+<li>先对每一个元组提取所需的字段，然后再执行上述去重算法。</li>
+</ul>
+</li>
+<li><strong>聚集操作 (Aggregation):</strong><ul>
+<li>类似于去重。通过排序或哈希将元组按 GroupBy 属性聚集在一起，然后计算聚合函数。</li>
+<li><strong>局部聚集优化:</strong>  在归并段的合并阶段计算局部结果 (如对 COUNT 做加和，对 MIN/MAX 取最值)，以减少写盘开销。</li>
+</ul>
+</li>
+<li><strong>集合操作 (并、交、差):</strong><ul>
+<li>可以基于已排序文件的归并方式，或基于哈希分区的映射匹配方式实现。</li>
+</ul>
+</li>
+<li><strong>倒排索引与关键字查询 (Keyword Queries):</strong><ul>
+<li>用于文本检索。每个关键字映射到一个有序的文档 ID 列表 (Inverted list)。查询多个关键字时，对各自的倒排列表取交集。倒排列表中通常还会记录词频 (TF) 和逆文档频率 (IDF) 以支持排序。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="evaluation-of-expressions">表达式求值 (Evaluation of Expressions)</h3>
+<h4 id="1-materialization">1. 物化法 (Materialization)</h4>
+<ul>
+<li><strong>原理:</strong>  从树的最底层开始，每次计算一个完整的操作，将得到的临时中间关系<strong>写入磁盘 (物化)</strong>。上一层算子需要时，再从磁盘中读取。</li>
+<li><strong>优点:</strong>  实现极其简单，始终适用。</li>
+<li><strong>缺点:</strong>  频繁读写磁盘，I/O 开销非常高。<ul>
+<li><strong>优化:</strong> <strong>双缓冲 (Double Buffering)</strong>。一个输出缓冲区满了往磁盘写入时，另一个缓冲区继续接受输出。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-pipelining">2. 流水线法 (Pipelining)</h4>
+<ul>
+<li><strong>原理:</strong>  多个操作同时运行。下层算子产生的元组直接传递给上层算子，无需写入磁盘暂存。</li>
+<li><strong>优点:</strong>  省去了中间结果写盘与读盘的巨大开销。</li>
+<li><strong>限制:</strong>  并非所有算法都支持流水线。例如，排序 (Sort) 和哈希连接 (Hash Join) 中的 Build 阶段是<strong>阻塞算子 (Blocking Operations)</strong>——在完全消费掉全部输入前，无法输出任何结果。</li>
+<li><strong>执行方式:</strong><ul>
+<li><strong>需求驱动 (Demand-driven / Pull 模型):</strong>  上层算子发出 <code>next()</code> 请求，下层算子计算并返回。每个算子实现为<strong>迭代器 (Iterator)</strong>：</li>
+<li><code>open()</code>: 初始化状态指针。</li>
+<li><code>next()</code>: 产出并返回下一个元组，在多次调用间必须维护迭代状态。</li>
+<li><code>close()</code>: 释放资源。</li>
+<li><strong>生产者驱动 (Producer-driven / Push 模型):</strong>  下层算子主动计算并向父算子推送数据，算子之间使用队列缓冲区进行限流。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="cache-conscious-algorithms">内存数据库与缓存意识优化 (Cache Conscious Algorithms)</h3>
+<blockquote>
+<p>现代系统大量数据常驻内存，瓶颈从磁盘 I/O 转移为内存与 CPU 缓存 (L3 Cache) 的数据吞吐。</p>
+</blockquote>
+<ul>
+<li><strong>即时编译 (JIT Compilation):</strong>  将查询树编译为机器码 (利用 LLVM 或 JVM Bytecode)，消除执行引擎解释 SQL 元数据、表达式逻辑的 CPU 开销。</li>
+<li><strong>列式存储 (Column-oriented Storage):</strong>  将相同属性的列连续存储，有助于执行 CPU 的向量化指令 (SIMD)。</li>
+<li><strong>缓存感知排序:</strong>  在生成有序 Runs 时，保证段的大小适配 L3 Cache（通常几 MB），避免段内排序时发生 Cache Miss。</li>
+<li><strong>缓存感知哈希连接:</strong>  对分区进行细分 (Subpartition)，使得子分区与其哈希索引的大小之和能够完整装入 L3 Cache，从而在 Probe 阶段大幅消除 Cache 缺失带来的 CPU 等待。</li>
+<li><strong>紧凑存储:</strong>  将频繁一起访问的属性在物理元组中紧邻排列，提高单条 Cache Line 的数据利用率。</li>
+<li><strong>多线程并发:</strong>  当一个线程因为 Cache Miss 产生数据 Stall 时，允许其他并发执行的算子线程继续处理。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

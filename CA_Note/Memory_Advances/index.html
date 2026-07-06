@@ -1,0 +1,1343 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Memory_Advances/">
+      
+      
+        <link rel="prev" href="../Memory_Basics/">
+      
+      
+        <link rel="next" href="../ILP_Static/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第五章 存储层次结构高级篇 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第五章 存储层次结构高级篇
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十种高级 Cache 优化技术
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十种高级 Cache 优化技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 降低命中时间
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 增加 Cache 带宽
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 降低不命中开销
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 降低不命中率
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 并行降低不命中率与开销
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        虚拟内存安全保护与虚拟机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="虚拟内存安全保护与虚拟机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 体系结构保护的四大任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 虚拟机与虚拟机监控器 (VMM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理器存储示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="处理器存储示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-arm-cortex-a53-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ARM Cortex-A53 实例 (以 32 位物理地址寻址为例)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-intel-core-i7-6700" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Intel Core i7-6700 实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十种高级 Cache 优化技术
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十种高级 Cache 优化技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 降低命中时间
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 增加 Cache 带宽
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 降低不命中开销
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 降低不命中率
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 并行降低不命中率与开销
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        虚拟内存安全保护与虚拟机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="虚拟内存安全保护与虚拟机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 体系结构保护的四大任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 虚拟机与虚拟机监控器 (VMM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理器存储示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="处理器存储示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-arm-cortex-a53-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ARM Cortex-A53 实例 (以 32 位物理地址寻址为例)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-intel-core-i7-6700" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Intel Core i7-6700 实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第五章 存储层次结构高级篇</h1>
+<p>本章深入讨论了十种高级 Cache 优化技术、虚拟内存的安全与保护任务、虚拟机监控器（VMM）的特权要求，并结合真实硬件实例（ARM Cortex-A53 与 Intel Core i7-6700）进行了详细的地址映射与性能开销分析。</p>
+<hr />
+<h2 id="cache">十种高级 Cache 优化技术</h2>
+<p>高级优化技术从Hit Time、Cache Bandwidth、Miss Penalty、Miss Rate、以及 Parallelism 等维度对存储系统进行全方位提升：</p>
+<h3 id="1">1. 降低命中时间</h3>
+<ul>
+<li><strong>Opt #1: 小且简单的第一级 Cache（Small and Simple First-Level Caches）</strong>：<ul>
+<li>痛点：直觉上我们希望 L1 Cache 越大、相联度越高越好。但是大和复杂会导致更复杂的逻辑门电路，一级拖慢 CPU 主频。</li>
+<li>做法：采用小容量、直接映射或低相联度结构，可支持更高的处理器主频并降低功耗。直接映射下，一个虚拟地址只可能存在于 Cache 的一个固定位置，CPU 查找时不需要做多路选择，甚至可以在 Tag 比较时将数据先传给 CPU，如果 Tag 比对成功，数据立刻就能用。</li>
+</ul>
+</li>
+<li><strong>Opt #2: 路预测（Way Prediction）</strong>：<ul>
+<li>痛点：组相联的命中率确实高，但是它每次需要将一个 Set 中的所有 Way 的 Tag 都读出来比对一遍，不仅慢还很耗电。</li>
+<li>做法：在组相联 Cache 中，为每个 Set 增加预测位来预测下一次访问命中的 Way。查询时仅需进行单次 Tag 比较，若命中则只需 1 周期；若预测失败，则在下一周期检索其余 Way。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-cache">2. 增加 Cache 带宽</h3>
+<ul>
+<li><strong>Opt #3: 多 Bank 缓存与流水线访存（Multibanked Caches &amp; Pipelined Access）</strong>：<ul>
+<li>痛点：单端口或单一 Bank 的 Cache 每次只能处理一个访存请求。当多个处理器核心并发读取数据，或者单核处理器单周期发射多条 Load/Store 指令时，单一的物理 Cache 端口会发生严重的结构冲突，成为吞吐的重大瓶颈。</li>
+<li>做法：将 Cache 划分为多个物理上独立、可并行工作的 Bank。利用顺序交叉编址（如将地址低位作为 Bank 索引）把连续的物理块映射到不同的 Bank，如果多路读写刚好打在不同的 Bank 就能并发执行。同时，将 Cache 的寻址与比对步骤进行流水线化，允许在当前请求未完成前就输入下一个请求，大幅提升吞吐率（但流水线级数加深会略微增加 Load 的命中延迟）。</li>
+</ul>
+</li>
+<li><strong>Opt #4: 非阻塞 Cache（Nonblocking Caches）</strong>：<ul>
+<li>痛点：在乱序执行处理器中，一旦发生一次 Cache Miss，如果整个 Cache 都暂停等待数据从主存读回，那后续本来可以在 Cache 中命中的读写指令都会被无辜挂起，导致乱序执行引擎完全无法发挥隐藏访存延迟的作用。</li>
+<li>做法：采用非阻塞设计的 Cache，在发生 Miss 时不阻塞后续的内存访问。允许继续处理命中的请求（Hit under Miss）甚至其他的 Miss 请求（Miss under Miss）。硬件上利用<strong>不命中状态寄存器（Miss Status Holding Register, MSHR）</strong>记录每一个未完成的 Miss 物理地址、目标寄存器等状态，待主存数据返回后进行广播 and 唤醒。</li>
+<li><strong>性能量化对比</strong>：以 32 KiB 缓存且 L2 不命中惩罚为 10 周期为例，支持 1 个不命中下命中（Hit under 1 Miss）在 SPECInt 编译集上能带来约 9% 的性能提升，在 SPECFp 上能带来 12.5% 的提升，其效果与直接将 Cache 从直接映射升级为“2路组相联”大致相当，且非阻塞机制的硬件开销通常更具性价比。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3">3. 降低不命中开销</h3>
+<ul>
+<li><strong>Opt #5: 关键字优先与尽早启动（Critical Word First &amp; Early Restart）</strong>：<ul>
+<li>痛点：发生 Cache Miss 时，CPU 需要将一整个内存块（例如 64 字节）全部调入 Cache。如果 CPU 只是急需该块中的某一个字（4 字节），却必须傻傻地等待整个 64 字节块全部传输完毕才恢复执行，会产生极长的无谓等待。</li>
+<li>做法：<ul>
+<li><strong>关键字优先（Critical Word First）</strong>：主存先发送发生 Miss 的那个特定数据字（Critical Word），一旦该字到达立即送回 CPU 并使其恢复执行，其余数据字则在后台静默填充到 Cache。</li>
+<li><strong>尽早启动（Early Restart）</strong>：数据依然按正常物理顺序读入，但在传输过程中，只要 CPU 请求的那个字一到达，CPU 就立即重启执行，余下数据在后台继续传输填充。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Opt #6: 合并写缓冲区（Merging Write Buffer）</strong>：<ul>
+<li>痛点：CPU 使用写回（Write-Back）策略时，写缓冲区（Write Buffer）负责暂存要写回主存的脏数据。如果每一次写入都直接占用总线去写主存，会产生高昂的总线抢占开销，且如果写入的数据地址离得很近，还会引发频繁的主存写冲突。</li>
+<li>做法：在写缓冲区中增加合并逻辑。当写入一个新项时，先检查缓冲区中是否已有相同块或相邻地址的写请求。如果地址连续或相邻，则将多次小位宽的写入合并为一个整块大字写操作再送往总线（例如将 4 个独立的单字写合并为一个双字或块写），显著减少主存写入次数，节省总线带宽。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4">4. 降低不命中率</h3>
+<ul>
+<li><strong>Opt #7: 编译器优化（Compiler Optimizations）</strong>：<ul>
+<li>痛点：硬件 Cache 的容量和结构是固定的，如果程序员写出的循环访存顺序很乱，就会导致 Cache Line 刚被加载进来就被置换出去，产生大量 Capacity Miss。直接扩大硬件 Cache 成本太高。</li>
+<li>做法：在不改动硬件的前提下，利用编译器在编译期对指令和数据排布进行逻辑重构：<ul>
+<li><strong>循环嵌套交换（Loop Interchange）</strong>：交换循环的内外嵌套层数，使程序在多维数组上的循环遍历方向（如按行还是按列）与数组在内存中的物理排布（行优先/列优先）方向完全吻合，最大化利用空间局部性。</li>
+<li><strong>分块技术（Blocking/Tiling）</strong>：对于矩阵乘法等大量重复读写数据的场景，将大矩阵切分成一个个尺寸极小、能完全塞入 L1 Cache 的子块（Block/Tile），在子块被置换出 Cache 之前完成全部运算，最大化挖掘时间局部性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="5">5. 并行降低不命中率与开销</h3>
+<ul>
+<li><strong>Opt #8: 硬件预取（Hardware Prefetching）</strong>：<ul>
+<li>痛点：Cache 总是处于“被动响应”状态（发生了 Miss 才去调入），这就意味着每次首次访问都会发生 Compulsory Miss / Cold Miss。</li>
+<li>做法：在 CPU 内置独立的硬件预取器。预取器通过监测 CPU 访存流的地址步长规律，在数据被实际需要之前，提前向主存发起预取请求，将数据和指令拉入 Cache 或专属的流缓冲器（Stream Buffer）中。当 CPU 真正发起读取时，数据已在缓存中，直接实现零延迟命中。</li>
+</ul>
+</li>
+<li>
+<p><strong>Opt #9: 编译器预取（Compiler Prefetching）</strong>：</p>
+<ul>
+<li>痛点：硬件预取器只能根据历史规律进行推测，对于高度复杂的非线性访存，硬件预取可能会误判导致预取了大量垃圾数据，反而挤占了有用的 Cache 行。</li>
+<li>做法：由编译器在编译期分析源码中的访存轨迹。在预计会发生 Miss 的 Load 指令前几十个周期（例如前几轮循环），在指令流中显式插入非阻塞式的<strong>预取指令（Prefetch）</strong>。当执行到预取指令时，数据在后台静默加载到 Cache，当真正的 Load 指令执行时直接命中，消除流水线等待开销。包括寄存器预取（Prefetch to Register）与缓存预取（Prefetch to Cache）。</li>
+</ul>
+<details class="example">
+<summary>编译器预取不命中次数与时钟周期计算</summary>
+<p><strong>已知条件</strong>：
+分析以下嵌套循环（包含 3 <span class="arithmatex">\(\times\)</span> 100 = 300 次迭代）：
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+</span></code></pre></div>
+* 块大小（Block Size）为 16 字节，采用写回（Write-Back）策略。
+* 数组 <code>a</code> 和 <code>b</code> 的元素大小为 8 字节（双精度浮点数 <span class="arithmatex">\(\implies\)</span> 每个 Cache 块包含 <span class="arithmatex">\(16 / 8 = 2\)</span> 个元素）。
+* 发生 Cache Miss 的开销为 100 周期。在无 Cache Miss 时，单次迭代执行基准时间为 7 周期。</p>
+<p><strong>1. 无预取（No Prefetching）情况下的不命中与周期分析</strong>：
+* <strong>数组 <code>a</code> 不命中</strong>：<code>a</code> 为 <span class="arithmatex">\(3 \times 100\)</span> 的二维数组。由于按行连续写入且每块容纳 2 个元素，因此每行产生 <span class="arithmatex">\(100 / 2 = 50\)</span> 次不命中。
+  * <code>a</code> 总不命中数 = <span class="arithmatex">\(3 \text{ 行} \times 50 \text{ 次/行} = 150\)</span> 次。
+* <strong>数组 <code>b</code> 不命中</strong>：访问项为 <code>b[j][0]</code> 与 <code>b[j+1][0]</code>。由于是行优先存储，相邻行的第 0 列元素在内存中物理地址相差 100 个元素（800字节），它们绝对位于不同的 Cache 块中。每一次迭代对 <code>b[j][0]</code> 的访问都会发生不命中。
+  * <code>b</code> 的不命中包含 <code>b[0][0] ~ b[100][0]</code>，总不命中数 = <span class="arithmatex">\(101\)</span> 次。
+* <strong>总计</strong>：<span class="arithmatex">\(150 + 101 = 251\)</span> 次不命中。
+* <strong>总执行时间</strong>：<span class="arithmatex">\(300 \text{ 迭代} \times 7 \text{ 周期/迭代} + 251 \text{ Misses} \times 100 \text{ 周期/Miss} = 27200 \text{ 周期}\)</span>。</p>
+<p><strong>2. 引入编译器预取（Compiler Prefetching）优化后的分析</strong>：
+* 编译器可以通过提前预取 7 轮迭代后的数据来消除大部分 Miss 延迟（因为 <span class="arithmatex">\(100\text{ 周期 Miss 延迟} / 7\text{ 周期迭代} \approx 14\)</span> 拍，考虑到预取指令自身的开销，每次迭代增加到约 8~9 周期，提前 7~8 轮预取刚好可以完全掩盖访存延迟）。
+* 优化后，仅在循环最开始的启动阶段（Startup Phase）发生无法避免的强制性不命中：
+  * 数组 <code>a</code> 在每一行前 8 轮产生 <span class="arithmatex">\(8 / 2 = 4\)</span> 次不命中：
+    * <span class="arithmatex">\(i=0\)</span> 行前段 Miss 数 = 4。
+    * <span class="arithmatex">\(i=1\)</span> 行前段 Miss 数 = 4。
+    * <span class="arithmatex">\(i=2\)</span> 行前段 Miss 数 = 4。
+  * 数组 <code>b</code> 的前 7 轮发生不命中：<code>b[0][0] ~ b[6][0]</code> 共 7 次 Miss。
+  * <strong>总计不命中数</strong>：<span class="arithmatex">\(4 + 4 + 4 + 7 = 19\)</span> 次。
+* <strong>优化后总执行时间</strong>：
+  * 启动预取循环（9拍/代）：<span class="arithmatex">\(3 \times 8 \text{ 周期} = 24 \text{ 周期}\)</span>。
+  * 主循环（8拍/代，增加了预取指令开销）：<span class="arithmatex">\(3 \times 92 \text{ 周期} = 276 \text{ 周期}\)</span>。
+  * 累加 19 次 Miss 惩罚，总时间缩短为大约 <strong>4400 周期</strong>。
+  * <strong>结论</strong>：预取成功避免了 232 次不命中，整体性能提升了近 6 倍。</p>
+</details>
+<ul>
+<li><strong>Opt #10: HBM 用作 L4 Cache（HBM as L4 Cache）</strong>：</li>
+<li>痛点：虽然利用 HBM（高带宽内存, High Bandwidth Memory）作大容量 L4 Cache 可以极大缓解访存开销，但由于 L4容量巨大（数兆至数吉字节），如果按照传统方式存储 Tag，Tag 本身就会占用极大的主存空间。而如果把 Tag 放在 HBM 内部，每次访问 L4 就必须执行两次访存（一次读 Tag，一次读 Data），这会使命中时间（Hit Time）直接翻倍。</li>
+<li>做法：<ul>
+<li><strong>同行优化（Same-row Optimization）</strong>：利用 DRAM 读写的空间局部性，将 Tag 与其对应的 Data 强行存放在 HBM 的同一物理行（Row）中。第一次读取 Tag 时，数据所在行会缓存到 Row Buffer 中，第二次读 Data 时直接在 Row Buffer 命中，免去了耗时的行打开步骤。</li>
+<li><strong>合金缓存（Alloy Cache）</strong>：设计为直接映射结构，将 Tag 和 Data 打包融合成单次突发传输结构。访问 L4 时只需单次 HBM 存取即可同时获取 Tag 与 Data 进行比对，如果 Tag 比对失败（Miss），则利用特殊的存储预测器直接预判并快速重定向，从而大幅节省读取延迟。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="_2">虚拟内存安全保护与虚拟机</h2>
+<p>虚拟内存的核心价值之一在于为操作系统提供精细的权限隔离与安全隔离。</p>
+<h3 id="1_1">1. 体系结构保护的四大任务</h3>
+<p>为了保障多用户多进程环境的安全，硬件设计必须提供以下四个保护支撑：</p>
+<ol>
+<li><strong>多特权模式</strong>：处理器至少支持两种运行模式，即用户模式（User Mode）与系统内核模式（Supervisor/Kernel Mode）。</li>
+<li><strong>状态保护</strong>：提供一部分用户程序只能读取、无法写入的特权处理器状态（如页表基址寄存器）。</li>
+<li><strong>特权级切换</strong>：提供用户态安全进入内核态（如系统调用 <code>syscall</code>/<code>trap</code>）以及退回用户态的硬件转换机制。</li>
+<li><strong>地址段隔离</strong>：提供内存段隔离机制，使得在进程上下文切换（Context Switch）时，无需将整片内存置换到磁盘即可完成内存权限保护。</li>
+</ol>
+<h3 id="2-vmm">2. 虚拟机与虚拟机监控器 (VMM)</h3>
+<p>虚拟机（Virtual Machine, VM）提供了一个比完整操作系统代码库小得多的保护基（Code Base），极大地提高了数据中心的隔离性与安全性：</p>
+<ul>
+<li><strong>虚拟机监控器（Virtual Machine Monitor, VMM / Hypervisor）</strong>：控制系统硬件资源，负责为客户机操作系统（Guest OS）提供与物理机几乎完全一致的运行环境，同时保持极低的主机（Host）性能开销。</li>
+<li><strong>VMM 的特权指令要求</strong>：VMM 必须在系统特权模式下运行。客户机执行的任何试图修改系统资源（如修改页表、分配物理内存）的指令都必须是<strong>特权指令（Privileged Instructions）</strong>，能在用户态下触发 Trap 捕获，交由 VMM 进行模拟和托管。</li>
+</ul>
+<hr />
+<h2 id="_3">处理器存储示例</h2>
+<h3 id="1-arm-cortex-a53-32">1. ARM Cortex-A53 实例 (以 32 位物理地址寻址为例)</h3>
+<p>Cortex-A53 是一款支持双发射的顺序处理器，采用两级 TLB 和两级 Cache：</p>
+<ul>
+<li><strong>基本参数</strong>：<ul>
+<li>Page Size：64 KiB (<span class="arithmatex">\(2^{16}\)</span> B) <span class="arithmatex">\(\implies\)</span> <strong>Page Offset 为 16 位</strong>，虚拟页号（VPN）为 16 位。</li>
+<li>L1 指令 Cache：32 KiB，2路组相联，块大小 64B。</li>
+<li>L1 数据 Cache：32 KiB，4路组相联，块大小 64B。</li>
+<li>L2 Cache：1 MiB，16路组相联，块大小 64B。</li>
+</ul>
+</li>
+<li><strong>地址字段位数推导</strong>：<ul>
+<li><strong>L1 I-Cache (VIPT)</strong>：<ul>
+<li>组数 = <span class="arithmatex">\(32\text{ KiB} / (64\text{B} \times 2) = 256\)</span> 组 <span class="arithmatex">\(\implies\)</span> <strong>Index 为 8 位</strong>，Block Offset 为 6 位。</li>
+<li>Index + Block Offset = <span class="arithmatex">\(8 + 6 = 14\)</span> 位。由于 <span class="arithmatex">\(14 \le 16\)</span>（Page Offset），故 VIPT 完全不会产生别名冲突，物理 <strong>Tag 为 18 位</strong>（<span class="arithmatex">\(32 - 8 - 6 = 18\)</span>）。</li>
+</ul>
+</li>
+<li><strong>L1 D-Cache (VIPT)</strong>：<ul>
+<li>组数 = <span class="arithmatex">\(32\text{ KiB} / (64\text{B} \times 4) = 128\)</span> 组 <span class="arithmatex">\(\implies\)</span> <strong>Index 为 7 位</strong>，Block Offset 为 6 位。</li>
+<li>Index + Block Offset = <span class="arithmatex">\(7 + 6 = 13\)</span> 位 <span class="arithmatex">\(\le 16\)</span> 位（Page Offset），无别名冲突，物理 <strong>Tag 为 19 位</strong>。  </li>
+</ul>
+</li>
+<li><strong>L2 Cache (PIPT)</strong>：<ul>
+<li>组数 = <span class="arithmatex">\(1\text{ MiB} / (64\text{B} \times 16) = 1024\)</span> 组 <span class="arithmatex">\(\implies\)</span> <strong>Index 为 10 位</strong>，Block Offset 为 6 位。</li>
+<li>L2 直接使用物理地址索引，其物理 <strong>Tag 为 16 位</strong>（<span class="arithmatex">\(32 - 10 - 6 = 16\)</span>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-intel-core-i7-6700">2. Intel Core i7-6700 实例</h3>
+<p>Core i7-6700 是一款四核乱序执行的动态调度处理器：</p>
+<ul>
+<li><strong>寻址范围</strong>：支持 48 位虚拟地址和 36 位物理地址（最大支持 36 GiB 物理内存）。</li>
+<li><strong>Cache 机制</strong>：L1 缓存采用 VIPT 以最小化命中延迟；L2 和 L3 缓存采用 PIPT。</li>
+<li><strong>侵略性硬件预取</strong>：为了最大程度避免长延迟导致流水线暂停，Core i7 部署了极其激进的预取策略。其 L2 的预取请求次数达到了实际 L2 需求读取次数的 1.5 倍之多。虽然这导致预取请求自身的不命中率高达 58%（并带来了可观的带宽和功耗惩罚），但成功用预取 Miss 代替了 CPU 需求访问 Miss，大幅缓解了流水线挂起。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1421 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.13/">
+      
+      
+        <link rel="prev" href="../chap.12/">
+      
+      
+        <link rel="next" href="../chap.14/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第十三章 事务管理 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十三章 事务管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事务管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务的基本概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事务的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACID 特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务状态及转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调度 (Schedules)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflict-serializability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突可串行化 (Conflict Serializability)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="冲突可串行化 (Conflict Serializability)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conflicting-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突指令 (Conflicting Instructions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突等价与可串行化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#precedence-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突可串行化测试：优先图 (Precedence Graph)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-serializability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        视图可串行化 (View Serializability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可恢复性与级联回滚
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可恢复性与级联回滚">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recoverable-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可恢复调度 (Recoverable Schedule)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cascadeless-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无级联调度 (Cascadeless Schedule)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anomalies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        并发控制中典型的读写异常 (Anomalies)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL-92 中的隔离级别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 事务控制语法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事务管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务的基本概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事务的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACID 特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事务状态及转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调度 (Schedules)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflict-serializability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突可串行化 (Conflict Serializability)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="冲突可串行化 (Conflict Serializability)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conflicting-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突指令 (Conflicting Instructions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突等价与可串行化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#precedence-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冲突可串行化测试：优先图 (Precedence Graph)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-serializability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        视图可串行化 (View Serializability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可恢复性与级联回滚
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可恢复性与级联回滚">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recoverable-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可恢复调度 (Recoverable Schedule)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cascadeless-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无级联调度 (Cascadeless Schedule)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anomalies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        并发控制中典型的读写异常 (Anomalies)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL-92 中的隔离级别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 事务控制语法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第十三章 事务管理</h1>
+
+<h2 id="_1">事务管理</h2>
+<p><strong>Chapter 17: Transactions</strong></p>
+<h3 id="_2">事务的基本概念</h3>
+<blockquote>
+<p><strong>事务 (Transaction):</strong> 是数据库中执行的一个或多个 SQL 语句的逻辑工作单元，它是恢复和并发控制的基本单位。</p>
+</blockquote>
+<h4 id="acid">ACID 特性</h4>
+<ul>
+<li><strong>原子性 (Atomicity):</strong>  事务中的所有操作要么全部成功执行，要么全部不执行（All-or-nothing）。</li>
+<li><strong>一致性 (Consistency):</strong>  事务执行前后，数据库必须保持一致性状态。</li>
+<li><strong>隔离性 (Isolation):</strong>  并发执行的事务之间互相隔离，一个事务的中间状态对其他事务不可见。</li>
+<li><strong>持久性 (Durability):</strong>  一旦事务提交，它对数据库的修改就是永久性的，即使发生系统崩溃也不会丢失。</li>
+</ul>
+<hr />
+<h3 id="_3">事务状态及转换</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Active: 开始
+    Active --&gt; PartiallyCommitted: 执行完最后一条语句
+    PartiallyCommitted --&gt; Committed: 提交成功 (日志落盘)
+    Active --&gt; Failed: 发现逻辑错误/被系统中断
+    PartiallyCommitted --&gt; Failed: 无法将缓冲数据写出到磁盘
+    Failed --&gt; Aborted: 回滚数据库，恢复到执行前状态
+    Aborted --&gt; [*]: 重启或终止事务
+    Committed --&gt; [*]: 事务完成</code></pre>
+<ul>
+<li><strong>Active (活动状态):</strong>  事务开始并正在执行过程中的状态。</li>
+<li><strong>Partially Committed (部分提交状态):</strong>  事务执行完最后一条 SQL，但数据尚未全部安全写出到磁盘。</li>
+<li><strong>Failed (失败状态):</strong>  正常执行无法继续或无法达到部分提交时进入的状态。</li>
+<li><strong>Aborted (中止状态):</strong>  事务已被撤销 (Rollback)，数据库恢复至事务开始前的状态。</li>
+<li><strong>Committed (提交状态):</strong>  事务所有更新全部成功写入磁盘，数据库进入新一致状态。</li>
+</ul>
+<hr />
+<h3 id="schedules">调度 (Schedules)</h3>
+<ul>
+<li><strong>定义:</strong>  一组并发执行事务的指令在时间上的执行序列。必须保留每个事务内部指令的相对顺序。</li>
+<li><strong>串行调度 (Serial Schedule):</strong>  不同的事务依次完整地执行（不交叉）。</li>
+<li><strong>并发调度 (Concurrent Schedule):</strong>  多个事务的指令交叉执行。</li>
+<li><strong>可串行化 (Serializability):</strong>  如果一个并发调度的最终执行结果与某个串行调度的结果完全等价，则称该调度是<strong>可串行化</strong>的。</li>
+</ul>
+<hr />
+<h3 id="conflict-serializability">冲突可串行化 (Conflict Serializability)</h3>
+<h4 id="conflicting-instructions">冲突指令 (Conflicting Instructions)</h4>
+<blockquote>
+<p>两个不同事务中的指令 <span class="arithmatex">\(I_i\)</span> 和 <span class="arithmatex">\(I_j\)</span> 访问<strong>同一个数据项</strong>，且其中<strong>至少有一个是写操作 (write)</strong> 时，它们之间就会发生冲突。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>事务 <span class="arithmatex">\(T_i\)</span> 指令</th>
+<th>事务 <span class="arithmatex">\(T_j\)</span> 指令</th>
+<th>是否冲突</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read(Q)</code></td>
+<td><code>read(Q)</code></td>
+<td>❌ 不冲突</td>
+</tr>
+<tr>
+<td><code>read(Q)</code></td>
+<td><code>write(Q)</code></td>
+<td>✅ 冲突 (读-写冲突)</td>
+</tr>
+<tr>
+<td><code>write(Q)</code></td>
+<td><code>read(Q)</code></td>
+<td>✅ 冲突 (写-读冲突)</td>
+</tr>
+<tr>
+<td><code>write(Q)</code></td>
+<td><code>write(Q)</code></td>
+<td>✅ 冲突 (写-写冲突)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">冲突等价与可串行化</h4>
+<ul>
+<li><strong>冲突等价 (Conflict Equivalent):</strong>  如果调度 <span class="arithmatex">\(S\)</span> 可以通过一系列<strong>交换非冲突相邻指令</strong>的步骤变换为调度 <span class="arithmatex">\(S'\)</span>，则称两者冲突等价。</li>
+<li><strong>冲突可串行化 (Conflict Serializable):</strong>  如果调度 <span class="arithmatex">\(S\)</span> 冲突等价于某一个<strong>串行调度</strong>，则称 <span class="arithmatex">\(S\)</span> 是冲突可串行化的。</li>
+</ul>
+<h4 id="precedence-graph">冲突可串行化测试：优先图 (Precedence Graph)</h4>
+<ul>
+<li><strong>优先图/前驱图:</strong>  顶点为事务，如果 <span class="arithmatex">\(T_i\)</span> 与 <span class="arithmatex">\(T_j\)</span> 冲突且 <span class="arithmatex">\(T_i\)</span> 先访问该冲突数据项，则画一条有向边 <span class="arithmatex">\(T_i \rightarrow T_j\)</span>。</li>
+<li><strong>判定定理:</strong></li>
+</ul>
+<blockquote>
+<p>一个并发调度是冲突可串行化的，<strong>当且仅当它的优先图是无环的 (Acyclic)</strong>。</p>
+</blockquote>
+<ul>
+<li><strong>串行顺序获取:</strong>  通过对优先图进行<strong>拓扑排序 (Topological Sorting)</strong>，可以得到等价的串行事务执行顺序。</li>
+</ul>
+<hr />
+<h3 id="view-serializability">视图可串行化 (View Serializability)</h3>
+<blockquote>
+<p>视图等价不关心指令交换，只关注读写依赖和最终状态。</p>
+</blockquote>
+<ul>
+<li><strong>视图等价 (View Equivalent) 的三条件 (对于每一数据项 <span class="arithmatex">\(Q\)</span>):</strong></li>
+<li><strong>初始读一致:</strong> <span class="arithmatex">\(S\)</span> 中 <span class="arithmatex">\(T_i\)</span> 读了 <span class="arithmatex">\(Q\)</span> 的初始值，则 <span class="arithmatex">\(S'\)</span> 中 <span class="arithmatex">\(T_i\)</span> 也必须读 <span class="arithmatex">\(Q\)</span> 的初始值。</li>
+<li><strong>读-写依赖一致:</strong> <span class="arithmatex">\(S\)</span> 中 <span class="arithmatex">\(T_i\)</span> 读的值是由 <span class="arithmatex">\(T_j\)</span> 的写操作产生的，则 <span class="arithmatex">\(S'\)</span> 中 <span class="arithmatex">\(T_i\)</span> 也必须读 <span class="arithmatex">\(T_j\)</span> 写入的值。</li>
+<li><strong>最终写一致:</strong> <span class="arithmatex">\(S\)</span> 中最后对 <span class="arithmatex">\(Q\)</span> 执行写入的事务，在 <span class="arithmatex">\(S'\)</span> 中也必须是最后一个对 <span class="arithmatex">\(Q\)</span> 执行写入的事务。</li>
+<li><strong>盲写 (Blind Write):</strong>  事务不执行 <code>read(Q)</code>，直接执行 <code>write(Q)</code>。</li>
+<li><strong>重要结论:</strong>  任何视图可串行化但非冲突可串行化的调度中，<strong>必定存在盲写操作</strong>。</li>
+<li><strong>判定问题:</strong>  判定一个调度是否为视图可串行化是 <strong>NP-Complete</strong> 问题，实际中难以高效检测。</li>
+<li><strong>关系:</strong>  冲突可串行化 <span class="arithmatex">\(\subset\)</span> 视图可串行化。</li>
+</ul>
+<hr />
+<h3 id="_5">可恢复性与级联回滚</h3>
+<h4 id="recoverable-schedule">可恢复调度 (Recoverable Schedule)</h4>
+<ul>
+<li><strong>要求:</strong>  若事务 <span class="arithmatex">\(T_j\)</span> 读取了被 <span class="arithmatex">\(T_i\)</span> 写入的数据，则 <strong><span class="arithmatex">\(T_i\)</span> 的提交操作必须发生在 <span class="arithmatex">\(T_j\)</span> 的提交操作之前</strong>。</li>
+<li><strong>反例:</strong>  若 <span class="arithmatex">\(T_j\)</span> 读了 <span class="arithmatex">\(T_i\)</span> 未提交的修改并直接 commit，随后 <span class="arithmatex">\(T_i\)</span> 发生 abort 回滚，由于 <span class="arithmatex">\(T_j\)</span> 已提交，其读取的脏数据无法撤回，破坏了数据库的持久性/一致性。</li>
+</ul>
+<h4 id="cascadeless-schedule">无级联调度 (Cascadeless Schedule)</h4>
+<ul>
+<li><strong>级联回滚 (Cascading Rollback):</strong>  一个事务的失败导致一系列并发未提交事务不得不一起回滚，浪费大量计算资源。</li>
+<li><strong>无级联要求:</strong>  若 <span class="arithmatex">\(T_j\)</span> 需读取 <span class="arithmatex">\(T_i\)</span> 写入的数据，<span class="arithmatex">\(T_i\)</span> 的提交操作必须发生在 <strong><span class="arithmatex">\(T_j\)</span> 读取数据操作之前</strong>。</li>
+<li><strong>关系:</strong>  无级联调度 <span class="arithmatex">\(\subset\)</span> 可恢复调度。数据库应当限制只产生无级联调度。</li>
+</ul>
+<hr />
+<h3 id="anomalies">并发控制中典型的读写异常 (Anomalies)</h3>
+<table>
+<thead>
+<tr>
+<th>异常名称</th>
+<th>冲突类型</th>
+<th>场景描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>不可重复读 (Unrepeatable Read)</strong></td>
+<td><strong>读-写冲突</strong></td>
+<td><span class="arithmatex">\(T_1\)</span> 读取 <span class="arithmatex">\(A\)</span>，随后 <span class="arithmatex">\(T_2\)</span> 修改 <span class="arithmatex">\(A\)</span> 并提交，<span class="arithmatex">\(T_1\)</span> 再次读取 <span class="arithmatex">\(A\)</span> 时得到不同结果。</td>
+</tr>
+<tr>
+<td><strong>脏读 (Dirty Read)</strong></td>
+<td><strong>写-读冲突</strong></td>
+<td><span class="arithmatex">\(T_1\)</span> 写入 <span class="arithmatex">\(A\)</span>，<span class="arithmatex">\(T_2\)</span> 读取了 <span class="arithmatex">\(A\)</span> 并提交，随后 <span class="arithmatex">\(T_1\)</span> 回滚。<span class="arithmatex">\(T_2\)</span> 读取了本不存在的脏数据。</td>
+</tr>
+<tr>
+<td><strong>不一致读 (Inconsistent Read / 读部分提交)</strong></td>
+<td><strong>写-读冲突</strong></td>
+<td><span class="arithmatex">\(T_2\)</span> 读 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span>，<span class="arithmatex">\(T_1\)</span> 修改 <span class="arithmatex">\(A\)</span> 然后修改 <span class="arithmatex">\(B\)</span> 并提交；<span class="arithmatex">\(T_2\)</span> 在 <span class="arithmatex">\(T_1\)</span> 修改 <span class="arithmatex">\(A\)</span> 前读了 <span class="arithmatex">\(A\)</span>，但在 <span class="arithmatex">\(T_1\)</span> 修改 <span class="arithmatex">\(B\)</span> 后读了 <span class="arithmatex">\(B\)</span>，读到了不一致的中间状态。</td>
+</tr>
+<tr>
+<td><strong>部分丢失更新 (Partially-lost Update)</strong></td>
+<td><strong>写-写冲突</strong></td>
+<td><span class="arithmatex">\(T_1\)</span> 写入 <span class="arithmatex">\(A\)</span> 并接着写入 <span class="arithmatex">\(B\)</span>；中间 <span class="arithmatex">\(T_2\)</span> 写入了 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span>。最终结果被两者的写入交叉覆盖，破坏了串行一致性。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sql-92">SQL-92 中的隔离级别</h3>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读 (Dirty Read)</th>
+<th>不可重复读 (Unrepeatable Read)</th>
+<th>幻读 (Phantom Read)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read Uncommitted (读未提交)</strong></td>
+<td>允许</td>
+<td>允许</td>
+<td>允许</td>
+</tr>
+<tr>
+<td><strong>Read Committed (读已提交)</strong></td>
+<td>❌ 禁止</td>
+<td>允许</td>
+<td>允许</td>
+</tr>
+<tr>
+<td><strong>Repeatable Read (可重复读)</strong></td>
+<td>❌ 禁止</td>
+<td>❌ 禁止</td>
+<td>允许</td>
+</tr>
+<tr>
+<td><strong>Serializable (可串行化)</strong></td>
+<td>❌ 禁止</td>
+<td>❌ 禁止</td>
+<td>❌ 禁止</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>幻影现象 (Phantom Phenomenon):</strong></li>
+<li><strong>场景:</strong> <span class="arithmatex">\(T_1\)</span> 读取 <code>salary &gt; 90000</code> 的记录并加上行级锁，随后 <span class="arithmatex">\(T_2\)</span> 插入了一条新的 <code>salary = 100000</code> 的记录并提交。当 <span class="arithmatex">\(T_1\)</span> 再次以相同条件查询时，会发现多了一条记录。</li>
+<li><strong>解决:</strong> 普通的行级锁无法解决幻读问题，需要引入<strong>谓词锁 (Predicate Locking)</strong>。</li>
+<li><strong>快照隔离 (Snapshot Isolation - SI):</strong>  许多主流数据库默认采用快照隔离（如 Oracle、PG 9.0 之前），它读取的是事务开始时的版本快照。</li>
+</ul>
+<hr />
+<h3 id="sql">SQL 事务控制语法</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- 开启并设置当前事务隔离级别</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">SET</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="w"> </span><span class="k">ISOLATION</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="k">SERIALIZABLE</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- 提交事务并隐式开启下一个新事务</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">COMMIT</span><span class="w"> </span><span class="k">WORK</span><span class="p">;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- 撤销/中止当前事务</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">ROLLBACK</span><span class="w"> </span><span class="k">WORK</span><span class="p">;</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>JDBC 事务控制:</strong> <code>connection.setAutoCommit(false)</code> 可关闭语句级隐式提交，使用 <code>connection.commit()</code> 和 <code>rollback()</code> 进行显式事务边界管理。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

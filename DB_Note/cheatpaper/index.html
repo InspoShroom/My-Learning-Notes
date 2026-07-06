@@ -1,0 +1,1379 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/cheatpaper/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>数据库系统期末考试双面 A4 纸 Cheat Sheet 与备考指南 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a4-cheat-sheet" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据库系统期末考试双面 A4 纸 Cheat Sheet 与备考指南
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：考试特征与笔记定位清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第一部分：考试特征与笔记定位清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 题型分布与分值占比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 核心考点与笔记对应位置索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a4-cheat-sheet_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：A4 纸 Cheat Sheet 抄写蓝本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二部分：A4 纸 Cheat Sheet 抄写蓝本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 关系代数等价性与优化 (Relational Algebra)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-foreign-key-cascade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 级联更新与删除 (Foreign Key Cascade)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-functional-dependencies-3nf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 正则覆盖与保持依赖分解 (Functional Dependencies &amp; 3NF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-b-b-tree-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. B⁺-树扇出、高度与检索开销 (B⁺-Tree Index)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-external-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 外部归并排序开销计算 (External Merge Sort)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-hash-join-hash-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hash Join 内存与代价计算 (Hash Join)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-query-size-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 查询大小估算 (Query Size Estimation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-2pl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 并发控制与两阶段锁协议 (2PL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-aries-aries-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. ARIES 恢复算法 (ARIES Recovery)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-lsm-tree-buffer-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 写优化索引 (LSM-Tree &amp; Buffer Tree)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="a4-cheat-sheet">数据库系统期末考试双面 A4 纸 Cheat Sheet 与备考指南</h1>
+<p><strong>Database Systems Final Exam - Double-Sided A4 Cheat Sheet &amp; Preparation Guide</strong></p>
+<p>本文件结合 2021-2022 与 2022-2023 历年卷特点，对期末考试的题型分布、高频考点、常考公式及经典例题进行了系统性梳理。</p>
+<hr />
+<h2 id="_1">第一部分：考试特征与笔记定位清单</h2>
+<p><strong>Exam Structure &amp; Notes Mapping</strong></p>
+<h3 id="1">1. 题型分布与分值占比</h3>
+<p>期末考试卷面总分 100 分，结构极其稳定，题型分布如下：
+* <strong>一、 单项选择题 (Multiple Choice Questions)</strong>：
+  * 占比：24% ~ 36%（21-22 为 12题<em>3分=36分；22-23 为 8题</em>3分=24分）
+* <strong>二、 判断题 (True/False Questions)</strong>：
+  * 占比：0% ~ 12%（21-22 无判断题；22-23 为 6题<em>2分=12分）
+* </em><em>三、 SQL 语句编写 (SQL Queries)</em><em>：
+  * 占比：16%（4道题，每题4分）
+* </em><em>四、 数据库设计与模式转换 (Database Design - ERD &amp; Schemas)</em><em>：
+  * 占比：16%（画 ER 图 8-10分，转关系模式并标注主外键 6-8分）
+* </em><em>五、 并发控制与 2PL (Concurrency Control &amp; 2PL)</em><em>：
+  * 占比：8%（判断冲突可串行性、画优先图、论证 2PL 协议）
+* </em><em>六、 ARIES 恢复算法 (ARIES Recovery)</em><em>：
+  * 占比：12%（分析阶段脏页表、Redo起点、Undo补偿日志CLR生成、恢复后数据值）
+* </em><em>七、 写优化索引结构 (Write-Optimized Indexes)</em>*：
+  * 占比：12%（21-22 考 LSM-Tree 读写开销估算；22-23 考 Buffer Tree 插入与分裂过程）</p>
+<hr />
+<h3 id="2">2. 核心考点与笔记对应位置索引</h3>
+<p>在复习和对照 <a href="file:///e:/mkdocs/DB_Note/docs/">DB_Note</a> 笔记时，各高频考点对应的章节如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">高频考点</th>
+<th style="text-align: left;">对应笔记章节</th>
+<th style="text-align: left;">核心考点说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>关系代数等价性</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.2.md">chap.2.md</a> &amp; <a href="file:///e:/mkdocs/DB_Note/docs/chap.12.md">chap.12.md</a></td>
+<td style="text-align: left;">自连接重命名后的自然连接错误、选择/投影下推规则</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>外键级联约束</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.3.md">chap.3.md</a> &amp; <a href="file:///e:/mkdocs/DB_Note/docs/chap.4.md">chap.4.md</a></td>
+<td style="text-align: left;"><code>ON DELETE/UPDATE CASCADE</code> 级联删除与更新的行数计算</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>正则覆盖与分解</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.7.md">chap.7.md</a></td>
+<td style="text-align: left;">求 Canonical Cover、无损连接性与保持依赖性判断</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>行存 vs. 列存</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.9.md">chap.9.md</a></td>
+<td style="text-align: left;">列存储的优势（IO减小、压缩率高、不适合频繁更新删除）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B⁺ 树高度与开销</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.10.md">chap.10.md</a></td>
+<td style="text-align: left;">节点扇出 <span class="arithmatex">\(n\)</span> 的计算、B⁺ 树最坏高度 <span class="arithmatex">\(h\)</span>、范围查询与等值查询 I/O 次数</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>外部归并排序开销</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.11.md">chap.11.md</a></td>
+<td style="text-align: left;">外部归并排序（External Merge Sort）在不同缓冲区分配下的 Seeks 和 Transfers</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>哈希连接内存计算</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.11.md">chap.11.md</a></td>
+<td style="text-align: left;">Hash Join 避免递归分块的最小内存 <span class="arithmatex">\(M &gt; \sqrt{b_r}\)</span>、I/O 代价公式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>选择/连接大小估算</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.12.md">chap.12.md</a></td>
+<td style="text-align: left;">选择度 <span class="arithmatex">\(s\)</span>、等值/非等值选择大小估算、自然连接大小估计</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SQL 复杂查询</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.3.md">chap.3.md</a> &amp; <a href="file:///e:/mkdocs/DB_Note/docs/chap.4.md">chap.4.md</a></td>
+<td style="text-align: left;"><code>GROUP BY</code>、<code>HAVING</code>、自连接、<code>LEFT JOIN</code>、<code>AVG/COUNT/MAX</code> 复合嵌套</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ER 图与模式转换</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.6.md">chap.6.md</a></td>
+<td style="text-align: left;">强/弱实体集表示、多对多/一对多联系、转化关系模式时主外键确立</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>并发优先图与 2PL</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.14.md">chap.14.md</a></td>
+<td style="text-align: left;">冲突操作判定、画 Precedence Graph、2PL 是可串行化的充分非必要条件</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ARIES 恢复过程</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.15.md">chap.15.md</a></td>
+<td style="text-align: left;">脏页表 RecLSN、RedoLSN 确定、Undo 逆序回滚与 CLR 日志写入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>写优化索引</strong></td>
+<td style="text-align: left;"><a href="file:///e:/mkdocs/DB_Note/docs/chap.10.md">chap.10.md</a></td>
+<td style="text-align: left;">LSM-Tree 层次合并代价与检索代价；Buffer Tree 插入、Overflow、下放与分裂</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-">---</h2>
+<h2 id="a4-cheat-sheet_1">第二部分：A4 纸 Cheat Sheet 抄写蓝本</h2>
+<blockquote>
+<p><strong>提示</strong>：本部分排版紧凑，公式与例题并重，建议双面打印或手抄至考场 A4 纸。</p>
+</blockquote>
+<h3 id="1-relational-algebra">1. 关系代数等价性与优化 (Relational Algebra)</h3>
+<ul>
+<li><strong>核心公式/规则：</strong></li>
+<li>选择交换率：<span class="arithmatex">\(\sigma_{\theta_1}(\sigma_{\theta_2}(E)) \equiv \sigma_{\theta_2}(\sigma_{\theta_1}(E))\)</span></li>
+<li>选择与笛卡尔积结合（转为连接）：<span class="arithmatex">\(\sigma_{\theta}(E_1 \times E_2) \equiv E_1 \bowtie_{\theta} E_2\)</span></li>
+<li>选择下推（分配率）：<span class="arithmatex">\(\sigma_{\theta}(E_1 \cup E_2) \equiv \sigma_{\theta}(E_1) \cup \sigma_{\theta}(E_2)\)</span></li>
+<li><strong>注意</strong>：两个表进行自连接重命名为 <span class="arithmatex">\(s_1\)</span> 和 <span class="arithmatex">\(s_2\)</span> 时，由于其所有属性名称不同（如 <span class="arithmatex">\(s_1.id\)</span> 与 <span class="arithmatex">\(s_2.id\)</span>），<strong>不能</strong>直接使用自然连接 <span class="arithmatex">\(\bowtie\)</span>，必须显式使用条件连接 <span class="arithmatex">\(\bowtie_{s_1.dept\_name=s_2.dept\_name}\)</span>。直接自然连接 <span class="arithmatex">\(\rho_{s_1}(E) \bowtie \rho_{s_2}(E)\)</span> 等同于无共同属性的笛卡尔积。</li>
+<li><strong>经典例题 (21-22 选择 1)：</strong>
+  查询 <code>select s1.id, s2.id from student s1, student s2 where s1.dept_name=s2.dept_name and s1.age&lt;18 and s2.age&gt;28</code>。</li>
+<li><strong>等价写法</strong>：<ul>
+<li><span class="arithmatex">\(\Pi_{s1.id, s2.id} ( \sigma_{s1.dept\_name=s2.dept\_name} ( \sigma_{age&lt;18}(\rho_{s1}(student)) \times \sigma_{age&gt;28}(\rho_{s2}(student)) ) )\)</span></li>
+</ul>
+</li>
+<li><strong>不等价写法（错误选项）</strong>：<ul>
+<li><span class="arithmatex">\(\Pi_{s1.id, s2.id} ( \sigma_{s1.age&lt;18 \land s2.age&gt;28} ( \rho_{s1}(student) \bowtie \rho_{s2}(student) ) )\)</span></li>
+<li><em>错误原因</em>：<span class="arithmatex">\(\rho_{s1}(student) \bowtie \rho_{s2}(student)\)</span> 无同名属性，退化为笛卡尔积，丢失了 <span class="arithmatex">\(s1.dept\_name=s2.dept\_name\)</span> 的连接约束条件。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="2-foreign-key-cascade">2. 级联更新与删除 (Foreign Key Cascade)</h3>
+<ul>
+<li><strong>核心机制：</strong></li>
+<li><code>ON DELETE CASCADE</code>：父表记录被删除时，子表中所有引用该主键的记录一并被删除。</li>
+<li><code>ON UPDATE CASCADE</code>：父表主键值更新时，子表中所有引用该主键的字段同步更新为新值。</li>
+<li><strong>典型递推步骤 (21-22 选择 2)：</strong>
+  表 <code>r(pid primary key, qid references r on delete cascade on update cascade)</code>。
+  数据：<code>11|null</code>, <code>22|11</code>, <code>33|22</code>, <code>44|22</code>, <code>55|11</code>。</li>
+<li>执行 a) <code>insert into r values ('11','55')</code> <span class="arithmatex">\(\rightarrow\)</span> 报错！因为 <code>55</code> 此时在外键中虽存在，但主键 <code>11</code> 已存在，不能插入。<ul>
+<li><em>更正</em>：如果是 <code>insert into r values ('77','11')</code> 则成功。</li>
+</ul>
+</li>
+<li>执行 b) <code>delete from r where pid='22'</code> <span class="arithmatex">\(\rightarrow\)</span> 级联删除引用 <code>22</code> 的记录，即 <code>33</code> 和 <code>44</code> 被自动删除。此时剩余：<code>11</code>, <code>55</code>。</li>
+<li>执行 c) <code>update r set pid='22' where pid ='11'</code> <span class="arithmatex">\(\rightarrow\)</span> 将 <code>11</code> 改为 <code>22</code>。级联更新引用 <code>11</code> 的记录，即 <code>55</code> 的 <code>qid</code> 变为 <code>22</code>。此时剩余：<code>22|null</code>，<code>55|22</code>。</li>
+<li>执行 d) <code>select count(*) from r where qid='22'</code> <span class="arithmatex">\(\rightarrow\)</span> 此时只有 <code>55</code> 的 <code>qid</code> 为 <code>22</code>。结果为 1。</li>
+</ul>
+<hr />
+<h3 id="3-functional-dependencies-3nf">3. 正则覆盖与保持依赖分解 (Functional Dependencies &amp; 3NF)</h3>
+<ul>
+<li><strong>Canonical Cover (正则覆盖 <span class="arithmatex">\(F_c\)</span>) 求解算法：</strong></li>
+<li>将所有函数依赖的右侧化为单一属性（使用合并规则 <span class="arithmatex">\(X \rightarrow A \land X \rightarrow B \Rightarrow X \rightarrow AB\)</span>）。</li>
+<li>在每个函数依赖 <span class="arithmatex">\(X \rightarrow A\)</span> 中，检查左侧 <span class="arithmatex">\(X\)</span> 是否含有外在（多余）属性。<ul>
+<li>若 <span class="arithmatex">\(Y \subset X\)</span>，且 <span class="arithmatex">\((X - Y)^+\)</span> 在 <span class="arithmatex">\(F\)</span> 下包含 <span class="arithmatex">\(A\)</span>，则 <span class="arithmatex">\(Y\)</span> 是多余的，从左侧删除 <span class="arithmatex">\(Y\)</span>。</li>
+</ul>
+</li>
+<li>检查是否存在外在（多余）的函数依赖。<ul>
+<li>对于 <span class="arithmatex">\(F\)</span> 中的某个 <span class="arithmatex">\(X \rightarrow A\)</span>，若在 <span class="arithmatex">\(F - \{X \rightarrow A\}\)</span> 下计算 <span class="arithmatex">\(X^+\)</span> 仍包含 <span class="arithmatex">\(A\)</span>，则该依赖多余，直接删除。</li>
+</ul>
+</li>
+<li><strong>经典例题 1 (21-22 选择 3)：</strong>
+  求 <span class="arithmatex">\(F = \{A \rightarrow B, B \rightarrow C, A \rightarrow CD, BD \rightarrow C\}\)</span> 的正则覆盖。</li>
+<li>合并右侧：<span class="arithmatex">\(A \rightarrow BCD\)</span> (因为 <span class="arithmatex">\(A \rightarrow B, A \rightarrow CD\)</span>)。</li>
+<li>检查左侧：对于 <span class="arithmatex">\(BD \rightarrow C\)</span>，看 <span class="arithmatex">\(D\)</span> 是否多余。在 <span class="arithmatex">\(F\)</span> 中计算 <span class="arithmatex">\(B^+ = BC\)</span> 包含 <span class="arithmatex">\(C\)</span>，故 <span class="arithmatex">\(D\)</span> 在左侧多余，依赖简化为 <span class="arithmatex">\(B \rightarrow C\)</span>。</li>
+<li>检查多余依赖：当前依赖集 <span class="arithmatex">\(\{A \rightarrow BCD, B \rightarrow C\}\)</span>。<ul>
+<li>检查 <span class="arithmatex">\(A \rightarrow C\)</span> 是否多余：在 <span class="arithmatex">\(\{A \rightarrow BD, B \rightarrow C\}\)</span> 下计算 <span class="arithmatex">\(A^+ = ABCD\)</span> 包含 <span class="arithmatex">\(C\)</span>，故 <span class="arithmatex">\(A \rightarrow C\)</span> 多余，从 <span class="arithmatex">\(A \rightarrow BCD\)</span> 右侧剔除 <span class="arithmatex">\(C\)</span>。</li>
+<li>最终得到 <span class="arithmatex">\(F_c = \{A \rightarrow BD, B \rightarrow C\}\)</span>。</li>
+</ul>
+</li>
+<li><strong>无损/保持依赖判断 (21-22 选择 4)：</strong>
+  <span class="arithmatex">\(R(A, B, C, D, E)\)</span>，<span class="arithmatex">\(F = \{A \rightarrow B, B \rightarrow CD\}\)</span>。</li>
+<li>检查分解 <span class="arithmatex">\(\{R_1(A,B), R_2(A,C,D), R_3(A,E)\}\)</span> 是否保持依赖。<ul>
+<li>对 <span class="arithmatex">\(B \rightarrow CD\)</span>，其涉及属性为 <span class="arithmatex">\(B, C, D\)</span>。分解中没有任何一个子关系同时包含 <span class="arithmatex">\(B\)</span> 和 <span class="arithmatex">\(C, D\)</span>（只有 <span class="arithmatex">\(A, B\)</span> 和 <span class="arithmatex">\(A, C, D\)</span>）。</li>
+<li>计算 <span class="arithmatex">\((BCD)^+\)</span> 发现无法在子模式的局部依赖闭包中恢复 <span class="arithmatex">\(B \rightarrow CD\)</span>，因此该分解<strong>不保持依赖</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="4-b-b-tree-index">4. B⁺-树扇出、高度与检索开销 (B⁺-Tree Index)</h3>
+<ul>
+<li><strong>核心公式：</strong></li>
+<li>节点大小为 <span class="arithmatex">\(P\)</span>，键大小为 <span class="arithmatex">\(K\)</span>，指针大小为 <span class="arithmatex">\(V\)</span>。</li>
+<li>
+<p>非叶节点最大扇出（度数）<span class="arithmatex">\(n\)</span> 满足：</p>
+<div class="arithmatex">\[n \cdot V + (n - 1) \cdot K \le P \implies n \le \frac{P + K}{V + K}\]</div>
+</li>
+<li>
+<p>最坏情况节点填充度：非叶节点至少有 <span class="arithmatex">\(\lceil n/2 \rceil\)</span> 个子节点；叶节点至少有 <span class="arithmatex">\(\lceil (n - 1)/2 \rceil\)</span> 个键值。</p>
+</li>
+<li>对于 <span class="arithmatex">\(N\)</span> 个键，最坏高度 <span class="arithmatex">\(h \le \lceil \log_{\lceil n/2 \rceil} (N) \rceil + 1\)</span>。</li>
+<li><strong>I/O 代价估计</strong>：<ul>
+<li>检索单条记录（Index Scan）：</li>
+<li>索引查找：需要读取 <span class="arithmatex">\(h\)</span> 个索引节点块。若无缓存，则需 <span class="arithmatex">\(h\)</span> 次 seek 和 <span class="arithmatex">\(h\)</span> 次 transfer。</li>
+<li>数据块读取：主（聚集）索引下数据有序，若等值查询只需 1 次 seek + 1 次 transfer；辅助（非聚集）索引需要先查叶子节点上的指针桶，再随机 seek 读取数据记录。</li>
+</ul>
+</li>
+<li><strong>经典例题 (21-22 选择 8)：</strong>
+  B⁺ 树索引高度为 4，查询 <code>select * from student where ID='2020160008'</code>（ID为主键）。
+  使用 Index Scan 算法定位记录的估算代价为：</li>
+<li><strong>答案</strong>：4 block transfers + 4 seeks。</li>
+<li><em>解析</em>：因为高度为 4，从根到叶节点路径上共有 4 个节点。由于是等值查询且无缓存，顺着树向下查找共需要 4 次 seek 和 4 次 block transfer。</li>
+</ul>
+<hr />
+<h3 id="5-external-merge-sort">5. 外部归并排序开销计算 (External Merge Sort)</h3>
+<ul>
+<li><strong>核心算法与公式：</strong></li>
+<li>数据块数 <span class="arithmatex">\(N\)</span>，内存缓冲区大小 <span class="arithmatex">\(M\)</span> 块。</li>
+<li><strong>Pass 0 (生成初始归并段 Run)</strong>：<ul>
+<li>读入 <span class="arithmatex">\(M\)</span> 块进行内部排序，写回磁盘。</li>
+<li>生成的初始 Run 数量 <span class="arithmatex">\(N_0 = \lceil N/M \rceil\)</span>。</li>
+<li>I/O 代价：<span class="arithmatex">\(2N\)</span> 次 block transfers；<span class="arithmatex">\(2 N_0\)</span> 次 seeks（读写各 <span class="arithmatex">\(N_0\)</span> 次）。</li>
+</ul>
+</li>
+<li><strong>后续 Merge 阶段</strong>：<ul>
+<li>若每次归并输入分配 1 个块，输出分配 1 个块，则归并路数（fan-in）为 <span class="arithmatex">\(M - 1\)</span>。</li>
+<li>归并段合并所需的 Pass数：<span class="arithmatex">\(P = \lceil \log_{M-1} (N_0) \rceil\)</span>。</li>
+<li>每次 Pass 的 I/O 代价：<span class="arithmatex">\(2N\)</span> 次 transfers；寻道数取决于分配的块缓冲大小。</li>
+</ul>
+</li>
+<li><strong>特殊缓冲分配例题 (21-22 选择 9 - 必背考题)：</strong>
+  <span class="arithmatex">\(N = 160\)</span> 块，内存缓冲区 <span class="arithmatex">\(M = 10\)</span> 块。使用外部归并排序，<strong>每个输入归并段和输出段分配 2 个缓冲块</strong>，排好序的结果写回磁盘。求总开销。</li>
+<li><strong>Pass 0</strong>：<ul>
+<li>每次用满 10 个缓冲块进行排序。生成 <span class="arithmatex">\(160 / 10 = 16\)</span> 个初始 Run，每个 Run 大小为 10 块。</li>
+<li>Transfers: <span class="arithmatex">\(2N = 320\)</span>。Seeks: 读 16 次 + 写 16 次 = 32 次。</li>
+</ul>
+</li>
+<li><strong>Merge 阶段扇出计算</strong>：<ul>
+<li>每个输入 Run 分配 2 块，输出段分配 2 块。</li>
+<li>归并路数 (fan-in) <span class="arithmatex">\(d = (10 - 2) / 2 = 4\)</span> 路。</li>
+</ul>
+</li>
+<li><strong>Pass 1</strong>：<ul>
+<li>16 个初始 Run 进行 4 路归并，生成 4 个新的 Run（每个大小为 40 块）。</li>
+<li>Transfers: <span class="arithmatex">\(2N = 320\)</span>。</li>
+<li>Seeks: 4 个组，每组归并 4 个大小为 10 块的段。</li>
+<li>读 1 个段需要 <span class="arithmatex">\(\lceil 10 / 2 \rceil = 5\)</span> 次 seek <span class="arithmatex">\(\Rightarrow\)</span> 每组读 seek = <span class="arithmatex">\(4 \times 5 = 20\)</span> 次。</li>
+<li>写输出段（大小 40 块）需要 <span class="arithmatex">\(\lceil 40 / 2 \rceil = 20\)</span> 次 seek。</li>
+<li>每组总 seek = <span class="arithmatex">\(20 + 20 = 40\)</span> 次。</li>
+<li>4 个组的总 seek = <span class="arithmatex">\(4 \times 40 = 160\)</span> 次。</li>
+</ul>
+</li>
+<li><strong>Pass 2</strong>：<ul>
+<li>将 4 个大小为 40 块的 Run 归并为 1 个大小为 160 块的最终 Run。</li>
+<li>Transfers: <span class="arithmatex">\(2N = 320\)</span>。</li>
+<li>Seeks: 读 4 个段，每个段 seeks = <span class="arithmatex">\(\lceil 40 / 2 \rceil = 20\)</span> 次 <span class="arithmatex">\(\Rightarrow\)</span> 读 seek = <span class="arithmatex">\(4 \times 20 = 80\)</span> 次；写输出 seeks = <span class="arithmatex">\(\lceil 160 / 2 \rceil = 80\)</span> 次。</li>
+<li>本 Pass 总 seek = <span class="arithmatex">\(80 + 80 = 160\)</span> 次。</li>
+</ul>
+</li>
+<li><strong>总开销</strong>：<ul>
+<li>Transfers = <span class="arithmatex">\(320 \times 3 = 960\)</span>。Seeks = <span class="arithmatex">\(32 + 160 + 160 = 352\)</span> 次。（选 C）</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="6-hash-join-hash-join">6. Hash Join 内存与代价计算 (Hash Join)</h3>
+<ul>
+<li><strong>核心公式：</strong></li>
+<li>关系 <span class="arithmatex">\(r\)</span> 的块数为 <span class="arithmatex">\(b_r\)</span>，关系 <span class="arithmatex">\(s\)</span> 的块数为 <span class="arithmatex">\(b_s\)</span>。</li>
+<li>
+<p><strong>无递归分块的最小内存 <span class="arithmatex">\(M\)</span> 满足：</strong></p>
+<div class="arithmatex">\[M &gt; \sqrt{f \cdot b_r} \quad (\text{通常取 } M &gt; \sqrt{b_r})\]</div>
+<p><em>若不满足，则需要进行递归分块。</em>
+  * <strong>I/O 代价公式（无递归分块）：</strong>
+* Block Transfers：<span class="arithmatex">\(3(b_r + b_s)\)</span>（划分阶段读一遍、写一遍，归并阶段读一遍）。
+* Seeks：<span class="arithmatex">\(2 \lceil b_r / b_b \rceil + 2 \lceil b_s / b_b \rceil + 2n_h\)</span>（其中 <span class="arithmatex">\(b_b\)</span> 是读写缓冲块数，<span class="arithmatex">\(n_h\)</span> 是分区数）。
+* <strong>经典例题 1 (21-22 选择 10)：</strong>
+  <span class="arithmatex">\(b_r = 256\)</span> 块，<span class="arithmatex">\(b_s = 1024\)</span> 块。每个块大小 4KB。求进行自然连接不发生递归分块的最小内存大小。
+  * <strong>计算</strong>：<span class="arithmatex">\(M &gt; \sqrt{256} = 16\)</span> 块。
+  * 内存大小 = <span class="arithmatex">\(16 \times 4\text{KB} = 64\text{KB}\)</span>。（选 A）</p>
+</li>
+</ul>
+<hr />
+<h3 id="7-query-size-estimation">7. 查询大小估算 (Query Size Estimation)</h3>
+<ul>
+<li><strong>核心估算公式：</strong></li>
+<li>关系 <span class="arithmatex">\(r\)</span> 的记录数为 <span class="arithmatex">\(n_r\)</span>。</li>
+<li><strong>等值选择 <span class="arithmatex">\(\sigma_{A=V}(r)\)</span></strong>：<ul>
+<li>若 <span class="arithmatex">\(A\)</span> 是候选键：估算大小 <span class="arithmatex">\(= 1\)</span>。</li>
+<li>若 <span class="arithmatex">\(A\)</span> 是普通属性，且不同值个数为 <span class="arithmatex">\(V(A, r)\)</span>：估算大小 <span class="arithmatex">\(= n_r / V(A, r)\)</span>。</li>
+</ul>
+</li>
+<li><strong>非等值选择 <span class="arithmatex">\(\sigma_{A \ge V}(r)\)</span></strong>：<ul>
+<li>假设值分布均匀，估算大小 <span class="arithmatex">\(= n_r \times \frac{\max(A) - V}{\max(A) - \min(A)}\)</span>。若无边界范围，默认估算为 <span class="arithmatex">\(n_r / 2\)</span> 或 <span class="arithmatex">\(n_r / 3\)</span>。</li>
+</ul>
+</li>
+<li><strong>自然连接 <span class="arithmatex">\(r \bowtie s\)</span></strong>：<ul>
+<li>若 <span class="arithmatex">\(r \cap s = \emptyset\)</span>（无公共属性）：估算大小 <span class="arithmatex">\(= n_r \times n_s\)</span>。</li>
+<li>若 <span class="arithmatex">\(r \cap s = \{A\}\)</span>，且 <span class="arithmatex">\(A\)</span> 是 <span class="arithmatex">\(s\)</span> 的主键：每个 <span class="arithmatex">\(r\)</span> 中的元组最多在 <span class="arithmatex">\(s\)</span> 中匹配一个，估算大小 <span class="arithmatex">\(= n_r\)</span>。</li>
+<li>若 <span class="arithmatex">\(A\)</span> 在两个表都非主键：估算大小 <span class="arithmatex">\(= \frac{n_r \times n_s}{\max(V(A,r), V(A,s))}\)</span>。</li>
+</ul>
+</li>
+<li><strong>综合大小估算例题 (21-22 选择 12)：</strong>
+  表 <code>instructor</code> 记录数 4000，<code>teaches</code> 记录数 8000。
+  <code>dept_name</code> 在 <code>instructor</code> 中的不同值有 20 个。
+  <code>salary</code> 范围在 10000 到 90000。
+  估算：<code>select * from instructor natural join teaches on ID where dept_name='CS' and salary &gt;= 70000</code> 的大小。</li>
+<li>自然连接 <code>instructor natural join teaches</code>：由于 <code>ID</code> 是 <code>instructor</code> 的主键，连接后的记录数估算为 <code>teaches</code> 的记录数，即 8000。</li>
+<li>选择条件 <code>dept_name='CS'</code>：选择度为 <span class="arithmatex">\(1/20\)</span>。此时数量 <span class="arithmatex">\(= 8000 / 20 = 400\)</span>。</li>
+<li>选择条件 <code>salary &gt;= 70000</code>：值范围 <span class="arithmatex">\(10000 \sim 90000\)</span>，选择度为 <span class="arithmatex">\((90000 - 70000) / (90000 - 10000) = 20000 / 80000 = 1/4\)</span>。</li>
+<li>最终估计大小 <span class="arithmatex">\(= 400 \times (1/4) = 100\)</span>。（选 C）</li>
+</ul>
+<hr />
+<h3 id="8-2pl">8. 并发控制与两阶段锁协议 (2PL)</h3>
+<ul>
+<li><strong>核心判定条件：</strong></li>
+<li><strong>冲突（Conflict）操作</strong>：两个不同事务针对<strong>同一数据项</strong>的操作，只要<strong>其中有一个是写操作</strong>（即 <span class="arithmatex">\(w_i(A)\)</span> 与 <span class="arithmatex">\(r_j(A)\)</span>，或 <span class="arithmatex">\(w_i(A)\)</span> 与 <span class="arithmatex">\(w_j(A)\)</span>），就构成冲突。</li>
+<li><strong>冲突可串行性</strong>：若优先图（Precedence Graph，冲突关系画出的有向图）中<strong>无环</strong>，则调度是冲突可串行化的。</li>
+<li><strong>两阶段锁协议 (2PL)</strong>：<ul>
+<li>增长阶段：可以获得锁，不能释放锁。</li>
+<li>收缩阶段：可以释放锁，不能获得锁。</li>
+<li><strong>定理</strong>：2PL 是冲突可串行化的<strong>充分非必要条件</strong>。</li>
+</ul>
+</li>
+<li><strong>经典大题例题 (21-22 简答 4)：</strong>
+  请给出一个包含 3 个事务的调度，含冲突操作，证明 2PL 协议<strong>不是</strong>冲突可串行性的必要条件（即找出一个可串行化但不满足 2PL 的调度）。</li>
+<li>
+<p><strong>构造示例</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">步骤</th>
+<th style="text-align: left;">事务 <span class="arithmatex">\(T_1\)</span></th>
+<th style="text-align: left;">事务 <span class="arithmatex">\(T_2\)</span></th>
+<th style="text-align: left;">事务 <span class="arithmatex">\(T_3\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>lock-X(A)</code>; <code>r(A)</code>; <code>w(A)</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><code>unlock(A)</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>lock-X(A)</code>; <code>r(A)</code>; <code>w(A)</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>unlock(A)</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>lock-X(A)</code>; <code>r(A)</code>; <code>w(A)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>unlock(A)</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>分析</strong>：</li>
+<li>该调度由于是完全串行执行时的（<span class="arithmatex">\(T_1 \rightarrow T_2 \rightarrow T_3\)</span>），所以显然是冲突可串行化的。</li>
+<li>但对于每个事务，在释放锁（<code>unlock</code>）之后就不能再获取任何锁。如果我们在事务内部先 unlock 然后又执行其他操作，就会违反 2PL。</li>
+<li>
+<p><strong>更严谨的交错不满足 2PL 但可串行化构造</strong>：</p>
+<div class="arithmatex">\[S: r_1(A) \ w_1(A) \ r_2(A) \ w_2(A) \ r_3(B) \ w_3(B) \ r_1(B) \ w_1(B)\]</div>
+<ul>
+<li>依赖关系：由于在 <span class="arithmatex">\(A\)</span> 上 <span class="arithmatex">\(T_1 \rightarrow T_2\)</span>；在 <span class="arithmatex">\(B\)</span> 上 <span class="arithmatex">\(T_3 \rightarrow T_1\)</span>。优先图为 <span class="arithmatex">\(T_3 \rightarrow T_1 \rightarrow T_2\)</span>，无环，冲突可串行化。</li>
+<li>2PL 验证：<span class="arithmatex">\(T_1\)</span> 必须在第 2 步后释放 <span class="arithmatex">\(A\)</span> 上的锁以让 <span class="arithmatex">\(T_2\)</span> 加锁。但 <span class="arithmatex">\(T_1\)</span> 在第 7 步又需要获取 <span class="arithmatex">\(B\)</span> 上的锁。在释放锁之后再次获取锁，违背了 2PL 协议。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="9-aries-aries-recovery">9. ARIES 恢复算法 (ARIES Recovery)</h3>
+<ul>
+<li><strong>三个阶段核心逻辑：</strong></li>
+<li><strong>Analysis 阶段</strong>：从最近的 checkpoint 开始向前/向后扫描日志。<ul>
+<li>脏页表 (DPT) 初始化为 checkpoint 中的表。后续发现任何修改页的 Log <span class="arithmatex">\(L\)</span>，若该页不在 DPT 中，则加入 DPT 并令 <span class="arithmatex">\(\text{RecLSN} = L\)</span>。</li>
+<li>活跃事务表初始化为 checkpoint 中的表。后续若有 <code>&lt;Ti begin&gt;</code> 则加入，<code>&lt;Ti commit/abort&gt;</code> 则移出。</li>
+</ul>
+</li>
+<li><strong>Redo 阶段</strong>：从 DPT 中最小的 <code>RecLSN</code> 开始向后重做所有历史写操作（包括未提交和已撤销的）。</li>
+<li><strong>Undo 阶段</strong>：从崩溃时的 active 事务列表开始，逆序回滚所有未提交事务。<ul>
+<li>撤销某操作 <span class="arithmatex">\(L\)</span> 时，写补偿日志 CLR，其 <code>UndoNextLSN</code> 指向 <span class="arithmatex">\(L\)</span> 的 <code>PrevLSN</code>。当 <code>UndoNextLSN</code> 变为 null 时，写入 <code>&lt;Ti abort&gt;</code> 表示该事务回滚完毕。</li>
+</ul>
+</li>
+<li><strong>经典大题例题 (21-22 简答 5)：</strong>
+  [日志数据见第六题背景]</li>
+<li><strong>分析阶段脏页表</strong>：扫描 2012 (T1 commit, 移出), 2013 (T3写5002, 已经在DPT), 2014 (T4写5003, 新加入DPT, RecLSN=2014), 2015 (T3 commit, 移出)。<ul>
+<li>最终脏页表：<strong>5001 (RecLSN=2003), 5002 (RecLSN=2006), 5003 (RecLSN=2014)</strong>。</li>
+</ul>
+</li>
+<li><strong>需 Undo 的事务</strong>：未提交的 <strong><span class="arithmatex">\(T_4\)</span></strong>（LastLSN = 2014）。</li>
+<li><strong>恢复后数值</strong>：<ul>
+<li><code>5001.2</code>：在 LSN 2004 由已提交的 <span class="arithmatex">\(T_2\)</span> 改为 222；在 LSN 2009 由未提交的 <span class="arithmatex">\(T_4\)</span> 改为 444。Undo 撤销 <span class="arithmatex">\(T_4\)</span> 后回滚为 <strong>222</strong>。</li>
+<li><code>5002.2</code>：在 LSN 2010 由已提交的 <span class="arithmatex">\(T_1\)</span> 改为 555；在 LSN 2013 由已提交的 <span class="arithmatex">\(T_3\)</span> 改为 666。均不撤销，值为 <strong>666</strong>。</li>
+</ul>
+</li>
+<li><strong>追加的恢复日志</strong>：<ul>
+<li>LSN 2016: <code>&lt;T4, 5003.1, 77, UndoNextLSN=2009&gt;</code> (撤销 LSN 2014)</li>
+<li>LSN 2017: <code>&lt;T4, 5001.2, 222, UndoNextLSN=null&gt;</code> (撤销 LSN 2009)</li>
+<li>LSN 2018: <code>&lt;T4, abort&gt;</code> (T4回滚结束)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="10-lsm-tree-buffer-tree">10. 写优化索引 (LSM-Tree &amp; Buffer Tree)</h3>
+<ul>
+<li><strong>LSM-Tree 代价模型：</strong></li>
+<li>L0 在内存中，大小为 <span class="arithmatex">\(B\)</span> 块。写满后顺序写入磁盘。</li>
+<li><strong>写 L0 到磁盘</strong>：1 次 seek + <span class="arithmatex">\(B\)</span> 次 transfers。</li>
+<li><strong>单条记录查找</strong>：依次查找内存 L0、磁盘 L0 (<span class="arithmatex">\(T_1, T_2, \dots\)</span>)。若每个磁盘树高为 <span class="arithmatex">\(H\)</span>，则需在每个磁盘树上进行 <span class="arithmatex">\(H\)</span> 次 seek + <span class="arithmatex">\(H\)</span> 次 transfers。</li>
+<li><strong>合并 L0 树 <span class="arithmatex">\(T_1, T_2\)</span> 写入 L1</strong>：<ul>
+<li>顺序读取 <span class="arithmatex">\(T_1\)</span> 和 <span class="arithmatex">\(T_2\)</span> 的叶子节点（因树有序，叶子块在磁盘上连续）。</li>
+<li>读取 <span class="arithmatex">\(T_1\)</span> 叶子：1 次 seek + <span class="arithmatex">\(L\)</span> 次 transfers（<span class="arithmatex">\(L\)</span> 为叶子节点块数）。</li>
+<li>读取 <span class="arithmatex">\(T_2\)</span> 叶子：1 次 seek + <span class="arithmatex">\(L\)</span> 次 transfers。</li>
+<li>归并生成新树写入 L1。新树总块数为 <span class="arithmatex">\(N_{\text{new}}\)</span>。顺序写入：1 次 seek + <span class="arithmatex">\(N_{\text{new}}\)</span> 次 transfers。</li>
+</ul>
+</li>
+<li><strong>Buffer Tree 运行逻辑：</strong></li>
+<li>插入键值先存入 Root 缓冲区。缓冲满则向下级子节点下放（Flush）。</li>
+<li>遇到叶子节点则直接插入。叶子节点键数超过限制，则向上分裂。</li>
+<li><strong>经典大题例题 (22-23 简答 7)：</strong>
+  度 <span class="arithmatex">\(n=4\)</span>（叶/内节点最多 3 键），缓冲大小 <span class="arithmatex">\(B=2\)</span>。</li>
+<li><strong>插入 38, 92</strong>：Root 缓冲变为 <code>[38, 92]</code>，未溢出。</li>
+<li><strong>插入 28</strong>：Root 变为 <code>[38, 92, 28]</code> 溢出。<ul>
+<li>根划分键为 80。<code>[38, 28]</code> 下放到左内节点；<code>[92]</code> 下放到右内节点。</li>
+<li>右内节点缓冲变为 <code>[92, 98]</code>，未溢出。</li>
+<li>左内节点缓冲变为 <code>[8, 22, 28, 38]</code> 溢出，继续下放。</li>
+<li>左内节点键为 30, 50。小于 30 的 <code>[8, 22, 28]</code> 下放到 Leaf 1；<span class="arithmatex">\(30 \sim 50\)</span> 的 <code>[38]</code> 下放到 Leaf 2。</li>
+<li>Leaf 2 插入 38 后为 <code>[30, 38, 40]</code>（未溢出）。</li>
+<li>Leaf 1 (<code>[10, 20]</code>) 插入 <code>[8, 22, 28]</code> 后溢出（共5个键：<code>8,10,20,22,28</code>），分裂为左叶子 <code>[8,10,20]</code> 和右叶子 <code>[22,28]</code>。</li>
+<li>将右侧最小键 <code>22</code> 向上推入左内节点。左内节点键变为 <code>[22,30,50]</code>（未溢出）。</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

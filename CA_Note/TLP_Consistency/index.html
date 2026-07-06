@@ -1,0 +1,1271 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/TLP_Consistency/">
+      
+      
+        <link rel="prev" href="../TLP_Coherence/">
+      
+      
+        <link rel="next" href="../TLP_Exploitation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第十二章 线程级并行与内存一致性 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十二章 线程级并行与内存一致性
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件同步与原子操作
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件同步与原子操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-lr-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 原子交换指令对：lr 与 sc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lrsc-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 利用 lr/sc 实现原子交换的 RISC-V 汇编实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自旋锁与缓存一致性协同优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自旋锁与缓存一致性协同优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统自旋锁的带宽瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-spin-on-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 读自旋（Spin-on-Read）优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-lrsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 基于 lr/sc 的轻量化自旋锁
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存一致性模型与放松对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内存一致性模型与放松对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-sequential-consistency-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 顺序一致性 (Sequential Consistency, SC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 放松一致性模型对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        释放一致性协议 (Release Consistency)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件投机隐藏一致性延迟
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件同步与原子操作
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件同步与原子操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-lr-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 原子交换指令对：lr 与 sc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lrsc-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 利用 lr/sc 实现原子交换的 RISC-V 汇编实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自旋锁与缓存一致性协同优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自旋锁与缓存一致性协同优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统自旋锁的带宽瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-spin-on-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 读自旋（Spin-on-Read）优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-lrsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 基于 lr/sc 的轻量化自旋锁
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存一致性模型与放松对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内存一致性模型与放松对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-sequential-consistency-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 顺序一致性 (Sequential Consistency, SC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 放松一致性模型对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        释放一致性协议 (Release Consistency)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件投机隐藏一致性延迟
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第十二章 线程级并行与内存一致性</h1>
+<p>本章分析了多处理器硬件同步原语的底层实现，探讨了利用缓存一致性优化自旋锁带宽的技术，系统比对了各种内存一致性模型（SC/TSO/PSO/WO/RC），并归纳了利用硬件投机来隐藏一致性延迟的方案。</p>
+<hr />
+<h2 id="_2">硬件同步与原子操作</h2>
+<p>为了避免多个线程同时读写共享变量导致的数据竞争（Data Race），必须在硬件层面提供高可靠性的原子操作（Atomic Operations）以支撑互斥锁。</p>
+<h3 id="1-lr-sc">1. 原子交换指令对：<code>lr</code> 与 <code>sc</code></h3>
+<p>RISC-V 采用 Load Reservation（预留加载）与 Store Conditional（条件存储）指令对来实现无锁原子交换：
+* <strong><code>lr rd, 0(rs1)</code></strong>：从内存地址 <code>rs1</code> 读取数据到寄存器 <code>rd</code> 中，并由硬件在该物理地址注册一个预留（Reservation）。
+* <strong><code>sc rd, rs2, 0(rs1)</code></strong>：尝试将寄存器 <code>rs2</code> 的值写入内存地址 <code>rs1</code>。
+  * <strong>成功</strong>：若此地址未被其他核心写入打断且未发生中断，则写入成功并在寄存器 <code>rd</code> 写入 <strong>0</strong>。
+  * <strong>失败</strong>：若该地址已被修改或发生上下文切换，则预留被清空，写入失败并在 <code>rd</code> 写入<strong>非 0 值</strong>（如 1 ）。
+* <strong>硬件检测原理</strong>：处理器内部部署了专用的保留寄存器记录 <code>lr</code> 的物理地址。任何其他处理器发出的对该地址的写失效（Invalidation）信号、或者本地中断的发生，都会直接<strong>清除保留寄存器</strong>，从而导致后续的 <code>sc</code> 执行失败。</p>
+<h3 id="2-lrsc-risc-v">2. 利用 <code>lr/sc</code> 实现原子交换的 RISC-V 汇编实例</h3>
+<p>将寄存器 <code>x4</code> 的值与内存地址 <code>0(x1)</code> 处的锁状态原子交换，并将原状态返回给 <code>x4</code>：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>try: addi x3, x4, 0      ; 将欲写入的值 x4 暂存到 x3
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     lr.d x2, 0(x1)      ; 加载锁的值到 x2，并注册预留
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>     sc.d x3, x3, 0(x1)  ; 尝试将新值 x3 写入，成功则 x3 变 0 
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>     bnez x3, try        ; 若 x3 不为 0，说明被他人打断或失败，重新尝试
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>     addi x4, x2, 0      ; 将旧锁值 x2 拷贝给目标 x4，完成原子交换
+</span></code></pre></div></p>
+<hr />
+<h2 id="_3">自旋锁与缓存一致性协同优化</h2>
+<p>自旋锁（Spin Locks）是核心不断循环重试获取锁的一种忙等锁结构。</p>
+<h3 id="1">1. 传统自旋锁的带宽瓶颈</h3>
+<p>若直接使用原子交换宏 <code>EXCH</code> 不断循环读写锁状态：每次运行 <code>EXCH</code>（都执行了一次写尝试）会在总线上频繁广播写失效（Invalidate）信号，导致其他正在轮询的处理器 Cache 块不断失效并重新从主存拉取数据，产生极高的总线流量与主存竞争。</p>
+<h3 id="2-spin-on-read">2. 读自旋（Spin-on-Read）优化</h3>
+<ul>
+<li><strong>机制</strong>：核心在循环里先使用普通读指令 <code>ld</code> 持续查询本地 Cache 的锁状态（S 状态）。只要锁仍被他人持有（lock != 0），核心就只在本地 Cache 命中的只读循环里“自旋”，<strong>完全不产生总线流量</strong>。</li>
+<li><strong>抢锁过程</strong>：一旦持有锁的核释放锁，会向总线广播 Invalidate 信号。轮询核的本地 Cache 被失效，随后的普通读 miss 并从主存重新获取锁的值为 0。此时各核心立即发起原子交换 <code>EXCH</code> 竞争锁。</li>
+</ul>
+<h3 id="3-lrsc">3. 基于 <code>lr/sc</code> 的轻量化自旋锁</h3>
+<p>更高效的做法是利用 <code>lr</code> 替代普通读 <code>ld</code>，并将 <code>EXCH</code> 换为 <code>sc</code>：
+* 普通读即使拿到锁为 0，随后发起 <code>EXCH</code> 写动作依然无差别触发 Invalidate。
+* 换用 <code>lr/sc</code> 对时，只有当某一个核抢锁时成功执行了 <code>sc</code>，才会真正向总线广播 Invalidate。抢锁失败核的 <code>sc</code> 默默写 1 失败并退回 <code>lr</code> 循环，<strong>完全不产生多余的总线写失效流量</strong>，最大限度保留了总线带宽。</p>
+<hr />
+<h2 id="_4">内存一致性模型与放松对比</h2>
+<p>内存一致性模型（Memory Consistency Models）定义了多个不同物理地址的读写操作在多处理器环境下的全局可见顺序。
+    !!! warning "考试核心辨析：缓存一致性（Coherence） vs 内存一致性（Consistency）"
+        这两者在概念上极易混淆，但它们的关注角度截然不同，属于期末高频简答考点：
+        1. <strong>缓存一致性（Coherence）</strong>：关注<strong>单个</strong>内存单元（单一地址）在多核 Cache 副本中的数据同步。它保证了“任何读操作都能读取到该地址最近写入的最新值”。
+        2. <strong>内存一致性（Consistency）</strong>：关注<strong>多个不同</strong>内存单元（不同地址）在多核间的读写操作<strong>全局可见顺序</strong>。它定义了“当核心 P1 依次修改了变量 A 和 B，核心 P2 观察到 A 和 B 发生变化的先后次序”。
+        * <strong>直观理解</strong>：缓存一致性负责确保同一个文件的本地拷贝不发生数据冲突；内存一致性则决定了在多核乱序执行下，多个不同读写操作的全局排列规则。</p>
+<h3 id="1-sequential-consistency-sc">1. 顺序一致性 (Sequential Consistency, SC)</h3>
+<ul>
+<li><strong>定义</strong>：任何程序执行的结果都与所有核按某种串行交错顺序访存且各核内部执行均严格保持程序顺序（Program Order）的结果相同。</li>
+<li><strong>硬件代价</strong>：为了维护 SC，任何写操作必须阻塞，直到总线上所有的写失效信号被其他核心完全接收并确认回复（Acknowledge）之后，写操作才算彻底完成。这阻碍了动态调度的乱序执行。</li>
+</ul>
+<h3 id="2">2. 放松一致性模型对比</h3>
+<p>由于 SC 代价高昂，现代处理器根据读写次序（<span class="arithmatex">\(R \to R\)</span>、<span class="arithmatex">\(R \to W\)</span>、<span class="arithmatex">\(W \to R\)</span>、<span class="arithmatex">\(W \to W\)</span>）的放松程度演进出多种弱一致性模型：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">内存一致性模型</th>
+<th style="text-align: left;">放松的读写物理顺序</th>
+<th style="text-align: left;">对同步指令（Sync）的约束要求</th>
+<th style="text-align: left;">典型代表硬件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>顺序一致性（SC）</strong></td>
+<td style="text-align: left;">无（最严格）</td>
+<td style="text-align: left;">所有读写均需要维持绝对顺序</td>
+<td style="text-align: left;">早期学术模型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>全店序（TSO）</strong></td>
+<td style="text-align: left;">放松 <span class="arithmatex">\(W \to R\)</span> (写后面的读可先做)</td>
+<td style="text-align: left;">必须保证同步读写与屏障的顺序</td>
+<td style="text-align: left;">x86 架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>偏店序（PSO）</strong></td>
+<td style="text-align: left;">放松 <span class="arithmatex">\(W \to R\)</span> 与 <span class="arithmatex">\(W \to W\)</span></td>
+<td style="text-align: left;">必须使用屏障约束同地址写的先后</td>
+<td style="text-align: left;">SPARC 架构</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>弱一致性（WO）/ 释放一致性（RC）</strong></td>
+<td style="text-align: left;">放松所有四种普通读写顺序</td>
+<td style="text-align: left;">普通读写可以任意乱序，只约束同步指令之间的顺序</td>
+<td style="text-align: left;">RISC-V, ARM, PowerPC</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="release-consistency">释放一致性协议 (Release Consistency)</h2>
+<p>释放一致性（RC）是弱一致性的一种典型形式，将同步操作细分为<strong>获取（Acquire）</strong>与<strong>释放（Release）</strong>：</p>
+<ul>
+<li><strong>获取（Acquire, SA）</strong>：表示进入临界区获取共享数据访问权。</li>
+<li><strong>重排界限</strong>：在 SA 之后的任何普通读写操作，<strong>禁止</strong>被重排到 SA 之前执行。</li>
+<li><strong>释放（Release, SR）</strong>：表示退出临界区释放访问权。</li>
+<li><strong>重排界限</strong>：在 SR 之前的任何普通读写操作，<strong>必须全部完成</strong>，禁止被重排到 SR 之后。</li>
+<li><em>物理意义</em>：SA 之前的普通读写和 SR 之后的普通读写可以自由跨越，赋予了流水线极高乱序执行空间。</li>
+</ul>
+<hr />
+<h2 id="_5">硬件投机隐藏一致性延迟</h2>
+<p>动态调度处理器可以利用硬件投机（Speculation）在保障严格一致性模型（如 SC）正确输出的前提下，通过乱序执行读写来掩盖长延迟：</p>
+<ul>
+<li><strong>延迟提交（Delayed Commit）</strong>：允许读指令在 ROB 中投机式提前乱序执行。</li>
+<li><strong>投机恢复（Speculation Recovery）</strong>：在投机读取数据（未提交）期间，如果核心从总线上收到了其他处理器对该数据地址的写失效（Invalidate）广播，说明当前投机读取的数据已被破坏。</li>
+<li>此时核心利用 ROB 中的控制信息触发恢复机制，<strong>回滚并放弃</strong>自该访存指令后的所有投机计算结果，并从该被失效的访存地址处<strong>重新执行</strong>，完美保证了顺序一致性行为。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

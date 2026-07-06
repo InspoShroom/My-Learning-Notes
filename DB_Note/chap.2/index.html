@@ -1,0 +1,1793 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.2/">
+      
+      
+        <link rel="prev" href="../chap.1/">
+      
+      
+        <link rel="next" href="../chap.3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第二章 关系模型介绍 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#intro-to-relational-model" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第二章 关系模型介绍
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro-to-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intro to Relational Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intro to Relational Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-relational-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of Relational DB
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure of Relational DB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relation-schema-and-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relation Schema and Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relational Algebra(关系代数)—— 一种过程化语言
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relational Algebra(关系代数)—— 一种过程化语言">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础运算符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        派生运算符
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="派生运算符">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#join-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Join Operation(连接运算)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他派生运算符
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空值(null value)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extended-relational-algebra-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extended-Relational-Algebra-Operations(扩展关系代数运算)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended-Relational-Algebra-Operations(扩展关系代数运算)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generalized-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalized Projection(广义投影)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-functions-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aggregate Functions and Operations(聚集函数和运算)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modification-of-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modification of the Database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modification of the Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deletion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insertion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiset-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiset Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-and-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL and Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro-to-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intro to Relational Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intro to Relational Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-relational-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of Relational DB
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure of Relational DB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relation-schema-and-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relation Schema and Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relational Algebra(关系代数)—— 一种过程化语言
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relational Algebra(关系代数)—— 一种过程化语言">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础运算符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        派生运算符
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="派生运算符">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#join-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Join Operation(连接运算)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他派生运算符
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空值(null value)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extended-relational-algebra-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extended-Relational-Algebra-Operations(扩展关系代数运算)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended-Relational-Algebra-Operations(扩展关系代数运算)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generalized-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalized Projection(广义投影)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-functions-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aggregate Functions and Operations(聚集函数和运算)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modification-of-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modification of the Database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modification of the Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deletion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insertion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiset-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiset Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-and-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL and Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第二章 关系模型介绍</h1>
+
+<h2 id="intro-to-relational-model">Intro to Relational Model</h2>
+<h3 id="structure-of-relational-db">Structure of Relational DB</h3>
+<h4 id="relation-schema-and-instance">Relation Schema and Instance</h4>
+<ul>
+<li><strong>Relation Schema</strong></li>
+</ul>
+<blockquote>
+<p><strong>R =(A <sub> 1 </sub>, A <sub> 2 </sub>, ..., A <sub> n </sub>)</strong></p>
+<p><strong>eg: instructor = (ID, name, dept_name, salary)</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>关系模式</strong>:是指一个关系的结构, 即: 这个关系有哪些属性(Attribute), 也就是 "表结构".</p>
+</li>
+<li>
+<p><strong>Relation Instance</strong></p>
+</li>
+<li>
+<p><strong>关系实例</strong>:是指这个关系当前的具体数据, 即: 表中实际存储的内容. 例如:</p>
+<p><span class="arithmatex">\(r(R)\)</span> 就是一个关系实例</p>
+</li>
+<li>
+<p><strong>tuple(元组)</strong></p>
+</li>
+<li>
+<p><strong>元组</strong>:关系实例里面的每个元素, 就叫做元组. 即: 对应表格中的一行数据.</p>
+</li>
+</ul>
+<blockquote>
+<p>关系也就是元组的集合; </p>
+<p><strong>关系是无序的, 因为它的本质是集合</strong>, 具体来讲, <strong>tuple</strong> 的存放顺序不会影响关系本身; </p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Attribute(属性)</strong></p>
+</li>
+<li>
+<p><strong>Domain(域):</strong>  每个属性允许取值的范围; </p>
+</li>
+<li><strong>Atomicity(原子性):</strong>  即: 不可再分性; 一个属性只能对应一个特性, 一个属性里也不能放多个值; </li>
+<li><strong>null(空值):</strong>  特殊值; 后续有关于 null 的运算; </li>
+</ul>
+<h3 id="keys">Keys</h3>
+<ul>
+<li><strong>Superkey(超码/超关键字)</strong></li>
+<li>是一个或者多个属性的集合</li>
+<li>这些属性可以实现 <strong>唯一标识 tuple</strong></li>
+<li><strong>Candidate key(候选码)</strong></li>
+<li>即满足极小性的 <strong>superkey(它的任意真子集都不是超码 /去掉任何一个属性都无法唯一表示数据)</strong></li>
+<li><strong>Primary key(主码)</strong></li>
+<li>从候选键中挑出的一个, 具有唯一性</li>
+<li>主码属性要加下划线</li>
+<li><strong>Foreign key(外码约束)</strong></li>
+<li>定义: 关系 r <sub> 1 </sub> 的 A 属性到关系 r <sub> 2 </sub> 的 B 属性的外码约束, 其中, 在任何数据库实例中, r <sub> 1 </sub> 中的每个元组对 A 的取值一定与关系 r <sub> 2 </sub> 某个元组对 B 的取值相等(eg: 要在授课表中新添加一个老师 ID, 但是这个 ID 在讲师表中没有, 那么这个插入请求就被取消了)</li>
+<li>引用关系(referencing relation)/从表/子表: 即 r <sub> 1 </sub></li>
+<li>被引用关系(referenced relation)/主表/父表: 即 r <sub> 2 </sub></li>
+</ul>
+<h3 id="relational-algebra">Relational Algebra(关系代数)—— 一种过程化语言</h3>
+<h4 id="_1">基础运算符</h4>
+<blockquote>
+<p>其中: 选择, 投影, 重命名是 <strong>一元运算符(unary)</strong>; 并, 差, 笛卡尔积是 <strong>二元运算符(binary)</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Select(<span class="arithmatex">\(\sigma\)</span>​)选择</strong></p>
+</li>
+<li>
+<p>作用: 选择满足给定谓词(predicate, 即: 条件)的元组;</p>
+<ul>
+<li>谓词的规则</li>
+</ul>
+<blockquote>
+<p>是命题演算的 <strong>公式</strong>, 可以由 <strong><span class="arithmatex">\(\land\)</span>(and)</strong>, <strong><span class="arithmatex">\(\lor\)</span>(or)</strong>, <strong><span class="arithmatex">\(\lnot\)</span>(not)</strong> 连接组合</p>
+</blockquote>
+</li>
+<li>
+<p>记作: <strong><span class="arithmatex">\(\sigma_{p}(r)\)</span>​</strong></p>
+</li>
+<li>
+<p>例子: 选出 A 关系中工资大于 1000 的元组</p>
+<p>​    : <strong><span class="arithmatex">\(\sigma_{salary&gt;1000}(A)\)</span>​</strong></p>
+</li>
+<li>
+<p><strong>Project(<span class="arithmatex">\(\Pi\)</span>​)投影</strong></p>
+</li>
+<li>
+<p>作用: 保留所选择的属性列</p>
+</li>
+<li>
+<p>记作: <strong><span class="arithmatex">\(\Pi_{A1,A2,...,An}(r)\)</span>​</strong></p>
+</li>
+<li>
+<p>例子: 选出关系 A 中的名称和 ID 属性</p>
+<p>​    : <strong><span class="arithmatex">\(\Pi_{name,ID}(A)\)</span>​</strong></p>
+</li>
+<li>
+<p>特性: 去除重复行(Duplicate rows), 因为关系的本质是集合</p>
+</li>
+<li>
+<p><strong>Union(<span class="arithmatex">\(\cup\)</span>​)并</strong></p>
+</li>
+<li>
+<p>作用: 合并两个关系的所有元组, 并自动去重</p>
+</li>
+<li>记作: <strong><span class="arithmatex">\(r \cup s\)</span></strong>​</li>
+<li>
+<p>合法前提: </p>
+<ul>
+<li>两个关系的元数必须相同</li>
+<li>对应位置的属性值域必须兼容, 即: 对应列数据类型必须一致</li>
+</ul>
+</li>
+<li>
+<p><strong>Set diffenence(<span class="arithmatex">\(-\)</span>​)差</strong></p>
+</li>
+<li>
+<p>作用: 选出属于关系 A 但不属于关系 B 的元组</p>
+</li>
+<li>记作: <strong><span class="arithmatex">\(r - s\)</span>​</strong></li>
+<li>
+<p>合法前提: 和并操作一致</p>
+</li>
+<li>
+<p><strong>Cartesian-Product(<span class="arithmatex">\(\times\)</span>​)笛卡尔积</strong></p>
+</li>
+<li>
+<p>作用: 把任意两个关系的信息组合成一个新关系</p>
+</li>
+<li>
+<p>记作: <strong><span class="arithmatex">\(r \times s\)</span>​</strong></p>
+</li>
+<li>
+<p>合法前提</p>
+<ul>
+<li>两个关系的属性集合不相交(disjoint), 即: 没有同名的属性</li>
+</ul>
+<blockquote>
+<p>为了避免同名, <strong>重命名(renaming)</strong> 是重要的</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Rename(<span class="arithmatex">\(\rho\)</span>)重命名</strong></p>
+</li>
+<li>
+<p>作用: 将表达 E 的计算结果重命名为 X</p>
+</li>
+<li>记作: <strong><span class="arithmatex">\(\rho_{x}(E)\)</span>​</strong><ul>
+<li>在此基础上, <strong><span class="arithmatex">\(\rho_{x(A1,A2,...,An)}(E)\)</span></strong> 把关系的 n 个属性依次命名为 A1, A2,..., An</li>
+</ul>
+</li>
+<li>核心特点: 尽修改关系/属性的名称(即关系模式), 而不修改实际数据(即关系实例)</li>
+</ul>
+<h4 id="_2">派生运算符</h4>
+<h5 id="join-operation">Join Operation(连接运算)</h5>
+<ul>
+<li>
+<p><strong>Semijoin(<span class="arithmatex">\(R \ltimes S\)</span>​)半连接</strong></p>
+</li>
+<li>
+<p><strong>Inner Join 内连接</strong></p>
+<ul>
+<li>
+<p><strong>Theta Join(<span class="arithmatex">\(\bowtie_\theta\)</span>)\theta 连接</strong></p>
+<ul>
+<li>实质: 先做笛卡尔积, 再对结果做选择筛选</li>
+<li>记作: <span class="arithmatex">\(r \bowtie_{\theta} s\)</span> = <span class="arithmatex">\(\sigma_{\theta}(r \times s)\)</span>​</li>
+</ul>
+</li>
+<li>
+<p><strong>Natural Join(<span class="arithmatex">\(\bowtie\)</span>​)自然连接</strong></p>
+<ul>
+<li>
+<p>本质: <span class="arithmatex">\(\theta\)</span> 连接+投影; 是特殊的 <span class="arithmatex">\(\theta\)</span> 连接</p>
+</li>
+<li>
+<p>记作: <span class="arithmatex">\(r \bowtie s\)</span>​</p>
+</li>
+<li>
+<p>规则:</p>
+<ul>
+<li>找出两个表中 所有同名的公共属性</li>
+<li>要求这些 公共属性的值必须相等, 自动完成等值 匹配筛选</li>
+<li>最终结果自动 去掉重复的公共属性列</li>
+</ul>
+<blockquote>
+<p>当自然连接中没有公共属性时, 相当于没有帅选条件, 直接进行笛卡尔积</p>
+</blockquote>
+</li>
+<li>
+<p>作用: 日常做关联查询的时候, 两个表总是会用同名的外码/主码做关联, 自然连接刚好直接匹配同名属性, 所以不用手动写匹配条件, 是最常用的连接类型</p>
+</li>
+<li>
+<p>例子:</p>
+<p><img alt="image-20260310110012607" src="../figures/chap2/image-20260310110012607.png" width="33%" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Outer Join(外连接)</strong></p>
+<ul>
+<li>
+<p>作用: 是普通连接的扩展, 用来解决普通连接丢失数据的问题; 它会用 <strong>null</strong> 填充缺失的数据, 避免信息丢失</p>
+</li>
+<li>
+<p>分类</p>
+<ul>
+<li><strong>Left Outer Join(<span class="arithmatex">\(R ⟕ S\)</span>)左外连接:</strong> 保留左表所有元素</li>
+<li><strong>Right Outer Join(<span class="arithmatex">\(R ⟖ S\)</span>​)右外连接:</strong> 保留右表所有元素</li>
+<li><strong>Full Outer Join(<span class="arithmatex">\(R ⟗ S\)</span>​)全外连接:</strong> 左右表都保留, 哪边匹配不上就用 <strong>null</strong> 填充</li>
+</ul>
+</li>
+<li>
+<p>例子:</p>
+<p><img alt="image-20260310111614767" src="../figures/chap2/image-20260310111614767.png" width="50%" /></p>
+<p><img alt="image-20260310111551030" src="../figures/chap2/image-20260310111551030.png" width="50%" /></p>
+<p><img alt="image-20260310111602483" src="../figures/chap2/image-20260310111602483.png" width="50%" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="_3">其他派生运算符</h5>
+<ul>
+<li>
+<p><strong>Set-intersection Operation(<span class="arithmatex">\(\cap\)</span>)交运算</strong></p>
+</li>
+<li>
+<p>作用: 找到给出关系的 共有元组</p>
+</li>
+<li>记作: <strong><span class="arithmatex">\(r \cap s\)</span> = <span class="arithmatex">\(r-(r-s)\)</span></strong></li>
+<li>
+<p>合法前提: </p>
+<ul>
+<li>两个关系的元数必须相同</li>
+<li>对应位置的属性值域必须兼容, 即: 对应列数据类型必须一致</li>
+</ul>
+</li>
+<li>
+<p><strong>Assignment Operation(<span class="arithmatex">\(\leftarrow\)</span>)赋值运算</strong></p>
+</li>
+<li>
+<p>作用: 类似于编程中的临时变量; 将复杂的关系代数表达式拆分开, 把中间部分的 结果赋值给临时变量, 以简化表达式</p>
+</li>
+<li>
+<p>记作: </p>
+<p><img alt="image-20260310143725961" src="../figures/chap2/image-20260310143725961.png" width="67%" /></p>
+</li>
+<li>
+<p><strong>Division Operation(<span class="arithmatex">\(÷\)</span>)除运算</strong></p>
+</li>
+<li>
+<p>定义: 给定两个关系 <span class="arithmatex">\(r(R)\)</span> 和 <span class="arithmatex">\(s(S)\)</span>(<span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(S\)</span> 是属性集合), 并且 <span class="arithmatex">\(S\)</span> 是 <span class="arithmatex">\(R\)</span> 的子集, 那么结果 <span class="arithmatex">\(r÷s\)</span> 的结果是: 一个属性为 <span class="arithmatex">\(R\)</span> 中去掉 <span class="arithmatex">\(S\)</span> 的关系; 并且这个关系满足: 结果中的每一个元组 <span class="arithmatex">\(t\)</span> 和 <span class="arithmatex">\(s\)</span> 中的每一个元组进行笛卡尔积后, 结果一定在 <span class="arithmatex">\(r\)</span>​中</p>
+</li>
+<li>
+<p>作用: 适合处理带有 for all 对于所有 这类描述的查询</p>
+</li>
+<li>
+<p>例子: </p>
+<p><img alt="image-20260310150431978" src="../figures/chap2/image-20260310150431978.png" width="67%" /></p>
+<p><img alt="image-20260310150452470" src="../figures/chap2/image-20260310150452470.png" width="33%" /></p>
+<p><img alt="image-20260310150556312" src="../figures/chap2/image-20260310150556312.png" width="33%" /></p>
+</li>
+</ul>
+<h4 id="null-value">空值(null value)</h4>
+<ul>
+<li>
+<p><strong>定义:</strong>  元组中某个属性的值可以存储为 <strong>null</strong>, 用来表示未知/不知道 <strong>(unknown)</strong></p>
+</li>
+<li>
+<p><strong>算数运算规则:</strong>  任何算数表达式, 只要含 null , 结果一定为 null</p>
+</li>
+<li>
+<p><strong>Three-valued logic 三值逻辑:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310144444792" src="../figures/chap2/image-20260310144444792.png" width="50%" /></p>
+<blockquote>
+<p>在 SQL 中, 配有新语法 <strong>"<span class="arithmatex">\(P\)</span> is unknown"</strong>, 若 P 的真值是 unknown, 则返回 true</p>
+</blockquote>
+<h3 id="extended-relational-algebra-operations">Extended-Relational-Algebra-Operations(扩展关系代数运算)</h3>
+<h4 id="generalized-projection">Generalized Projection(广义投影)</h4>
+<ul>
+<li>
+<p><strong>功能:</strong>  允许在投影列表中使用 算术运算表达式</p>
+</li>
+<li>
+<p><strong>记作:</strong> <span class="arithmatex">\(\Pi_{F1,F2,...,Fn}(E)\)</span>​​**</p>
+</li>
+<li>
+<p>参数说明</p>
+<ul>
+<li>E: 关系表达式</li>
+<li>Fn: 算数表达式</li>
+</ul>
+</li>
+<li>
+<p><strong>例子:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310152226229" src="../figures/chap2/image-20260310152226229.png" width="50%" /></p>
+<h4 id="aggregate-functions-and-operations">Aggregate Functions and Operations(聚集函数和运算)</h4>
+<ul>
+<li>
+<p><strong>作用:</strong>  接受一组值, 计算后返回一个单值结果</p>
+</li>
+<li>
+<p>**常用函数: **</p>
+</li>
+<li>
+<p><strong>avg</strong>: 计算平均值</p>
+</li>
+<li><strong>min</strong>: 计算最小值</li>
+<li><strong>max</strong>: 计算最大值</li>
+<li><strong>sum</strong>: 计算总和</li>
+<li><strong>count</strong>: 计数; 统计值的个数</li>
+<li>
+<p><strong>count-distinct</strong>: 去重计数; 只统计不同值的个数</p>
+</li>
+<li>
+<p><strong>写法: <span class="arithmatex">\(_{G_1,G_2} \mathcal{G}_{F_1(A_1), F_2(A_2)} (E)\)</span>​</strong></p>
+</li>
+<li>
+<p>参数说明</p>
+<ul>
+<li>E: 关系代数表达式</li>
+<li><span class="arithmatex">\({G_1,G_2}\)</span>: 分组属性列表, 按这些属性分组, 其中相同值的为一组(可以为空)</li>
+<li><span class="arithmatex">\({F_i}\)</span>: 每个分组需要执行的聚集函数</li>
+<li><span class="arithmatex">\({A_i}\)</span>: 每个聚集函数作用的目标属性名</li>
+</ul>
+</li>
+<li>
+<p>结果说明</p>
+<ul>
+<li>默认情况, 聚集运算的结果得到的新列是没有属性名的(因为是新值), 所以需要用重命名来解决, 为了方便, 可以直接把重命名写在聚集运算里</li>
+<li>比方说: <img alt="image-20260310154218033" src="../figures/chap2/image-20260310154218033.png" width="50%" /></li>
+</ul>
+</li>
+<li>
+<p><strong>例子(实际用了重命名):</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310153453906" src="../figures/chap2/image-20260310153453906.png" width="67%" /></p>
+<h3 id="modification-of-the-database">Modification of the Database</h3>
+<blockquote>
+<p>数据库内容修改一共分三类操作: 删除, 插入和更新; 所有操作都可以由赋值操作(<span class="arithmatex">\(\leftarrow\)</span>)来完成</p>
+</blockquote>
+<h4 id="deletion">Deletion</h4>
+<ul>
+<li>
+<p><strong>逻辑:</strong>  每一次都必须 删除一整个元组, 不能只删除某个属性中的值</p>
+</li>
+<li>
+<p><strong>记作:</strong> <span class="arithmatex">\(r \leftarrow r-E\)</span>​**</p>
+</li>
+<li>
+<p>参数说明</p>
+<ul>
+<li><span class="arithmatex">\(r\)</span>: 要修改的原关系</li>
+<li><span class="arithmatex">\(E\)</span>: 查询出要删除的元组的关系代数表达式</li>
+</ul>
+</li>
+<li>
+<p><strong>例子:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310155813765" src="../figures/chap2/image-20260310155813765.png" width="67%" /></p>
+<h4 id="insertion">Insertion</h4>
+<ul>
+<li>
+<p><strong>作用:</strong>  将新元组插入到原关系里, 既可以插入单个元组, 也可以插入一个查询结果的所有元组</p>
+</li>
+<li>
+<p><strong>记作:</strong> <span class="arithmatex">\(r \leftarrow r \cup E\)</span>​**</p>
+</li>
+<li>
+<p>参数说明</p>
+<ul>
+<li><span class="arithmatex">\(E\)</span>: 要么是 <strong>常量关系</strong> (手动写好要插入的单个/多个元组) 要么是 <strong>查询得到的元组集合</strong>, 和原关系做并运算再写回就完成了操作</li>
+</ul>
+</li>
+<li>
+<p><strong>例子:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310161225099" src="../figures/chap2/image-20260310161225099.png" width="67%" /></p>
+<h4 id="updating">Updating</h4>
+<ul>
+<li>
+<p><strong>作用:</strong>  修改已有元组的某个属性值, 不删除整行, 只改指定列的值</p>
+</li>
+<li>
+<p><strong>记作:</strong> <span class="arithmatex">\(r \leftarrow \Pi_{F_1,F_2,...F_i}(r)\)</span>​**</p>
+</li>
+<li>
+<p>更新实现的两种方式</p>
+</li>
+<li>
+<p>方法一: 利用广义投影直接进行覆盖, 不需要修改的属性直接保留, 需要修改的用算数表达式进行计算</p>
+</li>
+<li>
+<p>方法二: 先删除再插入; 先将旧元组筛选出来, 删掉旧元组, 然后再将修改好的元组插入回去</p>
+</li>
+<li>
+<p><strong>例子:</strong></p>
+</li>
+</ul>
+<p><img alt="image-20260310161315875" src="../figures/chap2/image-20260310161315875.png" width="67%" /></p>
+<h3 id="multiset-relational-algebra">Multiset Relational Algebra</h3>
+<blockquote>
+<p>传统关系代数中的任何运算都会将结果中的重复元组删除, 但为了适配 SQL 语义(SQL 本身默认是基于多重集合的), 扩展出了多级关系代数</p>
+</blockquote>
+<ul>
+<li><strong>多集的表示方法</strong></li>
+</ul>
+<p><img alt="image-20260310163212837" src="../figures/chap2/image-20260310163212837.png" width="67%" /></p>
+<blockquote>
+<p>记录每个元组的计数 <span class="arithmatex">\(λ(X)\)</span> (lambda 函数, 计数函数, 没列出的元组计数默认为 0)</p>
+</blockquote>
+<ul>
+<li>
+<p>多重集的运算规则</p>
+</li>
+<li>
+<p>多重集的交集</p>
+<ul>
+<li>对任意元素, 结果多重集 <span class="arithmatex">\(Z\)</span> 的重数为:  <span class="arithmatex">\(λ(Z)=min(λ(X),λ(Y))\)</span> 也就是取两个输入多重集里, 该 元素重数的较小值: </li>
+</ul>
+</li>
+<li>
+<p>多重集的并集</p>
+<ul>
+<li>重数取和</li>
+</ul>
+</li>
+<li>
+<p>多重集关系代数</p>
+</li>
+<li>
+<p><strong>选择(selection)</strong>:  如果一个元组满足选择条件, 那么结果中该元组的重复次数和它在输入多重集中的 重复次数相同. </p>
+</li>
+<li><strong>投影(projection)</strong>:  每个输入元组都会在结果中对应产出一个元组, 哪怕投影后出现重复元组, 也会 保留重复, 不会去重. </li>
+<li><strong>笛卡尔积(cross product)</strong>:  如果关系 <span class="arithmatex">\(r\)</span> 中有 <span class="arithmatex">\(m\)</span> 份元组 <span class="arithmatex">\(t_1\)</span>, 关系 <span class="arithmatex">\(s\)</span> 中有 <span class="arithmatex">\(n\)</span> 份元组 <span class="arithmatex">\(t_2\)</span>, 那么笛卡尔积 <span class="arithmatex">\(r \times s\)</span> 中, 组合元组 <span class="arithmatex">\(t_1,t_2\)</span> 会 有 <span class="arithmatex">\(m \times n\)</span> 份. </li>
+<li><strong>其他运算符(Other operators)</strong>(<span class="arithmatex">\(m,n\)</span> 是两个输入中对应元素的份数)<ul>
+<li>并集(union): 结果 保留 <span class="arithmatex">\(m+n\)</span> 份 该元素</li>
+<li>交集(intersection): 结果 保留 <span class="arithmatex">\(min(m,n)\)</span> 份 该元素</li>
+<li>差集(difference): 结果 保留 <span class="arithmatex">\(max(0,m-n)\)</span> 份 该元素</li>
+</ul>
+</li>
+</ul>
+<h3 id="sql-and-relational-algebra">SQL and Relational Algebra</h3>
+<blockquote>
+<p>讲解 SQL 语句和多集关系代数的等价转换规则</p>
+</blockquote>
+<ul>
+<li>
+<p>基础 SQL</p>
+<ul>
+<li>
+<p>例子:</p>
+<p><img alt="image-20260310165059024" src="../figures/chap2/image-20260310165059024.png" /></p>
+</li>
+<li>
+<p>转换逻辑</p>
+<ol>
+<li><strong>FROM</strong> 子句的多个表, <strong>对应做笛卡尔积</strong>, 把所有表拼接成一个关系</li>
+<li><strong>WHERE</strong> 子句的条件 <strong>P</strong>, 对应选择运算 <strong><span class="arithmatex">\(\sigma_{P}\)</span></strong>, 筛选符合条件的行</li>
+<li><strong>SELECT</strong> 子句指定的列, 对应投影运算 <strong><span class="arithmatex">\(\Pi\)</span></strong>, 提取需要的列, 因为是多集代数, 会保留重复, 和 SQL 语义一致.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>带分组聚合的 SQL</p>
+<ul>
+<li>
+<p>例子:</p>
+<p><img alt="image-20260310165357795" src="../figures/chap2/image-20260310165357795.png" width="67%" /></p>
+</li>
+<li>
+<p>转换逻辑</p>
+<ol>
+<li>还是先做表的笛卡尔积, 再用 <strong>WHERE</strong> 筛选行</li>
+<li>然后按 <strong>GROUP BY</strong> 的属性做分组聚集, 得到统计结果, 最后投影提取需要的列并重命名, 完全对应 SQL 的执行逻辑.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>等价 Query</p>
+</li>
+</ul>
+<p><img alt="image-20260310165604548" src="../figures/chap2/image-20260310165604548.png" width="67%" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

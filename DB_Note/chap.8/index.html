@@ -1,0 +1,1539 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.8/">
+      
+      
+        <link rel="prev" href="../chap.7/">
+      
+      
+        <link rel="next" href="../chap.9/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第八章 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第八章
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        物理存储系统
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="物理存储系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        物理存储介质的分类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        磁盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        磁带
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        闪存
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RAID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raid_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 简介
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 级别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 级别的选择
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        物理存储系统
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="物理存储系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        物理存储介质的分类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        磁盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        磁带
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        闪存
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RAID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raid_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 简介
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 级别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raid_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAID 级别的选择
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第八章</h1>
+
+<h2 id="_1">物理存储系统</h2>
+<p>chapter 12: Physical Storage System</p>
+<h3 id="_2">物理存储介质的分类</h3>
+<ul>
+<li>
+<p>**存储分类: **</p>
+</li>
+<li>
+<p>**易失性存储 (volatile storage): **</p>
+<ol>
+<li>断电后内容会丢失. </li>
+</ol>
+</li>
+<li>
+<p>**非易失性存储 (non-volatile storage): **</p>
+<ol>
+<li>断电后内容依然存在. </li>
+<li>包括二级存储, 三级存储, 以及带有电池备份的主存储器. </li>
+</ol>
+</li>
+<li>
+<p>**影响选择存储介质的因素: **</p>
+</li>
+<li>
+<p>数据访问速度(speed): 从发出指令到拿到数据需要多长时间.</p>
+</li>
+<li>
+<p>单位数据成本(cost per unit of data): 每 GB 或者 TB 需要花多少钱. </p>
+</li>
+<li>
+<p>可靠性(Relilability): 包括因断电或系统崩溃导致的数据丢失, 以及存储设备的物理损坏. </p>
+</li>
+<li>
+<p><strong>存储层次结构</strong></p>
+</li>
+</ul>
+<p>存储设备层级图:</p>
+<p><img src="https://note.noughtq.top/sys/db/images/lec8/1.png" alt="img" style="zoom: 50%;" /></p>
+<ol>
+<li>
+<p>缓存 (cache)</p>
+</li>
+<li>
+<p>主存储器 (main memory)</p>
+</li>
+<li>
+<p>闪存 (flash memory): </p>
+<ul>
+<li>常用于相机, 智能手机等设备中. 基于闪存实现的存储器有: U盘, 固态硬盘(SSD)等</li>
+</ul>
+</li>
+<li>
+<p>磁盘 (magnetic disk)</p>
+</li>
+<li>
+<p>光盘 (optical disk)</p>
+<ul>
+<li>包括DVD(digital video disk), 光驱(optical disk jukebox)等</li>
+</ul>
+</li>
+<li>
+<p>磁带 (magnetic tapes)</p>
+<p>其中, <strong>存储层级越往上,速度越快, 成本越高, 容量越小</strong>, 反之同理. </p>
+<p>DB会将经常访问的数据放在上方, 而大量历史数据放在下方</p>
+</li>
+</ol>
+<p>除此之外还可以将存储分为以下几个层级: </p>
+<ol>
+<li>
+<p>主存储/一级存储 (Primary storage):  </p>
+<ul>
+<li>速度最快,成本最高</li>
+<li>具有<strong>易失性</strong></li>
+<li>例如: <strong>缓存</strong>, <strong>主存</strong> </li>
+</ul>
+</li>
+<li>
+<p>二级存储(Secondary storage)/联机存储 (on-line storage):</p>
+<ul>
+<li>访问速度适中</li>
+<li>
+<p><strong>非易失性</strong></p>
+</li>
+<li>
+<p>例如: 闪存, 磁性硬盘</p>
+</li>
+</ul>
+</li>
+<li>
+<p>三级存储 (Tertiary storage):  层次结构中的最低级, <strong>非易失性</strong>, 访问速度慢. </p>
+<ul>
+<li>也称为脱机存储 (off-line storage), 常用于归档存储 (archival storage). </li>
+<li>例如: 磁带, 光盘. </li>
+<li>磁带:  顺序访问, 单盘容量 1 至 12 TB; 自动磁带库(Jukeboxes)可提供拍字节(PB, 即 1000s TB)级别的存储. </li>
+</ul>
+</li>
+</ol>
+<p>更现代的层级划分:</p>
+<p>​    <img alt="Storage_Hierarchy" src="../figures/chap8/Storage_Hierarchy.png" width="50%" /></p>
+<ul>
+<li>
+<p><strong>存储接口</strong></p>
+</li>
+<li>
+<p>磁盘接口标准家族: </p>
+<ol>
+<li>SATA (Serial ATA): 串行 ATA;  常见于个人电脑. SATA 3 支持最高 6 Gbps 的传输速度. </li>
+<li>SAS (Serial Attached SCSI): 串行连接 SCSI; 常见于企业级服务器. SAS 3 支持 12 Gbps. </li>
+<li>NVMe (Non-Volatile Memory Express): 非易失性内存主机控制器接口规范; 现代最快的标准, 通过 PCIe 接口连接. </li>
+<li>优势: 更低的延迟, 更高的传输率. </li>
+<li>速度: 最高可达 24 Gbps. </li>
+</ol>
+</li>
+<li>
+<p>存储网络架构: </p>
+<ol>
+<li>SAN (存储区域网络):  通过高速网络将大量硬盘连接到多台服务器. 磁盘通常组织在 RAID(冗余磁盘阵列, 用于提速和防灾)中. </li>
+<li>NAS (网络附加存储):  提供文件系统接口的联网存储设备. 解释: 简单说, SAN 像是一个网络上的 "虚拟硬盘", 而 NAS 像是一个网络上的 "共享文件夹". </li>
+<li>Cloud Storage (云存储): 随着互联网发展, 近年来增长迅速. </li>
+</ol>
+</li>
+</ul>
+<h3 id="_3">磁盘</h3>
+<ul>
+<li><strong>磁性硬盘(Magnetic Hard Disk Mechanism)的结构</strong></li>
+</ul>
+<p><img alt="image-20260520162527716" src="../figures/chap8/image-20260520162527716.png" width="50%" /></p>
+<p>Platter (盘片): 硬盘里叠在一起的圆形金属片, 表面覆盖磁性材料. 图中显示了三张盘片. 通常 1 到 5 张盘片安装在同一个主轴上.</p>
+<p>Spindle (主轴): 盘片中心旋转的轴. </p>
+<p>Rotation (旋转): 盘片以高速(如 7200 转/分)不停旋转. </p>
+<p>Arm assembly (磁臂组件): 像老式留声机的唱臂, 负责带着磁头来回移动. 所有的磁头跟随同一个磁臂同步移动</p>
+<p>Read-write head (读写磁头): 每个盘片的上下表面各有一个磁头, 它们悬浮在高速旋转的盘片表面极近的地方. </p>
+<ul>
+<li>**几何单位定义: **</li>
+</ul>
+<p><strong>Track  <span class="arithmatex">\(t\)</span> (磁道):</strong> 盘片表面分为同心圆磁道. 典型硬盘每个表面有 5 万道 10 万个磁道</p>
+<p><strong>Sector  <span class="arithmatex">\(s\)</span> (扇区):</strong> 磁道被划分成的小弧段, 称为扇区, <strong>是读写的最小单位</strong>. 大小通常为 512 字节. </p>
+<p><strong>Cylinder  <span class="arithmatex">\(c\)</span>​ (柱面):</strong> 所有盘片上具有相同半径的所有磁道的集合(就像一个垂直的圆柱体表面). </p>
+<ul>
+<li><strong>如何读/写一个扇区?</strong></li>
+</ul>
+<p>**寻道(Seek): ** 磁臂摆动, 将磁头定位到正确的磁道上. </p>
+<p>**旋转 (Rotation): ** 盘片持续旋转, 直到目标扇区转到磁头下方. </p>
+<ul>
+<li>
+<p><strong>磁盘控制器(Disk controller)</strong></p>
+<p>是计算机系统与磁盘驱动器硬件之间的接口. </p>
+<p>接受高层命令来读写扇区. </p>
+<p>启动动作(如将磁臂移动到正确磁道并实际读写数据). </p>
+<p>计算并附加校验和 (checksums): 为每个扇区验证读取的数据是否正确. 如果数据损坏, 校验和很可能不匹配. </p>
+<p>通过在写入后立即读回扇区来确保写入成功. </p>
+<p>执行坏扇区重映射. </p>
+</li>
+<li>
+<p><strong>磁盘性能度量</strong></p>
+</li>
+<li>
+<p><strong>存取时间 (Access time):</strong>  从发出读写请求到数据开始传输所花费的时间. 由以下部分组成: </p>
+<ol>
+<li>
+<p><strong>寻道时间 (Seek time):</strong>  将磁臂重新定位到正确磁道所需的时间. </p>
+</li>
+<li>
+<p>平均寻道时间是坏情况寻道时间的 1/2. </p>
+</li>
+<li>
+<p>典型磁盘上为 4 到 10 毫秒. </p>
+</li>
+<li>
+<p><strong>旋转延迟 (Rotational latency):</strong>  等待要访问的扇区旋转到磁头下方所需的时间. </p>
+</li>
+<li>
+<p>典型磁盘(5400 到 15000 转/分)上为 4 到 11 毫秒. </p>
+</li>
+<li>平均延迟是上述延迟的 1/2. </li>
+</ol>
+<p>总延迟:  取决于磁盘型号, 通常为 5 到 20 毫秒. </p>
+</li>
+<li>
+<p>数据传输率 (Data-transfer rate):  从磁盘检索或存储数据的速率.</p>
+<ul>
+<li>最大速率为 25 到 200 MB/秒, 内圈磁道的速率较低. </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>影响机械硬盘(HDD / Hard Disk Drive)性能的两大因素就是寻道和旋转两个物理动作, 所以数据库优化的一个主要目的就是减少这种物理寻道时间</p>
+</blockquote>
+<ul>
+<li>磁盘块 (Disk block): 存储分配和检索的逻辑单位. <ul>
+<li>通常为 4 到 16 KB. </li>
+<li>更小的块: 从磁盘传输的次数更多. </li>
+<li>更大的块: 由于块未填满而浪费的空间更多. </li>
+</ul>
+</li>
+<li><strong>顺序访问模式 (Sequential access pattern):</strong> <ul>
+<li>连续的请求访问连续的磁盘块. </li>
+<li>仅在访问第一块时需要寻道. </li>
+</ul>
+</li>
+<li><strong>随机访问模式 (Random access pattern):</strong> <ul>
+<li>连续的请求访问磁盘上任意位置的块. </li>
+<li>每次访问都需要寻道. </li>
+<li>由于大量时间浪费在寻道上, 传输率很低. </li>
+</ul>
+</li>
+<li>每秒输入/输出操作数 (IOPS): <ul>
+<li>磁盘每秒能支持的随机块读取数量. </li>
+<li>当前一代机械硬盘约为 50 到 200 IOPS. </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>数据库非常在意顺序访问和随机访问的区别. 顺序读取要比随机读取快得多. 而 IOPS 是衡量数据库处理高并发小请求能力的关键指标. HDD 在这一项上表现很弱.</p>
+</blockquote>
+<ul>
+<li>**平均无故障时间 (MTTF): ** 预期磁盘连续运行而不发生故障的平均时间. <ul>
+<li>通常为 3 到 5 年. </li>
+<li>新磁盘的故障概率很低, 对应于新磁盘 50 万 到 120 万 小时的 "理论 MTTF". </li>
+<li>例如: 如果 MTTF 为 120 万小时, 意味着在 1000 个相对较新的磁盘中, 平均每 1200 小时会有一个损坏. </li>
+<li>MTTF 会随着磁盘老化而降低. </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>MTTF 用于评估系统的可靠性. 虽然时间看上去很久, 但是拥有上万块硬盘的数据中心, 硬盘损坏是每天都会发生的常态, 所以数据库必须要具备数据冗余(如: RAID 或多副本)的能力</p>
+</blockquote>
+<h3 id="_4">磁带</h3>
+<ul>
+<li><strong>磁带(Magnetic Tapes)</strong></li>
+<li>可存储海量数据并提供高传输率. <ul>
+<li>DAT 格式几 GB, DLT 格式 10-40 GB, Ultrium 格式 100 GB+, Ampex 螺旋扫描格式 330 GB. </li>
+<li>传输率从几 MB/s 到几十 MB/s. </li>
+</ul>
+</li>
+<li>磁带本身便宜, 但驱动器(读写机)价格非常高. </li>
+<li>与磁盘和光盘相比, <strong>存取时间非常慢</strong>. <ul>
+<li>局限于顺序访问. </li>
+<li>某些格式提供较快的寻道(几十秒), 但以降低容量为代价. </li>
+</ul>
+</li>
+<li>主要用于备份, 存储不常用的信息, 以及作为系统间传输信息的脱机介质. </li>
+<li><strong>磁带库 (Jukeboxes)</strong> 用于超大容量存储. <ul>
+<li>可达数拍字节(PB, 10151015 字节). </li>
+</ul>
+</li>
+</ul>
+<h3 id="_5">闪存</h3>
+<ul>
+<li>
+<p><strong>闪存(Flash Storage)</strong></p>
+</li>
+<li>
+<p><strong>NOR 闪存</strong>(快, 但贵, 容量小)vs <strong>NAND 闪存</strong>(容量大, 单位成本低). </p>
+</li>
+<li>
+<p>**NAND 闪存: **</p>
+<ul>
+<li>广泛用于存储, 比 NOR 闪存便宜. </li>
+<li>要求 <strong>按页读取</strong>(每页: 512 字节到 4KB). </li>
+<li>读取一页需 20 到 100 微秒. </li>
+<li>顺序读取和随机读取之间差异不大. </li>
+<li><strong>一页只能写入一次</strong>: 必须先擦除才能重新写入. </li>
+</ul>
+</li>
+<li>
+<p>**固态硬盘 (SSD / Solid State Drive): **</p>
+</li>
+</ul>
+<p>​    使用标准的面相块的磁盘接口, 但在 <strong>内部将数据存储在多个闪存设备上.</strong> 目前 SSD 几乎全部采用的是 NAND 闪存. 它是一个完整的存储设备. 它除了包含多颗闪存芯片外, 还包含两个至关重要的部分: </p>
+<p>​    主控芯片 (Controller):  相当于 SSD 的 "大脑", 负责管理数据怎么写, 怎么读, 以及执行刚才幻灯片里提到的 "磨损均衡" 和 "重映射". </p>
+<p>​    接口与固件 (Interface &amp; Firmware):  负责让电脑能识别它(比如 SATA 或 NVMe 协议).</p>
+<blockquote>
+<p>SSD 强大的地方在于没有机械寻道延迟, 因此随机访问极快. 但是它有一个物理限制是必须 "先擦后写", 这导致 SSD 写入比读取慢.</p>
+</blockquote>
+<ul>
+<li>擦除以 <strong>擦除块 (erase block)</strong> 为单位进行. <ul>
+<li>耗时 2 到 5 毫秒. </li>
+<li>一个擦除块通常为 256 KB 到 1 MB(包含 128 到 256 页). </li>
+</ul>
+</li>
+<li><strong>重映射 (Remapping):</strong>  将逻辑页地址映射到物理页地址, 以避免等待擦除. </li>
+<li>闪存转换表 (Flash translation table) 跟踪映射关系. <ul>
+<li>同时也存储在闪存页的标签字段中. </li>
+<li>重映射由 闪存转换层 (FTL) 执行. </li>
+</ul>
+</li>
+<li>
+<p>在 10 万 到 100 万 次擦除后, 擦除块会变得不可靠且无法使用. </p>
+<ul>
+<li>磨损均衡 (wear leveling):  均匀分布写入压力. </li>
+</ul>
+</li>
+<li>
+<p><strong>SSD 的性能指标</strong></p>
+</li>
+<li>
+<p>每秒随机读/写次数: </p>
+<ul>
+<li>典型的 4 KB 读取: 每秒 10,000 次(10,000 IOPS). </li>
+<li>典型的 4 KB 写入: 40,000 IOPS. </li>
+</ul>
+</li>
+<li>SSD 支持并行读取: <ul>
+<li>典型的 4 KB 读取: </li>
+<li>在 SATA 上使用 32 路并行请求(QD-32)可达 100,000 IOPS. </li>
+<li>在 NVMe PCIe 上使用 QD-32 可达 350,000 IOPS. </li>
+</ul>
+</li>
+<li>顺序读写的数据传输率: <ul>
+<li>SATA3 约为 400 MB/sec, NVMe PCIe 约为 2 到 3 GB/sec. (注: 手写补充提示 PCIe 5.0 可达 14 GB/s). </li>
+</ul>
+</li>
+<li>混合硬盘 (Hybrid disks):  将少量闪存缓存与大容量机械硬盘结合. </li>
+</ul>
+<blockquote>
+<p>SSD 的 IOPS 远超机械硬盘(10 万+ vs 200). QD-32 (Queue Depth) 指的是并发请求的深度, SSD 非常擅长同时处理多个请求. 数据库现在大量转向 NVMe SSD 以榨取极致性能. </p>
+</blockquote>
+<h3 id="raid">RAID</h3>
+<h4 id="raid_1">RAID 简介</h4>
+<ul>
+<li><strong>独立磁盘冗余阵列(Redundant Arrays of independent Disks / RAID)</strong></li>
+</ul>
+<p>RAID 是一种磁盘组织技术. 它将多个物理硬盘结合成一个逻辑硬盘(在计算机系统中显示为一个大硬盘). 主要目的是通过不同的组合方式, 达到以下的一些目标:</p>
+<ol>
+<li>
+<p><strong>提升读写性能:</strong> 通过多块硬盘并行书写.</p>
+</li>
+<li>
+<p><strong>提高数据安全性:</strong> 通过数据冗余, 即使某块硬盘坏了, 数据也不会丢失.</p>
+</li>
+<li>
+<p><strong>扩大单张逻辑卷的容量:</strong> 将多块小硬盘整合成一块大硬盘.</p>
+<p>就是将多块物理硬盘(无论是 HDD, 还是 SSD, 都称为物理硬盘)的空间合并起来, 或者在原有的基础上追加新的硬盘, 让 OS 认为这是一个超大硬盘</p>
+<blockquote>
+<p>逻辑卷(Logical Volume): 这是操作系统'看'到的硬盘. 比如电脑中的 C 盘, D 盘; 或者 Linux 系统下的/dev/sdal</p>
+</blockquote>
+</li>
+</ol>
+<p>同时, RAID 也有矛盾存在. 当磁盘越多, 它的读写越快, 但是坏掉其中任意一个的概率就会大幅增加, 所以 RAID 要考虑利用冗余来抵消这种风险.</p>
+<ul>
+<li>
+<p><strong>通过冗余提高可靠性</strong></p>
+<ul>
+<li><strong>冗余 (Redundancy):</strong> 存储额外信息, 可用于在磁盘损坏时重建丢失的信息. </li>
+</ul>
+<p>例如: **镜像 (Mirroring / Shadowing): **</p>
+<ol>
+<li>复制每个磁盘. 一个逻辑磁盘由两个物理磁盘组成. </li>
+<li>每次写入都在两个磁盘上同时进行. </li>
+<li>读取可以从任意一个磁盘进行. </li>
+<li>如果一对磁盘中的一个损坏, 数据仍可从另一个获得. </li>
+<li>
+<p>数据丢失仅在磁盘损坏且其镜像盘在修复前也损坏时发生. 这种情况概率极小, 除非发生火灾, 建筑坍塌或断电冲击等相关联的故障. </p>
+</li>
+<li>
+<p><strong>平均数据丢失时间 (MTTDL):</strong> 取决于平均无故障时间(MTTF)和平均修复时间. </p>
+</li>
+</ol>
+<p>例如: MTTF 为 10 万小时, 修复时间为 10 小时, 镜像对的平均数据丢失时间可达 5.7 万年. </p>
+</li>
+<li>
+<p><strong>通过并行提高性能</strong></p>
+<p>磁盘系统中并行的两个主要目标: </p>
+<div class="language-text highlight"><pre><span></span><code>1. 负载均衡: 分散多个微小访问, 以增加吞吐量. 
+1. 并行化: 并行处理大型访问, 以减少响应时间.
+</code></pre></div>
+<blockquote>
+<p>通过在多个磁盘上 <strong>条带化 (Striping)</strong> 数据来 <strong>提高传输率.</strong> </p>
+</blockquote>
+<ul>
+<li><strong>位级条带化 (Bit-level striping):</strong> 将一个字节拆开后, 将每一位存到不同的盘中. 对于一个 8 个磁盘的阵列, 理论上它可以将读取速度提升为单盘的 8 倍. 但是实际上这种方式会导致硬盘频繁的为了读一个字节而集体寻道, 所以效率其实不高, 并不常用.</li>
+<li><strong>块级条带化 (Block-level striping):</strong> 按照一定的大小将数据切块, 比如 64KB. 当要读一个大表时, 所有磁盘并行工作; 当读一个极小的文件时, 可能只需要访问其中一块盘, 其他盘可以用来处理其他的请求(并行性)</li>
+</ul>
+</li>
+</ul>
+<h4 id="raid_2">RAID 级别</h4>
+<p>​    利用条带化结合 <strong>校验位(Parity bits)</strong>, 以较低成本提供冗余的方案. 不同的 RAID 级别具有不同的成本, 性能, 可靠性.</p>
+<ul>
+<li><strong>RAID 0: 只进行块条带化, 没有冗余</strong></li>
+</ul>
+<p>只追求效率, 可以满足对于数据安全性不敏感的高性能应用需求.</p>
+<ul>
+<li><strong>RAID 1: 镜像磁盘(Mirrored disks)</strong></li>
+</ul>
+<p>用另外一块硬盘来复制数据, 实现冗余. 这种方式读取速度快, 谁闲着谁就可以读数据, 但是成本也很高. 常用于存储数据库系统的日志文件. </p>
+<ul>
+<li>
+<p><strong>校验块 (Parity blocks):</strong> 假如现在有 10 块硬盘, 要存一个 900KB 的文件. 将这 900KB 的文件分为 9 份, 每份 100KB, 存入前 9 个硬盘中. 那么第 10 块硬盘计算前 9 块硬盘中存入块的异或值, 即: $1 \space XOR \space 2 \space XOR \space 3 \space ...XOR \space 9 $ . 这样, 当有一个盘的数据出错后, 利用计算就能重新复原之前的数据. </p>
+</li>
+<li>
+<p><strong>RAID 5: 块条带化 ＋ 分布式校验</strong></p>
+</li>
+</ul>
+<p>它的核心逻辑是 <strong>异或运算</strong>. 也就是 <span class="arithmatex">\(AXorB=C\)</span>​, 如果知道 B 和 C, 那么就能算出 A.</p>
+<ul>
+<li>将数据和校验信息分散在所有 <span class="arithmatex">\(N+1\)</span> 个磁盘上, 而不是将校验固定存放在一台磁盘. 例如: 5 块盘, 第 <span class="arithmatex">\(n\)</span> 组块的校验块存在磁盘 <span class="arithmatex">\((n \space mod \space 5)+1\)</span> 上, 数据块存在其余 4 块盘. </li>
+<li>如果数据块和校验块在不同磁盘, 块写入可以并行. </li>
+</ul>
+<blockquote>
+<p>根据异或运算的原理可知, <strong>RAID 5 仅允许同时坏 1 个盘</strong>, 当坏了两个及以上的盘后它就无法进行复原了.</p>
+</blockquote>
+<ul>
+<li><strong>RAID 6: P+Q 双重校验. ** 类似于 RAID 5, 但存储两个错误纠正块(P 和 Q), 以防止 </strong>两块磁盘同时损坏**. </li>
+</ul>
+<p>当硬盘容量越来越大的时候, RAID 5 就会因为恢复数据太慢而变得不太靠谱了. 因此诞生了 RAID 6 , 同时成本也更高</p>
+<ul>
+<li>RAID 6 就是在 RAID 5 的基础上, 多拿出了一个盘用来做校验. 一个盘用 XOR 的运算进行校验, 另一个盘用更复杂的方式来校验, 比如: 伽罗瓦域数学运算等.</li>
+</ul>
+<p>一些实践中不常用的级别: </p>
+<ul>
+<li>
+<p>**RAID 2: ** 内存式纠错码(ECC), 采用位条带化. </p>
+</li>
+<li>
+<p>**RAID 3: ** 位交错校验. </p>
+</li>
+<li>
+<p><strong>RAID 4: ** 块交错校验; 使用 </strong>单独的专用校验盘**. </p>
+</li>
+<li>
+<p>RAID 5 优于 RAID 4, 因为在随机写入时, RAID 4 的校验盘会承受极高的写负载, 成为瓶颈. </p>
+</li>
+</ul>
+<h4 id="raid_3">RAID 级别的选择</h4>
+<ul>
+<li>选择 RAID 级别的因素: </li>
+<li>磁盘的数量以及成本</li>
+<li>性能: 正常运行时的 IOPS 和带宽. </li>
+<li>故障时的性能表现. </li>
+<li>磁盘重建时的性能表现(包括重建所需的时间). </li>
+<li>
+<p>**RAID 0 仅在数据安全性不重要时使用. ** 例如, 数据可以很容易地从其他来源恢复. </p>
+</li>
+<li>
+<p>**RAID 1 的写入性能远优于 RAID 5. **</p>
+</li>
+<li>RAID 5 写入一个块至少需要 2 次读和 2 次写, 而 RAID 1 只需要 2 次写. </li>
+<li>**RAID 1 的存储成本高于 RAID 5. **</li>
+<li><strong>RAID 5 适用于顺序且大型的写入应用</strong>(需要大容量数据存储). </li>
+<li>**RAID 1 适用于有大量随机/微小更新的应用. **</li>
+<li><strong>RAID 6 提供了比 RAID 5 更好的数据保护</strong>, 因为它能容忍两块磁盘(或块)同时损坏. </li>
+<li>随着单盘故障风险增加, RAID 6 的重要性日益凸显. </li>
+</ul>
+<h3 id="_6">硬件问题</h3>
+<ul>
+<li>**软件 RAID (Software RAID): ** 完全由软件实现 RAID 逻辑, 不需要特殊的硬件支持. </li>
+<li>**硬件 RAID (Hardware RAID): ** 使用专用硬件实现 RAID 逻辑. </li>
+<li>使用 <strong>非易失性内存 (NV-RAM)</strong> 来记录正在执行的写入操作. </li>
+<li>
+<p>**警惕: ** 写入过程中的电源故障可能导致磁盘数据损坏. </p>
+<ul>
+<li>例如: 在镜像系统中, 写入第一块数据后, 写入第二块数据前发生故障. </li>
+<li>当电源恢复时, 必须检测到此类损坏数据. </li>
+<li>**恢复: ** 从损坏中恢复类似于从故障磁盘中恢复. </li>
+<li>**NV-RAM 的作用: ** 帮助高效地定位潜在损坏的块. </li>
+<li>如果没有 NV-RAM, 则必须读取磁盘的所有块并与镜像盘/校验块进行对比. </li>
+</ul>
+</li>
+<li>
+<p>**潜伏故障 (Latent failures): ** 早期成功写入的数据随后发生损坏. </p>
+</li>
+<li>即使只有一个磁盘发生故障, 也可能导致数据丢失. </li>
+<li>**数据清理 (Data scrubbing): **</li>
+<li>持续扫描磁盘以寻找潜伏故障, 并利用副本或校验块进行恢复. </li>
+<li>**热插拔 (Hot swapping): ** 在系统运行状态下更换磁盘, 无需关机. </li>
+<li>由某些硬件 RAID 系统支持. </li>
+<li>缩短了恢复时间, 大幅提高可用性. </li>
+<li>许多系统维护着 <strong>备用磁盘 (Spare disks)</strong>. 这些磁盘保持在线, 一旦检测到故障, 立即作为故障盘的替代品. </li>
+<li>极大地减少了恢复时间. </li>
+<li>许多硬件 RAID 系统通过以下方式确保 <strong>不存在单点故障 (SPOF)</strong>: </li>
+<li>带有电池备份的 <strong>冗余电源</strong>. </li>
+<li>
+<p><strong>多个控制器</strong> 和多条互连线路, 以防止控制器或线路故障. </p>
+</li>
+<li>
+<p>磁盘块访问的优化</p>
+</li>
+<li>**缓冲 (Buffering): ** 在内存中设置缓冲区来缓存磁盘块. </li>
+<li>**预读 (Read-ahead): ** 预测随后会被请求的块, 提前从磁道读取额外的块. </li>
+<li>**磁盘臂调度 (Disk-arm-scheduling): ** 通过算法对块请求进行重新排序, 以最小化磁盘臂的移动. <ul>
+<li>**电梯算法 (elevator algorithm): ** 就像电梯一样, 按一个方向移动并顺路处理所有请求, 直到到达尽头再掉头. </li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

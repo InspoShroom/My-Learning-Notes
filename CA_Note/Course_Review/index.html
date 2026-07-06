@@ -1,0 +1,1224 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Course_Review/">
+      
+      
+        <link rel="prev" href="../TLP_Exploitation/">
+      
+      
+        <link rel="next" href="../QiaNote/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第十四章 课程期末复习 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十四章 课程期末复习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课程知识点思维导图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-02-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：设计基础与性能度量（Lectures 02-03）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-04-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：存储层次结构（Lectures 04-05）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ilplectures-06-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：指令级并行（ILP）（Lectures 06-08）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dlplectures-09-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：数据级并行（DLP）（Lectures 09-10）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-11-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：多核与一致性（Lectures 11-13）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课程知识点思维导图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-02-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：设计基础与性能度量（Lectures 02-03）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-04-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：存储层次结构（Lectures 04-05）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ilplectures-06-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：指令级并行（ILP）（Lectures 06-08）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dlplectures-09-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：数据级并行（DLP）（Lectures 09-10）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lectures-11-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：多核与一致性（Lectures 11-13）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">计算机体系结构课程期末复习脑图与考点汇总</h1>
+<p>本章基于课程期末复习大纲（lec14-review.pptx）进行整理，提供直观的知识点思维导图框架，并在后续小节中列举了每个微观考点的大意与核心计算公式，方便考前复习。</p>
+<hr />
+<h2 id="_2">课程知识点思维导图</h2>
+<pre class="mermaid"><code>mindmap
+  root((计算机体系结构))
+    Fundamentals(1. 设计基础)
+      指标
+        Dennard Scaling
+        Moore's Law
+        Flynn 分类SISD/SIMD/MISD/MIMD
+      性能
+        Amdahl's Law
+      ISA
+        操作数: Stack/Accumulator/GPR
+        访存: Register-Memory/Load-Store
+        RV 寻址: Register/Immediate/Displacement
+    Memory(2. 存储层次)
+      性能
+        AMAT 公式
+        3C 异常: Compulsory/Capacity/Conflict
+      Cache 优化
+        基本优化: 6种(包括多级L1/L2)
+        高级优化: 10种(Way预测/Nonblocking/HBM等)
+      虚拟内存
+        VIPT 相联度与页限制
+    ILP(3. 指令级并行)
+      流水线
+        Latency 与 Initiation Interval
+        Hazards: 结构/数据(RAW/WAR/WAW)/控制
+      异常
+        精实时异常与 Precise Exception
+      静态调度
+        循环展开
+        静态分支预测: 延迟分支槽填充
+      动态调度
+        Scoreboard 记分牌(集中控制/3表)
+        Tomasulo (保留站/重命名/CDB)
+        投机 Speculation (ROB/顺序提交)
+      多发射
+        理想 IPC 与多路限制
+    DLP(4. 数据级并行)
+      向量架构
+        RV64V (vv/vs/sv)
+        动态寄存器类型与 MVL
+        Strip Mining &amp; setvl
+        车队 Convoy 与 Chime 计算
+        Memory Banks 与 Stride 步长冲突
+        Gather-Scatter 稀疏访存
+      多媒体 SIMD
+        删减特征
+        屋顶图 Roofline 算术强度
+      GPU
+        SIMT 与 CUDA 1D 索引计算
+        Warp Divergence 分支发散
+        Branch Sync Stack 同步栈
+        显存分层: Local/Shared/Global
+    TLP(5. 多核与一致性)
+      架构
+        UMA 与 NUMA
+      一致性 Coherence
+        MSI / MESI / MOESI 协议
+        Snooping 监听与 Directory 目录
+      同步 Synchronization
+        Atomic Exchange &amp; Spin Locks
+      一致性模型 Consistency
+        顺序一致性 SC
+        松弛一致性 Relaxed</code></pre>
+<hr />
+<h2 id="lectures-02-03">第一部分：设计基础与性能度量（Lectures 02-03）</h2>
+<ul>
+<li><strong>Dennard 缩放定律（Dennard Scaling）</strong>：指出随着晶体管尺寸减小，给定硅片区域的功率密度保持恒定。该定律在 2004 年左右失效，主要是因为电压和电流无法继续无限制降低以确保电路可靠性。</li>
+<li><strong>摩尔定律（Moore's Law）</strong>：预测每个芯片上的晶体管数量大约每两年翻一番。该定律在 2015 年左右基本失效。</li>
+<li><strong>多核处理器转型</strong>：由于单核能效无法继续提升，处理器转向采用多个高效核心替代单个低效大核心，从发掘指令级并行转为发掘数据级和线程级并行。</li>
+<li><strong>并行性分类</strong>：应用并行性分为数据级并行（DLP）与任务级并行（TLP）；硬件发掘并行性的手段有指令级并行（ILP）、向量/GPU 架构、线程级并行（TLP）、请求级并行（RLP）。</li>
+<li><strong>阿姆达尔定律（Amdahl's Law）</strong>：用于衡量部件改进对整体加速的效果。公式为：
+  $<span class="arithmatex">\(\text{Speedup} = \frac{1}{(1 - f) + \frac{f}{s}}\)</span>$
+  <em>(其中 <span class="arithmatex">\(f\)</span> 为改进部分的执行时间比例，<span class="arithmatex">\(s\)</span> 为该部件的加速比)</em>
+  性能提升上限公式为：
+  $<span class="arithmatex">\(\text{Limit} = \frac{1}{1 - f}\)</span>$</li>
+<li><strong>ISA 操作数存储分类</strong>：根据 CPU 内部存储类型分为三类：</li>
+<li>堆栈架构（Stack）：操作数隐式位于栈顶。</li>
+<li>累加器架构（Accumulator）：一个操作数隐式位于累加器，另一个显式来自内存。</li>
+<li>通用寄存器架构（GPR）：所有操作数均为显式指定，最为主流。</li>
+<li><strong>GPR 架构分类</strong>：分为寄存器-内存架构（任意指令均可访问内存，如 x86）与载入-存储架构（仅 load/store 指令可访存，如 RISC-V/MIPS）。</li>
+<li><strong>寻址模式</strong>：指定操作数所在的地址（寄存器、常量或内存）。RISC-V 仅支持寄存器寻址、立即数寻址与偏移量寻址。</li>
+<li><strong>弗林分类法（Flynn's Taxonomy）</strong>：根据指令流和数据流的组合分为：</li>
+<li>SISD：单指令单数据，即传统的单核标量机。</li>
+<li>SIMD：单指令多数据，如向量机、多媒体指令、GPU。</li>
+<li>MISD：多指令单数据，无商业实现。</li>
+<li>MIMD：多指令多数据，如多处理器多核系统。</li>
+</ul>
+<hr />
+<h2 id="lectures-04-05">第二部分：存储层次结构（Lectures 04-05）</h2>
+<ul>
+<li><strong>Cache 映射与放置策略</strong>：直接映射（映射到唯一 Set 唯一位置）、全相联（可放置在任意位置）、组相联（映射到唯一 Set，可放置在 Set 内任意位置）。</li>
+<li><strong>块识别</strong>：通过物理地址划分（Tag + Index + Offset）查找块。全相联 Cache 没有 Index 字段，直接并行比对所有 Tag。</li>
+<li><strong>写策略（写命中）</strong>：<ul>
+<li>写穿（Write-through）：数据同时写入 Cache 和下级内存，仅使用 Valid 位。</li>
+<li>写回（Write-back）：仅写入 Cache 块并标记 Dirty 位，直到该块被替换时才写回下级内存，使用 Valid 位与 Dirty 位。</li>
+</ul>
+</li>
+<li><strong>写策略（写不命中）</strong>：<ul>
+<li>写分配（Write allocate）：先将数据从内存调入 Cache，再进行写操作。</li>
+<li>无写分配（No-write allocate）：直接在下级内存中修改，不调入 Cache。</li>
+</ul>
+</li>
+<li><strong>平均内存访问时间（AMAT）</strong>：
+  $<span class="arithmatex">\(\text{AMAT} = \text{Hit Time} + \text{Miss Rate} \times \text{Miss Penalty}\)</span>$</li>
+<li><strong>不命中根源（3Cs）</strong>：冷启动不命中（首次访问）、容量不命中（Cache 太小）、冲突不命中（组内碰撞替换）。</li>
+<li><strong>Cache 六大基本优化</strong>：<ul>
+<li>增大块大小（利用空间局部性降低冷不命中，但增加 Miss Penalty）。</li>
+<li>增大 Cache 容量（降低容量不命中，但增加 Hit Time 与能耗）。</li>
+<li>提高相联度（降低冲突不命中，但增加 Hit Time）。</li>
+<li>多级缓存（在快 CPU 与慢主存之间插入 L2/L3 降低 Miss Penalty）。</li>
+<li>读不命中优先于写（通过写缓冲区暂存写操作，使读不命中优先处理）。</li>
+<li>地址转换并行化（利用虚拟索引物理标记 VIPT 绕过地址转换延迟）。</li>
+</ul>
+</li>
+<li><strong>多级缓存性能指标</strong>：</li>
+<li>本地不命中率（Local Miss Rate）：当前 Cache 的 Miss 数量除以进入该级 Cache 的总访问数。</li>
+<li>全局不命中率（Global Miss Rate）：该级 Cache 的 Miss 数量除以 CPU 发出的总访问数。L2 全局不命中率 = <span class="arithmatex">\(\text{Miss Rate}_{\text{L1}} \times \text{Miss Rate}_{\text{L2, Local}}\)</span>。</li>
+<li>多级 Cache 平均访存时间公式：
+    $<span class="arithmatex">\(\text{AMAT} = \text{Hit Time}_{\text{L1}} + \text{Miss Rate}_{\text{L1}} \times (\text{Hit Time}_{\text{L2}} + \text{Miss Rate}_{\text{L2, Local}} \times \text{Miss Penalty}_{\text{L2}})\)</span>$</li>
+<li>每指令平均访存挂起周期数：
+    $<span class="arithmatex">\(\text{Memory Stalls/Instruction} = \text{Misses/Instruction}_{\text{L1}} \times \text{Hit Time}_{\text{L2}} + \text{Misses/Instruction}_{\text{L2}} \times \text{Miss Penalty}_{\text{L2}}\)</span>$</li>
+<li><strong>Cache 十大高级优化</strong>：</li>
+<li>小而简单的 L1 Cache（降低 Hit Time 与功耗）。</li>
+<li>路预测（提前预测组相联中的路以降低 Hit Time）。</li>
+<li>流水化 Cache 访问（提升 Cache 带宽）。</li>
+<li>多 Bank Cache（支持多个不冲突的并发访存，提升带宽）。</li>
+<li>非阻塞 Cache（在发生 Miss 时支持后续指令继续 Hit，即 Hit-under-Miss）。</li>
+<li>关键字优先与提前重启（只获取急需的数据字即放行 CPU，降低 Miss Penalty）。</li>
+<li>合并写缓冲区（合并写入相邻地址，提升写带宽）。</li>
+<li>编译器优化（通过循环交换、分块 Blocking 提高数据局部性，降低 Miss Rate）。</li>
+<li>硬件/编译器预prefetching（提前将数据读入 Cache，降低 Miss Rate）。</li>
+<li>高带宽内存（HBM）（采用 3D 堆叠封装提升总带宽）。</li>
+</ul>
+<hr />
+<h2 id="ilplectures-06-08">第三部分：指令级并行（ILP）（Lectures 06-08）</h2>
+<ul>
+<li><strong>流水线延迟指标</strong>：Latency（延迟，指令在流水线中所花周期数）与 Initiation/Repeat Interval（发射间隔，流水线接收新指令所需的间隔周期）。</li>
+<li><strong>数据冒险分类</strong>：写后读（RAW，真相关）、读后写（WAR，反相关）、写后写（WAW，输出相关）。</li>
+<li><strong>控制冒险</strong>：分支指令未判定前，后继指令受控制相关制约。</li>
+<li><strong>精确异常（Precise Exception）</strong>：发生异常时，异常指令之前的所有指令均已完成提交，之后的所有指令均未执行（或已被完全冲刷撤销），寄存器状态完好。</li>
+<li><strong>静态调度技术</strong>：通过编译器重排指令（循环展开消除循环开销、填充延迟分支槽以消除分支停顿）。</li>
+<li><strong>静态分支预测</strong>：根据编译期规律预测分支（如 Predicted-Taken 或延迟分支槽）。延迟分支槽可从 Before、Target、Fall-through 填充。</li>
+<li><strong>动态分支预测</strong>：<ul>
+<li>1位分支预测器：记录上一次跳转方向。对单次异常跳转过度敏感，交替循环下准确率为 0%。</li>
+<li>2位分支预测器：采用 2 位饱和计数器，连续两次预测错误才改变预测状态，容错率高。</li>
+</ul>
+</li>
+<li><strong>动态调度之记分牌算法（Scoreboarding）</strong>：集中式硬件控制，不支持寄存器重命名。<ul>
+<li>四阶段：发射（检查结构与 WAW 冲突）、读操作数（等待 RAW 消除）、执行、写结果（等待并解决 WAR 冲突）。</li>
+<li>三张表：指令状态表、功能单元状态表（Busy, Op, Fi, Fj, Fk, Qj, Qk, Rj, Rk）、寄存器结果状态表。</li>
+</ul>
+</li>
+<li><strong>动态调度之 Tomasulo 算法</strong>：分布式控制，利用<strong>寄存器重命名</strong>消除 WAR/WAW 名字冲突，通过公共数据总线（CDB）广播前递数据。<ul>
+<li>三阶段：发射（分配 RS 并进行重命名）、执行（在 RS 中监听 CDB）、写结果（在 CDB 上广播，写入寄存器和 RS，释放 RS）。</li>
+<li>保留站字段：Busy（忙）、Op（操作）、Vj/Vk（就绪数值）、Qj/Qk（产生数据的 RS 编号）、A（访存地址）。</li>
+</ul>
+</li>
+<li><strong>硬件投机与重排序缓冲区（ROB）</strong>：支持<strong>乱序执行、顺序提交</strong>，从而完美保障精确异常。<ul>
+<li>ROB 字段：Instruction Type（类型）、Destination（目标寄存器/内存地址）、Value（临时计算值）、Ready（就绪标志）。</li>
+<li>四阶段：发射（分配 RS 与 ROB 项，重命名指向 ROB）、执行、写回（写入 ROB 对应 Value，立即释放保留站）、提交（按序将 ROB 的 Value 写入体系结构寄存器或主存，处理异常与分支失败）。</li>
+</ul>
+</li>
+<li><strong>多发射（Multiple Issue）</strong>：单周期发射多条指令（如超标量或 VLIW），理想 CPI &lt; 1，最大并行度受限于数据相关与结构带宽。</li>
+</ul>
+<hr />
+<h2 id="dlplectures-09-10">第四部分：数据级并行（DLP）（Lectures 09-10）</h2>
+<ul>
+<li><strong>向量执行车队模型</strong>：<ul>
+<li>车队（Convoy）：一组不含结构冲突的向量指令。由于链接（Chaining）机制，同一个车队内允许存在 RAW 相关。</li>
+<li>鸣响（Chime）：执行一个车队所需的时间。对于长度 <span class="arithmatex">\(n\)</span> 的向量，执行 <span class="arithmatex">\(m\)</span> 个车队耗时约 <span class="arithmatex">\(m \times n\)</span> 周期。</li>
+</ul>
+</li>
+<li><strong>分条挖掘（Strip Mining）</strong>：当循环长度超过最大向量长度（MVL）时，编译器利用 <code>setvl</code> 指令将大循环分割成大小 <span class="arithmatex">\(\le \text{MVL}\)</span> 的子块循环运行。</li>
+<li><strong>条件控制</strong>：向量处理器利用谓词/条件掩码寄存器（Mask）控制元素的条件执行，避免分支跳转（IF-conversion）。</li>
+<li><strong>内存多 Bank 设计</strong>：为了避免内存忙周期引起的冲突并提升访存吞吐率，内存划分为多个独立 Bank。</li>
+<li><strong>步长（Stride）冲突判定</strong>：判定由于步长访存导致 Bank 忙周期挂起的公式：
+  $<span class="arithmatex">\(\frac{\text{LCM}(\text{Stride}, \text{Bank 数量})}{\text{Stride}} &lt; \text{Bank 忙时间}\)</span>$</li>
+<li><strong>间接访存</strong>：收集（Gather, <code>vldx</code>）根据索引向量从离散内存中把数据打包读入向量寄存器；分散（Scatter, <code>vstx</code>）将连续向量结果按索引向量散布写回离散内存。</li>
+<li><strong>多媒体 SIMD 架构</strong>：短且固定宽度的向量，去除了向量长度寄存器、步长访存/收集分散指令与掩码寄存器以节省硬件成本。</li>
+<li><strong>屋顶图模型（Roofline Model）</strong>：将算术强度（AI = 浮点操作数 / 访存字节数）作为横坐标，将可达性能作为纵坐标，刻画 Memory-bound（斜坡）与 Compute-bound（平顶）的界限。</li>
+<li><strong>GPU 编程模型（SIMT）</strong>：单指令多线程。<ul>
+<li>线程层次：Grid <span class="arithmatex">\(\to\)</span> Thread Block <span class="arithmatex">\(\to\)</span> Thread。</li>
+<li>1D 线程索引公式：
+$<span class="arithmatex">\(\text{index} = \text{blockIdx.x} \times \text{blockDim.x} + \text{threadIdx.x}\)</span>$</li>
+<li>二级硬件调度：线程块调度器分发 Thread Block 到 SM，SIMD 线程调度器调度 Warp（32线程）在物理 SIMD Lanes 上发射指令。</li>
+</ul>
+</li>
+<li><strong>Warp 分支发散与同步栈</strong>：若 Warp 内线程走向不同分支（THEN/ELSE），硬件必须屏蔽部分 Lane 并串行执行两路路径。硬件内部使用分支同步栈记录分歧掩码（Token, Target PC, Target Active Mask）在 Diverge 时压栈并在 Converge 时弹栈。</li>
+<li><strong>GPU 存储</strong>：Local Memory（线程私有，显存上）、Shared Memory（片上 SRAM，Block 内共享，极快）、Global Memory（大容量显存，所有线程与 CPU 可见，慢）。</li>
+</ul>
+<hr />
+<h2 id="lectures-11-13">第五部分：多核与一致性（Lectures 11-13）</h2>
+<ul>
+<li><strong>共享内存多处理器分类</strong>：集中式共享内存（UMA，均匀访存）与分布式共享内存（NUMA，非均匀访存）。</li>
+<li><strong>缓存一致性问题（Cache Coherence）</strong>：多个处理器本地 Cache 中存有同一主存块的不同副本，当有核改写数据时，其他核的数据失效或变脏。</li>
+<li><strong>一致性（Coherence）三大定义属性</strong>：</li>
+<li>写传播（Write Propagation）：某一核心的写入操作最终必须能被其他核心读到。</li>
+<li>写序列化（Write Serialization）：所有核心对同一个内存位置的写入操作，看到的顺序必须完全一致。</li>
+<li>读操作能返回最近一次写入的值。</li>
+<li><strong>一致性协议实现</strong>：</li>
+<li>监听协议（Snooping）：所有 Cache 共享广播总线，监听总线上的读写请求（适用于小规模）。</li>
+<li>目录协议（Directory）：用一个集中/分布式的目录记录每个内存块的所有权和共享状态（适用于大规模扩展）。</li>
+<li><strong>写失效协议（Write Invalidate）</strong>：在改写数据前，发出 Invalid 广播使总线上所有其他 Cache 的相应副本失效。</li>
+<li><strong>Cache 状态协议转换</strong>：</li>
+<li><strong>MSI 协议</strong>：Modified（已修改，脏且独占）、Shared（共享，清洁）、Invalid（失效）。</li>
+<li><strong>MESI 协议</strong>：引入 Exclusive（独占清洁）状态，单核独占读取的数据在改写时无需广播 Invalidate。</li>
+<li><strong>MOESI 协议</strong>：引入 Owned（拥有）状态，允许脏块在 Cache 间直接共享而无需写回主存。</li>
+<li><strong>MESIF 协议</strong>：引入 Forward（转发）状态，指定唯一 Shared 状态节点响应 Read 读请求。</li>
+<li><strong>共享失效分类</strong>：</li>
+<li>真共享不命中（True Sharing Miss）：核心 A 修改变量，核心 B 随后读取该被修改变量产生不命中。</li>
+<li>伪共享不命中（False Sharing Miss）：核心 A 和 B 分别读写同一个 Cache 块内的不同独立变量，写操作导致整个块失效，引起另一核心产生不必要的不命中。</li>
+<li><strong>硬件同步原语</strong>：</li>
+<li>原子交换（Atomic Exchange / Test-and-Set）：硬件保证读-写操作一步完成，用于锁获取。</li>
+<li>链接载入/条件存储（LL/SC）：通过 <code>lr</code> 与 <code>sc</code> 指令实现无锁原子操作。</li>
+<li>自旋锁（Spin Lock）：循环查询直到锁释放。在 Cache 上自旋（Local Spinning）可降低总线负载。</li>
+<li><strong>内存一致性模型（Consistency）</strong>：定义了对<strong>不同内存地址</strong>进行读写操作的物理可见顺序。</li>
+<li>顺序一致性（Sequential Consistency, SC）：所有处理器看到的读写顺序与程序的逻辑顺序（Program Order）完全一致，且全局交织。</li>
+<li>松弛一致性模型（Relaxed Consistency）：允许对非冲突的读写进行乱序重排以提升硬件性能（如允许 W-&gt;R 重排），在需要强顺序时必须显式插入内存屏障（Fence/Barrier）指令。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

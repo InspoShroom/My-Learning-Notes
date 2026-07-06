@@ -1,0 +1,2004 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/DLP_Architecture/">
+      
+      
+        <link rel="prev" href="../ILP_Exploitation/">
+      
+      
+        <link rel="next" href="../DLP_Exploitation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第九章 数据级并行与矢量/GPU架构 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gpu" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第九章 数据级并行与矢量/GPU架构
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据级并行与向量架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据级并行与向量架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 什么是数据级并行（DLP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 向量架构基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rv64v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. RV64V 向量处理器设计要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动态寄存器类型与空间重分配
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        车队与 Chime 执行时间模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="车队与 Chime 执行时间模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cyclesflopfloating-point-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        车队划分与 Cycles/FLOP（FLoating-point Operation，浮点运算） 性能算例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分条挖掘与向量长度控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        条件控制与内存访存设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="条件控制与内存访存设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        向量条件分支（谓词/条件掩码）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存多 Bank 设计与满载带宽计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 步长与 Bank 冲突判定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gather-scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 收集-分散访存（Gather-Scatter）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多媒体 SIMD 与屋顶图模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多媒体 SIMD 与屋顶图模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 多媒体 SIMD 架构特征
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-roofline-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 屋顶图性能模型（Roofline Model）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU 架构与 CUDA 编程机制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPU 架构与 CUDA 编程机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CUDA 线程管理与索引计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. GPU 硬件控制与二级调度器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-warp-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 分支分歧（Warp Divergence）与同步栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. GPU 存储层次
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lec09-ppt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课件（lec09）知识点清单与 PPT 页码对照清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="课件（lec09）知识点清单与 PPT 页码对照清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dlpslide-2-slide-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 数据级并行（DLP）与向量基本架构（Slide 2 - Slide 16）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mvl-slide-17-slide-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 动态寄存器类型与 MVL 动态分配（Slide 17 - Slide 23）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-daxpy-cyclesflop-slide-25-slide-44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. DAXPY 车队划分与 Cycles/FLOP 性能计算（Slide 25 - Slide 44）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-strip-miningslide-49-slide-61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 分条挖掘（Strip Mining）与谓词掩码控制（Slide 49 - Slide 61）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-bank-stride-slide-62-slide-77" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 内存多 Bank 与 Stride 步长冲突计算（Slide 62 - Slide 77）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-gather-scatter-slide-75-slide-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 稀疏矩阵的 Gather-Scatter 间接寻址（Slide 75 - Slide 80）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-simd-slide-81-slide-86" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 多媒体 SIMD 与屋顶图模型（Slide 81 - Slide 86）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-gpu-cuda-1d-slide-87-slide-96" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. GPU 层次、CUDA 编程与 1D 线程索引（Slide 87 - Slide 96）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-gpu-simd-slide-97-slide-120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. GPU SIMD 线程调度与分支发散同步栈（Slide 97 - Slide 120）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据级并行与向量架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据级并行与向量架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 什么是数据级并行（DLP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 向量架构基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rv64v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. RV64V 向量处理器设计要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动态寄存器类型与空间重分配
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        车队与 Chime 执行时间模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="车队与 Chime 执行时间模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cyclesflopfloating-point-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        车队划分与 Cycles/FLOP（FLoating-point Operation，浮点运算） 性能算例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分条挖掘与向量长度控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        条件控制与内存访存设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="条件控制与内存访存设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        向量条件分支（谓词/条件掩码）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存多 Bank 设计与满载带宽计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 步长与 Bank 冲突判定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gather-scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 收集-分散访存（Gather-Scatter）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多媒体 SIMD 与屋顶图模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多媒体 SIMD 与屋顶图模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 多媒体 SIMD 架构特征
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-roofline-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 屋顶图性能模型（Roofline Model）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU 架构与 CUDA 编程机制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPU 架构与 CUDA 编程机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CUDA 线程管理与索引计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. GPU 硬件控制与二级调度器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-warp-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 分支分歧（Warp Divergence）与同步栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. GPU 存储层次
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lec09-ppt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课件（lec09）知识点清单与 PPT 页码对照清单
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="课件（lec09）知识点清单与 PPT 页码对照清单">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dlpslide-2-slide-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 数据级并行（DLP）与向量基本架构（Slide 2 - Slide 16）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mvl-slide-17-slide-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 动态寄存器类型与 MVL 动态分配（Slide 17 - Slide 23）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-daxpy-cyclesflop-slide-25-slide-44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. DAXPY 车队划分与 Cycles/FLOP 性能计算（Slide 25 - Slide 44）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-strip-miningslide-49-slide-61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 分条挖掘（Strip Mining）与谓词掩码控制（Slide 49 - Slide 61）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-bank-stride-slide-62-slide-77" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 内存多 Bank 与 Stride 步长冲突计算（Slide 62 - Slide 77）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-gather-scatter-slide-75-slide-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 稀疏矩阵的 Gather-Scatter 间接寻址（Slide 75 - Slide 80）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-simd-slide-81-slide-86" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 多媒体 SIMD 与屋顶图模型（Slide 81 - Slide 86）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-gpu-cuda-1d-slide-87-slide-96" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. GPU 层次、CUDA 编程与 1D 线程索引（Slide 87 - Slide 96）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-gpu-simd-slide-97-slide-120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. GPU SIMD 线程调度与分支发散同步栈（Slide 97 - Slide 120）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gpu">第九章 数据级并行与矢量/GPU 架构</h1>
+<p>本章介绍数据级并行（Data-Level Parallelism, DLP）的基本原理，重点剖析向量处理器架构（RV64V）、车队时间模型、内存多 Bank 设计与步长冲突、多媒体 SIMD 架构（以及屋顶图模型），以及 GPU 架构（SIMT 编程模型、分支分歧与同步栈、内存分层）的运行机制。</p>
+<hr />
+<h2 id="_1">数据级并行与向量架构</h2>
+<h3 id="1-dlp">1. 什么是数据级并行（DLP）</h3>
+<ul>
+<li><strong>基本定义</strong>：数据级并行是指对大规模数据集合中的不同数据元素，同时执行相同的操作。</li>
+<li><strong>为什么能效更高</strong>：在传统的指令级并行（ILP）中，每个操作都需要经过取指、译码等控制步骤；而 DLP 通过“单条指令启动大量独立数据操作”，大幅削减了取指、译码和依赖检查的硬件能量消耗，能效极高。</li>
+<li><strong>对程序员更友好</strong>：相比于经典的 MIMD（多指令多数据）多线程并发编程，DLP 不需要程序员去处理繁琐的线程同步、锁和数据竞争问题。</li>
+</ul>
+<h3 id="2">2. 向量架构基本概念</h3>
+<ul>
+<li><strong>工作原理</strong>：<ol>
+<li>从内存中抓取分散的数据元素（Gather）。</li>
+<li>将它们成组放置在顺序的向量寄存器文件中（Vector Register File）。</li>
+<li>用流水线化的功能单元对这些寄存器数据执行计算。</li>
+<li>将计算后的向量结果分散写回内存中（Scatter）。</li>
+</ol>
+</li>
+<li><strong>优势</strong>：一条向量操作指令可以触发几十次独立的寄存器-寄存器操作，且各数据元素相互独立，天然无数据冒险。</li>
+</ul>
+<h3 id="3-rv64v">3. RV64V 向量处理器设计要点</h3>
+<ul>
+<li><strong>向量寄存器堆</strong>：包含 32 个向量寄存器。它们通过高读写端口数的交叉开关（Crossbar Switches）与向量功能单元相连。</li>
+<li><strong>完全流水线化</strong>：每个向量单元都是完全流水线化的，每个时钟周期都能接收并开始处理一个新元素的操作。</li>
+<li>
+<p><strong>指令格式后缀</strong>：向量指令多使用 R 类型指令，支持三类后缀：</p>
+<ul>
+<li><code>.vv</code>：操作数均为向量寄存器（Vector-Vector）。</li>
+<li><code>.vs</code>：第一操作数为向量，第二操作数为标量寄存器（Vector-Scalar）。</li>
+<li><code>.sv</code>：第一操作数为标量，第二操作数为向量寄存器（Scalar-Vector）。</li>
+</ul>
+<p><div align="center">
+  <img src="images/Vector_Pipeline_Structure.png" width="500" alt="向量寄存器与流水线功能单元结构" />
+</div></p>
+</li>
+</ul>
+<h3 id="_2">动态寄存器类型与空间重分配</h3>
+<ul>
+<li><strong>动态寄存器类型（Dynamic Register Typing）</strong>：<ul>
+<li>为什么：如果在指令编码中为每一种数据类型（8位、16位、32位、64位整型/浮点）都分配独立的指令码，会导致指令集过度膨胀。因此，RV64V 的指令编码中<strong>省略了数据类型和大小的定义</strong>。</li>
+<li>怎么做：程序在执行向量操作前，先通过系统指令配置寄存器的数据宽度与类型（整型：8/16/32/64位；浮点：16/32/64位）。</li>
+</ul>
+</li>
+<li><strong>最大向量长度（MVL）的动态调整</strong>：<ul>
+<li>机制：允许程序禁用不需要的向量寄存器，从而将空闲出的物理存储空间分配给启用的寄存器，成倍增加其最大向量长度（Maximum Vector Length, MVL）。</li>
+<li>算例：假设向量内存总容量为 1024 字节：</li>
+<li>若启用全部 32 个向量寄存器，每个寄存器分配到 32 字节容量。</li>
+<li>若程序配置仅启用 4 个向量寄存器，则每个寄存器可分配到 256 字节容量，MVL 随之扩大 8 倍。</li>
+</ul>
+</li>
+<li><strong>隐式类型转换</strong>：支持根据寄存器当前的位宽配置直接在硬件中进行隐式的数据类型转换，无需额外显式插入类型转换指令。</li>
+</ul>
+<hr />
+<h2 id="chime">车队与 Chime 执行时间模型</h2>
+<h3 id="_3">核心概念</h3>
+<ul>
+<li><strong>车队（Convoy）</strong>：可以在流水线中潜在并行执行的一组向量指令集合。我们可以把每一条向量指令看作一辆大卡车，流水线就是高速公路。<ul>
+<li><strong>结构冲突分流</strong>：若两条向量指令需要争抢同一个硬件功能单元（如两条访存指令 <code>vld</code> / <code>vld</code> 或 <code>vld</code> / <code>vst</code>），则它们必须序列化，拆分到不同的车队中执行。</li>
+<li><strong>真相关放行</strong>：同一个车队中允许存在真数据相关（RAW）指令。因为硬件支持<strong>链接机制</strong>，第二条指令可以紧随第一条指令流水化运行。</li>
+</ul>
+</li>
+<li><strong>链接（Chaining）与弹性链接（Flexible Chaining）</strong>：<ul>
+<li>链接类似于标量 CPU 中的前递（Forwarding）技术。前一条向量指令的单个元素刚在 FUs 中计算完毕，无需等待整条向量指令全部执行完或写回寄存器，直接通过旁路送入下一条功能单元开始执行。</li>
+<li>弹性链接允许一个向量指令链接到任意其他活跃的向量指令。早期的链接非常死板，只能在特定的时钟周期或特定的部件之间链接。弹性链接 允许任意两个活跃的向量指令在任意时刻、任意空闲的功能单元之间建立这种“直通管道”，极大地提高了车队的组装成功率。</li>
+</ul>
+</li>
+<li><strong>鸣响（Chime）</strong>：执行一个车队所需的时间单位。对于向量长度为 <span class="arithmatex">\(n\)</span>、包含 <span class="arithmatex">\(m\)</span> 个车队的序列，忽略流水线启动开销时，总执行时间约为 <span class="arithmatex">\(m \times n\)</span> 个时钟周期。</li>
+</ul>
+<h3 id="cyclesflopfloating-point-operation">车队划分与 Cycles/FLOP（FLoating-point Operation，浮点运算） 性能算例</h3>
+<p>假设处理器各向量功能单元只有单个备份，即只有一个端口，真相关均可链接并行。分析以下 RV64V 向量序列：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. vld     v0, 0(x5)    ; 向量加载 1
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>2. vmul.vv v4, v0, v2   ; 向量乘法（依赖 v0）
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>3. vld     v2, 0(x6)    ; 向量加载 2（与第一条 vld 产生访存结构冲突）
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>4. vadd.vv v8, v2, v6   ; 向量加法（依赖 v2）
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>5. vst     v8, 0(x6)    ; 向量存储 （与加载 vld 产生访存结构冲突）
+</span></code></pre></div>
+<ul>
+<li><strong>划分 Convoys（车队）步骤</strong>：<ol>
+<li>指令 1 (<code>vld</code>) 发射，指令 2 (<code>vmul</code>) 依赖指令 1 的结果，通过 Chaining 链接，两者可以在同一个车队中并行 <span class="arithmatex">\(\to\)</span> <strong>Convoy 1</strong>。</li>
+<li>指令 3 (<code>vld</code>) 也是访存操作，与前面的 <code>vld</code> 争抢单一的访存功能单元，产生结构冲突，必须切断，另起车队。指令 4 (<code>vadd</code>) 依赖指令 3，Chaining 链接，归入同一个车队 <span class="arithmatex">\(\to\)</span> <strong>Convoy 2</strong>。</li>
+<li>指令 5 (<code>vst</code>) 是存储操作，与 Convoy 2 中的加载 <code>vld</code> 发生结构冲突，必须再次另起车队 <span class="arithmatex">\(\to\)</span> <strong>Convoy 3</strong>。</li>
+</ol>
+</li>
+<li><strong>Chime 与执行时间计算</strong>：<ul>
+<li>该序列被划分为 <strong>3 个 Convoys</strong>，因此需要 <strong>3 个 Chimes</strong> 来完成。</li>
+<li>若向量长度 <span class="arithmatex">\(n = 32\)</span>，则总时钟周期数约为 <span class="arithmatex">\(3 \times 32 = 96\)</span> 周期。</li>
+<li>运算总功：浮点加法和浮点乘法指令各处理 32 个元素，共执行了 <span class="arithmatex">\(32 \times 2 = 64\)</span> 次浮点操作（FLOPs）。</li>
+<li>性能指标（每个浮点操作消耗的时钟周期数，Cycles per FLOP）：
+<span class="arithmatex">\(\text{Cycles per FLOP} = \frac{96 \text{ 周期}}{64 \text{ FLOPs}} = 1.5 \text{ 周期/FLOP}\)</span></li>
+</ul>
+</li>
+</ul>
+<h3 id="_4">分条挖掘与向量长度控制</h3>
+<ul>
+<li>
+<p><strong>为什么需要分条挖掘</strong>：</p>
+<p>硬件中向量寄存器的最大向量长度（MVL）是有限且固定的（例如 64 或 128）。当程序中需要处理的循环上限 <span class="arithmatex">\(n\)</span> 大于 MVL，或者 <span class="arithmatex">\(n\)</span> 在编译期无法预测时，必须在软件层进行切分。</p>
+<p>比如说 MVL = 64，但是用户输入了200，那么就得分批打包处理，一次处理64个元素，直到全部处理完，这个过程就是分条挖掘。</p>
+</li>
+<li>
+<p><strong>分条挖掘（Strip Mining）机制</strong>：</p>
+<ul>
+<li>编译器会将大循环拆分为内外两层循环。</li>
+<li>外层循环处理剩下的余数 <span class="arithmatex">\(n \pmod{\text{MVL}}\)</span> 个元素，将向量寄存器填满一部分。</li>
+<li>内层循环以 MVL 为固定步长成组地处理剩下的元素。</li>
+<li>在循环体中，使用 <code>setvl</code> 指令动态设置向量长度寄存器 <code>vl</code>（Vector Length）。<code>vl</code> 寄存器将控制后续所有向量指令实际处理的元素个数，最大不超过 MVL。</li>
+</ul>
+<details class="example">
+<summary>实例说明</summary>
+<p><div align="center">
+<img src="../images/strip mining.png" width="600" />
+</div></p>
+</details>
+</li>
+</ul>
+<hr />
+<h2 id="_5">条件控制与内存访存设计</h2>
+<h3 id="_6">向量条件分支（谓词/条件掩码）</h3>
+<ul>
+<li>
+<p><strong>为什么需要向量条件分支</strong>：</p>
+<ol>
+<li>对于标量CPU，如果遇到if-else，我们就会使用如 beq, bne 等指令来让程序跳过某段代码。</li>
+<li>对于向量处理器，它一次性处理一批数据，如果64个元素中前面30个是true后面34个是false，那么处理器就无法做出正确的判断了。</li>
+<li>于是引入掩码机制——让所有元素都通过流水线，但我用掩码来进行过滤，只对掩码为1的元素进行计算。</li>
+</ol>
+</li>
+<li>
+<p><strong>原理</strong>：将原来的<code>if-else</code>语句，转换为两步：</p>
+<ol>
+<li>vplt 向量比较产生掩码</li>
+<li>vadd 带掩码的向量加法</li>
+</ol>
+</li>
+<li><strong>掩码寄存器（Mask/Predicate Registers）</strong>：<ol>
+<li>使用 1 位宽的掩码寄存器（如 p0）记录条件判断的结果（0 或 1）。</li>
+<li>当启用掩码寄存器控制时，后续向量操作只会对掩码对应位为 1 的元素执行计算并写入目的寄存器。</li>
+<li>掩码为 0 的对应位置，其目的寄存器中的原始值<strong>保持不变（不作任何改写）</strong>。</li>
+</ol>
+</li>
+<li><strong>编译器 IF 转换</strong>：编译器通过将条件分支跳转转化为直线的谓词掩码向量操作，消除了控制冒险。</li>
+</ul>
+<h3 id="bank">内存多 Bank 设计与满载带宽计算</h3>
+<ul>
+<li><strong>为什么需要多 Bank</strong>：内存 SRAM 的忙周期（Bank Busy Time）通常是处理器时钟周期的数倍。如果单时钟周期内有大量处理器同时请求访存，且都指向同一个主存，就会产生严重的冲突导致长时间挂起。因此，内存被切分为多个独立寻址工作的物理 Bank。</li>
+<li><strong>最小 Bank 数量计算示例</strong>：<ul>
+<li><strong>已知条件</strong>：Cray T90 系统包含 32 个处理器。每个处理器在每个时钟周期发出 4 个 Load 和 2 个 Store 请求。处理器时钟周期为 2.167 ns，主存 SRAM 忙时间为 15 ns。</li>
+<li><strong>计算步骤</strong>：<ol>
+<li>计算系统单周期最大发出的访存请求数：
+   $<span class="arithmatex">\(\text{Requests per Cycle} = (4 \text{ Load} + 2 \text{ Store}) \times 32 \text{ Processors} = 192 \text{ 次}\)</span>$</li>
+<li>计算以标量处理器时钟周期为单位的 SRAM 忙时间（向上取整）：
+   $<span class="arithmatex">\(\text{SRAM Busy Cycles} = \frac{15 \text{ ns}}{2.167 \text{ ns}} = 6.92 \approx 7 \text{ 周期}\)</span>$</li>
+<li>为保证所有处理器满载运行时不发生 Bank 冲突阻塞，主存所需的最小 Bank 数量为：
+   $<span class="arithmatex">\(\text{Min Banks} = 192 \text{ 请求/周期} \times 7 \text{ 忙周期} = 1344 \text{ 个}\)</span>$</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-bank">3. 步长与 Bank 冲突判定</h3>
+<ul>
+<li><strong>步长（Stride）</strong>：向量中相邻两个元素在主存中的物理内存地址间隔。<ul>
+<li>单元步长（Unit Stride）：步长为 1，代表要访问的元素在主存中是连续存放的。</li>
+<li>非单元步长（Non-unit Stride）：步长大于 1（例如矩阵列访问时，由于是行优先存储，相邻两个列元素地址相差一整行的数据大小）。采用 <code>vlds</code> / <code>vsts</code> 指令访存。</li>
+</ul>
+</li>
+<li><strong>冲突判定物理规律</strong>：当两个访问请求在 Bank 尚未空闲时映射到同一个 Bank，即产生 Bank 冲突。若步长与 Bank 数量存在公约数，会导致周期性的 Bank 命中。判定冲突导致 Stall 的充要公式为：
+  $<span class="arithmatex">\(\frac{\text{LCM}(\text{Stride}, \text{Bank 数量})}{\text{Stride}} &lt; \text{SRAM Bank 忙周期}\)</span>$
+  <em>(其中 LCM 为最小公倍数，该公式本质计算的是下一次请求回到同一个 Bank 所经过的周期数)</em></li>
+<li><strong>冲突性能对比经典算例（Slide 68-72）</strong>：<ul>
+<li><strong>已知条件</strong>：系统包含 8 个 Bank，忙时间为 6 周期，总访存延迟为 12 周期，要处理一个 64 元素的向量。</li>
+<li><strong>情况 A（Stride = 1）</strong>：<ul>
+<li><span class="arithmatex">\(\text{LCM}(1, 8)/1 = 8 \ge 6\)</span>。说明下一次回到 Bank 0 时已经过了 8 周期，Bank 早已恢复空闲，<strong>无任何 Bank 冲突</strong>。</li>
+<li>总消耗时间 = 总延迟 + 向量长度 = <span class="arithmatex">\(12 + 64 = 76\)</span> 周期。</li>
+</ul>
+</li>
+<li><strong>情况 B（Stride = 32）</strong>：<ul>
+<li><span class="arithmatex">\(\text{LCM}(32, 8)/32 = 1 &lt; 6\)</span>。因为 <span class="arithmatex">\(32 \pmod 8 = 0\)</span>，所有 64 个元素的访存请求都会被引向同一个 Bank（Bank 0），发生<strong>极度严重的 Bank 冲突</strong>。除了第一个元素外，后续每一个元素的访问都要被迫等待一个完整的 6 周期忙时间。</li>
+<li>总消耗时间 = 总延迟 + 1（首元素）+ 6 周期 <span class="arithmatex">\(\times\)</span> 63（剩余元素等待） = <span class="arithmatex">\(12 + 1 + 378 = 391\)</span> 周期。性能暴跌。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-gather-scatter">4. 收集-分散访存（Gather-Scatter）</h3>
+<ul>
+<li><strong>背景</strong>：在稀疏矩阵或稀疏数组运算中，矩阵中大部分元素是零，只需要处理非零元素。非零元素的物理内存地址是不规则且离散的，无法用固定步长表示，需要通过一个索引向量（Index Vector）记录偏移。</li>
+<li>
+<p><strong>工作机制</strong>：</p>
+<ul>
+<li><strong>Gather（收集）</strong>：用基地址加上索引向量 <code>K</code> 中的各个偏移值，从主存不规则的离散地址中读取数据，并在硬件中打包装入一个连续的向量寄存器中。对应指令为 <code>vldx</code>。</li>
+<li><strong>Scatter（分散）</strong>：计算完毕后，将向量寄存器中连续存放的结果，根据另一个索引向量 <code>M</code> 中给出的稀疏偏移量，分散写入到主存的不规则稀疏地址中。对应指令为 <code>vstx</code>。</li>
+</ul>
+<p><div align="center">
+  <img src="images/Gather_Scatter_Process.png" width="450" alt="Gather 与 Scatter 的稀疏访存过程" />
+</div></p>
+</li>
+</ul>
+<hr />
+<h2 id="simd">多媒体 SIMD 与屋顶图模型</h2>
+<h3 id="1-simd">1. 多媒体 SIMD 架构特征</h3>
+<ul>
+<li><strong>对比向量架构的三大删减（高频考点）</strong>：
+  多媒体 SIMD（如 x86 的 AVX 指令集、ARM 的 NEON 指令集）由于面向固定长度的超短向量（如 256 位或 512 位），在硬件中<strong>省略了以下三大机制</strong>以简化设计：<ol>
+<li>省略了<strong>向量长度寄存器（vl）</strong>。</li>
+<li>省略了<strong>非单元步长访存与收集-分散访存指令</strong>。</li>
+<li>省略了<strong>谓词/条件控制掩码寄存器</strong>。</li>
+</ol>
+</li>
+</ul>
+<h3 id="2-roofline-model">2. 屋顶图性能模型（Roofline Model）</h3>
+<ul>
+<li><strong>基本原理</strong>：屋顶图模型将处理器的浮点吞吐性能（横轴：算术强度，单位 FLOP/Byte；纵轴：可达到的最高性能，单位 GFLOP/s）描绘在同一个二维坐标系中。</li>
+<li>
+<p><strong>核心概念</strong>：</p>
+<ul>
+<li><strong>算术强度（Arithmetic Intensity）</strong>：程序运行期间每从主存读写 1 字节的数据，所执行的浮点操作次数。
+    $<span class="arithmatex">\(\text{Arithmetic Intensity} = \frac{\text{浮点操作次数 (FLOPs)}}{\text{读写内存的总字节数 (Bytes)}}\)</span>$</li>
+<li><strong>屋顶图分界（Roofline）</strong>：<ul>
+<li><strong>左侧斜坡（Memory-bound）</strong>：受限于内存带宽。此时算术强度低，处理器计算核心经常因为等数据而闲置，提升内存带宽或优化数据复用可提升性能。</li>
+<li><strong>右侧平顶（Compute-bound）</strong>：受限于计算核心上限。算术强度极高，内存带宽不再是瓶颈，性能达到处理器硬件能提供的最大 GFLOP/s 上限。</li>
+</ul>
+</li>
+</ul>
+<p><div align="center">
+  <img src="images/Roofline_Model.png" width="450" alt="Roofline 屋顶图模型分界图" />
+</div></p>
+</li>
+</ul>
+<hr />
+<h2 id="gpu-cuda">GPU 架构与 CUDA 编程机制</h2>
+<p>GPU 是一类高度多线程的 SIMD（或称为 SIMT 单指令多线程）处理器。</p>
+<h3 id="1-cuda">1. CUDA 线程管理与索引计算</h3>
+<ul>
+<li><strong>CUDA 逻辑层次结构</strong>：<strong>Grid（网格） <span class="arithmatex">\(\to\)</span> Thread Block（线程块） <span class="arithmatex">\(\to\)</span> Thread（线程）</strong>。<ul>
+<li>线程块被分配到多线程 SIMD 处理器（如 NVIDIA SM）上独立运行，线程块之间无法直接通信，且执行顺序随机。</li>
+</ul>
+</li>
+<li>
+<p><strong>1D 线程索引计算公式（最基础的入门大题）</strong>：
+  当 GPU 执行并行循环时，每个物理线程必须计算出自己对应处理的数据元素下标。在 1D 网格拓扑下，计算公式为：
+  $<span class="arithmatex">\(\text{index} = \text{blockIdx.x} \times \text{blockDim.x} + \text{threadIdx.x}\)</span>$</p>
+<ul>
+<li><code>blockIdx.x</code>：当前线程块在 Grid 中的 ID。</li>
+<li><code>blockDim.x</code>：每个线程块中包含的线程总数。</li>
+<li><code>threadIdx.x</code>：当前线程在自己所在的线程块内部的线程 ID。</li>
+</ul>
+<p><div align="center">
+  <img src="images/CUDA_Thread_Mapping.png" width="550" alt="Grid/Block/Thread 物理映射与索引计算" />
+</div></p>
+</li>
+<li>
+<p><strong>函数装饰符</strong>：</p>
+<ul>
+<li><code>__host__</code>：在 CPU（主机）上编译且在 CPU 上运行的普通函数。</li>
+<li><code>__device__</code>：在 GPU 上运行，且只能由 GPU 内部函数调用的辅助函数。</li>
+<li><code>__global__</code>：在 CPU 上调用，在 GPU 上启动执行的核函数（Kernel）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-gpu">2. GPU 硬件控制与二级调度器</h3>
+<ul>
+<li><strong>二级硬件调度</strong>：<ol>
+<li><strong>线程块调度器（Thread Block Scheduler）</strong>：属于全局粗粒度调度，负责将整个线程块分发给空闲的多线程 SIMD 处理器（SM）。</li>
+<li><strong>SIMD 线程调度器（SIMD Thread Scheduler）</strong>：属于 SM 内部的细粒度指令级调度，负责调度各 SIMD 线程组（Warp，包含 32 个线程）在物理 SIMD Lanes 上发射并执行。</li>
+</ol>
+</li>
+<li><strong>PTX 虚拟指令集</strong>：PTX（Parallel Thread Execution）是 NVIDIA 引入的一层硬件无关的稳定虚拟汇编。编译器先将 CUDA 翻译为 PTX，驱动程序在程序加载运行时通过即时编译（JIT）将其翻译为对应显卡世代的物理机器码，保证了跨代兼容性。</li>
+</ul>
+<h3 id="3-warp-divergence">3. 分支分歧（Warp Divergence）与同步栈</h3>
+<ul>
+<li><strong>分支分歧现象</strong>：在一个 Warp（32 线程）中，如果遇到 <code>if-else</code> 分支，且部分 Lane 条件为真，部分为假，硬件<strong>无法同时执行两个分支</strong>。此时必须串行执行：<ul>
+<li>第一步：激活满足 <code>if</code> 条件的线程，屏蔽（Mask 设为 0）不满足的线程，执行 THEN 分支。</li>
+<li>第二步：激活满足 <code>else</code> 条件的线程，屏蔽原先的线程，执行 ELSE 分支。</li>
+<li><strong>性能衰退</strong>：在单层 <code>if-else</code> 下，Warp 整体执行效率会跌至 <span class="arithmatex">\(50\%\)</span> 以下；嵌套两层 <code>if-else</code> 时执行效率跌至 <span class="arithmatex">\(25\%\)</span> 以下。</li>
+</ul>
+</li>
+<li><strong>分支同步栈（Branch Synchronization Stack）</strong>：<ul>
+<li>作用：为了在硬件指令级自动管理分支发散后的线程激活状态（Mask），硬件为每个 SIMD 线程组维护一个同步栈。</li>
+<li>栈条目结构：记录标识 Token、分支分歧跳转的目标指令地址、以及目标活跃线程掩码（Target Thread-active Mask）。</li>
+<li>运行机制：遇到分支发散时，将未执行的 ELSE 分支路径地址与对应掩码压入同步栈（Diverge），先执行当前分支；当前分支执行完毕后，硬件自动从同步栈中弹出条目并跳转到目标地址，合并不活跃掩码继续执行（Converge）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-gpu">4. GPU 存储层次</h3>
+<ul>
+<li><strong>Local Memory（本地内存）</strong>：线程私有。由于物理上存放在板载显存上，访问速度慢。</li>
+<li><strong>Shared Memory（共享内存）</strong>：片上高带宽低延迟的 SRAM 缓存。在同一个 Thread Block 内的所有线程共享，可用于线程间的协作与数据交换。</li>
+<li><strong>Global Memory（全局内存）</strong>：板载大容量显存。对所有线程块中的所有线程以及 CPU 宿主机完全可见，访问延迟高。</li>
+</ul>
+<hr />
+<h2 id="lec09-ppt">课件（lec09）知识点清单与 PPT 页码对照清单</h2>
+<p>为了便于您结合课件 PPT 中的图片进行针对性复习，以下梳理了本章最核心的知识清单与 PPT 页码对照：</p>
+<h3 id="1-dlpslide-2-slide-16">1. 数据级并行（DLP）与向量基本架构（Slide 2 - Slide 16）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解为什么 DLP 具有更高的能效；掌握向量寄存器与向量功能单元通过 Crossbar 开关连接的基本拓扑。</li>
+<li><strong>PPT 重要插图</strong>：<ul>
+<li><strong>Slide 8 - Slide 9</strong>：向量处理器操作内存与寄存器的基本动作过程示意。</li>
+<li><strong>Slide 11 - Slide 15</strong>：RV64V 处理器的向量寄存器（32个）、通用标量寄存器与 FP 寄存器的数量和通道拓扑。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-mvl-slide-17-slide-23">2. 动态寄存器类型与 MVL 动态分配（Slide 17 - Slide 23）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解指令编码省略数据类型的优势；掌握总容量固定时禁用部分寄存器以动态扩大最大向量长度（MVL）的算例。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 20</strong>：整型和浮点数所支持的各种位宽定义。</li>
+<li><strong>Slide 22</strong>：1024 字节向量内存动态划分为 4 个寄存器的分配算例图。</li>
+</ul>
+<h3 id="3-daxpy-cyclesflop-slide-25-slide-44">3. DAXPY 车队划分与 Cycles/FLOP 性能计算（Slide 25 - Slide 44）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握 Convoy（车队）、Chime（鸣响）的物理定义；掌握结构冲突（访存/访存）划分子车队的原则；掌握 Cycles/FLOP 的经典大题推导步骤。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 27 - Slide 28</strong>：RV64V 下的 DAXPY 经典汇编序列。</li>
+<li><strong>Slide 41 - Slide 43</strong>：3 个 Convoys 划分条件及 <span class="arithmatex">\(96/64 = 1.5\)</span> 周期/FLOP 的计算步骤。</li>
+</ul>
+<h3 id="4-strip-miningslide-49-slide-61">4. 分条挖掘（Strip Mining）与谓词掩码控制（Slide 49 - Slide 61）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握当循环迭代 <span class="arithmatex">\(n &gt; \text{MVL}\)</span> 时的分条挖掘汇编写法与 <code>setvl</code> 指令；掌握谓词/条件掩码寄存器在处理循环内 <code>if</code> 语句时的机制（IF-conversion）。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 52</strong>：带 Strip Mining 的完整 RV64V 汇编代码。</li>
+<li><strong>Slide 57</strong>：谓词寄存器对元素的 Mask 屏蔽控制。</li>
+</ul>
+<h3 id="5-bank-stride-slide-62-slide-77">5. 内存多 Bank 与 Stride 步长冲突计算（Slide 62 - Slide 77）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握主存最小 Bank 数量的计算；熟练掌握步长 Bank 冲突判定公式；重点掌握 Stride = 1 与 Stride = 32 时 64 元素向量在 8 个 Bank（忙时间 6 周期）下的执行时间计算大题（76周期对391周期）。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 64</strong>：Cray T90 维持全带宽所需 1344 个 Bank 数量的推导方案。</li>
+<li><strong>Slide 66</strong>：单元步长与非单元步长的物理差别直观图。</li>
+<li><strong>Slide 72</strong>：Stride = 32 时所有元素全部撞击 Bank 0 导致冲突挂起的时空图。</li>
+</ul>
+<h3 id="6-gather-scatter-slide-75-slide-80">6. 稀疏矩阵的 Gather-Scatter 间接寻址（Slide 75 - Slide 80）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解稀疏矩阵间接寻址的物理机制；掌握 <code>vldx</code>（Gather 收集）和 <code>vstx</code>（Scatter 分散）指令的用法。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 76</strong>：Gather 读离散地址打包与 Scatter 写离散地址图解。</li>
+<li><strong>Slide 78</strong>：稀疏数组求和的 RV64V 汇编代码。</li>
+</ul>
+<h3 id="7-simd-slide-81-slide-86">7. 多媒体 SIMD 与屋顶图模型（Slide 81 - Slide 86）</h3>
+<ul>
+<li><strong>核心内容</strong>：牢记多媒体 SIMD 相比向量架构删减掉的三个核心机制；熟练掌握 Roofline 模型中算术强度的计算，并能在屋顶图上判定 Compute-bound 与 Memory-bound。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 84</strong>：以算术强度（FLOP/Byte）为横轴的 Roofline 图形模型边界图。</li>
+</ul>
+<h3 id="8-gpu-cuda-1d-slide-87-slide-96">8. GPU 层次、CUDA 编程与 1D 线程索引（Slide 87 - Slide 96）</h3>
+<ul>
+<li><strong>核心内容</strong>：理解 GPU 的 SIMT 编程模型与 Host/Device 划分；熟练掌握 1D 线程索引计算大题；理解线程块的随机独立执行特性。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 92</strong>：CUDA 内置标示符映射图（gridDim, blockDim, blockIdx, threadIdx）。</li>
+<li><strong>Slide 94</strong>：DAXPY 核函数的 CUDA 实现。</li>
+</ul>
+<h3 id="9-gpu-simd-slide-97-slide-120">9. GPU SIMD 线程调度与分支发散同步栈（Slide 97 - Slide 120）</h3>
+<ul>
+<li><strong>核心内容</strong>：掌握 Thread Block Scheduler 与 SIMD Thread Scheduler 的二级调度机制；理解 Warp 分支发散时的串行退化规律；掌握硬件分支同步栈（Push/Pop 条目、目标活跃掩码）控制分支分歧与汇合的机制。</li>
+<li><strong>PPT 重要插图</strong>：</li>
+<li><strong>Slide 102</strong>：二级调度器分发线程块和 SIMD 指令 Warp 的逻辑图。</li>
+<li><strong>Slide 114 - Slide 115</strong>：IF-THEN-ELSE 控制发散下的指令遮罩执行与效率腰斩数据。</li>
+<li><strong>Slide 119</strong>：Warp 分支在同步栈控制下 Diverge 压栈与 Converge 弹栈合并的过程图。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

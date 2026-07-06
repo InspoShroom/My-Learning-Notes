@@ -1,0 +1,1491 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Trends_Performance/">
+      
+      
+        <link rel="prev" href="../Fundamentals_Basics/">
+      
+      
+        <link rel="next" href="../Memory_Basics/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第三章 趋势与性能评测 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第三章 趋势与性能评测
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fundamentals_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术与性能趋势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术与性能趋势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 五大硬件技术发展特征
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bandwidth-over-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 带宽优先于延迟 (Bandwidth over Latency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 特征尺寸与线延迟
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        功耗与能效
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功耗与能效">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 动态功耗与能量模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 能效优化策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        集成电路成本模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成电路成本模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 芯片成本与良率公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-capex-opex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. CAPEX 与 OPEX
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可靠性与可信赖性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可靠性与可信赖性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 故障、错误与失效的演进关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 可靠性测量指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 磁盘冗余阵列 (RAID) 级别对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能评测与定量设计原则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能评测与定量设计原则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 性能测量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-principle-of-locality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 局部性原理 (Principle of Locality)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. CPU 时间公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术与性能趋势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术与性能趋势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 五大硬件技术发展特征
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bandwidth-over-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 带宽优先于延迟 (Bandwidth over Latency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 特征尺寸与线延迟
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        功耗与能效
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功耗与能效">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 动态功耗与能量模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 能效优化策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        集成电路成本模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成电路成本模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 芯片成本与良率公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-capex-opex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. CAPEX 与 OPEX
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可靠性与可信赖性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可靠性与可信赖性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 故障、错误与失效的演进关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 可靠性测量指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 磁盘冗余阵列 (RAID) 级别对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能评测与定量设计原则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能评测与定量设计原则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 性能测量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-principle-of-locality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 局部性原理 (Principle of Locality)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. CPU 时间公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第三章 趋势与性能评测</h1>
+<p>本章深入探讨了定量计算机设计中更深层次的技术演进趋势、功耗与能效计算模型、集成电路良率与成本的关系、系统可靠性与磁盘冗余阵列（RAID），以及计算机性能评测公式与定量设计准则。</p>
+<hr />
+<h2 id="_2">技术与性能趋势</h2>
+<h3 id="1">1. 五大硬件技术发展特征</h3>
+<ul>
+<li>集成电路逻辑（IC Logic）：集成度曾以摩尔定律发展，在 2015 年后由于漏电流和物理尺寸逼近原子极限而显著放缓。</li>
+<li>半导体主存（DRAM）：容量大约每 3 年翻 4 倍，但近年来增速同样放缓。</li>
+<li>半导体闪存（Flash）：作为个人移动设备（PMD）的非易失（Nonvolatile）存储，容量大约每 2 年翻一倍，每位成本比 DRAM 便宜约 8 到 10 倍。</li>
+<li>磁盘（Magnetic Disk）：存储密度增长近年来已低于 5%，但其单位成本比闪存便宜约 8 到 10 倍，比 DRAM 便宜达 200 到 300 倍，是服务器与数据中心的核心支撑。</li>
+<li>网络技术（Network）：发展强劲，但提升带宽（Bandwidth）明显比改善延迟（Latency）容易。</li>
+</ul>
+<h3 id="2-bandwidth-over-latency">2. 带宽优先于延迟 (Bandwidth over Latency)</h3>
+<p>在各种性能提升技术中，<strong>带宽/吞吐量（Bandwidth/Throughput）</strong>的增长速度远快于<strong>延迟/响应时间（Latency/Response Time）</strong>的改善：</p>
+<ul>
+<li>在微处理器和网络领域，带宽增长了 32000 到 40000 倍，而延迟仅改善了 50 到 90 倍。</li>
+<li>在内存和磁盘领域（更侧重容量而非速度），带宽增长了 400 到 2400 倍，而延迟仅改善了 8 到 9 倍。</li>
+</ul>
+<h3 id="3">3. 特征尺寸与线延迟</h3>
+<p>随着晶体管<strong>特征尺寸（Feature Size）</strong>的缩小，晶体管性能呈线性提升且导线变短，但由于导线横截面积变小导致电阻电容延迟（RC delay）恶化，因此线延迟已成为限制系统性能的瓶颈。</p>
+<hr />
+<h2 id="_3">功耗与能效</h2>
+<p>功耗指瞬时能量开销（决定配电与散热极限），能效关注完成某项任务所消耗的总能量（决定电池寿命与运行电费）。</p>
+<h3 id="1_1">1. 动态功耗与能量模型</h3>
+<p>晶体管在开关切换状态（0 到 1，或 1 到 0）时，会产生<strong>动态功耗（Dynamic Power）</strong>。</p>
+<ul>
+<li><strong>单次开关能量公式</strong>：
+  <span class="arithmatex">\(E_{\text{dynamic}} \propto C \cdot V^2\)</span></li>
+<li><strong>动态功耗公式</strong>：
+  <span class="arithmatex">\(P_{\text{dynamic}} \propto C \cdot V^2 \cdot f\)</span>
+  其中 <span class="arithmatex">\(C\)</span> 为负载电容，<span class="arithmatex">\(V\)</span> 为工作电压，<span class="arithmatex">\(f\)</span> 为开关频率。</li>
+<li><strong>降频并不降低总能量</strong>：在恒定电压下，单纯降低时钟频率会降低瞬时功耗，但由于执行任务时间等比例延长，总能量消耗并不会减少。</li>
+<li><strong>调压调频（Dynamic Voltage-Frequency Scaling, DVFS）</strong>：如果同时将电压与频率降低 15%，瞬时功耗将下降近 40%，且由于能量与电压平方成正比，总能量消耗也将显著降低。</li>
+</ul>
+<h3 id="2">2. 能效优化策略</h3>
+<ol>
+<li><strong>空闲关闭（Do nothing well）</strong>：关闭非活跃模块的时钟或断电（门控时钟/电源门控）。</li>
+<li><strong>Race-to-halt（跑完即停）</strong>：使用主频极高且较耗能的处理器快速完成任务，然后迅速进入休眠状态，以使系统其他部分（如外设、内存）能尽早进入超低功耗模式，从而降低整机系统总能量。</li>
+<li><strong>瞬时超频（Turbo Mode）</strong>：允许芯片在短时间内超频运行，在温度触及上限前快速处理完高负载任务。</li>
+</ol>
+<hr />
+<h2 id="_4">集成电路成本模型</h2>
+<p>随着芯片特征尺寸缩小到 5 纳米及以下，制造复杂度急剧上升。</p>
+<h3 id="1_2">1. 芯片成本与良率公式</h3>
+<p>晶圆上的芯片制造成本受良率支配：</p>
+<p><span class="arithmatex">\(\text{Cost of die} = \frac{\text{Cost of wafer}}{\text{Dies per wafer} \times \text{Die yield}}\)</span></p>
+<p>其中，每个晶圆上的芯片数（Dies per wafer）估算公式为：</p>
+<p><span class="arithmatex">\(\text{Dies per wafer} = \frac{\pi \times (\text{Wafer diameter} / 2)^2}{\text{Die area}} - \frac{\pi \times \text{Wafer diameter}}{\sqrt{2 \times \text{Die area}}}\)</span></p>
+<p>芯片良率（Die Yield，基于 Bose-Einstein 模型）估算公式为：</p>
+<p><span class="arithmatex">\(\text{Die yield} = \text{Wafer yield} \times \left(1 + \frac{\text{Defects per unit area} \times \text{Die area}}{N}\right)^{-N}\)</span></p>
+<ul>
+<li><span class="arithmatex">\(N\)</span> 是工艺复杂度因子（通常取 11.5 到 14.5）。</li>
+<li><strong>良率改善策略</strong>：在集成电路上设计<strong>冗余单元（Redundancy）</strong>。例如在 SRAM 或 DRAM 中设计多余的存储单元，若测试发现缺陷，可通过熔断机制替代损坏单元，大幅提升良率。</li>
+</ul>
+<h3 id="2-capex-opex">2. CAPEX 与 OPEX</h3>
+<p>传统的计算机设计主要关注资本支出（Capital Expenses, CAPEX，如购买芯片和服务器的硬件成本）。而在仓储级计算机（WSC）时代，包含数十万台服务器，运行期间的运营支出（Operational Expenses, OPEX，如电费、散热冷却开销）比制造购买成本更为显著。</p>
+<hr />
+<h2 id="_5">可靠性与可信赖性</h2>
+<h3 id="1_3">1. 故障、错误与失效的演进关系</h3>
+<p>系统在发生最终故障表现前，遵循以下因果演进链条：</p>
+<p><span class="arithmatex">\(\text{故障 (Fault)} \longrightarrow \text{错误 (Error)} \longrightarrow \text{失效 (Failure)}\)</span></p>
+<ul>
+<li><strong>故障（Fault）</strong>：系统在物理层或设计层存在的缺陷。例如：程序中写错了加法公式（<span class="arithmatex">\(60 + 35 = 90\)</span>），此时该缺陷是<strong>潜伏错误（Latent Error）</strong>。</li>
+<li><strong>错误（Error）</strong>：故障被激活，导致系统内部状态处于不正确状态。例如：程序运行时调用了该加法函数。</li>
+<li><strong>失效（Failure）</strong>：错误的系统内部状态传递到外部，导致系统提供的服务偏离了约定的规范。例如：系统把计算出的错误成绩（90分而非95分）正式提交了。</li>
+<li><em>注</em>：如果错误在造成偏离规范前被软件逻辑捕获（例如 <code>if (add(60,35) &gt;= 86)</code> 而未影响输出结果），则称为非失效状态。</li>
+</ul>
+<h3 id="2_1">2. 可靠性测量指标</h3>
+<ul>
+<li><strong>平均失效前时间（Mean Time to Failure, MTTF）</strong>：系统从初始无故障运行至下一次发生故障的平均连续工作时间。</li>
+<li><strong>平均修复时间（Mean Time to Repair, MTTR）</strong>：发生失效后修复并使系统恢复正常服务的平均时间。</li>
+<li><strong>平均失效间隔（Mean Time Between Failures, MTBF）</strong>：
+  <span class="arithmatex">\(\text{MTBF} = \text{MTTF} + \text{MTTR}\)</span></li>
+<li><strong>可用性（Availability）</strong>：系统在特定时刻正常提供服务的概率：
+  <span class="arithmatex">\(\text{Availability} = \frac{\text{MTTF}}{\text{MTTF} + \text{MTTR}} = \frac{\text{MTTF}}{\text{MTBF}}\)</span></li>
+<li><strong>FIT（Failures in Time）</strong>：衡量每 10 亿小时内的失效次数的指标。
+  <span class="arithmatex">\(\text{MTTF} = 1,000,000 \text{ 小时} \implies \text{Failure rate} = 10^{-6} \text{ 次/小时} \implies 1000 \text{ FIT}\)</span></li>
+</ul>
+<h3 id="3-raid">3. 磁盘冗余阵列 (RAID) 级别对比</h3>
+<p>依靠物理硬件冗余（如镜像或校验）来防止单个物理故障导致失效：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">RAID 级别</th>
+<th style="text-align: left;">冗余设计</th>
+<th style="text-align: left;">空间开销与成本</th>
+<th style="text-align: left;">容错能力</th>
+<th style="text-align: left;">特征与局限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RAID 0</strong></td>
+<td style="text-align: left;">无冗余，条带化（Striping）</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">0 块盘</td>
+<td style="text-align: left;">读写速度快，但任意一块盘损坏则全部数据丢失</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 1</strong></td>
+<td style="text-align: left;">镜像（Mirroring）</td>
+<td style="text-align: left;">100%</td>
+<td style="text-align: left;">1 块盘</td>
+<td style="text-align: left;">空间开销极大，一次逻辑写入需执行两次物理写入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 2</strong></td>
+<td style="text-align: left;">位级拆分，海明码校验</td>
+<td style="text-align: left;">依赖海明码位数</td>
+<td style="text-align: left;">单盘纠错</td>
+<td style="text-align: left;">硬件过于复杂，现代已不采用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 3</strong></td>
+<td style="text-align: left;">字节级拆分，单奇偶校验盘（Parity Disk）</td>
+<td style="text-align: left;">1 块盘的容量</td>
+<td style="text-align: left;">1 块盘</td>
+<td style="text-align: left;">数据恢复采用奇偶校验位“减去”完好盘数据。瓶颈在单校验盘的频繁读写</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 4</strong></td>
+<td style="text-align: left;">块/扇区级独立读写，单奇偶校验盘</td>
+<td style="text-align: left;">1 块盘的容量</td>
+<td style="text-align: left;">1 块盘</td>
+<td style="text-align: left;">允许独立读，但单校验盘写入时会产生严重并发瓶颈</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 5</strong></td>
+<td style="text-align: left;">块级独立读写，分布式奇偶校验（Distributed Parity）</td>
+<td style="text-align: left;">1 块盘的容量</td>
+<td style="text-align: left;">1 块盘</td>
+<td style="text-align: left;">将校验信息打散在所有盘中，消除了 RAID 4 单奇偶校验盘的写瓶颈</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAID 6</strong></td>
+<td style="text-align: left;">双重奇偶校验，行对角校验（Row-Diagonal Parity）</td>
+<td style="text-align: left;">2 块盘的容量</td>
+<td style="text-align: left;">2 块盘</td>
+<td style="text-align: left;">使用两组不同的校验算子，可容忍任意两块磁盘同时物理损坏</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">性能评测与定量设计原则</h2>
+<h3 id="1_4">1. 性能测量</h3>
+<ul>
+<li><strong>响应时间（Response Time）/ 延迟（Latency）</strong>：用户看到任务完成所需的墙钟时间（Elapsed Time/Wall-clock Time），包括访存、I/O 以及操作系统开销。</li>
+<li><strong>吞吐量（Throughput）</strong>：单位时间内系统完成的总工作量。</li>
+<li><strong>几何平均值（Geometric Mean）</strong>：
+  $<span class="arithmatex">\(\text{Geometric Mean} = \sqrt[n]{\prod_{i=1}^n \text{SPECRatio}_i}\)</span>$
+  在评测标准基准测试套件（如 SPEC CPU2017）时，各程序耗时归一化为参考机的比率后，必须使用几何平均值进行综合对比，以保证评估结果不受所选参考机的影响。</li>
+</ul>
+<h3 id="2-principle-of-locality">2. 局部性原理 (Principle of Locality)</h3>
+<p>计算机设计最基础的定量物理事实：程序大约 <strong>90%</strong> 的执行时间花费在仅 <strong>10%</strong> 的代码中。</p>
+<ul>
+<li><strong>时间局部性（Temporal Locality）</strong>：最近访问过的数据/指令，在不久的将来大概率会再次访问（例如循环变量 <code>sum</code>、反复执行的循环体指令）。</li>
+<li><strong>空间局部性（Spatial Locality）</strong>：物理地址相邻近的数据/指令，在时间上也倾向于连续被访问（例如顺序执行的指令流、连续读写的数组元素 <code>a[i]</code>）。</li>
+</ul>
+<h3 id="3-cpu">3. CPU 时间公式</h3>
+<p>评估处理器性能的黄金计算公式：
+$<span class="arithmatex">\(\text{CPU Time} = \text{Instruction Count (IC)} \times \text{CPI} \times \text{Clock Cycle Time}\)</span>$
+这三个关键影响因子受到系统不同软硬件层次的制约：</p>
+<ul>
+<li><strong>时钟周期时间（Clock Cycle Time）</strong>：受电路工艺和硬件微组织（Micro-organization）限制。</li>
+<li><strong>每指令时钟周期数（CPI）</strong>：受微结构设计和指令集（ISA）设计限制。</li>
+<li><strong>指令数（Instruction Count）</strong>：受指令集（ISA）设计和编译器（Compiler）优化技术限制。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1096 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Patterns_Design-Case_Study/">
+      
+      
+        <link rel="prev" href="../Design/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>设计模式 - OOP Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lexi" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OOP Note" class="md-header__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OOP Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              设计模式
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OOP Note" class="md-nav__button md-logo" aria-label="OOP Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OOP Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Using_Objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用类与对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    类与封装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Object_Interactive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    构造、清理与对象交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Copy_constructor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拷贝构造、静态成员与命名空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内联函数、对象组合与继承基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Polymorphism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Overloaded_Operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运算符重载与类型转换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    异常处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Iterators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    迭代器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    程序设计/架构设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设计模式
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设计模式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题一：文档结构的内部表示（树形层次结构）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题二：排版格式化算法的解耦
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题三：装饰用户界面（边框与滚动条）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#look-and-feel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题四：支持多种视觉外观标准（Look-and-Feel）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题五：支持多种不兼容的底层窗口系统
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题六：用户操作命令的封装与撤销（Undo/Redo）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题七：遍历散落在层次结构中的数据
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题八：无缝扩展拼写检查与排版分析（不破坏字形类）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexi_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lexi 案例设计模式总结清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题一：文档结构的内部表示（树形层次结构）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题二：排版格式化算法的解耦
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题三：装饰用户界面（边框与滚动条）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#look-and-feel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题四：支持多种视觉外观标准（Look-and-Feel）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题五：支持多种不兼容的底层窗口系统
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题六：用户操作命令的封装与撤销（Undo/Redo）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题七：遍历散落在层次结构中的数据
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题八：无缝扩展拼写检查与排版分析（不破坏字形类）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexi_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lexi 案例设计模式总结清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lexi">经典设计模式案例分析：Lexi 文档编辑器</h1>
+<p>本笔记基于课程课件《Patterns Design-Case Study_改.ppt》进行整理。课件以开发一个所见即所得（WYSIWYG）的文档编辑器 Lexi 为案例，深入剖析了如何解决文档结构设计、算法解耦、跨平台窗口系统兼容、用户命令流控制等 8 个核心设计难题，并依次引入了 8 个经典的 Gang of Four (GoF) 设计模式。</p>
+<hr />
+<h3 id="_1">问题一：文档结构的内部表示（树形层次结构）</h3>
+<ul>
+<li><strong>设计需求</strong>：编辑器需要自由混合文本和图形，并且能够以统一的方式对待单个基本字符、图像以及复杂的物理排版结构（如行 Row、列 Column、表格）。</li>
+<li><strong>设计困境</strong>：如果不做统一抽象，程序在排版或分析时就必须频繁判断当前节点是字符还是图像，导致代码充斥着分支判断。</li>
+<li><strong>解决方案</strong>：引入<strong>递归组合（Recursive Composition）</strong>。定义一个通用的图形基类 <code>Glyph</code>（字形），其子类既包含原始图形元素（如 <code>Character</code>、<code>Image</code>），又包含结构化布局元素（如 <code>Row</code>、<code>Column</code>，它们内部持有一个 <code>Glyph</code> 链表）。</li>
+<li><strong>对应模式：组合模式（Composite Pattern）</strong></li>
+<li><strong>本质</strong>：将对象组合成树形结构以表示“部分-整体”的层次结构。它使得客户对单个对象和复合对象的使用具有一致性。</li>
+</ul>
+<details class="example">
+<summary>点击查看代码</summary>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 统一的字形抽象接口</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Glyph</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">draw</span><span class="p">(</span><span class="n">Window</span><span class="w"> </span><span class="n">w</span><span class="p">);</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="n">Rect</span><span class="w"> </span><span class="n">getBounds</span><span class="p">();</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="c1">// 树形结构管理</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">Glyph</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">remove</span><span class="p">(</span><span class="n">Glyph</span><span class="w"> </span><span class="n">g</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">abstract</span><span class="w"> </span><span class="n">Glyph</span><span class="w"> </span><span class="n">child</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+</span></code></pre></div>
+</details>
+<hr />
+<h3 id="_2">问题二：排版格式化算法的解耦</h3>
+<ul>
+<li><strong>设计需求</strong>：编辑器需要将文本折行为行，行折为列，且必须支持不同的排版算法（如快速折行、高质量双向对齐等）。</li>
+<li><strong>设计困境</strong>：排版算法复杂多变，如果将其直接写在 <code>Glyph</code> 类（如 <code>Row</code>）内部，当需要添加新的排版策略时，必须修改所有相关的字形类。</li>
+<li><strong>解决方案</strong>：将排版折行算法独立封装。定义一个抽象类 <code>Compositor</code>（排版器），它与 <code>Composition</code>（排版内容容器）松耦合。<code>Composition</code> 仅负责存储字形，而在需要排版时将其委派给 <code>Compositor</code> 的具体子类去计算并插入不可见的换行字形。</li>
+<li><strong>对应模式：策略模式（Strategy Pattern）</strong></li>
+<li><strong>本质</strong>：定义一系列算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。</li>
+</ul>
+<hr />
+<h3 id="_3">问题三：装饰用户界面（边框与滚动条）</h3>
+<ul>
+<li><strong>设计需求</strong>：需要动态为文本编辑区域加上边框（Border）或者滚动条（Scrollbar）。</li>
+<li><strong>设计困境</strong>：使用继承会引发<strong>类爆炸</strong>（如 <code>BorderedScrollableTextView</code>、<code>BorderedTextView</code> 等），且在运行期无法灵活撤销或叠加装饰。</li>
+<li><strong>解决方案</strong>：引入<strong>透明包围（Transparent Enclosure）</strong>。定义一个抽象修饰类 <code>MonoGlyph</code> 继承自 <code>Glyph</code>，其内部只持有一个子字形指针，并将所有调用转发给子字形。具体的子类 <code>Border</code> 在转发 <code>draw()</code> 请求的前后执行自己特有的画边框操作。</li>
+<li><strong>对应模式：装饰模式（Decorator Pattern）</strong></li>
+<li><strong>本质</strong>：动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。</li>
+</ul>
+<hr />
+<h3 id="look-and-feel">问题四：支持多种视觉外观标准（Look-and-Feel）</h3>
+<ul>
+<li><strong>设计需求</strong>：Lexi 需要兼容多种系统视觉主题（如 Motif、Windows、Mac 控件风格），并支持在启动时甚至运行期动态切换风格。</li>
+<li><strong>设计困境</strong>：如果在代码中直接实例化具体的控件（如 <code>new MotifScrollBar()</code>），会导致代码与特定平台主题高度强耦合。</li>
+<li><strong>解决方案</strong>：引入工厂机制。定义一个抽象工厂 <code>GUIFactory</code>，定义创建各类抽象产品的方法（如 <code>createScrollBar()</code>、<code>createButton()</code>）。具体的工厂子类（如 <code>MotifFactory</code>）负责生产特定风格的具体产品。</li>
+<li><strong>对应模式：抽象工厂模式（Abstract Factory Pattern）</strong></li>
+<li><strong>本质</strong>：提供一个创建系列相关或相互依赖对象的接口，而无需指定它们具体的类。</li>
+</ul>
+<hr />
+<h3 id="_4">问题五：支持多种不兼容的底层窗口系统</h3>
+<ul>
+<li><strong>设计需求</strong>：Lexi 必须能够跨不同的不兼容底层窗口系统（如 XWindow、Windows API、Mac OS）运行。</li>
+<li><strong>设计困境</strong>：这不同于产品外观，底层窗口系统的 API 规范完全不同，无法通过一个统一的产品继承树来直接抽象。</li>
+<li><strong>解决方案</strong>：将逻辑抽象与平台实现彻底分离。定义逻辑窗口层次结构 <code>Window</code>（负责 <code>drawRect</code>、<code>drawText</code> 等高级逻辑）；另外定义一套独立的平台实现层次结构 <code>WindowImp</code>（如 <code>XWindowImp</code>、<code>WinWindowImp</code>，专门封装系统相关的原始绘图调用）。<code>Window</code> 类内部持有一个指向 <code>WindowImp</code> 的指针，将操作委派给它。</li>
+<li><strong>对应模式：桥接模式（Bridge Pattern）</strong></li>
+<li><strong>本质</strong>：将抽象部分与它的实现部分分离，使它们都可以独立地变化。</li>
+</ul>
+<hr />
+<h3 id="undoredo">问题六：用户操作命令的封装与撤销（Undo/Redo）</h3>
+<ul>
+<li><strong>设计需求</strong>：需要支持新建、保存、剪切、粘贴等多种用户菜单操作，且必须提供统一的、多级撤销（Undo）与重做（Redo）队列。</li>
+<li><strong>设计困境</strong>：如果将操作直接绑定在菜单项 <code>MenuItem</code> 类中，菜单项就必须知晓文档的细节，导致 UI 组件与业务逻辑紧耦合；且无法记录历史命令。</li>
+<li><strong>解决方案</strong>：将用户请求封装为对象。定义抽象 <code>Command</code> 类，包含 <code>execute()</code>（执行）和 <code>unexecute()</code>（撤销）接口。UI 控件（如 <code>MenuItem</code>）在初始化时绑定具体的 <code>Command</code> 子类，触发时仅需调用其 <code>execute()</code>，并将该命令放入历史队列中以支持多级撤销。</li>
+<li><strong>对应模式：命令模式（Command Pattern）</strong></li>
+<li><strong>本质</strong>：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。</li>
+</ul>
+<hr />
+<h3 id="_5">问题七：遍历散落在层次结构中的数据</h3>
+<ul>
+<li><strong>设计需求</strong>：拼写检查、公式计算等分析操作需要遍历整个文档树，但文档树内部的不同节点采用了不同的底层容器（如链表、数组、树等）来存储子字形。</li>
+<li><strong>设计困境</strong>：遍历算法如果不加抽象，调用者就必须写一大堆针对不同容器的遍历逻辑；且无法支持多样化的遍历顺序（如前序、后序、逆序）。</li>
+<li><strong>解决方案</strong>：引入迭代器抽象。定义 <code>Iterator</code> 抽象类，提供标准接口如 <code>First()</code>、<code>Next()</code>、<code>IsDone()</code>、<code>CurrentItem()</code>。各个字形子类（如 <code>Row</code>）通过工厂方法 <code>CreateIterator()</code> 返回针对自己内部数据结构的专属迭代器实例。</li>
+<li><strong>对应模式：迭代器模式（Iterator Pattern）</strong></li>
+<li><strong>本质</strong>：提供一种方法顺序访问一个聚合对象中各个元素，而又不需暴露该对象的内部表示。</li>
+</ul>
+<hr />
+<h3 id="_6">问题八：无缝扩展拼写检查与排版分析（不破坏字形类）</h3>
+<ul>
+<li><strong>设计需求</strong>：需要对文档执行多种分析动作（如拼写检查、字符统计、语法分析、自动加连字符等），且希望分析动作的添加与字形类解耦（即增加新分析不需要去修改原有的 <code>Glyph</code> 类）。</li>
+<li><strong>设计困境</strong>：如果用普通的遍历配合类型判断（如使用 <code>instanceof</code> 或 <code>dynamic_cast</code> 检查是否为 <code>CharacterGlyph</code>），会导致遍历代码极其臃肿且违反开闭原则。</li>
+<li><strong>解决方案</strong>：引入<strong>双分派（Double Dispatch）</strong>。定义一个 <code>Visitor</code>（访问者）类层次结构，其中包含针对各类具体字形的访问方法（如 <code>visitCharacter()</code>、<code>visitRow()</code>）。在 <code>Glyph</code> 类中定义虚函数 <code>accept(Visitor&amp; v)</code>，由子类实现：<code>v.visitCharacter(this);</code>（利用动态绑定，将控制权反弹回访问者，自动实现类型匹配）。</li>
+<li><strong>对应模式：访问者模式（Visitor Pattern）</strong></li>
+<li><strong>本质</strong>：表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</li>
+</ul>
+<hr />
+<h3 id="lexi_1">Lexi 案例设计模式总结清单</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">难题 / 设计目标</th>
+<th style="text-align: left;">解决方案</th>
+<th style="text-align: left;">采用的设计模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>文档物理结构的内部统一表示</strong></td>
+<td style="text-align: left;">树形节点的层次递归嵌套</td>
+<td style="text-align: left;"><strong>组合模式（Composite）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>排版对齐算法与文档树的解耦</strong></td>
+<td style="text-align: left;">将排版逻辑封装在独立的 Compositor 算法类中</td>
+<td style="text-align: left;"><strong>策略模式（Strategy）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>动态且透明地为编辑区域添加边框/滚动条</strong></td>
+<td style="text-align: left;">使用单子节点的透明包围进行能力增强与任务委托</td>
+<td style="text-align: left;"><strong>装饰模式（Decorator）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>跨系统视觉外观（Look-and-Feel）的一键切换</strong></td>
+<td style="text-align: left;">抽象控件创建过程，用 GUIFactory 屏蔽具体类实例化</td>
+<td style="text-align: left;"><strong>抽象工厂模式（Abstract Factory）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支持不同的底层不兼容窗口系统开发</strong></td>
+<td style="text-align: left;">窗口逻辑层与系统实现层彻底分离，通过指针桥接</td>
+<td style="text-align: left;"><strong>桥接模式（Bridge）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>支持 UI 操作重用与多级撤销（Undo/Redo）</strong></td>
+<td style="text-align: left;">将动作封装为含有 execute/unexecute 的对象</td>
+<td style="text-align: left;"><strong>命令模式（Command）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>统一遍历由各种不同容器存储的字形树</strong></td>
+<td style="text-align: left;">抽象出迭代器接口，屏蔽底层遍历细节</td>
+<td style="text-align: left;"><strong>迭代器模式（Iterator）</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>在不修改字形类的前提下无缝新增拼写检查等分析</strong></td>
+<td style="text-align: left;">引入双分派机制，由外部访问者对象累积遍历状态</td>
+<td style="text-align: left;"><strong>访问者模式（Visitor）</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

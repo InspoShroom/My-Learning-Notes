@@ -1,0 +1,1511 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/Fundamentals_Basics/">
+      
+      
+        <link rel="prev" href="../Introduction/">
+      
+      
+        <link rel="next" href="../Trends_Performance/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第二章 计算机设计基础-基础篇 - CA Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="CA Note" class="md-header__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CA Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第二章 计算机设计基础-基础篇
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CA Note" class="md-nav__button md-logo" aria-label="CA Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CA Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Knowledge_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    知识地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 计算机设计基础-基础篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理器性能的发展
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lhadma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定量设计准则：阿姆达尔定律与 Lhadma 定律
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="定量设计准则：阿姆达尔定律与 Lhadma 定律">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-amdahls-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 阿姆达尔定律（Amdahl's Law）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lhadma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Lhadma 定律
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机的五大分类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flynn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        并行性的层级与 Flynn 分类法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="并行性的层级与 Flynn 分类法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 并行性的层级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-flynn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Flynn 分类法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISA设计的七个维度
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ISA设计的七个维度">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-isa-class-of-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ISA 的分类 (Class of ISA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-memory-addressing-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 内存寻址与对齐 (Memory Addressing &amp; Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-addressing-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 寻址方式 (Addressing Modes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risc-v-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RISC-V 的 3 种基本寻址方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isa-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复杂 ISA 寻址方式对比（RISC-V 不支持）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-types-and-sizes-of-operands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 操作数类型与大小 (Types and Sizes of Operands)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 操作指令分类 (Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-control-flow-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 控制流指令 (Control Flow Instructions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-encoding-an-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 指令集编码 (Encoding an ISA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trends_Performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 趋势与性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 存储层次结构基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory_Advances/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 存储层次结构高级篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Static/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 指令级并行与静态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Dynamic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章 指令级并行与动态调度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ILP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章 硬件级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章 数据级并行与矢量/GPU架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 数据级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Coherence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 线程级并行与缓存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Consistency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 线程级并行与内存一致性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TLP_Exploitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 线程级并行发掘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Course_Review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 课程期末复习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QiaNote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QiaNote (对齐笔记)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CheatPaper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    考试复习与 Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理器性能的发展
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lhadma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定量设计准则：阿姆达尔定律与 Lhadma 定律
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="定量设计准则：阿姆达尔定律与 Lhadma 定律">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-amdahls-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 阿姆达尔定律（Amdahl's Law）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lhadma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Lhadma 定律
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机的五大分类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flynn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        并行性的层级与 Flynn 分类法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="并行性的层级与 Flynn 分类法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 并行性的层级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-flynn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Flynn 分类法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISA设计的七个维度
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ISA设计的七个维度">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-isa-class-of-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ISA 的分类 (Class of ISA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-memory-addressing-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 内存寻址与对齐 (Memory Addressing &amp; Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-addressing-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 寻址方式 (Addressing Modes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risc-v-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RISC-V 的 3 种基本寻址方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isa-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复杂 ISA 寻址方式对比（RISC-V 不支持）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-types-and-sizes-of-operands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 操作数类型与大小 (Types and Sizes of Operands)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 操作指令分类 (Operations)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-control-flow-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 控制流指令 (Control Flow Instructions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-encoding-an-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 指令集编码 (Encoding an ISA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第二章 计算机设计基础</h1>
+<p>本章详细介绍了定量计算机设计的基础知识，包括处理器性能演变规律、定量分析的核心定律、计算机分类、并行性的 Flynn 分类法，以及 ISA 设计的七个关键维度。</p>
+<hr />
+<h2 id="_2">处理器性能的发展</h2>
+<p>过去四十年处理器性能的飞速发展，主要得益于微结构设计的突破与半导体工艺的红利。</p>
+<ol>
+<li><strong>摩尔定律（Moore's Law）</strong>：集成电路上可容纳的晶体管数目大约每两年增加一倍。该定律在 2015 年左右因达到原子级物理极限而逐渐终结。</li>
+<li><strong>登纳德缩放定律（Dennard Scaling）</strong>：随着晶体管尺寸缩小，其功耗密度保持恒定。因此可以在保持芯片总功耗和散热不变的前提下，大幅提升主频和晶体管数量。<ul>
+<li><strong>终结原因</strong>：约在 2004 年终结。由于工作电压（Voltage）和漏电流（Current）无法继续等比例降低，芯片功耗密度急剧上升，主频被迫封顶（“功耗墙”（Power Wall））。</li>
+</ul>
+</li>
+<li><strong>多核转型</strong>：物理极限迫使产业界转向<strong>多核处理器（Multi-Core Processor）</strong>，通过横向增加高效核心，将性能提升的途径从发掘指令级并行（ILP）转向发掘数据级并行（DLP）与线程级并行（TLP）。</li>
+</ol>
+<hr />
+<h2 id="lhadma">定量设计准则：阿姆达尔定律与 Lhadma 定律</h2>
+<h3 id="1-amdahls-law">1. 阿姆达尔定律（Amdahl's Law）</h3>
+<p>阿姆达尔定律用于计算对系统某一部分进行优化后，系统整体所获得的性能提升/加速比。</p>
+<ul>
+<li><strong>加速比公式</strong>：
+  <span class="arithmatex">\({Speedup} = \frac{1}{(1 - F_{    ext{enhanced}}) + \frac{F_{ ext{enhanced}}}{S_{ ext{enhanced}}}}\)</span>
+  其中：<ul>
+<li><span class="arithmatex">\(F_{  ext{enhanced}}\)</span>：被优化的部分在原系统运行时间中所占的比例（非负且 <span class="arithmatex">\(\le 1\)</span>）。</li>
+<li><span class="arithmatex">\(S_{  ext{enhanced}}\)</span>：该优化部分自身提升的加速比。</li>
+</ul>
+</li>
+<li><strong>加速比极限</strong>：
+  当优化部分的性能提升趋近于无穷大（<span class="arithmatex">\(S_{ ext{enhanced}}  o \infty\)</span>）时，整体加速比的极限为：
+  <span class="arithmatex">\(ext{Limit} = \frac{1}{1 - F_{    ext{enhanced}}}\)</span><ul>
+<li><em>启示</em>：若一个任务中有 10% 的部分无法被并行（必须串行执行），那么即使投入无限个核心，系统的最大加速比也只有 10 倍。</li>
+</ul>
+</li>
+<li><strong>设计准则</strong>：<strong>使常见情况变快（Make common case fast）</strong>。应优先优化占比高的部分，以获得最大的整体收益。<ul>
+<li><em>典型例题</em>：假设某一处理器的浮点求平方根指令（FPSQR）执行时间占总时间的 <span class="arithmatex">\(20\%\)</span>。通过硬件重构，可将该指令的执行速度提升至 <span class="arithmatex">\(10\)</span> 倍。<ol>
+<li>若仅优化此指令，系统整体的加速比是多少？</li>
+<li>另一备选方案是优化所有浮点运算指令（占总执行时间的 <span class="arithmatex">\(50\%\)</span>），使其整体速度提升至 <span class="arithmatex">\(2\)</span> 倍。两方案哪个更优？</li>
+</ol>
+</li>
+<li><em>解答</em>：<ol>
+<li>仅优化平方根指令：<span class="arithmatex">\(F_{    ext{enhanced}} = 0.20\)</span>，<span class="arithmatex">\(S_{ ext{enhanced}} = 10\)</span>。
+   <span class="arithmatex">\(ext{Speedup}_{1} = \frac{1}{(1 - 0.20) + \frac{0.20}{10}} = \frac{1}{0.80 + 0.02} \approx 1.22\)</span>
+   整体性能提升约 <span class="arithmatex">\(22\%\)</span>。</li>
+<li>优化全部浮点指令：<span class="arithmatex">\(F_{    ext{enhanced}} = 0.50\)</span>，<span class="arithmatex">\(S_{ ext{enhanced}} = 2\)</span>。
+   <span class="arithmatex">\(ext{Speedup}_{2} = \frac{1}{(1 - 0.50) + \frac{0.50}{2}} = \frac{1}{0.50 + 0.25} \approx 1.33\)</span>
+   整体性能提升约 <span class="arithmatex">\(33\%\)</span>。</li>
+<li><strong>结论</strong>：优化占比更高（<span class="arithmatex">\(50\%\)</span>）但提升温和（<span class="arithmatex">\(2\)</span> 倍）的浮点操作，其带来的收益高于优化占比低（<span class="arithmatex">\(20\%\)</span>）但提升巨大（<span class="arithmatex">\(10\)</span> 倍）的平方根操作。这充分印证了“使常见情况变快”的设计哲学。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-lhadma">2. Lhadma 定律</h3>
+<p>作为阿姆达尔定律的补充，Lhadma 定律强调：<strong>不能让非常规（未优化）的情况变得太慢（Yet uncommon case not so slow）</strong>。</p>
+<ul>
+<li><em>反例计算</em>：如果对占比 90% 的部分加速了 2 倍（<span class="arithmatex">\(S_{  ext{enhanced}} = 2\)</span>），但作为代价，使得剩下的 10% 部分慢了 10 倍（相当于加速比为 <span class="arithmatex">\(0.1\)</span>）。整体加速比计算为：
+  <span class="arithmatex">\(ext{Speedup} = \frac{1}{\frac{0.1}{0.1} + \frac{0.9}{2}} = \frac{1}{1 + 0.45} \approx 0.69\)</span>
+  结果显示，由于未优化的部分变慢，整体性能反而退化了 31%。</li>
+</ul>
+<hr />
+<h2 id="_3">计算机的五大分类</h2>
+<p>现代计算机系统根据应用场景和约束条件的不同，主要分为以下五大类：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">分类</th>
+<th style="text-align: left;">典型设备</th>
+<th style="text-align: left;">核心设计指标</th>
+<th style="text-align: left;">主要约束/瓶颈</th>
+<th style="text-align: left;">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">个人移动设备（PMD）</td>
+<td style="text-align: left;">手机、平板</td>
+<td style="text-align: left;">响应速度、能效</td>
+<td style="text-align: left;">电池电量、散热（无风扇）</td>
+<td style="text-align: left;">强响应性，属于软实时（Soft Real-Time）系统，注重代码体积优化</td>
+</tr>
+<tr>
+<td style="text-align: left;">桌面计算（Desktop）</td>
+<td style="text-align: left;">个人电脑、工作站</td>
+<td style="text-align: left;">性价比（Price-Performance）</td>
+<td style="text-align: left;">整机成本、性能表现</td>
+<td style="text-align: left;">最大的单一市场，最注重单机计算能力与图形表现</td>
+</tr>
+<tr>
+<td style="text-align: left;">服务器（Servers）</td>
+<td style="text-align: left;">数据中心服务器</td>
+<td style="text-align: left;">可用性（Availability）、吞吐量</td>
+<td style="text-align: left;">宕机经济损失、扩展成本</td>
+<td style="text-align: left;">强调防失效的可用性，以及高可扩展性（Scalability）和高吞吐量</td>
+</tr>
+<tr>
+<td style="text-align: left;">仓储级计算机（WSC）</td>
+<td style="text-align: left;">云计算数据中心</td>
+<td style="text-align: left;">性价比、能源效率</td>
+<td style="text-align: left;">电力损耗、建设成本</td>
+<td style="text-align: left;">强调交互式服务、海量存储与极高的网络带宽（不同于超算专注于浮点运算）</td>
+</tr>
+<tr>
+<td style="text-align: left;">嵌入式计算机（Embedded）</td>
+<td style="text-align: left;">智能家居、物联网设备</td>
+<td style="text-align: left;">最低价格满足性能</td>
+<td style="text-align: left;">极度敏感的价格与功耗限制</td>
+<td style="text-align: left;">隐藏在设备中，其核心分界线在于是否具备运行第三方软件的能力</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="flynn">并行性的层级与 Flynn 分类法</h2>
+<h3 id="1">1. 并行性的层级</h3>
+<ul>
+<li><strong>应用级并行（Application Parallelism）</strong>：<ul>
+<li><strong>数据级并行（Data-Level Parallelism, DLP）</strong>：同时对许多独立的数据项执行相同的操作。</li>
+<li><strong>任务级并行（Task-Level Parallelism, TLP）</strong>：构建多个独立的任务流以并行方式运行。</li>
+</ul>
+</li>
+<li><strong>硬件发掘并行机制</strong>：<ul>
+<li><strong>指令级并行（Instruction-Level Parallelism, ILP）</strong>：通过流水线和投机执行等在硬件级发掘细粒度的并行性。</li>
+<li><strong>SIMD/向量架构/GPU</strong>：硬件执行单条指令，对数据集合进行并行操作，发掘数据级并行（DLP）。</li>
+<li><strong>线程级并行（Thread-Level Parallelism, TLP）</strong>：利用多核硬件模型发掘 DLP 或 TLP。</li>
+<li><strong>请求级并行（Request-Level Parallelism, RLP）</strong>：利用解耦的硬件节点并行处理大量独立的客户端请求。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-flynn">2. Flynn 分类法</h3>
+<p>基于指令流（Instruction stream）和数据流（Data stream）的数量，将计算机体系结构划分为四类：</p>
+<ul>
+<li><strong>SISD（Single Instruction, Single Data）</strong>：单指令流单数据流。传统单核 CPU，主要发掘指令级并行（ILP）。</li>
+<li><strong>SIMD（Single Instruction, Multiple Data）</strong>：单指令流多数据流。相同的指令在多个处理单元上执行，操作不同的数据流（发掘 DLP，如向量架构、GPU、多媒体指令集）。</li>
+<li><strong>MISD（Multiple Instruction, Single Data）</strong>：多指令流单数据流。目前没有主流的商业实现。</li>
+<li><strong>MIMD（Multiple Instruction, Multiple Data）</strong>：多指令流多数据流。每个处理器自主获取指令并操作各自的数据。具有极高灵活性，是多核处理器与分布式系统的核心（发掘 TLP 与 RLP）。</li>
+</ul>
+<hr />
+<h2 id="isa">ISA设计的七个维度</h2>
+<p>指令集体系结构（ISA）是软件与硬件的接口交界面。定义一个 ISA 必须确定以下七个维度的属性：</p>
+<h3 id="1-isa-class-of-isa">1. ISA 的分类 (Class of ISA)</h3>
+<ul>
+<li><strong>寄存器-内存型（Register-Memory ISA）</strong>：许多指令可以直接将内存地址作为操作数，如 80x86。</li>
+<li><strong>加载-存储型（Load-Store / Register-Register ISA）</strong>：只有专属的 Load 和 Store 指令可以访问内存，其余所有计算指令的操作数必须是寄存器，如 RISC-V 和 ARMv8。</li>
+<li><em>趋势</em>：1985 年之后设计的所有现代 ISA 全都采用了 Load-Store 架构。</li>
+</ul>
+<h3 id="2-memory-addressing-alignment">2. 内存寻址与对齐 (Memory Addressing &amp; Alignment)</h3>
+<ul>
+<li><strong>字节寻址（Byte Addressing）</strong>：内存中最小的寻址单元是一个字节（Byte, 8 bits）。</li>
+<li><strong>内存对齐（Aligned Address）</strong>：当数据对象在内存中的物理起始地址 <span class="arithmatex">\(A\)</span> 满足 <span class="arithmatex">\(A \mod s = 0\)</span>（<span class="arithmatex">\(s\)</span> 为对象字节宽度）时，称为地址对齐。</li>
+<li><strong>性能影响</strong>：未对齐 of 访存（Misaligned access）在硬件上需要发起两次内存访问并进行数据拼接，会导致显着的性能损耗。因此，许多 ISA 强制或建议数据在内存中按其宽度边界对齐放置。</li>
+</ul>
+<h3 id="3-addressing-modes">3. 寻址方式 (Addressing Modes)</h3>
+<p>用于指明指令中的操作数存放在哪里（寄存器、常数/立即数、还是内存地址）。</p>
+<ul>
+<li><strong>RISC-V</strong> 仅支持 3 种基本寻址：寄存器（Register）、立即数（Immediate，如 <code>addi x1, x1, 16</code>）、偏移量寻址（Displacement，如 <code>lw x1, 100(x2)</code>）。</li>
+</ul>
+<details class="example">
+<summary>RISC-V 寻址方式详解与对比</summary>
+<h3 id="risc-v-3">RISC-V 的 3 种基本寻址方式</h3>
+<ol>
+<li><strong>寄存器寻址（Register Addressing）</strong><ul>
+<li><em>特点</em>：操作数直接存放在寄存器中，指令中指定寄存器编号。</li>
+<li><em>汇编</em>：<code>add x1, x2, x3</code></li>
+<li><em>执行过程</em>：将寄存器 <code>x2</code> 的值与 <code>x3</code> 的值相加，结果存回寄存器 <code>x1</code>。完全在 CPU 内部的寄存器堆和 ALU 内完成，无内存访问。</li>
+</ul>
+</li>
+<li><strong>立即数寻址（Immediate Addressing）</strong><ul>
+<li><em>特点</em>：操作数是一个常量，作为指令的一部分直接编码。</li>
+<li><em>汇编</em>：<code>addi x1, x2, 100</code></li>
+<li><em>执行过程</em>：将寄存器 <code>x2</code> 的值与立即数常量 <code>100</code> 相加，结果存回 <code>x1</code>。常量 <code>100</code> 直接从指令码中解析出，无需访存。</li>
+</ul>
+</li>
+<li><strong>偏移量寻址 / 寄存器相对寻址（Displacement Addressing）</strong><ul>
+<li><em>特点</em>：操作数在内存中，物理地址由基址寄存器内容与指令中指定的立即数偏移量相加得到。</li>
+<li><em>汇编</em>：<code>lw x1, 8(x2)</code></li>
+<li><em>执行过程</em>：计算访存物理地址 <span class="arithmatex">\(Addr = x2 + 8\)</span>，然后从内存该地址处读取一个字并载入到寄存器 <code>x1</code>。这是 RISC-V 唯一的内存访存寻址方式。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="isa-risc-v">复杂 ISA 寻址方式对比（RISC-V 不支持）</h3>
+<p>为简化译码和流水线设计，RISC-V 剔除了复杂指令系统中的高级寻址模式，需要通过多条简单指令组合实现相同功能：
+* <strong>比例变址寻址（Scaled Index，如 x86）</strong>
+    * <em>x86 汇编</em>：<code>mov eax, [ebx + ecx * 4]</code> （常用于数组快速访问）
+    * <em>RISC-V 等价实现</em>：需先用逻辑左移计算偏移量，再与基址相加，最后访存：
+      <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>slli x4, x3, 2     # x3 (ecx) 左移 2 位 (乘以 4)，结果存入临时寄存器 x4
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>add  x4, x2, x4     # 将基址 x2 (ebx) 与偏移量相加
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>lw   x1, 0(x4)      # 从最终地址载入数据
+</span></code></pre></div>
+* <strong>自增寻址（Autoincrement，如 ARM）</strong>
+    * <em>ARM 汇编</em>：<code>ldr r1, [r2], #4</code> （访存后自动递增指针，常用于循环）
+    * <em>RISC-V 等价实现</em>：必须将访存与基址指针更新分两步执行：
+      <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lw   x1, 0(x2)      # 载入基地址数据
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>addi x2, x2, 4      # 将指针 x2 递增 4 字节
+</span></code></pre></div></p>
+</details>
+<ul>
+<li><strong>80x86 / ARMv8</strong> 则支持更多复杂的变体：如比例变址（Scaled index，用于快速访问数组元素）、自增/自减（Autoincrement/Autodecrement，在访存的同时修改基址寄存器的值）等。</li>
+</ul>
+<h3 id="4-types-and-sizes-of-operands">4. 操作数类型与大小 (Types and Sizes of Operands)</h3>
+<p>指明硬件支持的数据宽度：如字符（8位）、半字（16位）、字（32位）、双字（64位），以及单精度/双精度浮点数等。</p>
+<h3 id="5-operations">5. 操作指令分类 (Operations)</h3>
+<p>主要分为四大通用类别：数据传输（Data transfer）、算术与逻辑运算（Arithmetic/Logical）、控制流指令（Control）、以及浮点运算（Floating point）。</p>
+<h3 id="6-control-flow-instructions">6. 控制流指令 (Control Flow Instructions)</h3>
+<p>包括条件分支（Conditional branches）、无条件跳转（Unconditional jumps）、过程调用（Procedure calls）与返回（Returns）。</p>
+<ul>
+<li><strong>返回地址存储</strong>：过程调用指令通常采用<strong>跳转并链接（Jump and Link）</strong>机制，在跳转的同时将紧随其后的下一条顺序指令的物理地址保存到链接寄存器（Link Register, 如 RISC-V 的 <code>ra</code> 寄存器）中，以便子程序执行完毕后能直接返回。</li>
+</ul>
+<h3 id="7-encoding-an-isa">7. 指令集编码 (Encoding an ISA)</h3>
+<p>确定如何将指令的语义和操作数转换为二进制格式。</p>
+<ul>
+<li><strong>固定长度编码（Fixed Length）</strong>：所有指令长度完全相同（如 RISC-V / ARMv8 均为 32 位）。便于硬件高速译码与设计流水线，但略微牺牲了程序代码体积。</li>
+<li><strong>可变长度编码（Variable Length）</strong>：指令长度不固定（如 80x86 介于 1 到 18 字节之间）。虽然能显著压缩代码体积，但导致译码硬件极其复杂，难以发掘 ILP。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

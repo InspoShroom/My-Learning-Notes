@@ -1,0 +1,2097 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/chap.10/">
+      
+      
+        <link rel="prev" href="../chap.9/">
+      
+      
+        <link rel="next" href="../chap.11/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第十章 索引 - DB Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="DB Note" class="md-header__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DB Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十章 索引
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DB Note" class="md-nav__button md-logo" aria-label="DB Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DB Note
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 关系模型介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 SQL简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 中级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 高级SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 E-R模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第七章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第八章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第九章
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十章 索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        索引的基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        顺序索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\) 树索引文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bb-tree-file-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\)树文件组织(B+-Tree File Organization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bb-tree-index-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B\)树索引文件(B-Tree Index Files)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indexing-on-flash-main-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        闪存与主存索引 (Indexing on Flash / Main Memory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        散列索引(Hash Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="散列索引(Hash Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态散列(Static Hashing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bucket-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        桶溢出处理(Bucket Overflow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态散列的缺陷与动态散列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有序索引 vs 散列索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 中的索引创建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-optimized-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        写优化索引(Write-Optimized Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="写优化索引(Write-Optimized Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lsm-log-structured-merge-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LSM 树(Log-Structured Merge Tree)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buffer-buffer-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buffer 树(Buffer Tree)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitmap-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位图索引(Bitmap Indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spatial-and-temporal-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间与时间索引(Spatial and Temporal Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="空间与时间索引(Spatial and Temporal Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间数据索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporal-data-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间数据索引(Temporal Data Indexing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充: \(B\) 树和\(B^+\) 树
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="补充: \(B\) 树和\(B^+\) 树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B\) 树
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\)树
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十一章 查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十二章 查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十三章 事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十四章 并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chap.15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第十五章 恢复系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        索引的基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        顺序索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\) 树索引文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bb-tree-file-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\)树文件组织(B+-Tree File Organization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bb-tree-index-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B\)树索引文件(B-Tree Index Files)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indexing-on-flash-main-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        闪存与主存索引 (Indexing on Flash / Main Memory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        散列索引(Hash Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="散列索引(Hash Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态散列(Static Hashing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bucket-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        桶溢出处理(Bucket Overflow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静态散列的缺陷与动态散列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有序索引 vs 散列索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL 中的索引创建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-optimized-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        写优化索引(Write-Optimized Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="写优化索引(Write-Optimized Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lsm-log-structured-merge-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LSM 树(Log-Structured Merge Tree)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buffer-buffer-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buffer 树(Buffer Tree)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitmap-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位图索引(Bitmap Indices)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spatial-and-temporal-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间与时间索引(Spatial and Temporal Indices)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="空间与时间索引(Spatial and Temporal Indices)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        空间数据索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporal-data-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间数据索引(Temporal Data Indexing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充: \(B\) 树和\(B^+\) 树
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="补充: \(B\) 树和\(B^+\) 树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B\) 树
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(B^+\)树
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>第十章 索引</h1>
+
+<h2 id="_1">索引</h2>
+<p><strong>Chapter 14: Indexing</strong></p>
+<h3 id="_2">索引的基本概念</h3>
+<blockquote>
+<p>需要强调的是: 当提到 <code>索引</code> 的时候, 多数情况指的都是 <strong>索引文件</strong>, 而不是单独的索引项.</p>
+</blockquote>
+<p>​    首先, 要明白为什么需要索引机制. 它的 <strong>目的是: 加速对所需数据的访问.</strong> 可以类比为图书馆中的作者目录.</p>
+<ul>
+<li>
+<p><strong>搜索码 (Search Key)</strong>: 一个或者一组属性, 用来在文件中查找记录.</p>
+</li>
+<li>
+<p><strong>索引项 (Index Entry)</strong>: 一个索引文件由一系列记录(称为 <strong>索引项</strong>)组成, 其格式为: <code>[搜索码 | 指针]</code>. 指针指向包含该码值的实际数据记录. </p>
+</li>
+<li><strong>特点</strong>: 索引文件通常比原始数据文件小得多. </li>
+<li><strong>分类</strong>: <ul>
+<li><strong>顺序索引(Ordered indices)</strong>: 搜索码按排序顺序存储. </li>
+<li><strong>散列索引(Hash indices)</strong>: 搜索码通过“散列函数”均匀分布在不同的“桶”(buckets)中. </li>
+</ul>
+</li>
+</ul>
+<p>​    要评估一个索引是好是坏, 有以下标准:</p>
+<ol>
+<li>支持的访问类型: 是否能高效支持查询具有特定属性值的记录, 以及属性值处于指定范围的记录. </li>
+<li>访问时间 (Access time): 查找一条记录所需的时间. </li>
+<li>插入时间 (Insertion time): 插入新记录并更新索引所需的时间. </li>
+<li>删除时间 (Deletion time): 删除记录并更新索引所需的时间. </li>
+<li>空间开销 (Space overhead): 索引本身占用的额外存储空间. </li>
+</ol>
+<h3 id="_3">顺序索引</h3>
+<ul>
+<li>
+<p><strong>定义:</strong> 索引项按照搜索码的值进行排序存储. </p>
+<ul>
+<li>
+<p><strong>聚集索引(Clustering index)/主索引(Primary index):</strong> 如果一个索引的搜索码指定的顺序与数据文件在磁盘上的物理存储顺序是一致的, 那么这个索引就叫聚集索引.</p>
+</li>
+<li>
+<p><strong>非聚集索引(Non-clustering index)/辅助索引(Secondary index):</strong> 索引定义的顺序与数据文件的物理存储顺序 <strong>不一致</strong>. 比如: 关键词索引是按照 A-Z 排列的, 但是书本正文是按照章节排列的. </p>
+<ul>
+<li>
+<p>特点: 辅助索引通常是 <strong>稠密索引</strong>(每一条记录都要在索引里有一个条目), 因为它无法利用物理排序的规律来快速定位.</p>
+<p><img alt="image-20260525135039128" class="center" src="../figures/chap10/image-20260525135039128.png" width="70%" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>索引顺序文件</strong>: 一种特定的文件组织形式. 指的是一个数据文件本身已经按着某个 <strong>搜索码</strong> 排列好了. 并且在这个搜索码上建立了一个 <strong>主索引</strong>. 这种结构很适合范围查询, 比如查找 ID 从 100 到 500 的所有学生, 因为索引是有序的, 并且数据在磁盘上是连续挨着的, 读取速度很快.</p>
+</li>
+<li>
+<p><strong>稠密索引文件(Dense Index Files): 对于文件中的每一个搜索码值, 索引中都有一个对应的索引项.</strong></p>
+<p><img alt="image-20260525140312132" class="center" src="../figures/chap10/image-20260525140312132.png" width="60%" /></p>
+<p><strong>特殊情况:</strong> 当文件按照 dept_name 排序存储时, 针对 dept_name 建立的稠密索引, 其中的索引项指向该系名在 <strong>数据文件中出现的第一条记录</strong>. </p>
+<blockquote>
+<p>图中强调: 这里的 ID 是 Primary Key; dept_name 是 Primary index</p>
+</blockquote>
+<p><img alt="image-20260525140352723" class="center" src="../figures/chap10/image-20260525140352723.png" width="60%" /></p>
+</li>
+<li>
+<p><strong>稠密索引文件(Sparse Index Files): 只为部分搜索码值建立索引项</strong></p>
+<p>​    <strong>前提条件:</strong> 数据记录必须已经按照搜索码顺序存储</p>
+<p>​    <strong>查找过程:</strong> 首先找到索引中最大的, 小于等于目标值 K 的键值; 然后从该键值对应地指针处开始, 在数据文件中顺序扫描, 直至找到目标记录.</p>
+<p>​    <strong>优点:</strong> 索引占用空间更小, 维护成本更低.</p>
+<p>​    <strong>缺点:</strong> 对比稠密索引, 定位单条记录的速度通常较慢.</p>
+<p>​    <strong>折中方案:</strong> </p>
+<div class="language-text highlight"><pre><span></span><code>- 对于聚集索引: 为数据文件的 **每一个物理块 (block)** 建立一个索引项(通常取块内的最小键值).
+
+- 对于非聚集索引: 在稠密索引之上再建一层稀疏索引, 形成 **多级索引 (Multilevel Index)**.
+</code></pre></div>
+<p><img alt="image-20260525140716723" class="center" src="../figures/chap10/image-20260525140716723.png" width="33%" /></p>
+</li>
+<li>
+<p><strong>多级索引(Multilevel Index)</strong></p>
+</li>
+</ul>
+<p><strong>问题:</strong> 当索引文件太大一直与无法完全放入内存时, 访问磁盘索引文件就会变得非常慢. </p>
+<p><strong>解决方案:</strong> 将索引文件本身看作是一个顺序文件, 并在其上再建立一个稀疏索引. 整个结构就变成了如下两个部分: </p>
+<ul>
+<li><strong>外层索引 (Outer Index)</strong>: 指向内层索引块的稀疏索引. </li>
+<li><strong>内层索引 (Inner Index)</strong>: 基础索引文件. </li>
+</ul>
+<p><strong>特点:</strong> 具有 <strong>扩展性</strong>, 如果外层索引还是很大, 可以继续往上建立</p>
+<p><strong>更新成本:</strong> 当原始数据文件发生插入或删除时, 所有层级的索引都必须同步更新. </p>
+<p><strong>结构图示:</strong> </p>
+<p>​    其中, 右侧是数据块, 中间是内层索引, 它指向了数据块; 左侧是外层索引, 它是稀疏的, 指向内层索引的块.</p>
+<p>​    <img alt="image-20260525142716649" class="center" src="../figures/chap10/image-20260525142716649.png" width="50%" /></p>
+<ul>
+<li><strong>辅助索引示例</strong></li>
+</ul>
+<p><img alt="image-20260525143031608" class="center" src="../figures/chap10/image-20260525143031608.png" width="33%" /></p>
+<p>​    观察图片可以看到, 这里索引的工资是按照顺序排列的, 但是它们指向的实际数据记录在物理位置上是乱序的. </p>
+<ul>
+<li><strong>桶(Bucket):</strong> 索引项并没有直接指向记录, 而是指向了一个包含多个指针的桶, 这些指针指向具有相同搜索码值的实际记录.</li>
+</ul>
+<h3 id="b"><span class="arithmatex">\(B^+\)</span> 树索引文件</h3>
+<blockquote>
+<p>关于<span class="arithmatex">\(B^+\)</span>树的讲解, 可以看: <a href="https://zhuanlan.zhihu.com/p/149287061">B+树看这一篇就够了(B+树查找、插入、删除全上)</a></p>
+<p>关于<span class="arithmatex">\(B\)</span>​树和<span class="arithmatex">\(B+\)</span>​树, 可以看: <a href="https://www.cnblogs.com/henuliulei/p/15114440.html">b树, b+树, b-树,红黑树详解-博客园</a></p>
+<p>另外, 需要澄清的一点是: 由于<span class="arithmatex">\(B\)</span>树的原英文名是<span class="arithmatex">\(B-Tree\)</span>, 所以总是译作<span class="arithmatex">\(B-\)</span>树, 容易让人理解为<span class="arithmatex">\(B\)</span>树和<span class="arithmatex">\(B-\)</span>树不是一个结构, 其实两者是完全一样的. </p>
+</blockquote>
+<ul>
+<li><strong>为什么需要 <span class="arithmatex">\(B^+\)</span> 树?</strong></li>
+</ul>
+<p>之前提到的索引顺序文件有一些缺点: </p>
+<ol>
+<li>随着数据增长, 会产生大量的溢出块, 性能会退化</li>
+<li>需要定期进行全表重组</li>
+</ol>
+<p>而 <span class="arithmatex">\(B^+\)</span> 树就是解决这个缺点的最佳方案. 他有以下优点:</p>
+<ol>
+<li>自动平衡: 在插入和删除时通过局部的分裂或合并自动保持平衡</li>
+<li>
+<p>无需全局重组: 性能在长期运行中保持稳定</p>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B^+\)</span> 树简介</strong></p>
+</li>
+<li>
+<p><span class="arithmatex">\(B^+\)</span>​树示例</p>
+<p>如图所示, 它的层级结构可以大致分为三层: 根节点, 中间节点和叶节点. </p>
+<p>查找逻辑: 通过节点中的搜索码进行导航, 例如查找 Gold, 从根节点开始查看, 比 Mozart 小, 走左边, 在中间节点找到 Gold, 再定位到子节点, 最终指向数据表记录.</p>
+<p><img alt="image-20260525145316447" class="center" src="../figures/chap10/image-20260525145316447-1779691996901-1.png" width="50%" /></p>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B^+\)</span>树的性质</strong></p>
+<ol>
+<li><strong>平衡性:</strong> 从根节点到任意叶节点的路径长度都相等</li>
+<li><strong>节点填充度:</strong> </li>
+<li><strong>中间节点:</strong> 子节点数量在<strong><span class="arithmatex">\(⌈n/2⌉\)</span>到<span class="arithmatex">\(n\)</span></strong>之间, 其中<span class="arithmatex">\(n\)</span>是指针最大容量</li>
+<li><strong>叶子节点:</strong> 包含的码值数量在<strong><span class="arithmatex">\(⌈(n−1)/2⌉\)</span>到<span class="arithmatex">\(n-1\)</span></strong>之间</li>
+<li><strong>根节点:</strong> 如果根节点<strong>不是叶子节点</strong>, 至少有<strong><span class="arithmatex">\(2\)</span>​个孩子</strong>; 如果根节点是<strong>叶子节点</strong>, 可以包含<strong><span class="arithmatex">\(0 \sim n-1\)</span>​​</strong>个码值.</li>
+</ol>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B^+\)</span>​树的节点结构</strong></p>
+<ul>
+<li><strong>结构模板:</strong> <code>[P1,K1,P2,...,Pn−1,Kn−1,Pn]</code>. 其中<span class="arithmatex">\(K\)</span>​是搜索码值, <span class="arithmatex">\(P\)</span>是指针. 在非叶子节点中, 指针指向了子节点; 在叶子节点中, 指针指向了桶或者对应的实际记录. </li>
+<li><strong>叶子节点:</strong> <span class="arithmatex">\(P_i\)</span>指向了具有搜索码<span class="arithmatex">\(K_i\)</span>的数据记录; <span class="arithmatex">\(P_n\)</span>是叶子节点的末尾指针, 它指向下一个叶子节点. </li>
+<li><strong>非叶子节点:</strong> </li>
+<li>指针<span class="arithmatex">\(P_1\)</span>指向的所有子树值都小于<span class="arithmatex">\(K_i\)</span></li>
+<li>指针<span class="arithmatex">\(P_i(2&lt;=i&lt;=n-1)\)</span>指向的所有子树的值都大于等于<span class="arithmatex">\(K_{i-1}\)</span>且小于<span class="arithmatex">\(K_i\)</span></li>
+<li>指针<span class="arithmatex">\(P_n\)</span>​指向的所有子树的值都大于等于<span class="arithmatex">\(K_{n-1}\)</span>​</li>
+</ul>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B^+\)</span>树的等值查找和范围查找</strong></p>
+<p><img alt="image-20260525152421770" class="center" src="../figures/chap10/image-20260525152421770.png" width="33%" /></p>
+<p><img alt="image-20260525152435328" class="center" src="../figures/chap10/image-20260525152435328.png" width="33%" /></p>
+<p>​    对于范围查找, 当找到左侧值之后, 不需要回到上层节点, 而是利用叶节点之间的顺序指针来进行遍历.</p>
+<ul>
+<li>函数定义: findRange(lb, ub), 其中 lb是下界, ub 是上界. </li>
+<li>实现方式: 在实际数据库系统中, 通常提供一个迭代器 (Iterator) 接口. </li>
+<li>next() 函数: 先定位起始点, 然后调用 next() 逐个获取匹配记录, 直到超出范围. </li>
+<li>图示: 再次强调了叶节点层的双向链表/单向链表结构. </li>
+</ul>
+</li>
+<li>
+<p><strong>性能分析</strong></p>
+<ul>
+<li><strong>树的高度</strong>: 如果文件中有 K个搜索码值, 树的高度不超过 ⌈log⁡⌈n/2⌉(K)⌉</li>
+<li><strong>节点大小</strong>: 通常一个节点就是一个磁盘块 (disk block), 例如 4KB. </li>
+<li><strong>高扇出 (High Fan-out)</strong>: 典型 n≈100n≈100</li>
+<li><strong>极速查找</strong>: 如果有 100 万个搜索码, B+-树只需要访问4个节点就能找到目标. </li>
+<li><strong>特点 (矮而胖)</strong>: B+-树倾向于非常“矮”且“宽”. </li>
+<li><strong>对比二叉树</strong>: 同样的 100 万记录, 平衡二叉树需要访问约 20 个节点. 由于每次访问节点都可能是一次 20 毫秒的磁盘 I/O, B+-树的速度是二叉树的数倍甚至数十倍. </li>
+</ul>
+</li>
+<li>
+<p><strong>非唯一键处理</strong></p>
+<p>如果搜索码不是唯一的(例如按姓名索引, 可能会有重名), 可选择以下三种处理方案:</p>
+<ol>
+<li><strong>复合键 (Composite Key):</strong> 将搜索码与一个唯一属性(如主码或记录 ID)结合, 形成一个新的唯一键 <span class="arithmatex">\((a_i, A_p)\)</span>。</li>
+<li><strong>查询实现:</strong> 对 <span class="arithmatex">\(a_i = v\)</span> 的查找变成了对范围 <span class="arithmatex">\((v, -\infty)\)</span> 到 <span class="arithmatex">\((v, +\infty)\)</span> 的查找。</li>
+<li><strong>I/O 影响:</strong> 如果是聚集索引, 访问依然是顺序的; 如果是非聚集索引, 每次读取重复键的记录可能都需要一次随机磁盘 I/O。</li>
+<li><strong>优点:</strong> 插入/删除逻辑更简单，是<strong>目前广泛采用</strong>的方案。</li>
+<li><strong>独立数据块上的桶 (Buckets on separate blocks):</strong> 将指针指向一个单独的桶文件，不推荐，因为有很多重复键值时会导致性能很差。</li>
+<li><strong>指针列表 (List of tuple pointers with each key):</strong> 每个键包含一个元组指针列表。空间开销低，但如果某键有大量重复项，删除元组时会变得非常昂贵（最坏情况可能退化为 <span class="arithmatex">\(O(N)\)</span> 线性复杂度）。 </li>
+</ol>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B^+\)</span>树的更新操作</strong></p>
+</li>
+<li>
+<p><strong>插入(Insertion)</strong></p>
+<p><strong>前提:</strong> 假设记录已经被添加到数据文件中. 设 <span class="arithmatex">\(pr\)</span> 为指向该记录的指针, <span class="arithmatex">\(v\)</span> 为记录的搜索码值.</p>
+<p><strong>基本流程:</strong></p>
+<ol>
+<li>找到搜索码值 <span class="arithmatex">\(v\)</span> 应该在的叶节点</li>
+<li><strong>若叶节点未满:</strong> 直接在叶节点中插入 <span class="arithmatex">\((v, pr)\)</span> 对</li>
+<li><strong>若叶节点已满:</strong> 需要<strong>分裂(split)</strong>该节点</li>
+</ol>
+<p><strong>叶节点分裂过程:</strong></p>
+<ul>
+<li>将该节点中原有的 <span class="arithmatex">\(n-1\)</span> 个键值和新插入的共 <span class="arithmatex">\(n\)</span> 个 <span class="arithmatex">\((搜索码, 指针)\)</span> 对按顺序排好</li>
+<li>前 <span class="arithmatex">\(\lceil n/2 \rceil\)</span> 个放在原节点, 其余放在新节点 <span class="arithmatex">\(p\)</span></li>
+<li>设新节点 <span class="arithmatex">\(p\)</span> 中最小的键值为 <span class="arithmatex">\(k\)</span>, 将 <span class="arithmatex">\((k, p)\)</span> 插入到父节点中</li>
+<li>如果父节点也满了, 则继续向上分裂</li>
+<li>最坏情况下分裂一直传递到根节点, 树的高度增加 1</li>
+</ul>
+<blockquote>
+<p><strong>eg:</strong> 在 <span class="arithmatex">\(n=4\)</span> 的 <span class="arithmatex">\(B^+\)</span> 树中插入 "Adams": 找到 "Brandt, Califieri, Crick" 所在叶节点 (已满), 分裂后新节点从 "Califieri" 开始, 向父节点插入 (Califieri, 指向新节点的指针).</p>
+</blockquote>
+</li>
+<li>
+<p><strong>删除(Deletion)</strong></p>
+<p><strong>基本流程:</strong></p>
+<ol>
+<li>从叶节点中移除 <span class="arithmatex">\((pr, v)\)</span> 对</li>
+<li><strong>若节点仍满足最小填充条件:</strong> 直接结束</li>
+<li><strong>若节点条目过少 (下溢):</strong> 分两种情况处理:</li>
+</ol>
+<p><strong>情况 A: 合并(Merge)</strong></p>
+<blockquote>
+<p>当前节点 + 某个兄弟节点的条目数 ≤ 节点最大容量, 可以合并</p>
+</blockquote>
+<ul>
+<li>将两个节点的所有搜索码合并到一个节点(保留左边的那个)</li>
+<li>删除已被合并的节点</li>
+<li>在父节点中删除指向被删节点的指针 <span class="arithmatex">\(P_i\)</span> 和对应的键值 <span class="arithmatex">\(K_{i-1}\)</span>, 并<strong>递归地</strong>向上处理</li>
+<li>如果根节点在删除后只剩 1 个指针, 则删除根节点, 其唯一子节点成为新的根节点</li>
+</ul>
+<p><strong>情况 B: 重分配(Redistribute)</strong></p>
+<blockquote>
+<p>当前节点 + 某个兄弟节点的条目数 &gt; 节点最大容量, 无法合并但可以借</p>
+</blockquote>
+<ul>
+<li>从兄弟节点借一个指针/键值过来, 使两个节点都满足最小填充条件</li>
+<li>更新父节点中对应的分隔键值 (不是删除, 而是更新)</li>
+</ul>
+<blockquote>
+<p><strong>更新代价:</strong>  插入和删除的 I/O 代价与树的高度成正比, 最坏情况为 <span class="arithmatex">\(O(\log_{\lceil n/2 \rceil} K)\)</span>. 实际中内部节点通常在缓冲区中, 大多数操作只涉及叶节点, 分裂和合并也比较少见.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>多键属性索引(Indices on Multiple Keys)</strong></p>
+</li>
+<li>
+<p><strong>组合搜索码(Composite Search Key):</strong>  由多个属性组成的搜索码</p>
+<blockquote>
+<p><strong>eg:</strong> 在 instructor 上建立 (dept_name, salary) 的组合索引</p>
+</blockquote>
+</li>
+<li>
+<p><strong>词典序(Lexicographic Ordering):</strong>  组合码的排序方式</p>
+<blockquote>
+<p><span class="arithmatex">\((a_1, a_2) &lt; (b_1, b_2)\)</span>, 当且仅当: <span class="arithmatex">\(a_1 &lt; b_1\)</span>, 或 <span class="arithmatex">\(a_1 = b_1\)</span> 且 <span class="arithmatex">\(a_2 &lt; b_2\)</span></p>
+</blockquote>
+</li>
+<li>
+<p><strong>组合索引的查询能力:</strong></p>
+<table>
+<thead>
+<tr>
+<th>查询条件</th>
+<th>是否可高效使用 (dept_name, salary) 索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dept_name = 'Finance' AND salary = 80000</code></td>
+<td>✅ 可以, 两个条件都能用</td>
+</tr>
+<tr>
+<td><code>dept_name = 'Finance' AND salary &lt; 80000</code></td>
+<td>✅ 可以, 先定位 dept_name, 再范围查 salary</td>
+</tr>
+<tr>
+<td><code>dept_name &lt; 'Finance' AND salary = 80000</code></td>
+<td>❌ 不高效, 需要扫描大量记录再筛选 salary</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>多索引交集策略:</strong>  也可以对每个属性分别建索引, 分别获取指针集合后取<strong>交集</strong>, 但效率通常不如组合索引.</p>
+</li>
+</ol>
+<h3 id="bb-tree-file-organization"><span class="arithmatex">\(B^+\)</span>树文件组织(B+-Tree File Organization)</h3>
+<ul>
+<li>
+<p><strong>定义:</strong>  <span class="arithmatex">\(B^+\)</span>树不仅可以用作<strong>索引文件</strong>, 也可以用来组织<strong>数据文件本身</strong></p>
+</li>
+<li>
+<p>普通 <span class="arithmatex">\(B^+\)</span>树索引: 叶节点存放的是 <span class="arithmatex">\((搜索码, 指针到实际记录)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(B^+\)</span>树文件组织: 叶节点<strong>直接存放实际记录</strong>, 而不是指针</p>
+</li>
+<li>
+<p><strong>优点:</strong>  即使在频繁的插入/删除/更新时, 也能保持数据记录的<strong>聚集性(clustered)</strong>, 避免顺序文件那种碎片化问题</p>
+</li>
+<li>
+<p><strong>注意:</strong>  由于记录比指针大, 叶节点能放下的记录数比非叶节点的指针数少</p>
+</li>
+<li>
+<p><strong>空间利用率优化:</strong>  通过在分裂/合并时引入<strong>2个兄弟节点</strong>参与再分配 (而非1个), 每个节点至少有 <span class="arithmatex">\(\lfloor 2n/3 \rfloor\)</span> 个条目, 提高空间利用率</p>
+</li>
+<li>
+<p><strong>其他相关话题:</strong></p>
+</li>
+<li>
+<p><strong>记录重定位与辅助索引:</strong>  当记录移动时, 所有存放记录指针的辅助索引都要更新 (代价很大); 解决方案是辅助索引中存放主索引的搜索码而非直接的记录指针</p>
+</li>
+<li><strong>字符串键索引:</strong>  变长字符串可变扇出; 内部节点用<strong>前缀压缩(Prefix Compression)</strong>只存能区分子树的最短前缀即可</li>
+<li><strong>批量加载(Bulk Loading):</strong>  一次性插入大量条目时, 比逐条插入效率高得多; 先排序再自底向上构建 <span class="arithmatex">\(B^+\)</span>树</li>
+</ul>
+<h3 id="bb-tree-index-files"><span class="arithmatex">\(B\)</span>树索引文件(B-Tree Index Files)</h3>
+<blockquote>
+<p>这里是作为教材中 <span class="arithmatex">\(B^+\)</span> 树的补充对比知识点</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>与 <span class="arithmatex">\(B^+\)</span>树的关键区别:</strong>  <span class="arithmatex">\(B\)</span>树中每个搜索码只出现<strong>一次</strong> (非叶节点中的搜索码不在叶节点重复), 消除了搜索码的冗余存储</p>
+</li>
+<li>
+<p><strong>非叶节点结构:</strong>  每个搜索码额外带一个<strong>桶/记录指针 <span class="arithmatex">\(B_i\)</span></strong>, 因为它本身就是数据</p>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(B\)</span>树 vs <span class="arithmatex">\(B^+\)</span>树</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th><span class="arithmatex">\(B\)</span>树</th>
+<th><span class="arithmatex">\(B^+\)</span>树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>查找路径</strong></td>
+<td>可能在非叶节点就找到 (提前结束)</td>
+<td>总是要到叶节点</td>
+</tr>
+<tr>
+<td><strong>节点大小</strong></td>
+<td>非叶节点更大 (含数据指针), 扇出更低</td>
+<td>非叶节点小, 扇出高</td>
+</tr>
+<tr>
+<td><strong>树的深度</strong></td>
+<td>通常更深</td>
+<td>通常更浅</td>
+</tr>
+<tr>
+<td><strong>插入删除</strong></td>
+<td>更复杂</td>
+<td>相对简单</td>
+</tr>
+<tr>
+<td><strong>实际使用</strong></td>
+<td>较少</td>
+<td>广泛使用</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论:</strong> <span class="arithmatex">\(B\)</span>树的优点 (提前找到) 通常不能弥补其缺点, 所以实际中基本都用 <span class="arithmatex">\(B^+\)</span>树</p>
+</blockquote>
+<h3 id="indexing-on-flash-main-memory">闪存与主存索引 (Indexing on Flash / Main Memory)</h3>
+<ul>
+<li><strong>闪存索引 (Indexing on Flash):</strong></li>
+<li><strong>特点:</strong>  闪存的随机读取开销极低 (<span class="arithmatex">\(20 \sim 100 \ \mu\text{s}\)</span>)，但写操作不是就地写入 (no in-place write)，且最终需要进行较慢的物理擦除 (erase)。</li>
+<li><strong>优化方案:</strong>  使用比磁盘更小的物理页大小 (optimum page size)；<strong>批量加载 (bulk loading)</strong> 非常关键，能够大幅减少物理擦除的次数；另外可以采用写优化的树结构 (如 LSM-tree 等)。</li>
+<li><strong>内存索引 (Indexing in Main Memory):</strong></li>
+<li><strong>特点:</strong>  内存的随机访问虽然远快于磁盘，但相对于 CPU 缓存 (Cache Line) 的读取而言依然缓慢。</li>
+<li><strong>缺陷:</strong>  在节点容量极大的传统 B⁺ 树节点中执行键值的二分查找，会发生大量的 <strong>CPU 缓存缺失 (Cache Misses)</strong>。</li>
+<li><strong>优化方案:</strong>  使用较小的 B⁺ 树节点尺寸以契合 CPU Cache Line 的大小；或者在 B⁺ 树节点内部不再使用简单的数组，而是以小型树状结构来组织键值。</li>
+</ul>
+<h3 id="hash-indices">散列索引(Hash Indices)</h3>
+<h4 id="static-hashing">静态散列(Static Hashing)</h4>
+<ul>
+<li><strong>基本思想:</strong>  用散列函数(hash function) <span class="arithmatex">\(h\)</span> 将搜索码映射到 <strong>桶(bucket)</strong> 地址; 一个桶通常对应一个或多个磁盘块</li>
+</ul>
+<p>$<span class="arithmatex">\(h(搜索码值) \rightarrow 桶编号\)</span>$</p>
+<ul>
+<li>
+<p><strong>散列函数的要求:</strong>  将搜索码值均匀分布在 <span class="arithmatex">\(B\)</span> 个桶上, 避免大量码值集中到同一个桶</p>
+</li>
+<li>
+<p><strong>两种用途:</strong></p>
+</li>
+<li>
+<p><strong>散列文件组织(Hash File Organization):</strong> 记录本身直接存放在桶中</p>
+</li>
+<li>
+<p><strong>散列索引(Hash Index):</strong> 桶中存放的是 <span class="arithmatex">\((搜索码, 记录指针)\)</span> 对</p>
+</li>
+<li>
+<p><strong>查找过程:</strong>  计算 <span class="arithmatex">\(h(v)\)</span> 得到桶号, 直接定位到对应桶, 在桶内顺序扫描找到目标记录</p>
+</li>
+</ul>
+<h4 id="bucket-overflow">桶溢出处理(Bucket Overflow)</h4>
+<ul>
+<li><strong>溢出原因:</strong></li>
+<li>桶的数量不足</li>
+<li>
+<p>搜索码分布不均匀 (多条记录同一搜索码值, 或散列函数分布不理想)</p>
+</li>
+<li>
+<p><strong>溢出链(Overflow Chaining):</strong>  当桶满时, 分配一个<strong>溢出桶</strong>, 将其用链表链接到原桶上</p>
+</li>
+</ul>
+<blockquote>
+<p>这种方案也叫<strong>封闭寻址(Closed Addressing)</strong> 或<strong>拉链法</strong></p>
+<p>相对地, <strong>开放寻址(Open Addressing)</strong> 不使用溢出桶, 但不适合数据库应用</p>
+</blockquote>
+<h4 id="_4">静态散列的缺陷与动态散列</h4>
+<ul>
+<li><strong>静态散列的问题:</strong></li>
+<li>桶数固定, 数据增长 → 大量溢出 → 性能退化</li>
+<li>预留过多桶 → 空间浪费</li>
+<li>
+<p>解决方案: 定期重组 (昂贵, 且会中断正常操作)</p>
+</li>
+<li>
+<p><strong>动态散列(Dynamic Hashing)</strong> — 允许桶数随时间动态变化:</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>周期重散列</strong></td>
+<td>条目数达到阈值时, 创建两倍大的新表并重散列所有条目</td>
+</tr>
+<tr>
+<td><strong>线性散列(Linear Hashing)</strong></td>
+<td>增量式地进行重散列</td>
+</tr>
+<tr>
+<td><strong>可扩展散列(Extendable Hashing)</strong></td>
+<td>专为磁盘散列设计; 多个散列值共享同一个桶; 目录项翻倍而桶数不必翻倍</td>
+</tr>
+</tbody>
+</table>
+<h4 id="vs">有序索引 vs 散列索引</h4>
+<table>
+<thead>
+<tr>
+<th>评估因素</th>
+<th>有序索引 (<span class="arithmatex">\(B^+\)</span>树)</th>
+<th>散列索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>等值查找</strong></td>
+<td>好</td>
+<td><strong>更好</strong></td>
+</tr>
+<tr>
+<td><strong>范围查找</strong></td>
+<td><strong>好</strong></td>
+<td>差 (无法利用顺序)</td>
+</tr>
+<tr>
+<td><strong>插入/删除成本</strong></td>
+<td>较低</td>
+<td>静态散列可能很高</td>
+</tr>
+<tr>
+<td><strong>最坏情况</strong></td>
+<td>对数级 <span class="arithmatex">\(O(\log n)\)</span></td>
+<td>可能退化为线性</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>实际情况:</strong>
+- PostgreSQL 支持散列索引, 但因性能问题不推荐使用
+- Oracle 支持静态散列文件组织, 但不支持散列索引
+- SQL Server 只支持 <span class="arithmatex">\(B^+\)</span>树</p>
+</blockquote>
+<h3 id="sql">SQL 中的索引创建</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- 创建索引</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="o">&lt;</span><span class="k">index</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">&lt;</span><span class="n">relation</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="o">&lt;</span><span class="n">attribute</span><span class="o">-</span><span class="n">list</span><span class="o">&gt;</span><span class="p">);</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- 示例</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">b_index</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">branch</span><span class="p">(</span><span class="n">branch_name</span><span class="p">);</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">takes_pk</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="w"> </span><span class="n">course_id</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="n">semester</span><span class="p">,</span><span class="w"> </span><span class="n">section</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- 删除索引</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="o">&lt;</span><span class="k">index</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">-- 创建唯一索引 (间接强制候选码约束)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="o">&lt;</span><span class="k">index</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">&lt;</span><span class="n">relation</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">attribute</span><span class="o">&gt;</span><span class="p">);</span>
+</span></code></pre></div>
+<blockquote>
+<p>主键上的索引会被所有数据库系统<strong>自动创建</strong>; 某些数据库也会自动为外码创建索引</p>
+<p>索引可以大幅加速查找, 但会增加插入/删除/更新的代价; 实际使用时需要权衡</p>
+</blockquote>
+<h3 id="write-optimized-indices">写优化索引(Write-Optimized Indices)</h3>
+<ul>
+<li><strong>背景:</strong>  <span class="arithmatex">\(B^+\)</span>树对<strong>写密集型(write-intensive)</strong>负载性能较差</li>
+<li>每次插入至少需要 1 次叶节点 I/O</li>
+<li>磁盘每秒插入量 &lt; 100</li>
+</ul>
+<h4 id="lsm-log-structured-merge-tree">LSM 树(Log-Structured Merge Tree)</h4>
+<ul>
+<li><strong>核心思想:</strong>  将数据分层存储, 写操作只写内存, 后台异步合并到磁盘</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>写入 → L0 (内存 B+树) → 满了 → 合并到 L1 (磁盘 B+树) → 满了 → 合并到 L2 → ...
+</span></code></pre></div>
+<ul>
+<li>每层的大小阈值是下一层的 <span class="arithmatex">\(k\)</span> 倍</li>
+<li>
+<p>合并使用自底向上的 <span class="arithmatex">\(B^+\)</span>树构建算法</p>
+</li>
+<li>
+<p><strong>优点:</strong>  所有写操作都是<strong>顺序 I/O</strong>; 叶节点填满, 空间利用率高</p>
+</li>
+<li>
+<p><strong>缺点:</strong>  查询时需要搜索多棵树; 数据被多次复制</p>
+</li>
+<li>
+<p><strong>Stepped-Merge 变体:</strong>  每层有 <span class="arithmatex">\(k\)</span> 棵树, 当某层所有树都存在时合并成下一层的一棵树; 减少写代价, 但查询更慢</p>
+</li>
+<li>
+<p>优化: 为每棵树维护<strong>布隆过滤器(Bloom Filter)</strong>在内存中, 查询时先用布隆过滤器判断, 只搜索可能包含目标的树</p>
+</li>
+<li>
+<p><strong>删除处理:</strong>  插入一条特殊的"删除标记"条目; 合并时遇到删除标记和原始条目则同时丢弃</p>
+</li>
+<li>
+<p><strong>应用场景:</strong>  Google BigTable, Apache Cassandra, MongoDB, LevelDB, MySQL 的 MyRocks 引擎</p>
+</li>
+</ul>
+<h4 id="buffer-buffer-tree">Buffer 树(Buffer Tree)</h4>
+<ul>
+<li>
+<p><strong>核心思想:</strong>  <span class="arithmatex">\(B^+\)</span>树的每个内部节点都有一个<strong>缓冲区</strong>用于暂存插入操作; 缓冲区满时批量将数据下推到下层</p>
+</li>
+<li>
+<p><strong>优点:</strong>  对查询的影响比 LSM 树小; 可以用于任何树状索引结构</p>
+</li>
+<li>
+<p><strong>缺点:</strong>  随机 I/O 比 LSM 树多</p>
+</li>
+<li>
+<p><strong>实际应用:</strong>  PostgreSQL 的广义搜索树 (GiST) 索引</p>
+</li>
+</ul>
+<h3 id="bitmap-indices">位图索引(Bitmap Indices)</h3>
+<ul>
+<li>
+<p><strong>适用场景:</strong>  属性只有<strong>少量不同取值</strong>的列 (如性别、国家、收入档次等)</p>
+</li>
+<li>
+<p><strong>基本结构:</strong>  对属性的每个不同值, 维护一个<strong>位图(bitmap)</strong> —— 位数等于关系中的记录数; 若第 <span class="arithmatex">\(i\)</span> 条记录的该属性值为 <span class="arithmatex">\(v\)</span>, 则对应位图的第 <span class="arithmatex">\(i\)</span> 位为 1, 否则为 0</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>eg:</strong> gender 属性有 male/female 两个值, 则维护两个位图:</p>
+<ul>
+<li>male 位图: <code>10010...</code> (第1、4条记录是男性)</li>
+<li>female 位图: <code>01101...</code></li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>查询操作:</strong>  通过位运算高效处理多属性联合查询</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>AND (交集):  100110 AND 110011 = 100010
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>OR  (并集):  100110 OR  110011 = 110111
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>NOT (取反):  NOT 100110       = 011001
+</span></code></pre></div>
+<blockquote>
+<p><strong>eg:</strong> 查询"男性且收入档次为L1": <code>male位图 AND L1位图</code>, 结果中为 1 的位置就是满足条件的记录</p>
+</blockquote>
+<ul>
+<li><strong>优点:</strong></li>
+<li>位图本身非常小 (记录 100 字节时, 单个位图仅占关系大小的 1/800)</li>
+<li>CPU 一次可处理 32 或 64 位 (一条指令处理多条记录)</li>
+<li>
+<p>统计匹配记录数速度极快 (利用预计算的 256 元素计数数组)</p>
+</li>
+<li>
+<p><strong>与 <span class="arithmatex">\(B^+\)</span>树结合:</strong>  在 <span class="arithmatex">\(B^+\)</span>树叶节点层, 对取值重复很多的属性, 可以用<strong>位图</strong>替代元组 ID 列表</p>
+</li>
+</ul>
+<h3 id="spatial-and-temporal-indices">空间与时间索引(Spatial and Temporal Indices)</h3>
+<h4 id="_5">空间数据索引</h4>
+<ul>
+<li>
+<p><strong>空间数据:</strong>  数据库可以存储线段、多边形、栅格图像等空间数据类型</p>
+</li>
+<li>
+<p><strong>常见空间查询类型:</strong></p>
+</li>
+<li><strong>最近邻查询(Nearest Neighbor):</strong> 给定一个点, 找最近的满足条件的对象</li>
+<li><strong>范围查询(Range Query):</strong> 查找部分或完全在指定区域内的对象</li>
+<li>
+<p><strong>空间连接(Spatial Join):</strong> 以位置作为连接属性进行连接</p>
+</li>
+<li>
+<p><strong>常用空间索引结构:</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>结构</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>k-d 树</strong></td>
+<td>早期多维索引结构; 每层按一个维度将空间分成两半; <span class="arithmatex">\(k\)</span>-d-<span class="arithmatex">\(B\)</span> 树是其磁盘友好变体</td>
+</tr>
+<tr>
+<td><strong>四叉树(Quadtree)</strong></td>
+<td>每个非叶节点将矩形区域均分为四个象限, 递归划分; 叶节点存放点的集合</td>
+</tr>
+<tr>
+<td><strong>R 树(R-Tree)</strong></td>
+<td><span class="arithmatex">\(B^+\)</span>树在 <span class="arithmatex">\(N\)</span> 维的推广; 每个节点关联一个最小包围盒(Minimum Bounding Box); 支持矩形和多边形的索引; 子节点的包围盒允许重叠</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>R 树查找:</strong>  从根节点开始, 若当前节点的包围盒与查询区域相交, 则递归搜索其子节点</li>
+</ul>
+<blockquote>
+<p>最坏情况下需要搜索多条路径, 但实际中表现可接受</p>
+</blockquote>
+<h4 id="temporal-data-indexing">时间数据索引(Temporal Data Indexing)</h4>
+<ul>
+<li><strong>时间数据:</strong>  每条记录关联一个<strong>有效时间区间</strong> (start_time, end_time)</li>
+</ul>
+<blockquote>
+<p>end_time 为无穷大表示当前仍然有效</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>查询需求:</strong>  查找在某个时间点或时间区间内有效的所有元组</p>
+</li>
+<li>
+<p><strong>索引方案:</strong></p>
+</li>
+<li>
+<p>将属性 <span class="arithmatex">\(a\)</span> 和时间看作二维数据, 用 <strong>R 树</strong>等空间索引结构建立时间索引</p>
+</li>
+<li>对于 end_time 为无穷大的"当前有效"元组, 单独维护一个以 <span class="arithmatex">\((a, start\_time)\)</span> 为键的索引, 查询时间点 <span class="arithmatex">\(t\)</span> 时做范围查询 <span class="arithmatex">\((a, 0)\)</span> 到 <span class="arithmatex">\((a, t)\)</span></li>
+</ul>
+<h3 id="b-b">补充: <span class="arithmatex">\(B\)</span> 树和<span class="arithmatex">\(B^+\)</span> 树</h3>
+<blockquote>
+<p>关于向上取整的一个算法:</p>
+<p><strong>对于计算<span class="arithmatex">\(\lceil A/B \rceil\)</span>, 向上取整的公式为<span style="color:#FF0000;"><span class="arithmatex">\((A+B-1)/B\)</span></span></strong></p>
+</blockquote>
+<h4 id="b_1"><span class="arithmatex">\(B\)</span> 树</h4>
+<ul>
+<li>
+<p><strong>定义:</strong> B树是一种平衡的多分树, 通常我们说<span style="color:#FF0000;"><strong><span class="arithmatex">\(m\)</span></strong>阶</span><strong>(也就是一个节点的子节点数目的最大值)</strong>的<span class="arithmatex">\(B\)</span>树, 它必须满足如下条件： </p>
+</li>
+<li>
+<p>每个节点<strong>最多</strong>只有<span style="color:#FF0000;"><strong><span class="arithmatex">\(m\)</span></strong></span>个子节点</p>
+</li>
+<li>每个非叶子节点(除了根节点)<strong>至少</strong>有<span style="color:#FF0000;"><strong><span class="arithmatex">\(\lceil m/2 \rceil\)</span></strong></span>个子节点, 拥有 <span style="color:#FF0000;"><strong><span class="arithmatex">\(\lceil m/2 \rceil -1\)</span></strong></span> 到 <span style="color:#FF0000;"><strong><span class="arithmatex">\(m-1\)</span></strong></span> 个键值. 对于具有<span class="arithmatex">\(k\)</span>个子节点的非叶子节点来说, 它包含<span class="arithmatex">\(k-1\)</span>个键值. </li>
+<li>如果根节点不是叶子节点, 那么根节点<strong>至少</strong>有<span style="color:#FF0000;">2</span>个子节点</li>
+<li>所有叶子节点都出现在同一水平, 高度一致.</li>
+</ul>
+<p>一个示例图</p>
+<p><img alt="img" class="center" src="https://img2018.cnblogs.com/blog/997909/201907/997909-20190727111522935-981534929.png" /></p>
+<ul>
+<li><strong>插入</strong></li>
+</ul>
+<p>​    对于<span class="arithmatex">\(m\)</span>阶高度h的B树, 插入一个元素时, 首先在B树种是否存在, 如果不存在, 即在叶子节点处结束, 然后在叶子节点中插入新的元素. </p>
+<p>​    核心规则如下: </p>
+<ul>
+<li>若该节点元素个数<strong>小于<span style="color:#FF0000;"><span class="arithmatex">\(m-1\)</span></span></strong>, 直接插入; </li>
+<li>若该节点元素个数<strong>等于<span style="color:#FF0000;"><span class="arithmatex">\(m-1\)</span></span></strong>, 引起节点分裂; 以该节点中间元素为分界, 取<strong>中间元素</strong>(偶数个数, 中间两个随机选取)插入到父节点中; </li>
+<li>
+<p>重复上面动作, 直到所有节点符合B树的规则; 最坏的情况一直分裂到根节点, 生成新的根节点, 高度增加1; </p>
+</li>
+<li>
+<p><strong>删除</strong></p>
+</li>
+</ul>
+<p>​    首先查找<span class="arithmatex">\(B\)</span> 树中需删除的元素,如果该元素在<span class="arithmatex">\(B\)</span> 树中存在, 则将该元素在其结点中进行删除; 删除该元素后, 首先判断该元素<strong>是否有左右孩子结点</strong>, 如果有, 则上移孩子结点中的某相近元素<strong>(“左孩子最右边的节点”或“右孩子最左边的节点”)</strong>到父节点中, 然后是移动之后的情况; 如果没有, 直接删除. </p>
+<p>​    <strong>核心规则如下:</strong> </p>
+<ul>
+<li>某结点中元素/键值数目<strong>小于<span style="color:#FF0000;"><span class="arithmatex">\(\lceil (m/2) \rceil -1\)</span></span></strong>,则需要看其某<strong>相邻兄弟结点是否丰满</strong>; </li>
+<li>如果丰满(结点中元素个数大于(m/2)-1), 则向父节点借一个元素来满足条件; </li>
+<li>如果其相邻兄弟都不丰满, 即其结点数目等于(m/2)-1, 则该结点与其相邻的某一兄弟结点进行“合并”成一个结点; </li>
+</ul>
+<h4 id="b_2"><span class="arithmatex">\(B^+\)</span>树</h4>
+<ul>
+<li><strong>定义</strong></li>
+<li>有<span style="color:#FF0000;"><span class="arithmatex">\(m\)</span></span>个子树的中间节点包含有<span style="color:#FF0000;"><span class="arithmatex">\(m\)</span></span>个元素(B树中是k-1个元素), 每个元素不保存数据, 只用来索引; </li>
+<li>所有的叶子结点中包含了全部关键字的信息, 及指向含有这些关键字记录的指针, 且叶子结点本身依关键字的大小自小而大的顺序链接. (而<span class="arithmatex">\(B\)</span> 树的叶子节点并没有包括全部需要查找的信息); </li>
+<li>
+<p>所有的非终端结点可以看成是索引部分, 结点中仅含有其子树根结点中最大(或最小)关键字. (而B 树的非终节点也包含需要查找的有效信息); </p>
+</li>
+<li>
+<p><strong>插入</strong></p>
+</li>
+</ul>
+<p><img alt="img" class="center" src="https://images2015.cnblogs.com/blog/990532/201701/990532-20170117134458755-1356536820.png" /></p>
+<p>​    为了保持平衡, 对于新插入的键值可能会产生大量的拆分操作, 也就是意味着磁盘的操作. 所以除此之外, <span class="arithmatex">\(B^+\)</span>​树还提供了旋转操作, 以此来减少页的拆分. </p>
+<ul>
+<li>
+<p>只有当叶子节点已经满了, 还要进行插入时, 如果它的左右节点还没满, 那么就可以通过旋转将记录转移到兄弟节点上. 一般左兄弟被首先检查用来做旋转操作. </p>
+<p>一个例子: 当我们插入70时, 可以看到如下变化</p>
+<p><img alt="img" class="center" src="https://images2015.cnblogs.com/blog/990532/201701/990532-20170117134602864-1401463251.png" /></p>
+<p><img alt="img" class="center" src="https://images2015.cnblogs.com/blog/990532/201701/990532-20170117135001442-1547516540.png" /></p>
+</li>
+<li>
+<p><strong>删除</strong></p>
+</li>
+</ul>
+<p><span class="arithmatex">\(B^+\)</span>树使用填充因子(fill factor)来控制树的删除变化, </p>
+<p><img alt="img" class="center" src="https://images2015.cnblogs.com/blog/990532/201701/990532-20170117135329114-221553173.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
