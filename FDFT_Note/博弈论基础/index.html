@@ -1,0 +1,1099 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>博弈论基础 - 数据要素贸易基础</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="数据要素贸易基础" class="md-header__button md-logo" aria-label="数据要素贸易基础" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            数据要素贸易基础
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              博弈论基础
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="数据要素贸易基础" class="md-nav__button md-logo" aria-label="数据要素贸易基础" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    数据要素贸易基础
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博弈论基础
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博弈论基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        微观经济学基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="微观经济学基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效用与效用函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="效用与效用函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        柯布-道格拉斯效用函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-v-nm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冯诺伊曼-摩根斯坦效用函数（V-NM效用函数）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拟线性效用函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效用最大化问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-clearing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        市场出清 (Market Clearing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        社会福利
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        市场失灵（market failure）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据的特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        博弈论基础
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        占优策略均衡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="占优策略均衡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重复剔除严格劣策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弱占优
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        纳什均衡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="纳什均衡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        古诺竞争
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        微观经济学基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="微观经济学基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效用与效用函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="效用与效用函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        柯布-道格拉斯效用函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-v-nm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        冯诺伊曼-摩根斯坦效用函数（V-NM效用函数）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        拟线性效用函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效用最大化问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-clearing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        市场出清 (Market Clearing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        社会福利
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        市场失灵（market failure）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据的特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        博弈论基础
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        占优策略均衡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="占优策略均衡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重复剔除严格劣策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弱占优
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        纳什均衡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="纳什均衡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        古诺竞争
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">博弈论基础</h1>
+<h2 id="_2">微观经济学基础</h2>
+<h3 id="_3">偏好</h3>
+<p><strong>偏好</strong>：在微观经济学中，偏好指的是消费者对不同商品或服务组合的主观喜爱程度和选择倾向。比如说：有的人喜欢购买一个苹果两个香蕉，有的人喜欢一次性买三个香蕉。</p>
+<p>关于偏好，它总是满足下面几个基本假设：</p>
+<ul>
+<li>完备性：消费者能够对任意两个商品组合进行比较。就比如之前例子中提到的组合 A（一苹果两香蕉）和组合 B（三个香蕉），消费者总能做出以下判断之一：<ol>
+<li>更喜欢 A</li>
+<li>更喜欢 B</li>
+<li>无差异（即两者差不多）</li>
+</ol>
+</li>
+<li>传递性：消费者的选择是一贯的，不自相矛盾的。如果消费者认为 A 比 B 好，且 B 比 C 好，那么肯定有 A 比 C 好。</li>
+<li>自反性：任何商品组合至少与它自身一样好。</li>
+<li>单调性：也称作“多多益善”。即其他条件相同的情况下，商品的数量越多，消费者越喜欢。</li>
+<li>凸性：偏好的多样化。消费者通常更倾向于均衡/混合 of 商品组合，而不是极端的组合。例如：对于三个香蕉的组合，消费者更喜欢一个苹果两个香蕉的混合组合。</li>
+</ul>
+<h3 id="_4">效用与效用函数</h3>
+<p><strong>效用</strong>：可以用一个常数来表示消费者对于一个消费组合的偏好程度，这个常数就叫做该消费组合对消费者产生的效用。</p>
+<p><strong>效用函数</strong>：对于形式为 <span class="arithmatex">\(x=(x_1,...,x_n)\)</span> 的消费组合/消费束，其中 <span class="arithmatex">\(x_i\)</span> 表示购买 <span class="arithmatex">\(x_i\)</span> 单位物品 <span class="arithmatex">\(i\)</span>，效用函数就是从消费组合映射到满意程度的函数：</p>
+<div class="arithmatex">\[u:R^n \rightarrow R\]</div>
+<p>常见的效用函数有：</p>
+<h4 id="-">柯布-道格拉斯效用函数</h4>
+<div class="arithmatex">\[u(x_1,x_2) = x_1^{\alpha} x_2^{1-\alpha}，其中\alpha \in (0,1)\]</div>
+<p>可以这样理解公式：</p>
+<ol>
+<li>因为两个指数都是大于 0 的，所以当商品 1、2 的消费数量增加时，对应的总效用 <span class="arithmatex">\(u\)</span> 也会增加，这也就是所说的“多多益善”</li>
+<li>
+<p>边际效用递减。以商品 1 为例，对其求偏导得到边际效用 <span class="arithmatex">\(\frac {\partial f(u)} {\partial f(x_1)} = \alpha x_1^{\alpha-1} x_2^{1-\alpha}\)</span>，可以看到，<span class="arithmatex">\(x_1\)</span> 的指数 <span class="arithmatex">\(\alpha-1 &lt; 0\)</span>。所以当 <span class="arithmatex">\(x_1\)</span>增加时，每次多消费一单位的商品 1 所新增的效用是递减的</p>
+<blockquote>
+<p>边际效用的定义：指消费者对某种物品的消费量每增加一单位所增加的额外满足程度。</p>
+<p>边际效用总是递减的，总效用达到最大时，如果继续消费，那么边际效用可能变为负数。</p>
+</blockquote>
+</li>
+<li>
+<p>如果有任何一种商品的消费量为 0，那么整个效用为 0。这反映了消费者倾向于平衡消费，而不是极端的仅选择一种商品</p>
+</li>
+</ol>
+<h4 id="-v-nm">冯诺伊曼-摩根斯坦效用函数（V-NM效用函数）</h4>
+<div class="arithmatex">\[u(L) = p·u(x) + (1-p)·u(y)\]</div>
+<p>同样的，我们理解这个效用计算的概念：</p>
+<ol>
+<li>这个函数反映人们在比较不同结果下得到的满足感的加权平均值</li>
+<li>
+<p>效用函数<span class="arithmatex">\(u(x)\)</span>的凹凸性直接反映了决策者对风险的态度：</p>
+<blockquote>
+<p>风险：即抉择的后果是不确定的，但每种可能后果发生的概率是已知的</p>
+</blockquote>
+<ul>
+<li>严格凹函数，<span class="arithmatex">\(u^n&lt;0\)</span>，如对数函数<span class="arithmatex">\(ln(x)\)</span>$\rightarrow $风险厌恶：由于凹函数对应了边际效应递减，所以损失同样数额的财富带来的痛苦要大于赢得所带来的快乐。这类人宁要稳定的平均财富，也不要冒险</li>
+</ul>
+<p><img alt="凹函数" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%87%B9%E5%87%BD%E6%95%B0.png" style="display: block; margin: 0 auto;" width="35%" /></p>
+<ul>
+<li>严格凸函数，<span class="arithmatex">\(u^n&gt;0\)</span>，如平方函数<span class="arithmatex">\(x^2\)</span> <span class="arithmatex">\(\rightarrow\)</span>风险偏好：凸函数对应了边际效用递增，所以与上面的情况恰好相反，这类人更喜欢冒险</li>
+</ul>
+<p><img alt="凸函数" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%87%B8%E5%87%BD%E6%95%B0.png" style="display: block; margin: 0 auto;" width="35%" /></p>
+<ul>
+<li>线性函数，<span class="arithmatex">\(u^n=0 \rightarrow\)</span>风险中性：边际效用恒定，这类人对风险的态度是只看钱的期望值，不在于有没有波动</li>
+</ul>
+<p>这个机制跟两个概念有关：期望财富的效用<span class="arithmatex">\(u(E[w])\)</span>和期望效用<span class="arithmatex">\(E[u(w)]\)</span>。前者是彩票的平均期望值，后者是玩该彩票在不确定状态下平均能获得的满足感。当<span class="arithmatex">\(u(E[w]) \leq E[u(w)]\)</span>时，函数是凸函数；当<span class="arithmatex">\(u(E[w]) \geq E[u(w)]\)</span>时，函数是凹函数。</p>
+<blockquote>
+<p>通过一个例子来更深入地理解：假设小明现在有财产100元，现在有一个彩票，有<span class="arithmatex">\(50\%\)</span>的概率赢<span class="arithmatex">\(50\)</span>元，有<span class="arithmatex">\(50\%\)</span>的概率输<span class="arithmatex">\(50\)</span>元。整个彩票的财富期望值/平均值是：</p>
+<p><span class="arithmatex">\(E[w] = 50\% \times 150 + 50\% \times 50 = 100 元\)</span></p>
+<p>也就是说，买这个彩票平均而言不输不赢。但是，对于不同效用函数的人选择是不同的：</p>
+<p>对于风险厌恶者小王，效用函数是<span class="arithmatex">\(u(w) = \sqrt{w}\)</span>，是一个凹函数。当不赌时，拿确定的100元的效用，所以：<span class="arithmatex">\(u(w) = \sqrt{100} = 10\)</span>；当去赌时，期望效用为：<span class="arithmatex">\(E[u(w) ] = 0.5 \times \sqrt{150}  \space + 0.5 \times \sqrt{50} \approx 0.5 \times 12.25 \space + 0.5 \times 7.07 = 9.66\)</span>。对比发现，确定的效用要大于赌彩票的期望效用，实际上也就是赢了<span class="arithmatex">\(50\)</span>所增加的效用只有2.25，而输了却减少效用<span class="arithmatex">\(2.93\)</span>，输钱的痛苦超过了赢钱的快乐，所以小王拒绝赌博。</p>
+<p>对于风险偏好者小李，效用函数为<span class="arithmatex">\(u(w) = w^2\)</span>，是凸函数。用同样的方法进行分析，得到赌彩排的期望效用为<span class="arithmatex">\(12500\)</span>，而不赌的效用为<span class="arithmatex">\(10000\)</span>，所以对于李四，他更渴望去赌一把。</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="_5">拟线性效用函数</h4>
+<div class="arithmatex">\[u(x,p) = v(x) - p\]</div>
+<ol>
+<li>假定每一元钱的效用是单位1，<span class="arithmatex">\(p\)</span>就是支付的价格</li>
+<li><span class="arithmatex">\(v(x)\)</span>表示消费者获得的纯粹满足感，并且<span class="arithmatex">\(v(x)\)</span>与他手里有多少钱是无关的</li>
+<li>该函数反映了消费某种商品获得的效用与为此支付的货币成本之间的折抵关系。</li>
+</ol>
+<h3 id="_6">效用最大化问题</h3>
+<p>为了方便，这里只考虑两个商品：效用函数<span class="arithmatex">\(u(x_1,z_2)\)</span>，商品价格<span class="arithmatex">\(p_1\)</span>和<span class="arithmatex">\(p_2\)</span>，消费者收入/预算为<span class="arithmatex">\(p\)</span>。这里考虑了消费者的预算约束，这样可以将效用最大化的目标写为：</p>
+<div class="arithmatex">\[\max\limits_{x_1, x_2} u(x_1, x_2)\]</div>
+<div class="arithmatex">\[s.t. \space p_1x_1+p_2x_2 \leq p\]</div>
+<p>要求<span class="arithmatex">\(u\)</span>关于<span class="arithmatex">\(x_1,x_2\)</span>是递增的，这样当<span class="arithmatex">\(u\)</span>取最大值是不等式必然取等号（可以用反证法证明）。</p>
+<details class="example" open="open">
+<summary>效用最大化例题</summary>
+<p><img alt="效用最大化问题" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E6%95%88%E7%94%A8%E6%9C%80%E5%A4%A7%E5%8C%96.png" style="display: block; margin: 0 auto;" width="60%" /></p>
+</details>
+<h3 id="market-clearing">市场出清 (Market Clearing)</h3>
+<ul>
+<li>
+<p>需求定律</p>
+<p>在其他条件不变的情况下，商品的需求量与价格之间成反方向变动的关系，即价格上涨，需求量减少；价格下降，需求量增加。</p>
+</li>
+<li>
+<p>供给定律</p>
+<p>对于正常商品来说，在其他条件不变的情况下，商品价格与供给量之间存在着正方向的变动关系，即一种商品的价格上升时，这种商品的供给量就会增加，相反，价格下降时供给量减少，这就是供给定律。</p>
+</li>
+<li>
+<p>市场出清</p>
+<p>市场出清：市场机制能够自动地消除超额供给或超额需求，市场在短期内自发地趋于供给等于需求的均衡状态。这个均衡也叫做“竞争均衡”。</p>
+<p>其几何模型如下：</p>
+<p><img alt="市场出清模型" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%B8%82%E5%9C%BA%E5%87%BA%E6%B8%85%E6%A8%A1%E5%9E%8B.png" style="display: block; margin: 0 auto;" width="50%" /></p>
+<ul>
+<li>
+<p>横轴<span class="arithmatex">\(Q\)</span>：Quantity，商品的数量</p>
+</li>
+<li>
+<p>纵轴<span class="arithmatex">\(P\)</span>：Price，商品的价格</p>
+</li>
+<li>
+<p>曲线<span class="arithmatex">\(S\)</span>：Supply，供给曲线。越往左对应价格越低，商家觉得没利润，越不生产。</p>
+</li>
+<li>
+<p>曲线<span class="arithmatex">\(D\)</span>：Demand，需求曲线。越往左对应价格越低，消费者嫌贵，买的少。</p>
+</li>
+<li>
+<p>交点<span class="arithmatex">\(E\)</span>：需求曲线<span class="arithmatex">\(D\)</span>和供给曲线<span class="arithmatex">\(S\)</span>的焦点，称为均衡点</p>
+</li>
+<li>
+<p>均衡价格<span class="arithmatex">\(P_E\)</span>：交点的纵坐标值，指双方达成一致的价格</p>
+</li>
+<li>
+<p>均衡数量<span class="arithmatex">\(Q_E\)</span>​​：交点的横坐标值，指均衡价格下发生交易的商品数量</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="_7">社会福利</h3>
+<p>了解了竞争均衡， 我们还需要了解一个市场达到的均衡有多好，于是引入了<code>福利</code></p>
+<p>福利：资源配置有效性的主要衡量标准</p>
+<p>福利主要分为以下部分：</p>
+<ol>
+<li>
+<p>消费者剩余：即消费者的心理估值/商品效用和实际支付之间的差额。通俗来讲就是自己占了多少便宜</p>
+</li>
+<li>
+<p>生产者剩余：厂商获得的商品收益/价格和生产成本之间的差额</p>
+</li>
+<li>
+<p>社会总福利：二者的总和，即消费者剩余＋生产者剩余。因为消费者的支付和厂商的价格相互抵消了，剩下的是“消费者得到的总效用-厂商的总生产成本”，这一部分就是全社会得到的净效用。</p>
+<p>可以用下面三张图来展示它们的逻辑
+<div style="display: flex; justify-content: space-around; align-items: center;" markdown="1">
+<img alt="消费者剩余" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E6%B6%88%E8%B4%B9%E8%80%85%E5%89%A9%E4%BD%99.png" width="31%" />
+<img alt="生产者剩余" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E7%94%9F%E4%BA%A7%E8%80%85%E5%89%A9%E4%BD%99.png" width="34%" />
+<img alt="社会总福利" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E7%A4%BE%E4%BC%9A%E6%80%BB%E7%A6%8F%E5%88%A9.png" width="35%" />
+</div></p>
+</li>
+</ol>
+<p>综上，可以得到福利经济学第一定律：在竞争市场中，当市场供求达到均衡时，市场资源配置是社会福利最大化的。</p>
+<h3 id="market-failure">市场失灵（market failure）</h3>
+<p>现实中无法满足福利经济学第一定律中的很多假设，所以总是会出现市场失灵的情况。</p>
+<ul>
+<li>垄断：一个商品只有一家厂商生产，所以它可以决定商品价格，破坏了完全竞争市场的福利最优性</li>
+<li>外部性：一个人或一群人的行动和决策使另一个人或一群人受损或受益的情况。比如：上游水源污染导致下游受到影响</li>
+<li>信息不对称：厂商与厂商之间，厂商与消费者之间所拥有的信息是不同的。信息不对称可能会导致“劣币驱逐良币”的结果，比如经典的“柠檬市场”概念。</li>
+</ul>
+<h3 id="_8">数据的特性</h3>
+<ul>
+<li>卖家垄断</li>
+<li>零成本复制性：供给曲线失效。同时数据出售更容易，人们更容易受到外部性影响</li>
+</ul>
+<p>由此，我们可以实施价格歧视（price discrimination）:</p>
+<ol>
+<li>一级价格歧视：厂商完全了解消费者，将价格定在消费者的最大支付意愿上</li>
+<li>二级价格歧视：版本化定价。厂商设计不同的套餐或者产品组合，让用户根据自身需求来选择。</li>
+<li>三级价格歧视：把消费者分为不同的群体，并制定不同的价格</li>
+</ol>
+<h2 id="_9">博弈论基础</h2>
+<p>微观经济学关注个人最大化自身效用的单人决策问题，到了现实生活中，人的决策会受多方影响，所以这里面存在相互博弈，效用的数学公式也就变为了：</p>
+<div class="arithmatex">\[\max \limits_{x \in X} u(x) \rightarrow \max \limits_{x_i \in X_i} u(x_i,x_{-i})\]</div>
+<p>其中：<span class="arithmatex">\(X\)</span>和<span class="arithmatex">\(X_i\)</span>表示决策者的可选决策，<span class="arithmatex">\(x_{-i}=(x_1,...,x_{i-1},x_{i+1},...x_n)\)</span>表示除了<span class="arithmatex">\(i\)</span>之外的其他人的决策。</p>
+<ul>
+<li>
+<p>博弈的表达</p>
+<p>三元组：<span class="arithmatex">\(G=(N,S_i,u_i)\)</span>，其中<span class="arithmatex">\(N\)</span>是参与人的集合，<span class="arithmatex">\(S\)</span>是每个参与者可选的策略，<span class="arithmatex">\(u\)</span>​是每个参与者的效用函数。</p>
+</li>
+<li>
+<p>博弈论中对人的假设</p>
+<p>理性、智能、双方彼此完全了解对方</p>
+</li>
+<li>
+<p>博弈的解</p>
+<p>即整个博弈的结局，博弈论的核心就是预测这个结局</p>
+</li>
+<li>
+<p>博弈论的分类</p>
+<ul>
+<li>
+<p>非合作博弈：参与人之间没有直接的合作效用</p>
+<ul>
+<li>是否完全信息？</li>
+<li>是静态博弈（参与人行动一次同时完成）还是动态博弈（参与人行动序贯完成）？</li>
+</ul>
+<p>四大类博弈：完全信息静态博弈、完全信息动态博弈、不完全信息静态博弈、不完全信息动态博弈</p>
+</li>
+<li>
+<p>合作博弈：考虑参与人之间合作后产生的联合效用</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_10">占优策略均衡</h2>
+<p>这里以囚徒困境为例。</p>
+<p><img alt="囚徒困境" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%9B%9A%E5%BE%92%E5%9B%B0%E5%A2%83.png" style="display: block; margin: 0 auto;" width="40%" /></p>
+<p>可以发现，不论是罪犯一还是罪犯二，他们不管对方怎么选择，自己选择承认的效用都是更好的。这时就可以说不承认是一个<strong>严格劣策略</strong>（strictly dominated strategy），其详细定义如下：</p>
+<details class="example">
+<summary>严格劣策略</summary>
+<p><img alt="严格劣策略" src="figures/博弈论基础\严格劣策略.png" style="display: block; margin: 0 auto;" width="70%" /></p>
+</details>
+<p>有了占优这个工具，我们就能针对一些博弈论问题展开分析了。</p>
+<h3 id="_11">重复剔除严格劣策略</h3>
+<p>以下图情况为例进行分析：</p>
+<p><img alt="剔除严格劣1" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%89%94%E9%99%A4%E4%B8%A5%E6%A0%BC%E5%8A%A31.png" style="display: block; margin: 0 auto;" width="40%" /></p>
+<p>可以发现，对于参与人2，不论参与人1怎么选，策略<span class="arithmatex">\(M\)</span>总是优于策略<span class="arithmatex">\(R\)</span>，即策略<span class="arithmatex">\(M\)</span>严格占优于<span class="arithmatex">\(R\)</span>，这样就可以剔除策略<span class="arithmatex">\(R\)</span>的那一列。</p>
+<p>进一步地，对于参与人1，也有策略<span class="arithmatex">\(T\)</span>严严格占优<span class="arithmatex">\(B\)</span>，剔除<span class="arithmatex">\(B\)</span>，于是得到了最终监护的博弈：</p>
+<p><img alt="剔除严格劣2" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%89%94%E9%99%A4%E4%B8%A5%E6%A0%BC%E5%8A%A32.png" style="display: block; margin: 0 auto;" width="40%" /></p>
+<h3 id="_12">弱占优</h3>
+<p>严格劣策略不是总是出现的，比如：</p>
+<p><img alt="弱占优" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%BC%B1%E5%8D%A0%E4%BC%98.png" style="display: block; margin: 0 auto;" width="40%" /></p>
+<p>虽然没有严格劣策略，但是对于参与人1来说，策略<span class="arithmatex">\(B\)</span>是不会比策略<span class="arithmatex">\(T\)</span>差的，即部分相等，有些占优。这种情况，就称策略<span class="arithmatex">\(B\)</span><strong>弱占优</strong>（weakly dominates）于策略<span class="arithmatex">\(T\)</span>。</p>
+<p>弱占优的详细定义如下：</p>
+<details class="example">
+<summary>弱占优</summary>
+<p><img alt="弱占优" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%BC%B1%E5%8D%A0%E4%BC%98%E5%AE%9A%E4%B9%89.png" style="display: block; margin: 0 auto;" width="70%" /></p>
+</details>
+<p>需要注意以下几点：</p>
+<ol>
+<li>一般情况下，默认的占优指的是弱占优，除非强调是严格占优</li>
+<li>理性参与人不会选择（弱）劣策略<ul>
+<li>“颤抖的手”原则：就对于上面的那个图片来说，如果参与人1确信对方100%回选择<span class="arithmatex">\(R\)</span>​，这样对于参与人1，选择<span class="arithmatex">\(T\)</span>​和选择<span class="arithmatex">\(B\)</span>​应该是一模一样的结果，但是理性人是不会选择<span class="arithmatex">\(T\)</span>​的，因为现实中人会犯错。假如参与人2有极小的概率<span class="arithmatex">\(x\)</span>​会选择<span class="arithmatex">\(L\)</span>​，那么得到的预期收益就会从<span class="arithmatex">\(2\)</span>​变为<span class="arithmatex">\(2-x\)</span>​，这样选<span class="arithmatex">\(B\)</span>​的期望收益就严格大于选择<span class="arithmatex">\(T\)</span>​的</li>
+</ul>
+</li>
+<li>剔除弱劣策略的最终结果受剔除顺序的影响。所以一般不进行剔除弱劣策略的操作，执行时也会更加谨慎</li>
+</ol>
+<h2 id="_13">纳什均衡</h2>
+<p>在之前，我们讨论了博弈中拥有占优策略的情况，相对的，有些博弈可能完全没有占优策略，比如：</p>
+<p><img alt="纳什均衡1" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A11.png" style="display: block; margin: 0 auto;" width="40%" /></p>
+<p>既然无法找到不论条件的占优，那么现在就退而求其次，寻找有条件下的最优：如果我提前知道了对方的选择，那么我的最佳选择应该是什么？这就是<strong>最优反应/最佳应对</strong>（Best Response）</p>
+<p>寻找最佳应对的一个简便方法是<strong>划线法</strong></p>
+<p>如果对于每个人来说，一个策略组合都是他们的最佳应对，那么这个策略组合就是一个<strong>纳什均衡</strong></p>
+<p>其中，占优策略均衡一定是纳什均衡</p>
+<p>关于最佳应对和纳什均衡的详细定义如下：</p>
+<details class="example">
+<summary>最佳应对与纳什均衡</summary>
+<p><img alt="最佳应对" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E6%9C%80%E4%BD%B3%E5%BA%94%E5%AF%B9.png" style="display: block; margin: 0 auto;" width="70%" />
+<img alt="纳什均衡" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1.png" style="display: block; margin: 0 auto;" width="70%" /></p>
+</details>
+<details class="example">
+<summary>纳什均衡的等价定义</summary>
+<p><img alt="等价定义" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1%E7%9A%84%E7%AD%89%E4%BB%B7%E5%AE%9A%E4%B9%89.png" style="display: block; margin: 0 auto;" width="70%" /></p>
+</details>
+<p>定义中的星号<code>*</code>指的是均衡值</p>
+<h3 id="_14">古诺竞争</h3>
+<p>在介绍古诺竞争之前，先了解以下伯川德竞争的内容：两个寡头同时在小镇卖书，每本书成本<span class="arithmatex">\(20\)</span>元，消费者能够接受的最大价格是每本书<span class="arithmatex">\(200\)</span>元，这两个寡头的博弈就是决定自己的售价。这种情况下，最优策略是定价等于成本；否则，价格竞争就会使得两者都没有利润，都降到<span class="arithmatex">\(20\)</span>元每本书。</p>
+<p>总之，伯川德竞争是双方进行价格竞争，而古诺竞争则是进行产量竞争，一个二人古诺竞争例子如下：</p>
+<p><img alt="古诺竞争" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%8F%A4%E8%AF%BA%E7%AB%9E%E4%BA%89.png" style="display: block; margin: 0 auto;" width="80%" /></p>
+<p>这种情况下，参与者的选择不再是离散的，而是连续的，所以无法画出表格，需要借助求导来寻找最优反应：</p>
+<p>已知价格函数是<span class="arithmatex">\(P=2-q_1-q_2\)</span>，所以可以计算两个厂商品的效用函数：</p>
+<p>$<span class="arithmatex">\(u_1(q_1,q_2)=P \cdot q_1-c_1q_1=q_1(2-q_1-q_2-c_1)\)</span>$​</p>
+<p>$<span class="arithmatex">\(u_1(q_1,q_2)=q_2(2-q_1-q_2-c_2)\)</span>$​</p>
+<p>根据纳什均衡，在给定对方产量的情况下，每个厂商都会选择自己的产量来最大化自身利润。以厂商1为例，对<span class="arithmatex">\(q_1\)</span>求偏导数，并令导数为0：</p>
+<div class="arithmatex">\[\frac{\partial{u_1}}{\partial{u_2}}=2-2q_1-q_2-c_1=0\]</div>
+<p>这样就得到了厂商1的最优反应函数：</p>
+<div class="arithmatex">\[q^*_1(q_2)=\frac{2-c_1-q_2}{2}\]</div>
+<p>同理，解出厂商2的最优反应函数：</p>
+<div class="arithmatex">\[q^*_2(q_1)=\frac{2-c_2-q_1}{2}\]</div>
+<p>纳什均衡就是这两个反应函数的交点，即两个厂商的产量在此时都是“最大化”的，联立两个式子解得：</p>
+<div class="arithmatex">\[q^*_1=\frac{2-2c_1+c_2}{3}\]</div>
+<div class="arithmatex">\[q^*_2=\frac{2-2c_2+c_1}{3}\]</div>
+<p>所以最终的均衡策略就是上面计算的两个结果</p>
+<details class="example">
+<summary>参考：古诺竞争均衡求解图示</summary>
+<p><img alt="古诺竞争求解图" src="../figures/%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80/%E5%8F%A4%E8%AF%BA%E7%AB%9E%E4%BA%89%E6%B1%82%E8%A7%A3%E5%9B%BE.png" style="display: block; margin: 0 auto;" width="35%" /></p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
