@@ -5,7 +5,8 @@ site_url: http://127.0.0.1:8000/
 # 主题
 theme:
   name: material # mkdocs-material
-  language: zh                    
+  language: zh
+  favicon: favicon.png               
   # 明暗主题切换
   palette:                        
     - media: "(prefers-color-scheme: light)"
