@@ -4,21 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- google字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
   <!-- 网页标题-->
   <title>InspoShroom的笔记站</title>
+
   <style>
     /* 全部CSS变量 */
     :root {
-      --bg-color: #0b0c10;       /* 网页背景：极简深炭黑 */
-      --text-main: #f4f4f5;      /* 主要文字：纯净纸张白 */
-      --text-muted: #8e9096;     /* 辅助文字：哑光中灰，用于描述信息 */
-      --card-bg: rgba(28, 30, 39, 0.75); /* 卡片背景：微透深灰，配合毛玻璃效果 */
-      --card-border: rgba(255, 255, 255, 0.07); /* 卡片边框：微弱白边 */
-      --accent-blue: #e4e4e7;    /* 强调色：经典银灰 */
-      --accent-glow: rgba(255, 255, 255, 0.02); /* 悬浮时低调的白色投影 */
+      --bg-color: #fcfcfc;       /* 网页背景 */
+      --text-main: #18181b;      /* 主要文字 */
+      --text-muted: #71717a;     /* 辅助文字 */
+      --card-bg: rgba(255, 255, 255, 0.7); /* 卡片背景 */
+      --card-border: rgba(0, 0, 0, 0.08); /* 卡片边框 */
+      --accent-blue: #18181b;    /* 强调色 */
+      --accent-glow: rgba(0, 0, 0, 0.01); /* 悬浮投影 */
     }
 
-    /* 基础样式重置，消除浏览器默认间距，确保在所有浏览器上排版一致 */
+    /* 基础样式 */
     * {
       box-sizing: border-box; /* 让 border 和 padding 包含在 width 和 height 内 */
       margin: 0;
@@ -28,22 +35,21 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
-      /* 使用系统默认的无衬线字体，在移动端和电脑端均能获得极佳的渲染清晰度 */
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Outfit', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       line-height: 1.5;
-      /* 核心背景：由“顶部白色聚光灯”和“经典设计点状网格画布”叠加而成，极具现代纵深感 */
+
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-        radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.01) 0%, transparent 60%),
+        radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
       background-size: 100% 100%, 24px 24px;
       background-repeat: no-repeat, repeat;
       background-attachment: fixed;
     }
 
-    /* 限制内容最大宽度为 1100px，在大屏显示器上居中，并在两侧保留内边距 */
+    /* 限制内容最大宽度,在大屏显示器上居中*/
     .container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 60px 20px;
     }
@@ -57,13 +63,14 @@
     /* 头部标题 */
     header h1 {
       font-size: 2.5rem;
-      font-weight: 200; /* 降低粗细，更显内敛 */
-      letter-spacing: -0.03em; /* 稍微缩紧字距，更显高级 */
+      font-weight: 400; /* 降低粗细，更显内敛 */
+      letter-spacing: -0.03em; /*字距*/
       margin-bottom: 12px;
-      color: #ffffff;
+      color: var(--text-main);
       background: none;
       -webkit-background-clip: unset;
       -webkit-text-fill-color: initial;
+      font-family: 'ZCOOL XiaoWei', 'Outfit', serif;
     }
 
     header p {
@@ -78,91 +85,93 @@
       position: relative;
     }
 
-    /* 搜索输入框样式：圆形药丸形状，带平滑焦点过渡动效 */
+    /* 搜索输入框样式 */
     .search-input {
       width: 100%;
       padding: 14px 20px;
-      border-radius: 9999px; /* 超大圆角形成胶囊形状 */
-      background-color: rgba(28, 30, 39, 0.85); /* 极简半透背景，与卡片底色呼应 */
+      border-radius: 1000px;
+      background-color: rgba(255, 255, 255, 0.85); /* 极简半透背景 */
       border: 1px solid var(--card-border);
       color: var(--text-main);
       font-size: 1rem;
       transition: all 0.3s ease; /* 边框平滑过渡 */
       outline: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
 
     /* 搜索框聚焦（点击/输入）时的亮化效果 */
     .search-input:focus {
-      border-color: rgba(255, 255, 255, 0.15); /* 灰色边框高亮，不做任何彩色光晕 */
-      background-color: rgba(35, 38, 50, 0.95); /* 背景微亮 */
+      border-color: rgba(0, 0, 0, 0.15); /* 灰色边框高亮，不做任何彩色光晕 */
+      background-color: rgba(255, 255, 255, 0.95); /* 背景微亮 */
     }
 
+    /*分类板块还没启用*/
     /* 分类板块容器 */
     .category-section {
       margin-bottom: 40px;
     }
 
-    /* 每个分类的标题行（例如：“计算机系统底座”） */
+    /* 分类标题行 */
     .category-title {
-      font-size: 1.15rem; /* 字号略调小，显得更加严谨 */
-      font-weight: 600;
+      font-size: 1.15rem;
       margin-bottom: 20px;
       display: flex;
-      align-items: center; /* 图标和文字垂直居中 */
+      align-items: center; /* 垂直居中 */
       gap: 10px; /* 图标与文字间距 */
-      color: #e4e4e7; /* 银白文字 */
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* 细灰色界线 */
+      color: var(--text-main); /*字体颜色*/
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       padding-bottom: 8px;
     }
 
-    /* 响应式网格布局：利用 CSS Grid 自动排列卡片，当宽度小于 300px 时自动换行 */
+    /* 网格布局,当宽度小于 300px 时自动换行 */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
       gap: 24px;
+      justify-content: center;
     }
 
-    /* 笔记卡片样式：核心的 Grayscale 极简设计 */
+    /* 笔记卡片样式 */
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 12px; /* 调整为更精炼的 12px 圆角 */
+      border-radius: 12px;
       padding: 24px;
-      text-decoration: none; /* 去除 a 标签自带的下划线 */
-      color: inherit; /* 继承 body 的文字颜色 */
+      text-decoration: none;
+      color: #273514c5;
       display: flex;
-      flex-direction: column; /* 纵向弹性盒，使内部元素垂直排列 */
-      height: 100%; /* 高度占满 grid 单元格，使同一行的卡片整齐对齐 */
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s, border-color 0.25s, box-shadow 0.25s; /* 极其克制的过渡曲线 */
-      backdrop-filter: blur(12px); /* 毛玻璃模糊效果，与背景网格完美叠加 */
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+      backdrop-filter: blur(12px); /*毛玻璃模糊效果*/
       -webkit-backdrop-filter: blur(12px);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); /* 微小底衬阴影 */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
 
-    /* 移除卡片顶部的彩色条效果，恢复极简纯净 */
     .card::before {
       display: none;
     }
 
-    /* 卡片悬浮状态：微上浮 2.5 像素并微幅放大，背景色和边框微微变亮，产生实体黑曜石浮空感 */
+    /* 卡片悬浮状态*/
     .card:hover {
-      transform: translateY(-2.5px) scale(1.008); /* 极其克制的微浮动与缩放 */
-      background-color: rgba(35, 38, 50, 0.9); /* 悬浮时卡片背景微亮并更实色 */
-      border-color: rgba(255, 255, 255, 0.15); /* 边框微微变深 */
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.01); /* 优雅漫反射阴影 */
+      transform: translateY(-2.5px) scale(1.008); /*浮动和缩放*/
+      background-color: rgba(255, 255, 255, 0.95); /*背景色*/
+      border-color: rgba(0, 0, 0, 0.12); /*边框*/
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06), 0 0 20px rgba(0, 0, 0, 0.01); /*阴影*/
     }
 
+    /*卡片标题*/
     .card-title {
       font-size: 1.15rem;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
+    /*卡片描述(未启用)*/
     .card-desc {
       color: var(--text-muted);
       font-size: 0.9rem;
@@ -173,7 +182,7 @@
     footer {
       text-align: center;
       margin-top: 60px;
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(0, 0, 0, 0.35);
       font-size: 0.85rem;
     }
   </style>
@@ -188,7 +197,7 @@
       动态显示一个随机名言 
       其中分别定义了: 段落ID,上外边距,字体样式,文字颜色,字号大小,最小高度(防止抖动),不透明度,过渡动画.
       -->
-      <p id="quote" style="margin-top: 12px; font-style: italic; font-weight: 400; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.92); font-size: 0.95rem; min-height: 1.5em; opacity: 0; transition: opacity 0.5s ease-in-out; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: rgba(255, 255, 255, 0.35);"></p>
+      <p id="quote" style="margin-top: 12px; font-style: italic; font-weight: 400; letter-spacing: 0.05em; color: rgba(24, 24, 27, 0.85); font-size: 0.95rem; min-height: 1.5em; opacity: 0; transition: opacity 0.5s ease-in-out; text-decoration: underline; text-underline-offset: 6px; text-decoration-color: rgba(24, 24, 27, 0.15);"></p>
     </header>
 
     <!-- 检索框 -->
@@ -196,25 +205,27 @@
       <input type="text" id="searchInput" class="search-input" placeholder="搜索笔记或关键字...">
     </div>
 
-    <!-- 笔记卡片网格 -->
+    <!-- 笔记卡片 -->
     <div class="grid">
-      <!-- 笔记卡片：计算机体系结构 -->
-      <!-- data-title 内置用于 JS 筛选的关联关键词（拼音和英文） -->
+
+      <!-- 计算机体系结构 -->
       <a href="./CA_Note/" class="card" data-title="计算机体系结构 ca notes jsjtxjg hardware cpu">
-        <h2 class="card-title">计算机体系结构 (CA)</h2>
-        <p class="card-desc">关于计算机硬件层面的微架构设计、流水线优化、指令集以及存储层次结构的深入笔记。</p>
+        <h2 class="card-title">计算机体系结构(CA)</h2>
       </a>
 
-      <!-- 笔记卡片：数据库系统 -->
+      <!-- 数据库系统 -->
       <a href="./DB_Note/" class="card" data-title="数据库系统 db notes sjk relational sql mysql">
-        <h2 class="card-title">数据库系统 (DB)</h2>
-        <p class="card-desc">关系型数据库原理，包含 SQL 查询优化、ACID 事务机制、索引结构以及并发控制技术。</p>
+        <h2 class="card-title">数据库系统(DB)</h2>
       </a>
 
-      <!-- 笔记卡片：面向对象程序设计 -->
+      <!-- 面向对象程序设计 -->
       <a href="./OOP_Note/" class="card" data-title="面向对象程序设计 oop notes mxdx cpp design patterns">
-        <h2 class="card-title">面向对象程序设计 (OOP)</h2>
-        <p class="card-desc">深入分析类与对象、封装继承多态机制，探究 C++ 内存模型、异常处理以及经典设计模式的实践案例。</p>
+        <h2 class="card-title">面向对象程序设计(OOP)</h2>
+      </a>
+
+       <!-- 数据要素贸易基础 -->
+      <a href="./FDFT_Note/" class="card" data-title="数据要素贸易基础  fdft notes microeconomics game theory byl">
+        <h2 class="card-title">数据要素贸易基础</h2>
       </a>
     </div>
 
@@ -224,24 +235,24 @@
     </footer>
   </div>
 
-  <!-- 轻量级实时筛选检索 JS 脚本 -->
+  <!-- JS部分 -->
   <script>
-    const searchInput = document.getElementById('searchInput'); // 获取搜索框 DOM 对象
-    const cards = document.querySelectorAll('.card');           // 获取页面所有的卡片 DOM
+    const searchInput = document.getElementById('searchInput'); // 获取搜索框
+    const cards = document.querySelectorAll('.card');           // 获取卡片
 
-    // 为输入框绑定 input 输入监听事件（用户输入、删除、粘贴均会实时触发）
+    // 输入监听
     searchInput.addEventListener('input', function (e) {
-      // 提取输入文本：转为小写并剔除两端多余空格
+      // 提取输入文本
       const query = e.target.value.toLowerCase().trim();
 
-      // 遍历每一张笔记卡片，核对是否匹配
+      // 遍历匹配
       cards.forEach(card => {
-        const title = card.getAttribute('data-title'); // 获取卡片上的筛选预设关键词
-        const desc = card.querySelector('.card-desc').textContent.toLowerCase(); // 获取卡片的描述段落文本
+        const title = card.getAttribute('data-title'); // 获取卡片预设关键词
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase(); // 获取卡片描述
 
-        // 如果用户查询词在标题关键词或描述内容中存在，则显示卡片，否则隐藏
+        //显示与隐藏
         if (title.includes(query) || desc.includes(query)) {
-          card.style.display = 'flex'; // 以 flex 布局渲染显示
+          card.style.display = 'flex'; 
         } else {
           card.style.display = 'none'; // 隐藏卡片
         }
@@ -250,7 +261,7 @@
 
    
 
-    // 首页随机名言展示
+    // 首页随机名言
     const quotes = [
       "“程序必须是写给人读的，只是顺便给机器执行。” —— Abelson & Sussman",
       "“你写下的每一行代码，都是在向未来的自己低语。”",
@@ -264,14 +275,35 @@
     ];
 
     const quoteElement = document.getElementById('quote');
+
+    function changeQuote(isInitial = false) {
+      if (!quoteElement) return;
+      
+      if (isInitial) {
+        // 首次加载直接显示并淡入
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        quoteElement.textContent = quotes[randomIndex];
+        setTimeout(() => {
+          quoteElement.style.opacity = '0.85';
+        }, 100);
+      } else {
+        // 动态切换：先淡出，在透明度为 0 后换词，再淡入
+        quoteElement.style.opacity = '0';
+        setTimeout(() => {
+          let nextIndex;
+          do {
+            nextIndex = Math.floor(Math.random() * quotes.length);
+          } while (quotes.length > 1 && quoteElement.textContent === quotes[nextIndex]);
+          
+          quoteElement.textContent = quotes[nextIndex];
+          quoteElement.style.opacity = '0.85';
+        }, 500); // 对应 style 中 transition 设定的 0.5s 淡出时间
+      }
+    }
+
     if (quoteElement) {
-      // 随机选择一句名言
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      quoteElement.textContent = quotes[randomIndex];
-      // 延迟 100ms 触发渐显，让过渡动画更自然
-      setTimeout(() => {
-        quoteElement.style.opacity = '0.85';
-      }, 100);
+      changeQuote(true); // 首次加载
+      setInterval(() => changeQuote(false), 6000); //切换时间
     }
   </script>
 </body>
