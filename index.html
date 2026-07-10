@@ -247,8 +247,9 @@
 
       // 遍历匹配
       cards.forEach(card => {
-        const title = card.getAttribute('data-title'); // 获取卡片预设关键词
-        const desc = card.querySelector('.card-desc').textContent.toLowerCase(); // 获取卡片描述
+        const title = card.getAttribute('data-title') || ''; // 获取卡片预设关键词
+        const descElement = card.querySelector('.card-desc'); // 获取卡片描述
+        const desc = descElement ? descElement.textContent.toLowerCase() : '';
 
         //显示与隐藏
         if (title.includes(query) || desc.includes(query)) {
