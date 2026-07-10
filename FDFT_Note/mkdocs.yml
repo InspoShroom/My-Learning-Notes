@@ -1,5 +1,5 @@
 # 标题名和URL
-site_name: OOP Note             
+site_name: 数据要素贸易基础           
 site_url: http://127.0.0.1:8000/
 
 # 主题
@@ -40,6 +40,7 @@ extra_javascript:
 
 # markdown解析器插件扩展
 markdown_extensions:              
+  - attr_list                     # 支持图片属性设置（如大小、居中等）
   - pymdownx.arithmatex:          # 支持数学公式渲染
       generic: true               
   - admonition                    # 支持警告/提示框语法如 `!!! note`
@@ -53,27 +54,21 @@ markdown_extensions:
       anchor_linenums: true       # 允许点击代码的行号来生成锚点链接
       line_spans: __span          # 为每行代码包裹 span 标签，方便用 CSS 做精细的行样式调整
       pygments_lang_class: true   # 为代码块自动添加对应的 Pygments 语言 Class 类名
-  - pymdownx.inlinehilite         # 支持行内代码的高亮显示，例如 `python import os`
-  - pymdownx.snippets             # 支持在 Markdown 中嵌入其他 Markdown 或文件的片段（复用内容）
-  - pymdownx.critic               # 支持 CriticMarkup 语法，用于显示文档的修订改动
-  - pymdownx.caret                # 支持上标（如 `x^2^`）和下划线（如 `^^inserted^^`）语法
-  - pymdownx.keys                 # 支持键盘按键的优雅排版效果，例如 `++ctrl+alt+del++`
-  - pymdownx.mark                 # 支持文本高亮（荧光笔效果），例如 `==highlight==`
-  - pymdownx.tilde                # 支持下标语法，例如 `H~2~O`
+  # 支持行内代码高亮，例:`python import os`
+  - pymdownx.inlinehilite         
+  # 支持在 Markdown 中嵌入其他 Markdown 或文件的片段
+  - pymdownx.snippets             
+  # 支持 CriticMarkup 语法，用于显示文档的修订改动
+  - pymdownx.critic               
+  # 支持上标(`x^2^`)和下划线(`^^inserted^^`)
+  - pymdownx.caret                
+  # 支持键盘按键的优雅排版效果,例:`++ctrl+alt+del++`
+  - pymdownx.keys                 
+  # 支持文本高亮,例:`==highlight==`
+  - pymdownx.mark                 
+  # 支持下标，例:`H~2~O`
+  - pymdownx.tilde                
 
 # 导航目录
 nav:                              
-  - 目录: index.md
-  - 导论: Introduction.md
-  - 使用类与对象: Using_Objects.md
-  - 类与封装: Class.md
-  - 构造、清理与对象交互: Object_Interactive.md
-  - 拷贝构造、静态成员与命名空间: Copy_constructor.md
-  - 内联函数、对象组合与继承基础: Inheritance.md
-  - 多态: Polymorphism.md
-  - 运算符重载与类型转换: Overloaded_Operators.md
-  - 异常处理: Exceptions.md
-  - 模板: Template.md
-  - 迭代器: Iterators.md
-  - 程序设计/架构设计: Design.md
-  - 设计模式: Patterns_Design-Case_Study.md
+  - 博弈论基础: 博弈论基础.md
