@@ -43,11 +43,14 @@ jobs:
             cd OOP_Note && mkdocs build -d ../public/OOP_Note && cd ..
           fi
           
+          if [ -d "FDFT_Note" ]; then
+            cd FDFT_Note && mkdocs build -d ../public/FDFT_Note && cd ..
+          fi
+          
           # 3. 将我们刚刚写好的 index.html 网页拷贝到发布目录的根目录，作为最外层的首页
           if [ -f "index.html" ]; then
             cp index.html public/
           fi
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
