@@ -51,6 +51,9 @@ jobs:
           if [ -f "index.html" ]; then
             cp index.html public/
           fi
+          if [ -f "favicon.png" ]; then
+            cp favicon.png public/
+          fi
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
