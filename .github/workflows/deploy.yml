@@ -32,18 +32,22 @@ jobs:
           
           # 2. 分别构建各科笔记到对应的子目录中
           if [ -d "CA_Note" ]; then
+            cp favicon.png CA_Note/docs/favicon.png
             cd CA_Note && mkdocs build -d ../public/CA_Note && cd ..
           fi
           
           if [ -d "DB_Note" ]; then
+            cp favicon.png DB_Note/docs/favicon.png
             cd DB_Note && mkdocs build -d ../public/DB_Note && cd ..
           fi
           
           if [ -d "OOP_Note" ]; then
+            cp favicon.png OOP_Note/docs/favicon.png
             cd OOP_Note && mkdocs build -d ../public/OOP_Note && cd ..
           fi
           
           if [ -d "FDFT_Note" ]; then
+            cp favicon.png FDFT_Note/docs/favicon.png
             cd FDFT_Note && mkdocs build -d ../public/FDFT_Note && cd ..
           fi
           
