@@ -1,7 +1,7 @@
 /* 自定义 CSS 样式 */
 :root {
   /*正文*/
-  --md-typeset-color: #2c3e50;
+  --md-typeset-color: #689acb;
   /* 加粗字体 */
   --custom-bold-color: #de7272;
   /* ``中的代码 */
