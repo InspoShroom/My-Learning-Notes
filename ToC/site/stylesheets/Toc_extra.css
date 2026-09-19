@@ -1,0 +1,92 @@
+[data-md-color-scheme="default"] {
+  --md-typeset-color: #252736;
+  --custom-bold-color: #6c88f5;
+  --custom-h2-color: #0f172a;
+  --custom-h3-color: #1e293b;
+  --custom-h3-border: #000000;
+  --custom-h4-color: #000000;
+}
+
+.md-typeset {
+  font-size: 15px;
+  counter-reset: h2-counter;
+}
+
+.md-typeset h2 {
+  color: var(--custom-h2-color);
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.5em;
+
+  border-bottom: 2px solid #000000;
+  counter-increment: h2-counter;
+  position: relative;
+}
+
+.md-typeset h2::before {
+  content: "PART " counter(h2-counter);
+  display: block;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  color: #000000;
+  margin-bottom: 0.2em;
+  text-transform: uppercase;
+}
+
+
+.md-typeset h3 {
+  color: var(--custom-h3-color);
+  font-weight: 700;
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
+  border-left: 3px solid var(--custom-h3-border);
+  padding-left: 0.3em;
+}
+
+/* 加粗字体 */
+strong,
+b {
+  color: var(--custom-bold-color);
+  font-weight: 700;
+}
+
+/* `>`引用块 */
+.md-typeset blockquote {
+  /* 左侧边框色 */
+  border-left: 4px solid var(--custom-bold-color) !important;
+  /* 文本颜色 */
+  color: #555971;
+  /* 左侧内边距 */
+  padding-left: 0.8em;
+  /* 整体微向右缩进 */
+  margin: 1.2em 0 1.2em 0.5em;
+}
+
+.md-typeset blockquote p {
+  margin: 0;
+}
+
+/* 居中文字分割线 */
+.md-typeset hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  /* 细底线 */
+  height: 0;
+  margin: 2.5em 0;
+  text-align: center;
+  overflow: visible;
+}
+
+.md-typeset hr::after {
+  content: "SECTION";
+  font-size: 0.50rem;
+  font-weight: normal;
+  letter-spacing: 0.2em;
+  color: #000000;
+  background: var(--md-default-bg-color, #ffffff);
+  padding: 0 12px;
+  position: relative;
+  top: -15px;
+}
