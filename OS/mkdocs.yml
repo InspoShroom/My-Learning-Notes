@@ -1,0 +1,75 @@
+# 标题名和URL
+site_name: 操作系统          
+site_url: http://127.0.0.1:8000/
+
+# 主题
+theme:
+  name: material # mkdocs-material
+  language: zh
+  favicon: favicon.png                   
+  # 明暗主题切换
+  palette:                        
+    - media: "(prefers-color-scheme: light)"
+      scheme: default # 浅色主题方案
+      primary: black              # 主色调:导航栏底色等
+      accent: black               # 强调色:链接,悬浮
+      toggle:                     # 切换按钮图标与提示
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # 深色模式设置（系统偏好为 dark 时激活）
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate               
+      primary: black             
+      accent: black               
+      toggle:                    
+        icon: material/brightness-4
+        name: Switch to bright mode
+  # 高级交互特性
+  features:                       
+    - navigation.instant          # 开启即时页面加载
+    - navigation.instant.prefetch # 开启预加载
+
+# CSS引入
+extra_css:                        
+  - stylesheets/extra.css       #自定义排版  
+
+# JS引入
+extra_javascript:               
+  - javascripts/mathjax.js        # MathJax数学公式渲染
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+# markdown解析器插件扩展
+markdown_extensions:              
+  - attr_list                     # 支持图片属性设置（如大小、居中等）
+  - pymdownx.arithmatex:          # 支持数学公式渲染
+      generic: true               
+  - admonition                    # 支持警告/提示框语法如 `!!! note`
+  - pymdownx.details              # 支持可折叠块
+  - pymdownx.superfences:         # 允许代码嵌套
+      custom_fences:              # 自定义代码块围栏
+        - name: mermaid           # 支持mermaid绘图
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:           # 代码高亮及行号配置
+      anchor_linenums: true       # 允许点击代码的行号来生成锚点链接
+      line_spans: __span          # 为每行代码包裹 span 标签，方便用 CSS 做精细的行样式调整
+      pygments_lang_class: true   # 为代码块自动添加对应的 Pygments 语言 Class 类名
+  # 支持行内代码高亮，例:`python import os`
+  - pymdownx.inlinehilite         
+  # 支持在 Markdown 中嵌入其他 Markdown 或文件的片段
+  - pymdownx.snippets             
+  # 支持 CriticMarkup 语法，用于显示文档的修订改动
+  - pymdownx.critic               
+  # 支持上标(`x^2^`)和下划线(`^^inserted^^`)
+  - pymdownx.caret                
+  # 支持键盘按键的优雅排版效果,例:`++ctrl+alt+del++`
+  - pymdownx.keys                 
+  # 支持文本高亮,例:`==highlight==`
+  - pymdownx.mark                 
+  # 支持下标，例:`H~2~O`
+  - pymdownx.tilde                
+
+nav:                              
+  - 导论: ch1_Introduction.md
+  - 实验: About_Lab.md

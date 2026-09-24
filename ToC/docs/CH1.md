@@ -44,6 +44,9 @@
 | 吸收律 (Absorption Law) | $A \cup (A \cap B) = A$ | $A \cap (A \cup B) = A$ |
 | 德·摩根律 (De-Morgan's Law) | $A - (B \cup C) = (A - B) \cap (A - C)$ | $A - (B \cap C) = (A - B) \cup (A - C)$ |
 
+??? "tips"
+    德摩根律可以将差运算看为"负号"，带入到后面的部分，并改变其中的$\cap$为$\cup$，再利用分配律展开，反之亦然。
+
 > 计算理论视角的哲学思考：
 
 > - 问题 $\Leftrightarrow$ 集合 或语言
@@ -160,11 +163,11 @@
 
 **函数 (Functions)**
 
-- 形式化定义：从集合 $A$ 到集合 $B$ 的一个关系 $f \subseteq A \times B$，若满足对于 $A$ 中每个元素都有且仅有 $B$ 中一个唯一元素与之对应，则称 $f$ 为函数 (Function) (记作 $f: A \to B$)：
+形式化定义：从集合 $A$ 到集合 $B$ 的一个关系 $f \subseteq A \times B$，若满足对于 $A$ 中每个元素都有且仅有 $B$ 中一个唯一元素与之对应，则称 $f$ 为函数 (Function) (记作 $f: A \to B$)：
 
-    $$\forall a \in A, \; \exists ! \, b \in B \text{ such that } (a, b) \in f \quad (\text{记作 } f(a) = b)$$
+$$\forall a \in A, \; \exists ! \, b \in B \text{ such that } (a, b) \in f $$
 
-    ($\exists!$：有且仅有一个/存在唯一)
+$$(\text{记作 } f(a) = b) (\exists!:\text{ 有且仅有一个/存在唯一})$$
 
 - 单射 (One-to-one / Injective)：
 
@@ -181,7 +184,13 @@
 - 双射 / 一一对应 (Bijective / One-to-one Correspondence)：
     同时满足单射和满射 (Injective + Surjective)
 
-    - 特点：集合 $A$ 与集合 $B$ 的元素完美一对一对应
+    - 特点：集合 $A$ 与集合 $B$​​ 的元素完美一对一对应
+
+
+
+![image-20260920090837714](./img/ch1-graph/image-20260920090837714.png){style="display: block; margin: 0 auto;"}
+
+
 
 - 核心思考与辨析：
     1. 不是函数的两种典型情形 (Not a Function)：
