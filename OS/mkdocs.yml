@@ -72,4 +72,7 @@ markdown_extensions:
 
 nav:                              
   - 导论: ch1_Introduction.md
+  - 操作系统结构: ch2_Structures.md
+  - 进程: ch3_Processes.md
+  - 线程: ch4_Threads.md
   - 实验: About_Lab.md
