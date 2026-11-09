@@ -490,6 +490,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="循环个几次,看返回的time的值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -616,6 +633,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="循环个几次,看返回的time的值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1003,6 +1037,81 @@ finish</p>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>c<span class="w"> </span>/<span class="w"> </span>si
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>info<span class="w"> </span>registers<span class="w"> </span>a0<span class="w"> </span>a1<span class="w"> </span>a6<span class="w"> </span>a7
 </span></code></pre></div>
+<h2 id="lab2">Lab2</h2>
+<ol>
+<li>
+<p>首先是提到物理内存的管理，主要是文件<code>mm.c</code>（memory management），详细可以看代码注释；</p>
+</li>
+<li>
+<p>修改文件<code>defs.h</code>（definitions），用来给操作系统配置工具箱和系统参数。因为C语言本身没有直接操作CSR regs的语法，所以这里需要用内联汇编为两个宏，可以让其他C文件随时调用。</p>
+</li>
+<li>
+<p>关于_start_kernel：启动内核；_ekernel（end-kernel）：内核程序占用终点</p>
+<p>内核本身确实是一直运行的死循环，但是我们编译的这个程序本身也有大小，是有边界的。对于QEMU，其默认的环境大小是128MB，所以剩余的空间都是空白内存，用使用来mm-init切块。</p>
+<p>eg：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>0x80000000：物理内存起点。OpenSBI固件运行区
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>|
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>|
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>0x80200000：_start/_kernel启动内核
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>|
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>|
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>0x80205000：假如说是_ekerrnel位置，内核程序终点
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>|
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>|
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>0x88000000：物理内存终点
+</span></code></pre></div>
+</li>
+<li>
+<p>修改proc.h（process）：</p>
+<ul>
+<li>
+<p>定义一些常量宏，</p>
+</li>
+<li>
+<p>PCB结构定义。同时牵扯到了思考题1，为什么只保存s0-s11，主要是调用者保存和被调用者保存的区分；</p>
+</li>
+<li>
+<p>运行栈（run stack）的地址结构和划分，解决一页装下一个线程的问题；</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    以下是一个线程的运行栈
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>高   ——————————————
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        ｜   ｜
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        ｜   ｜
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>     ——————————————
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>      task-struct       
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>低   ——————————————
+</span></code></pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p>线程分配以及一些额外处理</p>
+<ul>
+<li>OS本身就是一个thread，但是我们自启动后没有位它分配一个task-struct，所以第一步是为其分配一个线程ID，我们将其记作线程idle，PID=0；</li>
+<li>current是一个全局指针；</li>
+</ul>
+</li>
+<li>
+<p>什么是dummy()函数？</p>
+<p>是我们实验中的测试函数，一个死循环，用来显示当前正在处理线程信息；</p>
+<p>同时，因为一个新线程没有历史状态记录，所以首次切换到该线程的时候，无法读取历史状态进行恢复，需要在初始化的时候给定一个地址，也就是这里的dummy函数位置，让首次切换进入到该函数执行；</p>
+</li>
+<li>
+<p>理解一下 text.entry, .adta，即代码段、数据段等信息，在Entry.S文件中</p>
+</li>
+<li>
+<p>一些操作缩写，如ret, sres, mret，等，以及各种CSR regs</p>
+</li>
+<li>
+<p>线程切换</p>
+<p>分为上下两层理解：上层是C函数switch-to，用来做决策；底层汇编__switch-to用来进行实际的硬件操作；</p>
+<p>C调用底层的__switch-to汇编函数时，用到<code>prev</code>和<code>next</code>两个参数，分别进入寄存器<code>a0</code>和<code>a1</code></p>
+<p>Task-struct结构：前面8*4bytes信息，后面有ra，sp，s[12]寄存器的存放。</p>
+</li>
+<li>
+<p>验收</p>
+<p>注意各个寄存器对应的值</p>
+</li>
+</ol>
 
 
 
