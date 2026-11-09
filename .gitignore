@@ -11,3 +11,7 @@
 .DS_Store
 .vscode/
 .idea/
+
+# 忽略 MkDocs 本地编译生成目录
+site/
+**/site/
