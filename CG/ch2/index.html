@@ -1,0 +1,970 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch2/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../CGblog1_drawingLine/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>第二章 连续与离散、光栅化 - 计算机图形学</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch2" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机图形学" class="md-header__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机图形学
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第二章 连续与离散、光栅化
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机图形学" class="md-nav__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机图形学
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 连续与离散、光栅化
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 连续与离散、光栅化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于连续和离散的一些了解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#光栅化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直线光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        圆的光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅化多边形
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他内容了解
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CGblog1_drawingLine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    直线光栅化 (DDA / Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CGblog2_drawingCircle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    圆的光栅化 (Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 视口、坐标系统与OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 矩阵栈与投影变换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于连续和离散的一些了解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#光栅化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直线光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        圆的光栅化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅化多边形
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他内容了解
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch2">ch2</h1>
+<p>（这一章节的笔记是做的最难受的）</p>
+<p>首先，关于计算机画图形到屏幕上，我们只需要牢记两个词就可以了：<strong>离散</strong>与<strong>像素点</strong>。用一句话来说：显示器屏幕本质是离散的像素点矩阵。</p>
+<p>下面的这一部分内容是关于照相机拍照成图的过程理解，如要跳过，正文在<a href="#光栅化">光栅化</a></p>
+<h2 id="_1">关于连续和离散的一些了解</h2>
+<ol>
+<li>
+<p><strong>图像传感器</strong></p>
+<p>无论是手机还是相机中的图像传感器，它们都是由底层的感光单元排列组成的，而感光单元的本质是光电二极管。光电二极管的工作方式为：光子打到硅片，激发出电子，电子产生电流。所以光线越强，激发的电子越多，电流越强，数值越大。</p>
+</li>
+<li>
+<p><strong>图像传感器为什么需要滤波阵列？</strong></p>
+<p>上面提到了感光单元的工作方式，很明显，这种方法无法判断光子的颜色（波长）。为了解决这个问题，我们在感光单元上覆盖微透镜和颜色滤波阵列。</p>
+</li>
+<li>
+<p><strong>什么是滤波阵列？</strong></p>
+<p>滤波阵列（Color Filter Array CFA）：</p>
+<ol>
+<li>滤波，在这里就指“滤光”，比如放置特定颜色的玻璃，只让特定颜色的光线通过，其他颜色的光都被反射或者吸收；</li>
+<li>阵列，就是将这些微小的滤波镜片组合到一起，一次有成百上千个，组成一个二维网格。</li>
+</ol>
+<p>例如课件第4页 的 中的6种CFA排列方案：</p>
+<ul>
+<li>垂直条纹：按R,G,B规律顺序排列。结构简单，但水平方向分辨率急剧下降，极易产生单向的严重锯齿和摩尔纹；</li>
+<li>Bayer 拜尔阵列：50%G, 25%R, 25%B。因为人眼视网膜对于绿光的敏感度远高于红蓝光，因为分配双倍的绿色采样点；</li>
+<li>Pseudo-random 伪随机排列：打破周期性，高频混叠，消除特定方向规则的摩尔纹；</li>
+<li>Complementary colors  CMY/CMYG：采用青Cyan，品红Magenta，黄Yellow。互补色滤镜允许更多光谱分量通过（透光率高），暗光性能好，但需通过色彩矩阵变换解算回 RGB，会放大色度噪声。</li>
+<li>全色/泛色阵列（Panchromatic / Kodak CFA 2.0 - RGBW）：图中的白色方块为 Clear / Panchromatic（全色/无滤镜单元），优势为：白色像素不滤除任何可见光光子，进光量提升 2~4 倍，大幅提高暗光信噪比（SNR）。</li>
+<li>Burtoni CFA：非对称交错错位排列，用于平衡对角线方向的分辨率</li>
+</ul>
+</li>
+<li>
+<p><strong>什么是柯达 RGBW 传感器（作为例子理解）</strong></p>
+<p>其中的W就是指White，或者是P(Panchromatic  全色/泛色)，二者含义是一样的。</p>
+<p>因为传统的滤波阵列都太浪费光了，比如bayer阵列，对于每个滤光镜片，有大约2/3的光都被吸收或者反射了，即浪费了。当到了夜晚或者暗光环境中，光子数量较少时，像素就会充满雪花般的噪点。</p>
+<p>Q：引入W像素也带来了新的挑战，因为W是完全透明的，所以它无法分辨颜色，那么要怎么处理呢？</p>
+<p>A：因为人眼对于明暗轮廓很敏感，但是对于颜色分辨率很迟钝。所以RGBW传感器将任务分为了两半：W像素负责当骨架，全速采集全分辨率的明暗画面；RGB像素用来低分辨率地采集色彩信息；最后使用算法融合，合成暗光下噪点极低的高清图像。</p>
+</li>
+<li>
+<p><strong>RGBW 图像重构管线</strong></p>
+<div class="language-text highlight"><pre><span></span><code>解释了 RGBW 传感器如何利用亮度和色度分离原理，重构出完整分辨率的彩色图像。
+</code></pre></div>
+<ol>
+<li>首先，分别提取出P全色像素和RGB色彩像素</li>
+<li>对提取出的P像素进行两种操作：<ul>
+<li>对P像素进行空间插值，得到全分辨率明度图；</li>
+<li>对P像素进行局部平均，得到低分辨率明度图；</li>
+</ul>
+</li>
+<li>对于RGB像素，进行去马赛克插值，得到低分辨率的初始彩色图</li>
+<li>用低分辨率彩色图减去低分辨率明度图，得到低分辨率下的色差图像，对色差进行插值放大，得到全分辨率色差图</li>
+<li>用之前计算的全分辨率明度图和该全分辨率色差图进行相加融合，就得到了最终的全分辨率色彩图。这样既得到了低噪点图像，又保留了准确色彩</li>
+</ol>
+<blockquote>
+<p>关于明度图和色差图的解释和理解：</p>
+<p>明度图：也就是一张纯粹的黑白灰度图，没有色彩，只有明暗对比</p>
+<p>色差图：任何一个彩色像素都可以拆分为两个部分<span class="arithmatex">\(真实颜色 = 明度 + 色差\)</span>，色差的含义是这个位置在脱离了明暗影响后，纯粹偏向某个颜色的程度</p>
+</blockquote>
+</li>
+<li>
+<p><strong>失真</strong></p>
+<p>字面含义就是失去了真实面貌。因为现实世界中光纤，物体表面等都是连续的，而计算机采样时是离散的，通过计算、压缩、插值等操作后，输出画面会和现实世界有偏差，这就是失真。</p>
+<p>一些常见的失真类型有：</p>
+<ol>
+<li>模糊失真：锐利/细节被抹平，一些边缘的跳变被插值抹平，变得很糊；</li>
+<li>走样/锯齿失真：当采样率不够高时，倾斜直线在屏幕上呈现出阶梯状的锯齿，或者是出现摩尔纹；</li>
+<li>色彩失真/伪彩：黑白交界的高对比度边缘凭空出现紫色或者绿色的杂边；</li>
+</ol>
+</li>
+<li>
+<p><strong>分辨率</strong></p>
+<p>从计算机图形学的角度来理解，大概有三个角度：</p>
+<ol>
+<li>
+<p>像素分辨率/网格分辨率：即离散的像素网格数量，比如1920×1080 (1080p)，以及3840×2160 (4K)，本质指的是计算机帧缓冲区中离散采样的网格点总数</p>
+</li>
+<li>
+<p>空间密度分辨率 (PPI/DPI )：对于同样的1920×1080，放在手机屏幕和大幕布的效果是不一样的，前者画面非常精细，而后者每个像素却非常大，为了区分，引入空间密度。</p>
+<p>PPI (Pixels Per Inch)：每英寸长度里面有多少个像素点</p>
+<p><span class="arithmatex">\(PPI = \sqrt {水平像素^2+垂直像素^2} / 屏幕物理对角线尺寸(英寸)\)</span></p>
+</li>
+<li>
+<p>颜色/灰度分辨率：测量一个像素的亮度时，我们的刻度尺有多精细？比如测量一个像素的亮度，我们是使用 8-bit 共256份还是使用 10-bit 共1024份，不同的刻度对应的细密程度不同，越精细越能反映微弱的光影起伏</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>线性插值、双线性插值、三线性插值</strong></p>
+<p>插值：也即知道几个锚点的数据，按照一定的权重，推测中间某个未知点的值。</p>
+<p>从线性到双线性、三线性其实是维度的递增</p>
+<ul>
+<li>
+<p>线性插值：一般就是权重求和，越靠近某个点其值的权重越高</p>
+<p><span class="arithmatex">\(lerp(v_0,v_1,t) = (1-t)v_0 + tv_1 = v_0 + t(v_1 - v_0)\)</span></p>
+<p><img src="./assets/ch2/linear_interpolation.png" alt="image-20261010141702176" style="zoom: 50%;" /></p>
+</li>
+<li>
+<p>双线性插值：二维，在一个矩阵网格内计算。一共做了三次一维线性插值，横着两次，竖着一次。首先计算上下两边的中间点<span class="arithmatex">\(R_1, R_2\)</span>，然后再通过<span class="arithmatex">\(R_1, R_2\)</span>计算最终点<span class="arithmatex">\(P\)</span></p>
+<p><img src="./assets/ch2/bilinear_interpolation.png" alt="image-20261010141926673" style="zoom: 50%;" /></p>
+</li>
+<li>
+<p>三线性插值：主要作用是在现代GPU的Mipmap（多级渐远纹理映射），大致内容如下：</p>
+<p><img src="./assets/ch2/trilinear_interpolation.png" alt="image-20261010142404071" style="zoom: 40%;" /></p>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="光栅化">光栅化</h2>
+<ul>
+<li>
+<p><strong>什么是光栅化(Rasterization)</strong></p>
+<p>光栅化，又称<strong>扫描转换(Scan Conversion)</strong>。严格来说，它是一个数学计算和离散采样的过程：就是判断图元覆盖了哪些离散的像素格子，然后给这些格子填入颜色数值的计算过程。</p>
+</li>
+<li>
+<p>图元：指的是硬件渲染管线能够直接识别、处理并绘制的最基本的几何元素。常见的主流图形API，比如OpenGL, DirectX, Vulkan中，图元主要分为：点、线、三角形</p>
+<blockquote>
+<p>为什么三角形是最基本的图元？而且3D渲染中，几乎很多复杂的模型最终都会被切分成成千上万个三角形网络。</p>
+<ol>
+<li>天然共面：不共线三点处于同一个平面，不会像四边形那样发生空间扭曲易于插值：</li>
+<li>利用三角形内部的任意点属性，都可以通过重心坐标来进行简单高效的插值硬件加速：</li>
+<li>现在GPU的光栅化硬件针对三角形遍历与边界测试做了极致的优化通用性强：</li>
+<li>任何复杂多变性都可以无歧义地三角化</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>光栅化的两个核心步骤</p>
+<ol>
+<li>确定位置。几何离散化，我们要在屏幕上确定究竟哪些格子被这个几何图元覆盖了。这个过程就叫做光栅化</li>
+<li>确定颜色/着色。确定了这些像素之后，每个像素应该填充什么颜色？</li>
+</ol>
+</li>
+<li>
+<p>光栅化之后的显示输出过程</p>
+<ol>
+<li>首先在光栅化之后，显卡内存中存放的是已经算好的一帧完整的画面，它存放在帧缓冲存储器中；</li>
+<li>显示芯片定时从帧缓冲中读出数据；</li>
+<li>数模转换器（DAC）将存储的二进制数字信号转换为模拟电压来驱动物理显示部件</li>
+<li>彩色电子枪与逐行扫描：红、绿、蓝三路模拟电压信号分别输入对应的彩色电子枪，控制发射电子束的强弱。电子束在偏转磁场控制下，从屏幕左上角开始，自左向右横向扫描一行，扫完一行后快速回扫到下一行起点，从上到下逐行铺满整个屏幕。由于荧光粉受激发光以及人眼的视觉暂留特性，高速扫描的离散光点在人眼中合成了连续完整的彩色图像。</li>
+</ol>
+<p>图示过程如下：</p>
+<p><img src="./assets/ch2/raster_display_pipeline.png" alt="image-20261105203456928" style="zoom: 33%;" /></p>
+</li>
+<li>
+<p>关于帧缓冲存储器</p>
+<p>帧：视频或者游戏是由一幅幅静止的图片连续播放组成的，其中每一幅单独的画面就叫做帧；</p>
+<p>缓冲：显卡把下一幅画面临时存放，等待显示器来取</p>
+<p>帧缓冲存储器实际上就是一个与屏幕分辨率一致的二维数据矩阵，比如某台电脑的分辨率是1920×1080， 那么其帧缓冲存储器也就是一个1920×1080的矩阵，每个存储器对应一个像素点。早期计算机会使用单缓冲机制，现代显卡和图形API普遍采用双缓冲或者三缓冲。</p>
+<ul>
+<li>
+<p>单缓冲</p>
+<p>工作方式：显卡计算下一刻游戏/视频的画面并存放进入帧缓冲存储器中，显示器读取存储器中的值并显示到屏幕上。</p>
+<div class="language-text highlight"><pre><span></span><code>但是这经尝会出现画面撕裂的问题，因为显示器是一行一行往下扫描的，显示器和显卡的速度不协同。可能显示器上半部分显示的是某个FPS游戏开枪前的画面，但是因为显卡已经计算出了开枪后的画面并写入了缓冲，那么下半部分显示器就会显示开枪后的画面，我们需要解决这个问题，于是引入双缓冲甚至三缓冲
+</code></pre></div>
+</li>
+<li>
+<p>双缓冲</p>
+<p>也就是准备了两个一模一样的帧缓冲，但是分为前后缓冲区。前缓冲负责给显示器读取显示，后缓冲区则是让显卡时刻计算修改。直到显卡把后缓冲区画好了，并且显示器刚好把前缓冲区的一帧全部扫描完到了最底部，驱动程序直接修改前后缓冲区的指针，完成调换。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2"><strong>直线光栅化</strong></h2>
+<p>详见：<a href="../CGblog1_drawingLine/">光栅化直线</a></p>
+<h2 id="_3">圆的光栅化</h2>
+<p>详见：<a href="../CGblog2_drawingCircle/">光栅化圆</a></p>
+<p>补充：极坐标参数法与增量计算</p>
+<p>参数方程形式为：</p>
+<div class="arithmatex">\[
+x = x_c + r\cos\theta, \quad y = y_c + r\sin\theta
+\]</div>
+<p>令角度以微小增量 <span class="arithmatex">\(\Delta\theta\)</span> 步进，即 <span class="arithmatex">\(\theta = i \cdot \Delta\theta\)</span>。</p>
+<p>为了避免每一步都重新计算三角函数，利用三角和角公式：</p>
+<div class="arithmatex">\[
+x_{i+1} = r\cos(\theta_i + \Delta\theta) = r\cos\theta_i\cos\Delta\theta - r\sin\theta_i\sin\Delta\theta = x_i\cos\Delta\theta - y_i\sin\Delta\theta
+\]</div>
+<div class="arithmatex">\[
+y_{i+1} = r\sin(\theta_i + \Delta\theta) = r\sin\theta_i\cos\Delta\theta + r\cos\theta_i\sin\Delta\theta = y_i\cos\Delta\theta + x_i\sin\Delta\theta
+\]</div>
+<p>通过旋转递推可显著减少浮点三角函数调用。</p>
+<h2 id="_4">光栅化多边形</h2>
+<ul>
+<li>
+<p><strong>多边形的两种表示形式</strong></p>
+<ol>
+<li>顶点表示(by vertex)：用顶点坐标序列描述出边界。优点是便于进行缩放平移旋转等几何变换，缺点是无法直接控制内部像素的颜色。</li>
+<li>点阵表示(by lattice)：用内部覆盖的像素点阵表示，是最终进入帧缓冲显示的物理形式。</li>
+</ol>
+<p><img src="./assets/ch2/polygon_representation.png" alt="image-20261010161555057" style="zoom: 33%;" /></p>
+</li>
+<li>
+<p><strong>多边形填充</strong></p>
+<p>本质：完成从顶点表示到点阵表示的转换</p>
+</li>
+<li>
+<p><strong>多边形内外性测试 (Inside Check)</strong></p>
+<p>在多边形填充之前，我们需要确定平面上的像素点究竟是位于多边形内部还是外部。</p>
+<p>常用方法为<strong>射线法</strong>：从待测点 <span class="arithmatex">\(P\)</span> 出发，向任意方向引出一条无穷长射线，统计射线与多边形所有边界线段的相交情况。</p>
+<ul>
+<li>
+<p><strong>奇偶测试 (Even-Odd Test)</strong></p>
+<p>统计射线与多边形所有边界的交点总数，然后根据交点数来进行判断：</p>
+<ol>
+<li>若交点个数为奇数，则点位于多边形内部；</li>
+<li>若为偶数，则位于多边形外部；</li>
+</ol>
+<blockquote>
+<p>用一个情景类比来不严谨地证明一下这个奇偶判断的原理：</p>
+<p>首先，一个多边形，不论是凹多边形还是凸多边形，我们都将其看作一个封闭的空间，比如一个由墙围起来的院子。并且我们知道，走到无穷远处一定是在这个院子外面的，而射线的一端是无穷长的。</p>
+<p>对于内部的点来说，要到院子外面，就必须要翻出一道墙。如果中途又不小心翻进了院子，要出去就必须再翻一次。所以最终无论翻了多少次，这个次数总是一个奇数；</p>
+<p>对于外部的点，如果翻进了院子，那么要想出去，就势必得再翻一次，这是一一对应的。等到通往无穷远，也就是翻出了院子，那么翻墙次数自然是偶数。</p>
+<p>有了这个规律，我们就可以通过奇偶次数来判断点的位置了。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>环绕数测试 (Winding Number Test)</strong></p>
+<p>将待测点 <span class="arithmatex">\(P\)</span> 与多边形各顶点相连，计算沿多边形边界逆时针走完一圈时，边对点 <span class="arithmatex">\(P\)</span> 张开的有向夹角总和。夹角总和除以 <span class="arithmatex">\(2\pi\)</span> 即为环绕数 <span class="arithmatex">\(wn\)</span>：</p>
+<div class="arithmatex">\[
+wn = \frac{1}{2\pi} \sum_{i=0}^{n-1} \theta_i
+\]</div>
+<p>这里的<span class="arithmatex">\(\theta_i\)</span>是有向角，如果视线逆时针转动，角度记为正<span class="arithmatex">\((+)\)</span>；顺时针就是负<span class="arithmatex">\((-)\)</span>，最后根据环绕数判断：</p>
+<ol>
+<li>若环绕数 <span class="arithmatex">\(wn \ne 0\)</span>，则点在多边形内部；</li>
+<li>若环绕数 <span class="arithmatex">\(wn = 0\)</span>，则点在多边形外部。</li>
+</ol>
+<blockquote>
+<p>继续借用上面的情景来讲，就是说如果院子中有一个木桩，上面连着一个绳子，我们拉着绳子沿着围墙完整走一圈回到起点，这时候木桩也会被绳子绕一整圈。而如果是外面的位置，那么绳子就不会绕过木桩。</p>
+</blockquote>
+<p><img src="./assets/ch2/winding_number_test.png" alt="多边形内外测试" style="zoom: 25%;" /></p>
+</li>
+<li>
+<p><strong>边界与特殊情况处理</strong></p>
+<p><img src="./assets/ch2/inside_check_edge_cases.png" alt="image-20261010162006171" style="zoom: 50%;" /></p>
+<ul>
+<li>
+<p>关于奇偶测试</p>
+<ol>
+<li>
+<p>理想情况是图1所示，考虑临界情况，比如外部点不穿过边，那么相交次数就是0，也满足偶数；内部点只穿过一条边，次数为1，满足奇数。所以这个方法是方向无关的。</p>
+</li>
+<li>
+<p>特殊情况是射线可能会正好穿过多边形顶点，或者与某条边界边重合。考虑图2的六种情况：</p>
+<ul>
+<li>
+<p>正常穿过一条边，算1次；</p>
+</li>
+<li>
+<p>穿过顶点，有两种情况，算2次或者0次；</p>
+</li>
+<li>
+<p>穿过水平边：</p>
+<p>如果水平边两端一上一下，算1次；</p>
+<p>如果水平边两端在同侧，算0次或2次；</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>关于环绕数测试的一些理解</p>
+<p>将式子写开成向量的点乘公式，算出点到每一边两端的夹角。考虑图4有角度小于0的特殊情况（顺时针为负角），实际上，正因为有正负，内部点累加起来刚好是<span class="arithmatex">\(2\pi\)</span>，外部的加起来刚好为0</p>
+</li>
+<li>
+<p>两种方式的改进</p>
+<p>两种数学方式很优美，但是效率不太行，扫描反余弦公式和模长的平方根计算的开销极大，而奇偶测试又要写很多条件分支处理特殊情况。整个计算复杂度为<span class="arithmatex">\(O(\text{像素总数} \times \text{多边形边数})\)</span>，效率极低。</p>
+<p>图形学利用扫描线的行间连续性和边的连通性，引入了基于边表 (Edge Table ET) 和活性边表 (Active Edge Table AET) 的扫描线多边形填充算法，大幅提升了多边形光栅化的处理效率。（可以深入了解）https://zhuanlan.zhihu.com/p/80471730</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_5">其他内容了解</h2>
+<ol>
+<li>
+<p><strong>3D DDA 算法与三维体素空间</strong></p>
+<p>将二维直线的光栅化思想扩展到三维离散空间，即得到 3D DDA 算法。</p>
+<ul>
+<li>核心思想：在由三维体素 (Voxel Grid) 构成的离散空间中，计算一根连续空间光线所穿过的所有离散体素单元。</li>
+<li>计算方式：寻找光线方向矢量中变化最快的主坐标轴作为主步进方向，另外两个坐标轴根据斜率增量递推步进。</li>
+<li>典型应用：常用于光线投射 (Ray Casting)、光线步进 (Ray Marching)、体绘制以及三维物理引擎中的视线相交检测与碰撞检测。</li>
+</ul>
+</li>
+<li>
+<p><strong>曲线的常见表示方法</strong></p>
+<p>在几何造型和图形显示中，曲线主要有三种数学表达形式：</p>
+<ol>
+<li>显式表示 (Explicit Curve)：形如 <span class="arithmatex">\(y = f(x)\)</span>，每一个自变量 <span class="arithmatex">\(x\)</span> 唯一对应一个函数值 <span class="arithmatex">\(y\)</span>。缺点是无法表示具有闭合环路或在局部出现垂直切线的几何曲线。</li>
+<li>参数表示 (Parametric Curve)：形如 <span class="arithmatex">\(x = x(t), y = y(t)\)</span>，其中参数 <span class="arithmatex">\(t \in [t_0, t_1]\)</span>。这是计算机辅助设计和图形建模中最推崇的形式，通过均匀或自适应改变参数 <span class="arithmatex">\(t\)</span> 即可平滑生成曲线点，易于表示任意形状的自由曲线和闭合曲线。</li>
+<li>隐式表示 (Implicit Curve)：形如 <span class="arithmatex">\(g(x, y) = 0\)</span>。其优势在于容易判断给定点与曲线的相对空间位置：点在曲线上时 <span class="arithmatex">\(g=0\)</span>，点在曲线一侧时 <span class="arithmatex">\(g&gt;0\)</span>，在另一侧时 <span class="arithmatex">\(g&lt;0\)</span>。常用于距离场计算和碰撞检测。</li>
+</ol>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

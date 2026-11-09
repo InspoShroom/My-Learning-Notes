@@ -1,0 +1,746 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/CGblog2_drawingCircle/">
+      
+      
+        <link rel="prev" href="../CGblog1_drawingLine/">
+      
+      
+        <link rel="next" href="../ch3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>圆的光栅化 (Bresenham) - 计算机图形学</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机图形学" class="md-header__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机图形学
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              圆的光栅化 (Bresenham)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机图形学" class="md-nav__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机图形学
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 连续与离散、光栅化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CGblog1_drawingLine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    直线光栅化 (DDA / Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    圆的光栅化 (Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    圆的光栅化 (Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一些尝试
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bresenham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bresenham 画圆算法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 视口、坐标系统与OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 矩阵栈与投影变换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一些尝试
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bresenham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bresenham 画圆算法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">计算机中圆的绘制</h1>
+<h2 id="_2">前言</h2>
+<p>在上一篇中，我们大致了解了计算机是如何画出一条直线的，通过直线/线段组合我们还可以得到一些常见的图形。然而，几何世界中还存在着一些非线性的图形，这其中我们最熟悉的当属圆了，所以在本篇，我们简单地了解一下圆的绘制方式。</p>
+<h2 id="_3">一些尝试</h2>
+<p>在盲无目的地一头扎进计算之前，我们先逐步理清思路，做一些简单的尝试：首先，圆也同直线一样，拥有对应的几何方程。借用最初画直线的想法，我们直接解方程可以得到 <span class="arithmatex">\(y\)</span> 关于 <span class="arithmatex">\(x\)</span> 的函数，利用函数便能通过 <span class="arithmatex">\(x\)</span> 的值得到 <span class="arithmatex">\(y\)</span> 的值。</p>
+<p>考虑最简单的情况，我们以圆心在原点 <span class="arithmatex">\((0,0)\)</span>，半径为 <span class="arithmatex">\(R\)</span> 的圆为例。它的标准方程为：</p>
+<div class="arithmatex">\[
+x^2+y^2 = R^2
+\]</div>
+<p>很容易地能够得到我们想要的函数：</p>
+<div class="arithmatex">\[
+y =\pm\sqrt{R^2-x^2}
+\]</div>
+<p>基于此函数，以及 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 的定义域，我们分四个象限去讨论，然后将每次算出的 <span class="arithmatex">\(y\)</span> 的值进行四舍五入。如果就画出圆这个问题而言，我们已经解决了，但是很明显，这里又出现了我们不想要的情况：</p>
+<ol>
+<li>
+<p>复杂的开方运算，甚至比乘法还要糟心；</p>
+</li>
+<li>
+<p>如果我们对函数 <span class="arithmatex">\(y=\sqrt{R^2-x^2}\)</span> 关于 <span class="arithmatex">\(x\)</span> 求导（也可以从切线斜率来理解，更加直观），那么有：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+&amp; \frac{dy}{dx}=-\frac{x}{\sqrt{R^2-x^2}}\\
+\\
+所以有：&amp; \lim_{x \rightarrow R^-}{|\frac{dy}{dx}|}=\frac{R}{0^+}=+\infty
+\end{aligned}
+\]</div>
+<p>所以当 <span class="arithmatex">\(x\)</span> 的值越来越接近 <span class="arithmatex">\(R\)</span> 的时候，<span class="arithmatex">\(x\)</span> 每自增 <span class="arithmatex">\(1\)</span>，<span class="arithmatex">\(y\)</span> 可能会变化好几个单位，又会出现那种视觉上的断裂；</p>
+</li>
+</ol>
+<p>当然，圆的表示不仅有标准方程，一个比较特殊的是极坐标参数方程。虽然利用极坐标方程可以消除开方运算，用角度来做步进，并借助一些三角公式来进行递推，但仍然免不了浮点数的运算，并且对于角度步长的把控要求较高。如果有读者感兴趣，可以自行了解。</p>
+<p>所以接下来，我们需要进行方案优化，解决上面的两个问题。</p>
+<p>关于第二个问题，如果我们采用和画直线一样的处理方式，无非是很麻烦的，因为整个圆表面切线的斜率是不断变化的。我们可以很好地利用圆的对称性，将其分为八等分。这样一来，我们只需要画出其中一个卦限的点，其他卦限的点我们都可以利用坐标对称快速完成。</p>
+<p><img src="./assets/blog2_circle/circle_eight_symmetry.png" width="50%" /></p>
+<p>而且在第二卦限内，我们还不用愁纵坐标变化过快的问题，切线的斜率绝对值在 [0,1] 之间。如此，我们把 <strong>第二个缺陷解决了</strong>。</p>
+<p>第一个问题我们通过学习 Bresenham 的画圆算法来解决。</p>
+<h2 id="bresenham">Bresenham 画圆算法</h2>
+<p>我们只分析第二卦限的情况，其他卦限的点均可以通过对称当前卦限画的点获得。</p>
+<p><img src="./assets/blog2_circle/bresenham_circle_octant.png" width="70%" /></p>
+<p>（上面这个图用作参考，便于理解理论推导）</p>
+<p>算法从点 <span class="arithmatex">\((0,R)\)</span> 出发，沿顺时针方向进行绘制。假设我们现在确定了像素点 <span class="arithmatex">\((x_k,y_k)\)</span>，对于下一个像素点，我们有两个选择：</p>
+<ol>
+<li>正右方像素点 <span class="arithmatex">\(P_1(x_k+1,y_k)\)</span>；</li>
+<li>右下方像素点 <span class="arithmatex">\(P_2(x_k+1,y_k-1)\)</span>；</li>
+</ol>
+<p>同样的，我们需要让选择的点尽可能靠近理想圆弧，所以找两个待选像素点所连线段的中点：</p>
+<div class="arithmatex">\[
+M (x_k+1, y_k-\frac{1}{2})
+\]</div>
+<p>将中点代入圆的隐式函数：</p>
+<div class="arithmatex">\[
+F(x, y)=x^2+y^2-R^2
+\]</div>
+<div class="arithmatex">\[
+令：\color{red}{d_k=F(M)=(x_k+1)^2+(y_k-\frac{1}{2})^2-R^2} \tag{1}
+\]</div>
+<p>于是我们就构造出了一个判别式 <span class="arithmatex">\(d_k\)</span>，这个式子本来是反映点和圆的位置关系的，同时又能帮助我们找到理想的像素点：</p>
+<ol>
+<li><span class="arithmatex">\(d_k&lt;0\)</span>：中点在圆内，所以圆弧从中点上方经过，所以正右方 <span class="arithmatex">\(P_1\)</span> 像素点离圆弧更近，且 <span class="arithmatex">\(y_{k+1} = y_k\)</span></li>
+<li><span class="arithmatex">\(d_k=0\)</span>：中点在圆上，两个像素点离圆弧一样近；</li>
+<li><span class="arithmatex">\(d_k&gt;0\)</span>：中点在圆外，圆弧从中点下方穿过，所以右下方 <span class="arithmatex">\(P_2\)</span> 像素点离圆弧更近，有 <span class="arithmatex">\(y_{k+1}=y_k-1\)</span></li>
+</ol>
+<p>继续套用直线算法的思路，接下来我们推导判别式的增量。</p>
+<ol>
+<li>如果 <span class="arithmatex">\(d_k&lt;0\)</span>，选择 <span class="arithmatex">\(P_1\)</span> 像素点，有 <span class="arithmatex">\(x_{k+1}=x_k+1, y_{k+1}=y_k\)</span>。下一个待测试的中点为 <span class="arithmatex">\((x_k+2,y_k-\frac{1}{2})\)</span>，于是有：</li>
+</ol>
+<div class="arithmatex">\[
+  d_{k+1} - d_k = (x_k + 2)^2 - (x_k + 1)^2 = 2x_k + 3
+\]</div>
+<div class="arithmatex">\[
+  \color{red}{d_{k+1} = d_k + 2x_k + 3} \tag{2}
+\]</div>
+<ol>
+<li>如果<span class="arithmatex">\(d_k\geq0\)</span>，选择<span class="arithmatex">\(P_2\)</span>像素点，有 <span class="arithmatex">\(x_{k+1}=x_k+1, y_{k+1}=y_k-1\)</span>，下一个待测试的中点为 <span class="arithmatex">\((x_k+2,y_k-\frac{3}{2})\)</span>，作差有：</li>
+</ol>
+<div class="arithmatex">\[
+  d_{k+1} - d_k = [(x_k + 2)^2 - (x_k + 1)^2] + [(y_k - \frac{3}{2})^2 - (y_k - \frac{1}{2})^2] = 2(x_k - y_k) + 5
+\]</div>
+<div class="arithmatex">\[
+  \color{red}{d_{k+1} = d_k + 2(x_k - y_k) + 5} \tag{3}
+\]</div>
+<p>这个递推式中虽然还有乘法，但是是乘2，恰好可以用位移运算来替代，所以至此，我们<strong>解决了平方运算的麻烦</strong>。</p>
+<p>最后，我们计算起点<span class="arithmatex">\((0,R)\)</span>对应的判别式：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+d_0 &amp;= F(1, R - \frac{1}{2}) \\
+&amp;=1^2 + (R - \frac{1}{2})^2 - R^2 \\
+&amp;=\color{blue}{1.25 - R}
+\end{aligned}
+\]</div>
+<p>至此，我们仿佛已经解决了所有问题，模仿着推导完了公式。</p>
+<p>但是！这个1.25是个浮点数，这很不友好，难道我们最终还是摆脱不掉浮点计算吗？其实不然，这里当属整个算法最巧妙的部分：</p>
+<p>回顾我们的算法推导，自始至终我们的目的只有一个：<strong>选择下一个理想像素点</strong>。至于过程中我们怎么弯弯绕绕都没有关系，直到最后我们将选择像素点的任务和判别式<span class="arithmatex">\(d_k\)</span>挂了钩，问题变成了<strong>计算并判断<span class="arithmatex">\(d_k\)</span>的符号</strong>。所以，<strong>我们并不关心这个判别式计算的结果是多少，我们只关心它的符号是正是负。</strong></p>
+<p>再观察<span class="arithmatex">\((2)(3)\)</span>这两种情况的递推公式，不论哪一种，每一步的增量都是一个整数，而我们的初始半径<span class="arithmatex">\(R\)</span>也是整数，这说明判别式永远可以写成<code>某个整数+0.25</code>的形式；又因为我们只关心结果符号，如果整数是正数，那么符号自然不变，如果整数是个负数，哪怕是最大的-1加上0.25也不会改变符号。所以，这个0.25对于我们的判断是没有任何影响的，自然我们可以将其舍弃，得到最终完美的整数判别式初值：</p>
+<div class="arithmatex">\[
+\color{red}{d_0=1-R} \tag{4}
+\]</div>
+<p>现在，浮点数我们也解决了，所有开头提出的问题都得到了处理。最后需要提一嘴的是，如果我们在第二卦限计算，那么我们计算的临界值就是<span class="arithmatex">\(x=y\)</span>，需要注意范围。</p>
+<p>整个算法推导结束。</p>
+<hr />
+<p>示例：</p>
+<p>同样的，我们手算一道题目，来熟悉一下整个算法的执行过程，就拿一开始的那个参考图为例：</p>
+<p>圆心<span class="arithmatex">\((0,0)\)</span>，半径<span class="arithmatex">\(R=6\)</span>，初始判别式<span class="arithmatex">\(d_0=1-R=-5\)</span></p>
+<ol>
+<li>在第二卦限中，点亮起始像素点<span class="arithmatex">\((0,6)\)</span>，<span class="arithmatex">\(d_0=-5\)</span>；</li>
+<li><span class="arithmatex">\(d_0&lt;0\)</span>，选择正右方像素点<span class="arithmatex">\((1,6)\)</span>，更新<span class="arithmatex">\(d_1=d_0+2\times0+3=-2\)</span>；</li>
+<li><span class="arithmatex">\(d_1&lt;0\)</span>，选择正右方像素点<span class="arithmatex">\((2,6)\)</span>，更新<span class="arithmatex">\(d_2=d_1+2\times1+3=3\)</span>；</li>
+<li><span class="arithmatex">\(d_2&gt;0\)</span>，选择右下方像素点<span class="arithmatex">\((3,5)\)</span>，更新<span class="arithmatex">\(d_3=d_2+2\times(2-6)+5=0\)</span>；</li>
+<li><span class="arithmatex">\(d_3\geq0\)</span>，选择右下方像素点<span class="arithmatex">\((4,4)\)</span>，更新<span class="arithmatex">\(d_4=d_3+2\times(3-5)+5=1\)</span>；</li>
+</ol>
+<p>当前像素点坐标为<span class="arithmatex">\((4,4)\)</span>，满足<span class="arithmatex">\(x=y\)</span>，所以绘制结束。</p>
+<h2 id="_4">结语</h2>
+<p>首先，我是觉得直线和圆的Bresenham算法比较有趣，所以专门在此分享出来，同时也希望能够帮助到一些想了解的人。这些内容算不上很高大上，但是用来做初步的理解和学习还是不错的，能够很好地引发一些思考，比如像最后处理浮点数的那一部分我就觉得很精彩。</p>
+<p>考虑到我也是在初步摸索着学习这些内容，文章中可能有表达不当之处，还请各位指正，非常感谢！</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

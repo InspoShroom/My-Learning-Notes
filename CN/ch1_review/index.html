@@ -1,0 +1,643 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch1_review/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>计算机网络 第 1 章：核心知识点复习 - 计算机网络</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机网络" class="md-header__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机网络
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              计算机网络 第 1 章：核心知识点复习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机网络" class="md-nav__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机网络
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、 网络宏观架构与边缘 / 核心
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、 网络宏观架构与边缘 / 核心">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 网络的地域分类与边缘/核心划分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-access-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 接入网（Access Network）与最后一公里
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 数据交换方式与多路复用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 路由与转发（网络核心两大功能）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、 分层模型与协议体系结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、 分层模型与协议体系结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么需要分层与参考模型？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-osi-7-vs-tcpip-4-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. OSI 7 层 vs TCP/IP 4 层 vs 五层教学模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#socket-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、 套接字网络编程（Socket API）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、 套接字网络编程（Socket API）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 套接字本质与地址结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-udp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. UDP 套接字通信流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. TCP 套接字通信流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、 网络度量单位与底层辅助机制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、 网络度量单位与底层辅助机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 速率、带宽与四大时延
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 网络辅助协议与运行机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1">计算机网络 第 1 章：核心知识点复习</h1>
+<hr />
+<h2 id="_1">一、 网络宏观架构与边缘 / 核心</h2>
+<h3 id="1_1">1. 网络的地域分类与边缘/核心划分</h3>
+<ol>
+<li>按地域规模划分，<strong>PAN、LAN、MAN、WAN</strong> 分别代表什么？请各举一个生活中的典型例子。</li>
+<li>什么是<strong>网络边缘（Network Edge）</strong>？它由什么构成？核心功能是什么？</li>
+<li>什么是<strong>网络核心（Network Core）</strong>？其核心任务是什么？主要由哪些设备构成？</li>
+</ol>
+<h3 id="2-access-network">2. 接入网（Access Network）与最后一公里</h3>
+<ol>
+<li>“接入网”到底是一个动作过程，还是一种客观的物理/逻辑存在？用“公路交通系统”如何形象比喻它？</li>
+<li>为什么说光纤到户（<strong>FTTH</strong>）属于<strong>无源光网络（PON）</strong>？这里的“无源”具体是指哪一部分无需供电？</li>
+<li>在 PON 架构中，<strong>OLT（光线路终端）</strong> 和 <strong>ONT（光网络终端/光猫）</strong> 分别部署在什么物理位置？它们各自的核心职责是什么？</li>
+<li>为什么 OLT 在上行方向（各家庭光猫向机房发光时）必须采用 <strong>TDMA（时分多址）</strong> 进行严格调度？</li>
+</ol>
+<h3 id="3">3. 数据交换方式与多路复用</h3>
+<ol>
+<li>简述<strong>电路交换（Circuit Switching）</strong>的主要特点及其最大缺点（为什么无法应对互联网广泛存在的突发流量？）。</li>
+<li>什么是<strong>分组交换（Packet Switching，包交换）</strong>？相比传统的“报文交换（Message Switching）”，为什么把大报文拆分成小分组可以大幅降低整个传输过程中的<strong>存储转发（Store-and-Forward）时延</strong>？</li>
+<li>解释 <strong>FDM（频分多路复用）</strong> 与 <strong>TDM（时分多路复用）</strong> 的英文全称与本质切分维度的区别；什么是<strong>统计时分复用（STDM）</strong>？</li>
+</ol>
+<h3 id="4">4. 路由与转发（网络核心两大功能）</h3>
+<ol>
+<li>为什么说<strong>路由（Routing）</strong>是<strong>全局操作</strong>，而<strong>转发（Forwarding）</strong>是<strong>本地操作</strong>？</li>
+<li>路由属于哪一个平面（控制平面还是数据平面）？转发属于哪一个平面？它们之间通过什么核心数据结构建立联系？</li>
+</ol>
+<hr />
+<h2 id="_2">二、 分层模型与协议体系结构</h2>
+<h3 id="5">5. 为什么需要分层与参考模型？</h3>
+<ol>
+<li>什么是网络协议的“三要素”？请分别解释<strong>语法</strong>、<strong>语义</strong>和<strong>时序</strong>。</li>
+<li>计算机网络为什么一定要采用<strong>分层体系结构</strong>？它带来的三大核心工程优势是什么？（以 Wi-Fi 升级到 Wi-Fi 6 无需修改微信代码为例说明）。</li>
+<li>为什么说“协议是水平的，服务是垂直的”？什么是<strong>对等实体（Peer）</strong>？</li>
+</ol>
+<h3 id="6-osi-7-vs-tcpip-4-vs">6. OSI 7 层 vs TCP/IP 4 层 vs 五层教学模型</h3>
+<ol>
+<li>OSI 7 层从下到上各层的标准名称是什么？每一层对应的传输数据单元（<strong>PDU</strong>）分别叫什么（Bit, Frame, Packet, Segment, Message）？</li>
+<li><strong>数据链路层（L2）</strong> 与 <strong>网络层（L3）</strong> 的根本分工区别是什么？（提示：Hop-to-Hop 邻居传输 vs Host-to-Host 端到端传输）。</li>
+<li><strong>【核心考点】</strong> 既然每块网卡在出厂时都有全球唯一的 <strong>MAC 地址</strong>，为什么在网络层还需要单独分配 <strong>IP 地址</strong>？（请从路由聚合/层次化寻址与异构网络屏蔽两个角度说明）。</li>
+<li><strong>传输层（L4）</strong> 的核心作用是什么？为什么有了 IP 地址定位主机之后，还必须依赖<strong>端口号（Port）</strong>？</li>
+<li>简述 <strong>TCP（面向连接、可靠）</strong> 与 <strong>UDP（无连接、不可靠）</strong> 的核心区别及各自适用的典型业务场景。</li>
+<li>为什么 OSI 七层模型在工业界失败了，而 TCP/IP 取得了最终事实标准的胜利？</li>
+<li>解释 TCP/IP 的<strong>“端到端原则”</strong>（为什么说是“简单网络 &amp; 聪明终端”？）以及著名的<strong>“沙漏模型”</strong>（IP over everything, Everything over IP）。</li>
+<li>当主机 A 向主机 B 发送数据经过局域网交换机和多台路由器时：<ul>
+<li><strong>交换机</strong>会解封装到哪一层？</li>
+<li><strong>路由器</strong>会解封装到哪一层？为什么路由器在转发前必须剥离并重新封装数据链路层帧头？</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="socket-api">三、 套接字网络编程（Socket API）</h2>
+<h3 id="7">7. 套接字本质与地址结构</h3>
+<ol>
+<li><strong>套接字（Socket）</strong> 的本质是什么？它位于哪两层之间？为什么它的英文原意叫“插座”？</li>
+<li>在 Linux 系统中，“一切皆文件”是如何在套接字上体现的？什么是<strong>套接字描述符（<code>sockfd</code>）</strong>？</li>
+<li>为什么需要定义通用的 <code>struct sockaddr</code>（虚父类）和 IPv4 专用的 <code>struct sockaddr_in</code>（子类）？代码中是如何通过强制类型转换配合使用的？</li>
+<li>什么是<strong>大端字节序（网络字节序）</strong>和<strong>小端字节序</strong>？为什么在给 <code>sin_port</code> 赋值时必须调用 <code>htons()</code>？</li>
+<li>32 位 IPv4 地址在计算机底层是以什么形式存储的？<code>inet_pton()</code> 函数的作用是什么？</li>
+</ol>
+<h3 id="8-udp">8. UDP 套接字通信流程</h3>
+<ol>
+<li>为什么基于 UDP 的通信<strong>不需要</strong>调用 <code>listen()</code>、<code>connect()</code> 和 <code>accept()</code>？</li>
+<li>详细说明 <code>sendto()</code> 和 <code>recvfrom()</code> 的每个参数含义，为什么发送必须显式传入目标地址 <code>to</code>，接收必须传入出参 <code>from</code>？</li>
+<li>在 UDP 回音服务端中，服务端在 <code>bind()</code> 时将 IP 设为 <code>htonl(INADDR_ANY)</code> 代表什么含义？为什么整个 UDP 服务端只需要一个套接字就能为多个不同的客户端服务？</li>
+</ol>
+<h3 id="9-tcp">9. TCP 套接字通信流程</h3>
+<ol>
+<li><strong>【核心考点】</strong> 在 TCP 服务器中，为什么必须同时存在<strong>监听套接字（<code>listenfd</code>）</strong>与<strong>已连接套接字（<code>connfd</code>）</strong>？用“酒店大堂迎宾员与包厢服务员”如何通俗比喻？</li>
+<li>解释 <code>listen(socket_fd, backlog)</code> 中 <code>backlog</code> 参数的含义。</li>
+<li>解释客户端调用 <code>connect()</code> 时底层发生了什么？为什么该调用是阻塞的？</li>
+<li><code>accept()</code> 函数是从哪里取出连接的？它的返回值是什么？</li>
+<li>一旦 TCP 连接建立完毕，双方为什么可以直接使用普通文件读写调用 <code>read()</code> 和 <code>write()</code> 进行通信？服务端如何知道客户端已经主动断开了连接（触发 EOF）？</li>
+</ol>
+<hr />
+<h2 id="_3">四、 网络度量单位与底层辅助机制</h2>
+<h3 id="10">10. 速率、带宽与四大时延</h3>
+<ol>
+<li><strong>【单位陷阱】</strong> 存储计算（Byte）与网络传输（bit）在单位大小写和 <span class="arithmatex">\(K/M/G\)</span> 进制换算上有何关键不同？为什么办理了 <span class="arithmatex">\(100\text{ Mbps}\)</span> 的宽带，实际最大下载速度只有约 <span class="arithmatex">\(12.5\text{ MB/s}\)</span>？</li>
+<li>什么是交换机的<strong>线速转发</strong>？在同样带宽负载下，为什么<strong>大包</strong>比<strong>小包</strong>更容易实现线速转发？</li>
+<li>详细写出网络总时延的四个组成部分：<ul>
+<li><strong>处理时延（<span class="arithmatex">\(d_{\text{proc}}\)</span>）</strong>：因何产生？</li>
+<li><strong>排队时延（<span class="arithmatex">\(d_{\text{queue}}\)</span>）</strong>：因何产生？</li>
+<li><strong>传输时延 / 发送时延（<span class="arithmatex">\(d_{\text{trans}}\)</span>）</strong>：计算公式是什么？取决于什么？</li>
+<li><strong>传播时延（<span class="arithmatex">\(d_{\text{prop}}\)</span>）</strong>：计算公式是什么？取决于什么？</li>
+</ul>
+</li>
+<li>简述<strong>时延带宽积</strong>的物理意义，为什么它被形象地称为“以比特为单位的链路长度”或“充满管道的比特数”？</li>
+</ol>
+<h3 id="11">11. 网络辅助协议与运行机制</h3>
+<ol>
+<li>什么是 <strong>ICMP 协议</strong>？它属于哪一层？为什么说它是网络层的“侦察兵与报错员”？</li>
+<li><code>ping</code> 命令工作在第几层？它使用了 TCP 还是 UDP 协议？黑框输出中的 <code>icmp_seq</code>、<code>time (RTT)</code> 以及 <code>TTL</code> 分别表示什么？</li>
+<li>什么是 <strong>ARP 协议</strong>？它的核心使命是什么？它是如何通过“广播请求（大喇叭）”与“单播应答（私信）”建立起 IP 与 MAC 地址映射的？什么是 ARP 缓存表？</li>
+<li>简述设备关闭 Wi-Fi 或设备损坏时，路由器如何通过 <strong>DHCP 租期机制</strong> 和 <strong>ARP 探测</strong> 回收 IP 地址。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

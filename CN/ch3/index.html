@@ -1,0 +1,739 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch3/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>ch3 数据链路层基础 - 计算机网络</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch3" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机网络" class="md-header__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机网络
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ch3 数据链路层基础
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机网络" class="md-nav__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机网络
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据链路层概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#framing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Framing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Framing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#byte-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        byte count
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flag-bytes-with-byte-stuffing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flag bytes with byte stuffing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flag-bits-with-bits-stuffing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flag bits with bits stuffing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        差错检测和纠正
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="差错检测和纠正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        码字
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        典型检错码
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="典型检错码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parity-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        奇偶检测（parity check）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checksum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        校验和 (Checksum)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRC 循环冗余校验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        典型纠错码
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="典型纠错码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hamming-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hamming code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch3">ch3 数据链路层基础</h1>
+<h2 id="_1">数据链路层概述</h2>
+<ol>
+<li>
+<p>位置：位与先前提到的五层模型中的第四层，介于网络层和物理层之间，向上提供服务接口，向下调用服务；</p>
+</li>
+<li>
+<p>功能</p>
+<ul>
+<li>成帧（Framing）：比特流划分，用于区分边界和纠错；</li>
+<li>差错控制（Error Control）：处理传输中出现的差错；</li>
+<li>流量控制（Flow Control）：发送方发送速率不能大于接收方的处理速率，避免缓冲区溢出</li>
+</ul>
+</li>
+<li>
+<p>服务</p>
+<p>根据有无确认以及有无连接这两个维度来区分不同的服务类型</p>
+<ul>
+<li>
+<p>无确认、无连接服务（Unacknowledges connectionless）</p>
+<p>不握手、不确认、不重传，如果帧丢了或者坏了，没有后手处理。</p>
+<p>常见的技术应用比如以太网/有线局域网，因为有线网线的信道质量高，一般情况下不会出现误码的情况，所以不需要进行 ACK 回复，能节省信道带宽。再比如说音视频通信，宁可画面丢帧也不愿意干等 ACK 回复。如果真出现了丢帧，可以交给传输层的 TCP 去处理重传</p>
+</li>
+<li>
+<p>有确认、无连接（Acknowledged connectionless）</p>
+<p>不握手、但是有接收方 ACK 回复，发送端没收到要进行局部快速重传。</p>
+<p>技术应用如 WIFI，与有线传输相比，无线更容易被环境和介质影响，误码率高。但是 WIFI 不能像以太网一样让上层重传，因为这个过程的延时太久了，WIFI 必须在数据链路层这一跳解决问题，发过去没收到 ACK 网卡就要立马重发一次</p>
+</li>
+<li>
+<p>有确认、有连接（ACknowledged connection-oriented）</p>
+<p>三方握手、传输过程中进行严格的帧编号、顺序交付、错误重传等。</p>
+<p>常用于高延迟、高误码的场景，比如卫星通信，深空探测等</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="framing">Framing</h2>
+<p>​   成帧。数据链路层的 PDU，即协议数据单元是帧，所以成帧的意思就是“组成帧”。</p>
+<p>​   我们要从发送方和接收方两方考虑，发送方的任务是将网络层的分组包装，添加帧头和帧尾，组成帧，即封装成帧（Frame Encapsulation）；而接收方严格来讲是做解封装（Decapsulation）。</p>
+<p>​   <strong>分组和帧的关系</strong>：网络层的分组对应到帧就是有效载荷部分，一般是 1:1 对应的，如果 packet 太大也可能会被切分为多块部分。头标（Header）和尾标（Trailer）则是添加的控制信息，头标内容如：目的 MAC 和源 MAC、IPv4 还是 IPv6 的协议分类、帧序号和确认号 ACK 等；尾标比如：帧校验序列；</p>
+<p>​   <strong>为什么要成帧？</strong>——就先前提到的五层网络体系结构而言，不论是哪一层的 PDU，其本质都可抽象为比特流。而比特流无非是 01 的组合序列，我们要想准确得到每一帧，就得知道每帧的开头和结尾。成帧就是在做这个区分加密以及接收解密的任务。</p>
+<hr />
+<p>成帧的方式：</p>
+<ul>
+<li>字节计数法（Byte count）</li>
+<li>带字节填充的定界符法（<strong>Flag</strong> bytes with byte stuffing）</li>
+<li>带比特填充的定界符法（<strong>Flag</strong> bits with bit stuffing）</li>
+<li>物理层边码违例（Physical layer coding violations）</li>
+</ul>
+<hr />
+<h3 id="byte-count">byte count</h3>
+<p>​   这种处理我们容易想到：就是在每一帧的开头专门用一个 byte 写一个数字，表示这一帧总共有包含字节（包含这个 byte 本身）</p>
+<p>​   比如图示 case：</p>
+<p>​   <img src="./assets/image-20261026113143257.png" alt="image-20261026113143257" style="zoom: 67%;" /></p>
+<p>​   接收端在读到数字后就知道了这一帧的总长，然后根据长度读取完整个帧，再开始阅读下一帧。</p>
+<p>​   但是这种方法的缺点也很明显，如果因为噪声等原因导致了传输出错，比如某一帧的计数头被干扰，那么这样就会导致后续的所有帧边界全部错位，所以这种方法基本知识一种理念上的考虑，实际工业中基本不用。</p>
+<hr />
+<h3 id="flag-bytes-with-byte-stuffing">flag bytes with byte stuffing</h3>
+<p>​   字节填充（byte stuffing）</p>
+<p>​   这种直接数数字的方式相对而言不太靠谱，我们就在每一帧的开头和结尾放一个特殊的标记字节，叫做 <code>FLAG</code>。比如十六进制的 <code>0x7E</code>，即 <code>01111110</code></p>
+<p>​   特殊字节有了，但是还要规避掉有些数据本身就是这个值的影响，就像转义字符的处理一样。所以我们再定义一个转义字符 <code>ESC</code>，通常取 <code>0x7D</code></p>
+<p>​   可以通过一张图理解：</p>
+<p>​   <img src="./assets/image-20261026115321661.png" alt="image-20261026115321661" style="zoom: 50%;" /></p>
+<p>​   接收端的处理就是扔掉第一个 ESC，保留后面的那个部分变为有效载荷</p>
+<ul>
+<li>缺点：这种方法是面向字节的，所以如果传输的数据不是严格按照 8 位字节对齐的任意位串，处理比较麻烦</li>
+</ul>
+<hr />
+<h3 id="flag-bits-with-bits-stuffing">flag bits with bits stuffing</h3>
+<p>​   这里我们使用的 FLAG 还是 <code>01111110</code>，但是与 byte stuffing 不同的是，我们要求发送端发送数据载荷时，只要数到连续的 5 个 1，不管下一个 bit 是 0 还是 1，都要强行塞入一个 0，就比如下图所示：</p>
+<p>​   <img src="./assets/image-20261026120910234.png" alt="image-20261026120910234" style="zoom:50%;" /></p>
+<p>​   接收方的处理：当出现连续 5 个 1bit 时，如果下一个 bit 是 0，那么就是有效载荷，丢弃 bit 0；而如果下一个比特是 1，那么就连同后面的一个 bit 0 构成 <code>FLAG</code>，一帧结束。</p>
+<p>​   <img src="./assets/image-20261026121057698.png" alt="image-20261026121057698" style="zoom:50%;" /></p>
+<h2 id="_2">差错检测和纠正</h2>
+<p>我们依旧先大致疏通整个逻辑关系：</p>
+<ol>
+<li>首先，在信道中传输数据难免会被噪声影响，就有可能会出现差错，这里的差错专指的是数据发生错误；</li>
+<li>我们有两个角度去解决：检错以及纠错，前者可以在检错后申请重传，后者则可以直接在接收端进行数据恢复；</li>
+<li>而对于检错，我们就得提供多余的信息来负责这一部分的任务，这些就是冗余信息，或者说校验信息；</li>
+<li>纠错也是同理，需要冗余信息来定位出错的位置，而且纠错天生就带有着检错的能力，不过实际纠错的方式又牵扯到不同的技术；</li>
+</ol>
+<p>​   一个简单的例子是发送每一位 bit 时连续传三份，如果三份中有一位出错，就可以纠错。比如要发送信息 <code>0100101</code>，连发三份就是 <code>000111000000111000111</code>。不过这种方式冗余信息占比太高，占到 2/3，效率低下。</p>
+<p>​   所以最终目标就是 <strong>既要保证一定的检测和纠错能力，又要尽可能减少冗余信息量</strong></p>
+<p>​   两个策略：</p>
+<ul>
+<li>
+<p><strong>检错码（error-detecting code）</strong></p>
+<p>因为检错码没有纠正的能力，所以它需要申请重传，自然适应于高可靠、误码率低的信道，比如光纤链路；</p>
+<p>这种检错后重传的机制也叫做 ARQ（automatic repeat request）</p>
+</li>
+<li>
+<p><strong>纠错码（error-correcting code）</strong> </p>
+<p>纠错码则主要用于错误发生频繁的信道上，比如无线链路；纠错码同时也可以当一个检错码使用</p>
+<p>使用纠错码的技术通常称为 前向纠错（FEC, forward error correction），前向的意思就是从发送端到接收端的方向</p>
+</li>
+</ul>
+<h3 id="_3">码字</h3>
+<p>码字（code word）：包含 m 个数据位和 r 个校验位的 n 位单元，其中 n = m + r</p>
+<p>码率（code rate）：码字中不含冗余部分所占比例，m/n</p>
+<p>海明距离（Hamming distance）：两个码字之间不同对应比特的数目，比如 <code>00101111</code> 和 <code>00000000</code> 的海明距离为 5</p>
+<hr />
+<h3 id="_4">典型检错码</h3>
+<hr />
+<h4 id="parity-check"><strong>奇偶检测（parity check）</strong></h4>
+<p>​   最简单基础的校验码</p>
+<ul>
+<li>
+<p>原理</p>
+<p>​   奇偶校验，即看整串数据中 1 的总个数。发送方和接收方要共同约定好一个校验规则，分“偶校验”和“奇校验”两种。</p>
+<p>​   打个比方：如果一个发送方有 7 为有效数据 <code>1011010</code>，双方约定使用偶校验，那么此时已经满足总共 4 个 1，是偶数，所以只在最后添加一个校验位 <code>0</code>，变为 <code>10110100</code>；反之，如果双方约定使用“奇校验”，那么校验位就要变为 <code>1</code>，即 <code>10110101</code>。</p>
+<p>​   接收方查错时，根据双方采用的校验规则，然后数数据中的 1 的个数（包含校验位），如果满足校验规则，则说明无错，否则就会报错；</p>
+</li>
+<li>
+<p>缺点</p>
+<p>​   很明显，当变坏的位数为奇数时，我们能校验出来，如果是偶数个，那么就会漏检，效率和准确率都比较低；</p>
+</li>
+<li>
+<p>改进</p>
+<p>​   使用二位奇偶检验，可以纠错。</p>
+<p>​   比方说：我们要传一个 16bit 的数据，将其排成 <span class="arithmatex">\(4\times4\)</span> 的矩阵，横竖都计算偶校验。假如此时（3，2）的 bit 变坏了，那么此时就能通过行列确定到唯一 bit 并进行修改</p>
+<p>​   <img src="./assets/2d_parity_check_matrix.png" alt="2d_parity_check_matrix" style="zoom: 25%;" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="checksum"><strong>校验和 (Checksum)</strong></h4>
+<p>常用于 TCP/IP 体系中的网络层和传输层</p>
+<ul>
+<li>
+<p>原理</p>
+<p>​   将发送的数据求和，端回进位，然后再按位取反，接收方验证时将所有数据加在一起，如果不出错结果会是全 1</p>
+<p>​   比如：发送方的两个数据 <code>1110011001100110</code> 和 <code>1101010101010101</code>，求和后得到 <code>1 101101110111011</code>，如果有进位，进位数字要重新卷回加到末尾，得到结果 <code>101101110111100</code>，再按位取反 <code>0100010001000011</code>（校验和），将这个数贴在数据后面一起发送过去</p>
+<p>​   接受方只需要将两个数据求和并将进位加到末尾，实际上和之前没什么区别，然后再加上校验和，如果最后是全 1，那么证明无错误；如果出现了任意一个 0，则说明数据被噪声影响了</p>
+</li>
+</ul>
+<hr />
+<h4 id="crc"><strong>CRC 循环冗余校验</strong></h4>
+<p>CRC，cyclic redundancy check，数据链路层广泛使用</p>
+<ul>
+<li>
+<p>原理</p>
+<p>​   主要用到了模 2 除法，以及除法中的余数。</p>
+<blockquote>
+<p>模 2 运算：一种在二进制数上定义的运算体系</p>
+<ul>
+<li>加减法运算：不考虑进位和借位，加减法的操作等价于亦或运算</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">加法</th>
+<th style="text-align: center;">减法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="arithmatex">\(0\oplus0=0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0\ominus0=0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="arithmatex">\(0\oplus1=1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0\ominus1=1\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="arithmatex">\(1\oplus0=1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1\ominus0=1\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="arithmatex">\(1\oplus1=0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1\ominus1=0\)</span>​</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>乘法运算：和普通二进制乘法一致，逻辑与/AND</p>
+</li>
+<li>
+<p>除法运算：不存在借位操作，也不比较值的大小，只要对其后被除数部分高位是 1 那么就给商记 1，否则为 0，然后和常数除法步骤一样，还有做减法时执行的是模 2 运算的减法。</p>
+</li>
+</ul>
+<p>比如说：<img src="./assets/image-20261028143148701.png" alt="image-20261028143148701" style="zoom:50%;" /></p>
+</blockquote>
+<p>​   假设我们要传 k 位有效数据，如果要生成 n 位 CRC 校验码，那么收发双方要事先约定好一个 n+1 位的二进制位模式 G，也叫做生成多项式，G 的最高位是 1；接着在 k 位有效数据后添加 n 个 0，再用该数据模 2 除以生成多项式 G，得到的最终余数 R 就是 CRC 校验码（n 位，不足时前面用 0 补齐，对应的就是先前填充到有效数据末尾的 n 个 0）</p>
+<p>​   示例：<img src="./assets/image-20261028145600376.png" alt="image-20261028145600376" style="zoom: 67%;" /></p>
+</li>
+</ul>
+<hr />
+<h3 id="_5">典型纠错码</h3>
+<p>​   检错码只需要判断出有无错误即可，纠错码则需要通过设计找到原先的正确数据，所以关于纠错码的设计也尤为关键。</p>
+<p>​   我们做如下假设和理解：假设要传的有效数据为 m 位，校验码有 r 位，总长度为 n = m+r，我们的目标是纠单比特错（无论哪一位翻转，接收方都能找出并纠正）</p>
+<p>​   有效数据为 m 位，意味着一共有 <span class="arithmatex">\(2^m\)</span> 种不同的真实数据，加上校验码之后，这 <span class="arithmatex">\(2^m\)</span> 个正确的完整串，就是合法码；如果一个合法的串的其中一位翻转，考虑所有情况，会有 n 种可能；</p>
+<p>​   接收方在收到 n 位长的串时，要想能够断定这就是当初发来的那个数据，要考虑两种情况：</p>
+<ol>
+<li>传输良好，数据没被噪声影响变坏，唯一正确的 1 种情况</li>
+<li>路上被噪声影响，错了 1 位，共 n 种情况</li>
+</ol>
+<p>​   所以要想让一个合法数据被认出来，不论是有错还是没错，这 n+1 种情况都要被规划为一个类中，专供这一个数据使用，也就是 n+1 个位模式；</p>
+<p>​   有了上面的内容，我们就能得到一个不等式。对于 <span class="arithmatex">\(2^m\)</span> 个不同的合法数据，每一个要被认出来，都需要独占(n+1)种情况，所以总共就需要 <span class="arithmatex">\((n+1)\times2^m\)</span> 种情况，而我们的 n 位串总共只有 <span class="arithmatex">\(2^n\)</span>​种组合，所以我们需要的情况是不能超过这个界限的，所以有：</p>
+<p><span class="arithmatex">\((n+1) \times 2^m \leq 2^n\)</span></p>
+<p>将 n = m + r 代入，即可化简得到：</p>
+<p><span style="color:#FF3333;"><strong><span class="arithmatex">\(2^r \geq m + r + 1\)</span>​</strong> </span></p>
+<p>这就是海明不等式，用来确定海明码中校验位的最小数量。同时，<strong>只要是纠正一位错的二进制码，都必须满足这个式子，在信息论中这叫做 Hamming Bound 海明界</strong></p>
+<hr />
+<h4 id="hamming-code">hamming code</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

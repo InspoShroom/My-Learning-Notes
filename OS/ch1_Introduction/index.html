@@ -1,0 +1,1028 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch1_Introduction/">
+      
+      
+      
+        <link rel="next" href="../ch2_Structures/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>导论 - 操作系统</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="操作系统" class="md-header__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            操作系统
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              导论
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="操作系统" class="md-nav__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    操作系统
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统的角色与体系结构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统的定义
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机启动与引导过程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件组织架构与系统运行机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中断系统与处理流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-dma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O 结构与 DMA 技术
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        存储体系结构与缓存机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机体系结构分类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统结构与多道分时技术
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统运行保护与双模式机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心子系统管理职责
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统设计原则与 RISC-V 核心寄存器
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2_Structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    操作系统结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch3_Processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch4_Threads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../About_Lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统的角色与体系结构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统的定义
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机启动与引导过程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件组织架构与系统运行机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中断系统与处理流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-dma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O 结构与 DMA 技术
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        存储体系结构与缓存机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计算机体系结构分类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统结构与多道分时技术
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统运行保护与双模式机制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心子系统管理职责
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作系统设计原则与 RISC-V 核心寄存器
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch1">CH1</h1>
+<h2 id="_1">操作系统的角色与体系结构</h2>
+<ol>
+<li>
+<p>计算机系统的四个组成部分：</p>
+<p>硬件：提供最基本的计算资源，包括 CPU、内存、各类输入输出设备。</p>
+<p>操作系统：负责控制与协调底层硬件在各个应用程序和用户之间的分配与使用。</p>
+<p>系统程序与应用程序：定义了利用系统资源解决具体计算问题的方法。系统程序用于辅助系统运行和软件开发，例如命令行解释器 Bash、编译器 GCC、文件系统管理工具 mkfs 等；应用程序则是满足用户业务需求的软件，例如浏览器、文字处理软件、数据库、音视频播放器等。</p>
+<p>用户：包括普通用户、使用该系统的其他计算设备或自动化程序。</p>
+</li>
+<li>
+<p>操作系统的定位与核心目标：</p>
+<p>操作系统是充当用户与底层硬件之间的中介程序。</p>
+<p>其核心目标主要有三点：协助用户运行程序，降低解决计算问题的难度；让计算机系统更加方便易用；以高效率的方式合理利用计算机硬件资源。</p>
+</li>
+<li>
+<p>学习操作系统的动因与新兴技术：</p>
+<p>操作系统是现代计算机系统软件的基石，连接了底层算法、数据结构与上层应用。</p>
+<p>现代技术生态中许多核心方向都建立在操作系统原理之上：云计算依赖操作系统提供的大规模资源池化能力；虚拟化以及软件定义存储和网络依赖底层隔离与抽象机制；容器技术直接基于内核的命名空间 Namespace 与控制组 Cgroups 隔离技术实现；以 Hadoop 为代表的大数据生态，则是将单机操作系统的文件管理和任务调度扩展到了网络集群。</p>
+</li>
+</ol>
+<h2 id="_2">操作系统的定义</h2>
+<ol>
+<li>
+<p>业界并没有统一的标准定义：</p>
+<p>由于应用场景极广，学术界和工业界对操作系统没有唯一固定的定义。</p>
+<p>厂商交付视角：通常认为从厂商处获取操作系统安装介质时，所包含的整套软件都可以泛称为操作系统。这种界定差异极大，桌面操作系统附带大量图形工具和预装应用，而嵌入式系统可能只包含最基本的运行时环境。</p>
+</li>
+<li>
+<p>从功能角度理解操作系统的角色：</p>
+<p>资源分配器 (Resource Allocator)：计算机系统的物理硬件资源有限，面对多个并发任务提出的竞争需求，操作系统充当裁判员，负责统一管理所有资源，并在相互冲突的请求之间做出裁决，兼顾系统的吞吐效率与资源分配的公平性。</p>
+<p>控制程序 (Control Program)：负责监督和控制所有程序的执行过程，提供安全运行边界，防止因程序自身的错误或恶意操作对系统硬件及其他程序造成破坏。</p>
+</li>
+<li>
+<p>狭义与广义的界定：</p>
+<p>狭义的操作系统特指内核 (Kernel)，即计算机开机后始终常驻内存并持续运行的唯一程序。</p>
+<p>除了内核之外，其余所有代码在逻辑上要么属于随系统交付的系统程序，要么属于独立的应用程序。</p>
+</li>
+</ol>
+<h2 id="_3">计算机启动与引导过程</h2>
+<ol>
+<li>
+<p>引导程序 (Bootstrap Program)：</p>
+<p>计算机加电开机或重新启动时执行的第一段初始化代码。</p>
+</li>
+<li>
+<p>存放介质：</p>
+<p>引导程序通常保存在 ROM 或 EPROM 等只读非易失性芯片中，也就是常说的固件 (Firmware，如 BIOS 或 UEFI)。</p>
+</li>
+<li>
+<p>引导的核心任务：</p>
+<p>对计算机内部的所有硬件进行初始诊断与自检，初始化 CPU 寄存器、设备控制器和内存状态。</p>
+<p>在外部存储介质中定位操作系统的引导扇区，将操作系统内核程序加载到主存 (RAM) 中。</p>
+<p>将 CPU 执行指针跳转至内核入口地址，正式移交控制权，进入操作系统的运行循环。</p>
+</li>
+</ol>
+<h2 id="_4">硬件组织架构与系统运行机制</h2>
+<ol>
+<li>
+<p>基于总线的共享内存拓扑：</p>
+<p>计算机内部由一个或多个 CPU、各类设备控制器通过公共系统总线相互连接，共同访问中央共享主内存。</p>
+<p>CPU 与各类外设控制器在硬件层面是并发运行的，它们通过总线仲裁机制竞争主存访问周期。</p>
+</li>
+<li>
+<p>设备控制器与局部缓冲区：</p>
+<p>外部设备并不直接与 CPU 进行电气层面的交互，每类外设都由对应的设备控制器负责管理，例如磁盘控制器管理磁盘，USB 控制器管理键盘和鼠标。</p>
+<p>每个控制器内部都配备有寄存器和局部缓冲区 (Local Buffer)，用于暂存外设采集或待写入的数据。</p>
+</li>
+<li>
+<p>数据传输的两阶段模型：</p>
+<p>第一阶段：实际物理设备与控制器局部缓冲区之间的数据传输，由控制器硬件自动完成，完全不占用 CPU 算力。</p>
+<p>第二阶段：控制器局部缓冲区与系统主内存之间的数据搬运，可以通过 CPU 指令逐字搬运，也可以通过 DMA 控制器批量搬运。</p>
+</li>
+<li>
+<p>中断通报机制：</p>
+<p>控制器完成既定操作后，通过系统总线向 CPU 触发一个硬件中断信号，通知 CPU 操作已完成。</p>
+</li>
+</ol>
+<h2 id="_5">中断系统与处理流程</h2>
+<ol>
+<li>
+<p>操作系统由中断驱动：</p>
+<p>现代操作系统在没有事件发生时处于被动等待状态，所有硬件事件和状态流转均由中断驱动。</p>
+</li>
+<li>
+<p>中断向量表 (Interrupt Vector)：</p>
+<p>内存中预设的一组函数指针数组，保存了所有中断服务例程 (ISR, Interrupt Service Routine) 的入口物理地址。</p>
+<p>硬件在接收到中断信号后，根据唯一的中断号作为索引快速检索并跳转至对应的处理例程。</p>
+</li>
+<li>
+<p>现场保护与恢复：</p>
+<p>中断发生时，硬件必须第一时间保存当前被中断指令的地址 (即程序计数器 PC) 和关键通用寄存器的值。</p>
+<p>中断服务程序执行完毕后，系统通过恢复保存的现场信息，使原程序得以无缝继续执行。</p>
+</li>
+<li>
+<p>中断屏蔽机制：</p>
+<p>CPU 在处理某个中断的过程中，通常会在硬件层面暂时关闭后续中断响应，防止同类中断嵌套引发状态丢失或覆盖。</p>
+</li>
+<li>
+<p>广义中断的分类：</p>
+<p>硬件中断 (Interrupt)：由外部硬件设备异步触发，例如时钟脉冲到达、网卡接收到数据包、磁盘完成扇区读写等，触发时机与当前执行的指令无关。</p>
+<p>软件异常 (Exception)：CPU 执行当前指令时因内部错误同步引发，例如除以零、非法内存访问等。</p>
+<p>陷阱与系统调用 (Trap / System Call)：用户程序为了请求操作系统提供特权服务而主动执行的特殊指令，例如 RISC-V 架构下的 ecall 指令。执行后 CPU 会主动陷入内核态并跳转到指定服务例程。</p>
+</li>
+</ol>
+<h2 id="io-dma">I/O 结构与 DMA 技术</h2>
+<ol>
+<li>
+<p>同步 I/O (Synchronous I/O)：</p>
+<p>CPU 发出 I/O 命令后，当前程序暂停执行，CPU 进入等待状态，必须等待该 I/O 操作彻底完成并产生中断后才返回用户程序。</p>
+<p>实现上可以让 CPU 处于闲置等待指令状态，或者通过忙等待循环持续轮询设备状态，这会持续争用总线周期。</p>
+<p>系统在同一时刻只能串行处理一个 I/O 请求，硬件利用率较低。</p>
+</li>
+<li>
+<p>异步 I/O (Asynchronous I/O)：</p>
+<p>CPU 发出 I/O 指令后无需等待设备处理完毕，立即返回并继续执行后续的用户程序。</p>
+<p>操作系统在内存中维护一张设备状态表 (Device-Status Table)，记录系统中每台设备的类型、端口地址以及当前工作状态。</p>
+<p>外设完成操作触发中断后，操作系统在中断例程中检索设备状态表更新状态，并唤醒正在等待该事件的阻塞程序。</p>
+</li>
+<li>
+<p>直接内存访问 DMA (Direct Memory Access)：</p>
+<p>面向高速 I/O 设备（如磁盘、网卡），这类设备传输速率接近主存访问速度。</p>
+<p>传统的 I/O 机制如果每传输一个字节就产生一次中断，会导致 CPU 大量耗费在中断上下文切换中。</p>
+<p>DMA 控制器能够直接接管总线，在设备控制器缓冲区与系统主内存之间批量传输数据块，整个传输过程无需 CPU 插手。</p>
+<p>核心优势在于：由原来每传输一个字节产生一次中断，优化为每传输完一个完整数据块才产生一次中断，大幅释放了 CPU 算力。</p>
+</li>
+</ol>
+<h2 id="_6">存储体系结构与缓存机制</h2>
+<ol>
+<li>
+<p>存储层次结构：</p>
+<p>存储系统呈金字塔分层排列，从顶到底依次为：CPU 内部寄存器、高速缓存 Cache、系统主内存 RAM、固态硬盘 SSD、机械磁盘、磁带等远级归档介质。</p>
+<p>自顶向下呈现出一致规律：访问速度逐步降低，单位容量成本逐步降低，物理存储容量逐步增大，易失性逐步向非易失性过渡。</p>
+<p>主内存是 CPU 能够通过总线直接寻址读取的唯一大型存储介质，在逻辑上可以视作辅存的最后一层缓存。</p>
+</li>
+<li>
+<p>机械磁盘物理组织：</p>
+<p>磁盘表面在逻辑上划分为若干同心圆磁道 (Tracks)，磁道进一步划分为扇区 (Sectors)。</p>
+<p>磁盘控制器负责处理计算机与物理盘片之间的逻辑数据交互。</p>
+</li>
+<li>
+<p>缓存原理 (Caching)：</p>
+<p>核心作用是解决上下两级存储介质之间巨大的速度不匹配问题 (Speed mismatch)。</p>
+<p>基于局部性原理，系统将近期频繁使用的数据从低速介质复制一份暂存在高速缓存中。读取数据时优先检查缓存，命中即可极快返回。</p>
+<p>缓存空间远小于被缓存介质，因此必须精细设计容量管理机制与替换策略 (如 LRU 最近最少使用算法)。</p>
+</li>
+<li>
+<p>缓存一致性问题 (Cache Coherence)：</p>
+<p>在多任务并发以及多核处理器环境下，同一份变量数据可能同时存在于主存和各个 CPU 核心的私有 Cache 中。</p>
+<p>当某一个 CPU 核心修改了其私有 Cache 中的数据时，硬件与总线必须依靠缓存一致性协议，确保其余所有 CPU 核心读取到的都是全局最新数据。</p>
+</li>
+</ol>
+<h2 id="_7">计算机体系结构分类</h2>
+<ol>
+<li>
+<p>对称多处理系统 SMP (Symmetric Multiprocessing)：</p>
+<p>系统中包含多个地位对等的 CPU 核心。</p>
+<p>每个处理器拥有自己独立的寄存器和局部缓存，所有处理器通过公共系统总线平等共享同一个物理主内存和 I/O 资源。</p>
+</li>
+<li>
+<p>多核系统 (Multicore)：</p>
+<p>将多个计算核心集成在同一块物理硅芯片上。</p>
+<p>片内核心之间的通信总线延迟明显低于板级跨芯片通信，同时具备更低的功耗与发热量。</p>
+</li>
+<li>
+<p>非一致性内存访问系统 NUMA (Non-Uniform Memory Access)：</p>
+<p>每个 CPU 拥有直接连接的本地内存，各个节点之间通过高速专用互联总线连接。</p>
+<p>CPU 访问自身绑定的本地内存极快，跨互联总线访问其他 CPU 节点的远端内存延迟明显增加。</p>
+<p>操作系统必须具备 NUMA 感知能力，在进程调度和内存分配时尽量让代码在本地内存运行，降低跨节点开销。</p>
+</li>
+</ol>
+<h2 id="_8">操作系统结构与多道分时技术</h2>
+<ol>
+<li>
+<p>多道程序设计 (Multiprogramming)：</p>
+<p>单用户单作业环境下，程序在等待慢速 I/O 时 CPU 只能处于空闲状态，整体资源利用率低下。</p>
+<p>多道程序设计在主内存中同时载入多个处于就绪状态的作业，内存空间被划分为内核驻留区与多个作业区。</p>
+<p>当正在执行的作业因等待 I/O 等事件让出 CPU 时，操作系统调度器立即切换 CPU 去执行内存中的另一个就绪作业，保证 CPU 始终处于繁忙状态，提升系统吞吐率。</p>
+</li>
+<li>
+<p>分时系统 (Timesharing / Multitasking)：</p>
+<p>分时系统是多道程序设计的进一步延伸，CPU 在多个处于内存的进程之间以极短的时间片轮流切换。</p>
+<p>核心追求是高度交互性 (Interactivity)，系统对每个任务的响应时间通常小于 1 秒，使每个用户在感知上如同独占整台计算机。</p>
+<p>分时系统依赖于进程抽象、CPU 时间片调度、内存交换机制 (Swapping) 以及虚拟内存机制（允许进程在没有完全载入物理内存的情况下执行）。</p>
+</li>
+</ol>
+<h2 id="_9">操作系统运行保护与双模式机制</h2>
+<ol>
+<li>
+<p>硬件双模式运行 (Dual-Mode Operation)：</p>
+<p>为了防止用户程序出错或恶意破坏系统，硬件提供了模式位 (Mode bit) 来区分 CPU 的特权状态。</p>
+<p>用户态 (User Mode)：运行普通用户程序，权限受到限制。</p>
+<p>内核态 (Kernel Mode / Supervisor Mode)：运行操作系统内核与驱动，拥有对底层硬件与全套指令集的完全控制权。</p>
+<p>特权指令保护：修改中断使能、配置页表基址、直接操作底层 I/O 设备等关键指令被划归为特权指令，仅允许在内核态下执行。用户态尝试执行特权指令会直接触发硬件异常。</p>
+</li>
+<li>
+<p>模式转换链路：</p>
+<p>用户程序需要系统服务时，通过执行系统调用指令触发陷阱，硬件将模式位自动置为内核态并跳转到内核入口。</p>
+<p>内核完成检查与服务后，执行特殊的返回指令恢复现场，并将模式位重新置回用户态，交还控制权。</p>
+</li>
+<li>
+<p>硬件定时器 (Timer)：</p>
+<p>用于防止用户程序因陷入死循环而无限期霸占 CPU。</p>
+<p>在将 CPU 调度给用户程序之前，操作系统会预设定时器的初值计数。硬件时钟脉冲递减该计数器，归零时强制触发时钟中断。</p>
+<p>时钟中断强制 CPU 重新回到内核态，操作系统调度器由此夺回控制权，决定是否剥夺当前进程并调度其他任务。</p>
+</li>
+</ol>
+<h2 id="_10">核心子系统管理职责</h2>
+<ol>
+<li>
+<p>进程管理 (Process Management)：</p>
+<p>程序是存放在存储介质上的静态指令集合，是无生命的实体；进程是程序在计算机中的一次动态执行过程，是系统分配资源与调度的基本工作单元。</p>
+<p>单线程进程拥有一个独立的程序计数器 PC，按序执行；多线程进程在共享地址空间的同时，每个线程各拥有独立的程序计数器。</p>
+<p>操作系统的管理活动包括：进程的创建与终止、进程状态挂起与恢复、提供进程同步机制（如互斥锁与信号量）、提供进程间通信机制 IPC、提供死锁预防与解除机制。</p>
+</li>
+<li>
+<p>内存管理 (Memory Management)：</p>
+<p>代码和数据必须加载到内存中才能被 CPU 寻址并执行。</p>
+<p>操作系统的管理活动包括：精确跟踪物理内存中哪些区域已被使用以及被哪个进程使用；在内存不足时决定将哪些进程或页面换入换出；负责动态分配与回收物理内存空间；提供虚拟内存地址转换与内存隔离保护。</p>
+</li>
+<li>
+<p>存储与文件系统管理 (Storage Management)：</p>
+<p>操作系统通过文件 (File) 这一抽象概念，屏蔽底层磁盘、磁带、闪存等不同物理介质的电磁特性，向上提供统一的逻辑存储视图。</p>
+<p>文件系统职责包括：文件与目录的创建、删除、修改与读写定位原语；文件访问权限控制；将文件逻辑地址映射到底层实际物理块；元数据与文件备份机制。</p>
+<p>辅存管理职责包括：磁盘空闲块空间管理、物理块分配策略、磁盘磁头寻道调度算法。</p>
+</li>
+<li>
+<p>I/O 子系统 (I/O Subsystem)：</p>
+<p>向用户和上层应用隐藏特定外部设备的差异与操作怪癖。</p>
+<p>负责 I/O 内存管理：包括缓冲 (Buffering，在传输中临时存取数据以解决速度不匹配)、缓存 (Caching，暂存频繁使用的数据提高性能)、假脱机 (Spooling，通过磁盘队列重叠作业输入输出，虚拟化慢速独占设备)。</p>
+<p>提供标准通用的设备驱动程序接口，以及针对具体外设的专用驱动实现。</p>
+</li>
+</ol>
+<h2 id="risc-v">操作系统设计原则与 RISC-V 核心寄存器</h2>
+<ol>
+<li>
+<p>操作系统的根本设计原则：</p>
+<p>抽象 (Abstraction)：将底层硬件细节封装为清晰易用的接口模型，例如将 CPU 抽象为进程、将物理内存抽象为虚拟地址空间、将磁盘抽象为文件系统。</p>
+<p>多路复用 (Multiplexing)：在时间维度（分时共享）与空间维度（分块共享）上复用硬件资源，支持多任务并发。</p>
+<p>隔离保护 (Isolation)：确保不同应用程序之间以及应用程序与内核之间强隔离，单一程序崩溃不影响整体系统。</p>
+<p>资源共享 (Sharing)：在安全可控的前提下，支持多个程序共享数据与物理资源。</p>
+<p>高性能与通用性 (Performance &amp; Range of uses)：以尽可能低的系统开销驱动硬件，支撑多样化的上层计算需求。</p>
+</li>
+<li>
+<p>衔接实验的 RISC-V 核心寄存器体系：</p>
+<p>通用寄存器文件：包含 32 个通用寄存器 (x0 至 x31)。其中 x0 恒为 0；ra 为函数返回地址寄存器；sp 为栈指针寄存器；gp 与 tp 分别为全局指针与线程指针；a0 至 a7 用于函数调用与系统调用参数传递；s0 至 s11 为被调用者保存寄存器；t0 至 t6 为临时寄存器。</p>
+<p>控制与状态寄存器 (CSRs)：用于特权级切换与中断异常控制。sstatus 记录当前特权模式与全局中断使能；sie 与 sip 分别控制中断使能与查询中断挂起状态；stvec 保存陷阱处理程序的基地址；scause 记录引发陷阱的具体原因代码；sepc 在陷入 S 态时自动保存中断发生处的 PC 地址；stval 记录出错的虚拟内存地址或指令代码；satp 保存页表基地址并控制硬件分页机制的开启。</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

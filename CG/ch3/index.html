@@ -1,0 +1,795 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch3/">
+      
+      
+        <link rel="prev" href="../CGblog2_drawingCircle/">
+      
+      
+        <link rel="next" href="../ch6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>第三章 视口、坐标系统与OpenGL - 计算机图形学</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch3" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机图形学" class="md-header__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机图形学
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第三章 视口、坐标系统与OpenGL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机图形学" class="md-nav__button md-logo" aria-label="计算机图形学" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机图形学
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 连续与离散、光栅化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CGblog1_drawingLine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    直线光栅化 (DDA / Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CGblog2_drawingCircle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    圆的光栅化 (Bresenham)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 视口、坐标系统与OpenGL
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 视口、坐标系统与OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        续ch2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opengl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenGL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenGL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API 命名规范
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本几何图元
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GLUT 事件驱动程序设计与双缓冲机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 矩阵栈与投影变换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        续ch2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opengl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenGL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenGL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API 命名规范
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本几何图元
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GLUT 事件驱动程序设计与双缓冲机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch3">ch3</h1>
+<h2 id="ch2">续ch2</h2>
+<ol>
+<li>
+<p><strong>视口与坐标系统</strong></p>
+<p>在图形程序中，图形数据从世界坐标映射到屏幕显示，涉及不同层次的窗口与坐标系统定义：</p>
+<ul>
+<li>窗口概念的双重含义：</li>
+<li>操作系统视角下的显示窗口：操作系统分配给图形应用程序的物理客户区，具有明确的像素分辨率，受窗口管理系统调度。</li>
+<li>虚拟世界视角下的观察窗口：在三维或二维虚拟场景中指定的矩形视野区域，定义了观察者能看到虚拟世界中的哪一部分场景。</li>
+<li>视口（Viewport）：</li>
+<li>视口是应用程序显示窗口内部实际用于绘制画面的矩形子区域。默认情况下视口大小与窗口大小重合，但也可以将视口设置为窗口的局部区域，例如分屏显示或小地图。超出视口边界的图元像素会被硬件裁剪丢弃，不会渲染到屏幕上。</li>
+<li>坐标系转换与映射：</li>
+<li>用户坐标系是浮点数坐标，允许开发者自由定义现实世界物体的长宽尺寸。</li>
+<li>视口坐标系是与帧缓冲区一一对应的非负整数坐标，直接对应物理像素格子。图形系统负责将用户坐标空间中的几何图元线性缩放并平移映射到视口区域内。</li>
+</ul>
+</li>
+<li>
+<p><strong>像素坐标约定与区域图元光栅化规则</strong></p>
+<p>在离散像素网格上光栅化多边形等区域图元时，必须建立严谨的数学坐标对齐标准：</p>
+<ul>
+<li>像素中心半整数约定：</li>
+<li>OpenGL 规定，像素网格的边界线位于整数坐标处，而像素的几何采样中心位于半整数坐标位置，即 <span class="arithmatex">\((x + 0.5, y + 0.5)\)</span>。</li>
+<li>例如左下角第一个像素格子的范围是 <span class="arithmatex">\([0, 1] \times [0, 1]\)</span>，其对应的采样点中心坐标为 <span class="arithmatex">\((0.5, 0.5)\)</span>。</li>
+<li>区域图元包含判定规则：</li>
+<li>当且仅当某个像素的几何采样中心严格落在多边形区域内部时，硬件光栅化器才会为该像素生成片元。</li>
+<li>共享边界处理规则（Left-Bottom 准则）：</li>
+<li>难点解释与例子：当两个相邻三角形紧密拼合、共用一条公共边时，位于公共边上的像素中心恰好落在几何分界线上。如果两个三角形都认为该像素属于自己并进行绘制，在半透明混合或深度测试时就会出现像素重复绘制、产生多余暗纹；反之如果都不绘制，接缝处就会出现一条透出背景色的裂缝。</li>
+<li>解决机制：OpenGL 等图形系统规定了统一的边界归属法则，通常只绘制多边形的左边界和底边界。如果像素中心落在顶边界或右边界上，则判定为不属于当前多边形。这种规则严格保证了任意紧邻拼接的多边形在光栅化时，接缝处的每一个像素都被且仅被其中一个多边形绘制一次，实现无缝且无重叠的渲染。</li>
+</ul>
+</li>
+<li>
+<p><strong>图形渲染管线基础模型</strong></p>
+<p>现代计算机图形系统将三维几何数据转换为二维屏幕画面的处理过程抽象为一个线性的流水线结构，核心阶段包括：</p>
+<ul>
+<li>逐顶点操作（Per-vertex operations）：接收应用程序传入的模型几何顶点，执行模型视点变换与投影变换，将三维坐标变换到规范化设备坐标系中，并计算顶点的光照颜色或法向量。</li>
+<li>图元装配（Primitive Assembly）：根据图元类型指令，将处理后的离散顶点重新组合装配为点、线段或多边形网格，并在此阶段执行视锥体裁剪。</li>
+<li>光栅化（Rasterization）：将连续的几何图元网格分解并覆盖到离散的像素格子上，产生一系列候选片元（Fragments）。片元不仅包含屏幕像素坐标，还包含了该位置插值得到的深度值、颜色、纹理坐标和法线向量。</li>
+<li>逐片元操作（Per-fragment operations）：根据插值得到的数据执行纹理采样、光照着色计算，并依次通过裁剪测试、Alpha 测试、模板测试和深度测试，剔除被遮挡的无效片元。</li>
+<li>帧缓冲操作（Frame buffer operations）：将最终通过各项测试的片元颜色值与帧缓冲区中已有像素进行混合或覆盖写入，完成整幅画面的生成。</li>
+</ul>
+</li>
+</ol>
+<h2 id="opengl">OpenGL</h2>
+<ol>
+<li>认识OpenGL：一个用于图形渲染的跨平台软件接口标准，它不是具体的图形库实现，而是一套跨语言跨平台的规范。向下负责屏蔽不同显卡硬件的底层差异，并调用硬件加速，向上为应用程序提供统一的图形渲染API</li>
+<li>现代图形API演进：OpenGL最初是单线程状态机架构，显卡驱动程序承担了大量的运行状态校验、显存调度等，导致驱动层高开销；现代图形平台比如Vulkan、Metal，它们将显存分配和指令缓冲架构的控制权下放给应用程序，能获得更高的并发性能以及更低的驱动层开销</li>
+<li>核心架构：状态机。<ul>
+<li>应用程序通过API设置状态变量，比如画笔颜色，光照模式等等。</li>
+<li>每个状态变量初始化时都有系统默认值</li>
+<li>当状态被激活它将一直保持生效，并影响后续所有的图元绘制，直到下一次状态修改的到来。</li>
+</ul>
+</li>
+<li>功能范围<ul>
+<li>只绘制几何图元并渲染成图像，不能完成窗口创建、键盘鼠标事件监听以及音频控制等与具体操作系统紧密绑定的功能，这些依赖于其他的工具包。</li>
+<li><strong>GLUT(OpenGL Utility Toolkit)</strong>，OpenGL实用工具包，用来负责窗口创建和管理，键盘鼠标监听，窗口大小调整等行为；</li>
+<li>GLU，实用库，用来进行一些复杂对象的生成，比如球体、圆柱体等；</li>
+</ul>
+</li>
+</ol>
+<h3 id="_1">工具链</h3>
+<ol>
+<li>核心库，头文件为<code>&lt;GL/gl.h&gt;</code>，包含核心指令集合；</li>
+<li>实用库（GLU）：头文件<code>&lt;GL/glu.h&gt;</code>，在核心库上封装的高级功能，可以进行一些复杂对象的生成，还有相机观察矩阵计算工具等；</li>
+<li>实用工具包（GLUT）：头文件为 <code>&lt;GL/glut.h&gt;</code>，负责跨平台的窗口创建，事件监听，主事件循环调度等</li>
+</ol>
+<h3 id="api">API 命名规范</h3>
+<ol>
+<li>函数命名以 <code>gl</code>、<code>glu</code> 或 <code>glut</code> 开头，采用小驼峰命名，例如 <code>glVertex3f</code>。</li>
+<li>常量与宏定义全部以 <code>GL_</code>、<code>GLU_</code> 或 <code>GLUT_</code> 开头的大写字母及下划线组成，例如 <code>GL_COLOR_BUFFER_BIT</code>。</li>
+<li>数据类型以 <code>GL</code> 开头，例如 <code>GLfloat</code>, <code>GLint</code>, <code>GLenum</code>。</li>
+<li>函数后缀标明参数数量与数据类型：例如 <code>glVertex3f</code> 表示该函数接收 3 个 float 类型的浮点参数；<code>glVertex3fv</code> 中的 <code>v</code> 表示参数以数组指针形式传入。</li>
+</ol>
+<h3 id="_2">基本几何图元</h3>
+<p>OpenGL 中所有复杂三维模型最终都拆解为三类基本几何图元：</p>
+<ul>
+<li>点与线图元：</li>
+<li><code>GL_POINTS</code>：离散的点序列。</li>
+<li><code>GL_LINES</code>：独立的线段，每两个顶点组成一条互不相连的线段。</li>
+<li><code>GL_LINE_STRIP</code>：相连的折线段，首尾相接但不闭合。</li>
+<li><code>GL_LINE_LOOP</code>：闭合的折线环，最后一个顶点会自动连回第一个顶点。</li>
+<li>多边形与三角网格图元：</li>
+<li><code>GL_TRIANGLES</code>：独立的三角形集合，每三个连续顶点构成一个三角形。</li>
+<li><code>GL_TRIANGLE_STRIP</code>：三角形带，除了前三个顶点构成第一个三角形外，之后每增加一个顶点就与前两个顶点组成一个新的相邻三角形，大大减少冗余顶点数据传输。</li>
+<li><code>GL_TRIANGLE_FAN</code>：三角形扇，所有三角形共享第一个公共中心顶点。</li>
+<li><code>GL_QUADS</code> 与 <code>GL_QUAD_STRIP</code>：独立四边形与四边形带。</li>
+<li><code>GL_POLYGON</code>：单凸多边形。</li>
+<li>多边形有效性限制：</li>
+<li>OpenGL 规范要求绘制的多边形必须满足四个几何条件：所有顶点共面、简单不自交、完全闭合、且必须是凸多边形。凹多边形在光栅化分解时可能产生不可预期的拓扑错误。</li>
+<li>面显示模式与背向剔除：</li>
+<li>环绕方向定义正面：OpenGL 默认采用逆时针环绕（CCW）的顶点顺序定义为多边形朝向观察者的正面，顺时针（CW）定义为背面。可通过 <code>glFrontFace</code> 显式设置。</li>
+<li>显示模式控制：通过 <code>glPolygonMode</code> 可以将多边形的前面、背面分别指定以点集（<code>GL_POINT</code>）、线框（<code>GL_LINE</code>）或实体填充（<code>GL_FILL</code>）方式呈现。</li>
+<li>背向面剔除（Cull Face）：在封闭三维实体中，背向观察者的多边形必定会被前表面的实体遮挡。调用 <code>glEnable(GL_CULL_FACE)</code> 并配合 <code>glCullFace(GL_BACK)</code>，可以在光栅化之前将不可见的背向多边形直接丢弃，节约着色与深度测试的计算开销。</li>
+</ul>
+<h3 id="glut">GLUT 事件驱动程序设计与双缓冲机制</h3>
+<p>GLUT 采用典型的事件驱动设计范式，应用程序将各功能函数注册到框架中，由主循环统一派发执行。</p>
+<ul>
+<li>核心事件回调函数：</li>
+<li>绘制回调（<code>glutDisplayFunc</code>）：当窗口需要重绘（例如首次弹出、被遮挡后重新显示或调用重绘请求）时被框架自动调用。</li>
+<li>视口重塑回调（<code>glutReshapeFunc</code>）：当用户手动拖动改变窗口大小时被调用。函数内部重新设定 <code>glViewport</code> 视口矩阵以及 <code>glOrtho</code> 投影矩阵，保证画面不会因窗口拉伸而发生几何长宽比例畸变。</li>
+<li>鼠标回调（<code>glutMouseFunc</code>）与移动回调（<code>glutMotionFunc</code>）：响应鼠标按键按下、释放以及按住拖动的屏幕交互事件。</li>
+<li>键盘回调（<code>glutKeyboardFunc</code>）：响应普通字符键以及功能键的按击事件。</li>
+<li>空闲回调（<code>glutIdleFunc</code>）：当操作系统没有待处理的外部输入事件时持续调用的函数，通常在其中改变旋转角度、物理位移等连续动画变量，并在末尾调用 <code>glutPostRedisplay()</code> 通知窗口调度下一帧刷新。</li>
+<li>双缓冲交互机制（Double Buffering）：</li>
+<li>单缓冲的缺陷：在单缓冲模式下，所有的几何图元都是直接绘制在显示器正在读取扫描的同一个显存区域中。如果场景图元复杂、绘制用时较长，显示器扫描速度与显卡绘制不同步，用户屏幕上就会看到物体逐个闪现甚至画面横向撕裂。</li>
+<li>双缓冲的工作方式：系统在显存中开辟两个相同规格的缓冲区。前缓冲区的内容直接送往显示器扫描显示，后缓冲区对用户完全隐蔽，GPU 将新一帧画面的所有图元全部绘制在后缓冲区中。当后缓冲区绘制完毕，且显示器恰好完成一帧扫描时，程序调用 <code>glutSwapBuffers()</code> 交换前后缓冲区指针。此机制彻底消除了屏幕闪烁与残影撕裂，是实现流畅交互动画的基础。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

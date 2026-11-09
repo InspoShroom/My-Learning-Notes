@@ -1,0 +1,1371 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch3_Processes/">
+      
+      
+        <link rel="prev" href="../ch2_Structures/">
+      
+      
+        <link rel="next" href="../ch4_Threads/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>进程 - 操作系统</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch3" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="操作系统" class="md-header__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            操作系统
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              进程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="操作系统" class="md-nav__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    操作系统
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2_Structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    操作系统结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Processes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Concept
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-in-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process in Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-control-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Control Block
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Scheduling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process Scheduling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-scheduling_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context Switch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operations-on-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operations on Processes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operations on Processes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-termination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Termination
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cooperating-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cooperating Processes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interprocess-communication-ipc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interprocess Communication (IPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-server-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-Server Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch4_Threads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../About_Lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Processes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Concept
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-in-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process in Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-control-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Control Block
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Scheduling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process Scheduling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-scheduling_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context Switch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operations-on-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operations on Processes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operations on Processes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-termination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Termination
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cooperating-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cooperating Processes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interprocess-communication-ipc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interprocess Communication (IPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-server-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-Server Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch3">CH3</h1>
+<h2 id="processes">Processes</h2>
+<h3 id="process-concept">Process Concept</h3>
+<p>​   在教材以及题目中，我们可能会看到 Job 和 Process 的混用，它们代表是同一个意思，只不过因为历史原因保留了一些习惯性叫法。在早期的批处理系统中，习惯叫 Job，后来的分时系统习惯叫 Process 或者 Task。</p>
+<p>​   更多关于操作系统发展史的介绍：</p>
+<ol>
+<li><a href="https://blog.csdn.net/u013669912/article/details/140479330">操作系统发展简史</a></li>
+<li><a href="https://blog.csdn.net/DRZ_2000/article/details/104840733">操作系统发展历程 </a></li>
+<li><a href="xxxx.md">我的笔记</a></li>
+</ol>
+<p><strong>进程</strong>，即“正在执行中的程序”，英文表达为：<strong>a program in execution</strong> </p>
+<p><strong>进程和程序的区别</strong></p>
+<p>​   程序，是静态的，是一个可执行文件，保存在磁盘中；</p>
+<p>​   进程，是动态的，指的是程序的执行过程</p>
+<p>​   对于我们来说，可以根据进程的名称来区分不同的进程，比如：QQ进程，微信进程；但是从计算机的视角看，操作系统对进程的管理和理解与我们大不相同。以下，逐步了解进程的详细内容，并探索操作系统对于进程的管理</p>
+<h4 id="process-in-memory"><strong>Process in Memory</strong></h4>
+<p>​   对于计算机而言，一个进程要想存在，是脱离不了内存的。而一个进程在内存中通常包含了以下部分：</p>
+<blockquote>
+<p>只是一种经典的划分，并不是说所有进程都只有这几种状态</p>
+</blockquote>
+<div style="display: flex; gap: 20px; align-items: center;">
+  <!-- 左侧文字区域 -->
+  <div style="flex: 0.6;">
+    <ul>
+      <li>text section：代码段。即编译后的二进制代码，放在进程运行期间的虚拟内存的最低位</li>
+      <li>data section：数据段。存放程序的全局变量和静态变量</li>
+      <li>heap：堆区。程序运行期间进行动态申请内存，向高地址方向生长</li>
+      <li>stack：栈区。存放函数调用的局部变量</li>
+      <li>program counter：PC</li>
+    </ul>
+  </div>
+  <!-- 右侧图片区域 -->
+  <div style="flex: 0.4; text-align: center;">
+    <img src="./assets/image-20261018215249492.png" alt="image-20261018215249492" style="zoom:50%;" />
+  </div>
+</div>
+
+<h4 id="process-state">Process State</h4>
+<p>​   进程在获取代码、数据、堆栈等资源后，便会作为一个对象参与系统调度。但是<strong>一个CPU核心在任何时刻都只能处理一个进程</strong>，并且一个进程往往会和外设进行交互，这是很费时间的，在当今的多任务环境下，为了CPU的效率，进程不可能一直独占CPU。</p>
+<p>​   所以在一个进程的生命周期中，进程会因为各种情况进行不同的状态转换，具体来说有以下几种：</p>
+<ul>
+<li>新建 (New)：进程创建中...</li>
+<li>就绪 (Ready)：进程准备好运行，等待OS分配CPU资源</li>
+<li>运行 (Running)：进程指令正在被CPU执行</li>
+<li>等待/阻塞 (Waiting / Blocked)：进程因等待事件发生(如IO操作)而暂时无法进行</li>
+<li>终止 (Terminated)：进程全部执行完或被异常终止</li>
+</ul>
+<p>一张图总览状态变化关系</p>
+<p><img src="./assets/image-20261018220004540.png" alt="image-20261018220004540" style="zoom:50%;" /></p>
+<h4 id="process-control-block">Process Control Block</h4>
+<p>​   <strong>PCB，即：进程控制块</strong></p>
+<p>​   既然进程的状态是时刻在变的，而进程又可能随时被中断打断，等再次回来时我们想要接续上次进程的状态继续执行，那么这个状态就需要被记忆。PCB就是操作系统用来管理和记录每个进程的所有状态信息的。</p>
+<p>​   PCB主要包含了以下内容：</p>
+<ul>
+<li>
+<p>process state：进程状态。<a href="# Process State">前面介绍过的内容</a></p>
+</li>
+<li>
+<p>program counter：程序计数器，指向下一条执行指令的地址</p>
+</li>
+<li>
+<p>CPU registers：寄存器。即进程离开CPU时，CPU内部所有通用和专用寄存器的备份，比如：所有的通用数据寄存器、栈指针寄存器sp、标志寄存器、甚至现代扩充的浮点寄存器和向量寄存器</p>
+</li>
+<li>
+<p>memory limits：内存管理信息。主要是划定该进程在内存中的位置，以及虚拟地址和物理地址的转换表。</p>
+<p>比如现代x86架构在切换进程时，操作系统会把PCB内的页表地址写入CPU的CR3寄存器</p>
+</li>
+<li>
+<p>list of open files：打开文件列表。记录了该进程当前占用了系统中的哪些外部持久化文件资源，主要就是在应用层写代码时打交道最多的文件描述符表。</p>
+<p>每个进程的PCB都有一个固定大小的指针数组，下标就是文件描述符数字，比如0代表标准输入，1代表标准输出，打开一个新文件后，可能就会将文件的内核指针放到数组的3下标下。这样做的目的是记录文件的独写偏移量offset，以及不同的打开模式等。</p>
+</li>
+</ul>
+<p><img src="./assets/image-20261019144439379.png" alt="image-20261019144439379" style="zoom: 67%;" /></p>
+<hr />
+<h3 id="process-scheduling">Process Scheduling</h3>
+<h4 id="process-scheduling_1">Process Scheduling</h4>
+<p>​   1.1 中我们阐明了单个进程的现场信息由PCB记录和承载。在真实的操作系统中，系统里存着成百上千个并发进程，但是因为CPU核心有限，如果所有进程都去抢CPU的资源，系统就会崩溃。所以我们将这些PCB管理起来，让它们排队。</p>
+<p>​   但是不同进程排队的原因也各不相同，于是我们使用不同的队列来安排它们：</p>
+<p><strong>调度队列 Scheduling Queues</strong></p>
+<ol>
+<li>
+<p>就绪队列 Ready Queue：存放在主存中，处于就绪状态，等待分配CPU的进程链表。</p>
+<p>​   位与就绪队列的进程，其运行代码和数据都已经存放进了内存，只需要等待CPU分配时间片来执行即可。</p>
+</li>
+<li>
+<p>设备队列 Device Queue：等待各种设备响应的进程链表。</p>
+<p>​   设备队列是交给硬件外设处理的。CPU在执行过程中，进程可能发起磁盘读写、键盘输入、等待网络数据包等操作；由于外设的速度比较慢，所以在得到这个结果之前，CPU都无法继续执行下去，所以就将这个进程踢出就绪队列，丢到设备队列中排队。</p>
+</li>
+<li>
+<p>作业队列 Job Queue：包含系统中所有进程的完整结合。</p>
+<p>​   记录了系统中存在的所有进程，它的作用像是进程的“Buffer”。用户提交的所有任务，都是先排到外部磁盘存储的作业队列中，然后再通过长城调度器，每隔一段时间检查内存空间，当内存充裕时，再从作业队列里挑选合适的任务进入就绪队列。</p>
+</li>
+</ol>
+<p><img src="./assets/image-20261019153743025.png" alt="image-20261019153743025" style="zoom:50%;" /></p>
+<p>队列在内存的本质就是一条单向链表；</p>
+<p>就绪队列是最终交付给CPU处理的进程队列；</p>
+<p>进程在生命周期中会在上述各个队列之间动态迁移；</p>
+<p>如下图所示：就绪队列中存放了不同的进程状态PCB；还有左侧各种设备队列，可以看到不同的设备后有序号，因为同一台设备可能有多个硬件，比如两个磁带机，两个磁盘等</p>
+<p><img src="./assets/image-20261019153345853.png" alt="image-20261019153345853" style="zoom:50%;" /></p>
+<p>队列还需要调度器来管控</p>
+<p><strong>调度器 Schedule</strong></p>
+<ul>
+<li>什么是调度器？-- 调度器本质是内核中的一小段C语言算法程序</li>
+</ul>
+<p>调度器分类：</p>
+<ol>
+<li>长程调度器 (Long-term scheduler / Job scheduler)：或作业调度器。负责决定把外存中的哪几个任务调入内存，正式为它们建立 PCB 并送入就绪队列，调用频率很低。</li>
+<li>短程调度器 (Short-term scheduler / CPU scheduler)：从就绪队列中挑选下一个分配 CPU 的进程。调用频率极高（毫秒级别），执行逻辑必须尽可能精简高速；</li>
+</ol>
+<blockquote>
+<p>​ 因为 long-term scheduler 和 short-term scheduler 都只负责往里搬东西，这导致整个队列缺少平衡管理。考虑一种极端的情况：有8个进程被长程调度器放进了内存，但是有一段时间，这10个进程都开始疯狂申请内存，这会导致内存告急；为了处理这种情况，我们加入中程调度器：</p>
+<p>​ 中程调度器 (Medium-term scheduler)：当系统内存吃紧时，将部分进程从内存换出到磁盘交换空间挂起，待内存空闲时再换入主存，即进程交换机制 (Swapping)。运行逻辑如下图：</p>
+<p><img src="./assets/image-20261023164038861.png" alt="image-20261023164038861" style="zoom: 67%;" /></p>
+</blockquote>
+<ul>
+<li>
+<p>进程行为特征与调度平衡</p>
+<p>对于长程调度器，在挑选进程时，必须要考虑分析不同的进程特征，进程主要可以分为两类：</p>
+<ol>
+<li>I/O 密集型进程 (I/O-bound process)：主要时间花费在 I/O 操作上，伴随较多较短的 CPU 计算突发；</li>
+<li>CPU 密集型进程 (CPU-bound process)：主要时间花费在数值计算上，极少进行 I/O，CPU 计算突发周期很长；</li>
+</ol>
+<p>所以调度器要维持这两类进程的平衡搭配，不能完全偏向一方，否则会导致CPU繁忙而其他外设空闲；或者全部蜂拥向外设，CPU空闲</p>
+</li>
+</ul>
+<h4 id="context-switch">Context Switch</h4>
+<blockquote>
+<p><strong>上下文切换：在计算机里，上下文就是指某个进程在运行时某一瞬间的现场记忆</strong></p>
+</blockquote>
+<ul>
+<li>当 CPU 从一个进程切换到另一个进程时，操作系统必须先保存当前正在运行进程的现场（保存至其 PCB 中），随后加载新进程先前保存的现场（从其 PCB 中恢复）；</li>
+<li>上下文切换时间是纯粹的系统开销，在切换期间 CPU 不执行任何有效计算工作；</li>
+<li>切换速度受底层硬件支持影响，例如某些架构（如 SPARC）提供多套物理寄存器组，可实现快速切换。</li>
+</ul>
+<hr />
+<h3 id="operations-on-processes">Operations on Processes</h3>
+<p>​   本节核心：进程的创建与终止</p>
+<h4 id="process-creation">Process Creation</h4>
+<ol>
+<li><strong>Tree of Processes</strong></li>
+</ol>
+<p>​   进程树。在现代操作系统中，绝大多数进程都不是凭空出现的，而是由一个已存在的父进程 (Parent process) 通过系统调用繁衍出子进程 (Children processes)，子进程又可以继续创建它的子孙进程，最终在整个系统中构成一棵层次清晰的进程树。</p>
+<ul>
+<li>每个进程在系统中都有一个唯一的数字标识符，即进程号 <strong>PID (Process Identifier)</strong>；</li>
+<li>进程树的顶点是系统的始祖根进程，其 <strong>PID 固定为 1</strong>。例如在典型的 Solaris 系统中，由 sched 调度器派生出 init；在现代 Linux 中为 systemd 或 init；在 macOS 中则为 launchd；</li>
+<li>系统中的用户 Shell、图形桌面、系统服务等，追根溯源全都是从这个 1 号根进程一级一级派生下来的。</li>
+</ul>
+<p><img src="./assets/ch3_process_tree_solaris.png" alt="ch3_process_tree_solaris" style="zoom: 67%;" /></p>
+<p><strong>2. Resource Sharing</strong></p>
+<p>​   资源共享。子进程被创建时需要内存、文件和 I/O 资源，父子进程之间关于资源的继承存在三种设计：</p>
+<ul>
+<li>共享所有资源 (Share all resources)：父进程拥有的数据、内存和打开的文件描述符，子进程全部直接共享访问；</li>
+<li>共享父进程的部分子集 (Share subset of parent's resources)：父进程分配一部分资源限额给子进程，防止子进程创建过多任务把系统的全局资源耗尽；</li>
+<li>完全不共享资源 (Share no resources)：子进程由操作系统从系统全局资源池中另行分配独立资源，与父进程互不相干。</li>
+</ul>
+<p><strong>3. execution</strong></p>
+<p>​   执行时序。子进程创建后，父进程与子进程在调度执行时序上有两种配合方式：</p>
+<ul>
+<li>并发执行 (Execute concurrently)：父进程生完子进程后，双方各自独立排队争夺 CPU，并驾齐驱向前推进。例如 Web 服务器主进程接收到客户端连接后，立刻 fork 出一个子进程去处理具体的数据传输，而主进程自己继续并发监听下一个网络请求；</li>
+<li>
+<p>父进程等待子进程终止 (Parent waits until children terminate)：父进程主动调用系统调用（如 wait）将自己挂起阻塞，把 CPU 完全交给子进程。直到子进程全部执行完毕并返回退出状态，父进程才被唤醒继续往下执行。例如在命令行终端输入编译命令 <code>gcc main.c</code> 时，Shell 进程就会等待 gcc 子进程执行完毕，才会重新弹出命令提示符。</p>
+</li>
+<li>
+<p>地址空间与 UNIX 经典创建机制 (Address Space &amp; fork/exec)</p>
+</li>
+</ul>
+<p>​   子进程被创建后的地址空间存在两种可能：</p>
+<ol>
+<li>子进程完全复制父进程的地址空间 (Child duplicate of parent)；</li>
+<li>子进程在地址空间中加载全新的程序代码 (Child has a program loaded into it)。</li>
+</ol>
+<p>​   在 UNIX / Linux 系统中，操作系统并没有用一个臃肿的单一系统调用去同时完成创建与加载，而是精妙地拆解为两个独立的系统调用协同完成：</p>
+<ul>
+<li><strong><code>fork()</code> 系统调用</strong>：负责克隆生成新进程。子进程会完全复制父进程的地址空间（包含代码段、数据段、堆栈）以及打开的文件描述符列表，唯一不同的是它们拥有不同的 PID；</li>
+<li><strong><code>exec()</code> 系列系统调用</strong>：负责置换进程内容。在 fork 之后调用，它会用磁盘上指定的新可执行程序，彻底冲刷并覆盖掉当前进程原有的代码段、数据段和堆栈，从新程序的入口处开始执行。</li>
+</ul>
+<blockquote>
+<p>​ <strong>为什么要把创建与执行拆分为 fork 和 exec 两步？</strong><br />
+​ 这是 UNIX 极具智慧的解耦设计。正因为中间留有一段缝隙，子进程在调用 exec 加载新程序之前，可以自由地修改自己的运行环境。例如：修改自己的文件描述符表（把 1 号 stdout 重定向到文本文件，从而实现命令行的输出重定向 <code>&gt;</code> 功能）、调整环境变量等，极大提升了系统的灵活性。</p>
+</blockquote>
+<p><img src="./assets/ch3_process_creation.png" alt="ch3_process_creation" style="zoom: 60%;" /></p>
+<blockquote>
+<p>​ <strong>关于 exec 族函数的后缀含义</strong>：<br />
+​ 课件底部提到存在多种 exec API（如 <code>execve()</code>, <code>execv()</code>, <code>execle()</code>, <code>execvp()</code>, <code>execlp()</code> 等），它们的底层系统调用都是 <code>execve</code>，库函数通过不同后缀提供便捷调用：<br />
+​ - <code>l</code> (List)：参数以可变参数列表逐个传入；<br />
+​ - <code>v</code> (Vector)：参数以指针数组统一传入；<br />
+​ - <code>p</code> (Path)：无需写死可执行文件的完整绝对路径，系统会自动在环境变量 PATH 包含的目录下检索该程序；<br />
+​ - <code>e</code> (Environment)：允许额外显式传入自定义的环境变量数组。</p>
+</blockquote>
+<p><strong>5. 经典 C 语言代码示例与解析</strong></p>
+<p>​   课件展示了使用 <code>fork()</code>, <code>execlp()</code>, <code>wait()</code> 协同工作的标准 UNIX 编程范式：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/types.h&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/wait.h&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">{</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="p">;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="cm">/* 1. 调用 fork() 派生新进程 */</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="cm">/* 返回值小于 0：说明创建失败（如系统进程数超限或内存不足） */</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Fork Failed"</span><span class="p">);</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="cm">/* 返回值等于 0：当前处于子进程的执行上下文中 */</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="cm">/* 调用 execlp 用磁盘上的 /bin/ls 程序替换当前子进程的地址空间 */</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="n">execlp</span><span class="p">(</span><span class="s">"/bin/ls"</span><span class="p">,</span><span class="w"> </span><span class="s">"ls"</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="cm">/* 返回值大于 0：当前处于父进程的执行上下文中，pid 的值为刚创建的子进程 PID */</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="cm">/* 父进程调用 wait 等待子进程执行完毕 */</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">        </span><span class="n">wait</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">"Child Complete</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>fork()</code> 的神奇之处在于一次调用，两次返回</strong>：<ul>
+<li>在子进程中，<code>fork()</code> 返回 <code>0</code>，子进程据此得知自己是孩子，于是调用 <code>execlp</code> 去执行全新的任务（如列出目录的 <code>ls</code> 程序）；</li>
+<li>在父进程中，<code>fork()</code> 返回<strong>新创建子进程的实际 PID（大于 0）</strong>，父进程据此得知自己是父亲，于是调用 <code>wait(NULL)</code> 挂起等待；</li>
+<li>若系统资源不足发生故障，则返回负数。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="process-termination">Process Termination</h4>
+<p>​   当一个进程完成了它的历史使命，或者由于某种原因无法继续运行时，便进入进程终止流程。</p>
+<p><strong>1. 正常主动退出 (exit)</strong></p>
+<ul>
+<li>当进程执行完 main 函数的最后一条语句，或者在代码中显式调用了 <code>exit()</code> 系统调用时，进程请求操作系统将其注销；</li>
+<li>操作系统接管后，回收该进程占用的物理内存、打开的文件描述符和 I/O 缓冲区等系统资源；</li>
+<li>子进程可以通过 <code>exit(status)</code> 传递一个退出状态整数值，该状态码会被内核暂存，直到父进程通过 <code>wait(&amp;status)</code> 读取。</li>
+</ul>
+<p><strong>2. 异常被动终止 (abort)</strong></p>
+<p>​   父进程有权通过系统调用（如 <code>abort()</code> 或发送 SIGKILL 信号）强行终止其派生出的子进程，常见原因包括：</p>
+<ul>
+<li>子进程超出了分配给它的系统资源限额（例如内存泄漏吃光了配额）；</li>
+<li>分配给子进程的任务已不再需要（例如用户在下载界面按下了取消下载按钮）；</li>
+<li>父进程自身即将退出。</li>
+</ul>
+<p><strong>3. 级联终止 (Cascading Termination)</strong></p>
+<ul>
+<li>在某些操作系统设计中，明确规定<strong>不允许子进程在没有父进程的情况下独立存活</strong>；</li>
+<li>一旦父进程因任何原因终止（正常退出或被异常杀死），操作系统会顺着进程树的血缘指针，将其所有子进程、孙子进程逐级全部强行杀死，这种机制被称为<strong>级联终止 (Cascading termination)</strong>。</li>
+</ul>
+<p><strong>4. 孤儿进程与僵尸进程 (Orphan &amp; Zombie)</strong></p>
+<p>​   在不采用级联终止的类 UNIX 系统中，父子进程的生命周期异步性会引发两种经典的特殊进程形态：</p>
+<ul>
+<li><strong>孤儿进程 (Orphan process)</strong>：<ul>
+<li>父进程先于子进程终止，但子进程依然在后台运行；</li>
+<li>系统为了避免这些孤儿进程无人监管，会由<strong>1 号根进程（init / systemd / launchd）主动领养并收养它们</strong>，充当它们的养父，负责在它们最终退出时代为收尸。</li>
+</ul>
+</li>
+<li><strong>僵尸进程 (Zombie process)</strong>：<ul>
+<li>子进程已经执行完毕 <code>exit()</code> 终止了，其代码和内存空间已被系统清空回收，<strong>但其父进程尚未调用 <code>wait()</code> 来读取它的退出状态</strong>；</li>
+<li>此时该子进程在操作系统进程表中的条目与 PCB 无法彻底删除（仍保留 PID 和退出码供父进程查阅），此时的子进程被称为<strong>僵尸进程</strong>；</li>
+<li>危害：若父进程长时间处于死循环而不调用 wait，系统中就会累积大量占用 PID 槽位的僵尸进程，最终可能导致系统耗尽进程号，无法创建新进程。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="cooperating-processes">Cooperating Processes</h3>
+<p>​   在多任务操作系统中，同时运行的并发进程可以划分为两大类：</p>
+<ul>
+<li><strong>独立进程 (Independent process)</strong>：其执行过程不影响其他进程，也不受其他进程影响。独立进程独享自身的数据，不与外界产生任何状态共享。</li>
+<li><strong>协作进程 (Cooperating process)</strong>：其执行过程会影响其他进程，或者受到其他进程的影响。任何与其他进程共享数据的进程都是协作进程。</li>
+</ul>
+<p><strong>1. 进程协作的优势</strong></p>
+<p>​   为什么操作系统要支持并鼓励进程协作？主要有四大核心优势：</p>
+<ul>
+<li><strong>信息共享 (Information sharing)</strong>：多个用户或应用可能对同一份数据感兴趣。例如多个并发进程共同读取一份数据库或共享配置文件。</li>
+<li><strong>计算加速 (Computation speed-up)</strong>：将一个耗时庞大的大任务拆分为若干个子任务，让它们在多核 CPU 上并行计算，从而大幅缩短整体运行时间。</li>
+<li><strong>模块化设计 (Modularity)</strong>：按照软件工程的模块化思想，将系统按功能拆分为不同职责的独立进程。例如编译器系统拆分为预处理器、词法分析器、语法分析器和代码生成器，各模块通过协作管道逐步推进。</li>
+<li><strong>操作便利 (Convenience)</strong>：方便单个用户同时处理多项关联任务。例如一边在编辑器中敲代码、一边后台运行单元测试、一边在浏览器中查阅文档。</li>
+</ul>
+<hr />
+<p><strong>2. 经典模型：生产者-消费者问题 (Producer-Consumer Problem)</strong></p>
+<p>​   生产者-消费者问题是操作系统协作进程中最基础、最经典的范式：</p>
+<ul>
+<li><strong>生产者进程 (Producer)</strong>：负责生产数据项，并放入公共缓冲区中；</li>
+<li><strong>消费者进程 (Consumer)</strong>：负责从公共缓冲区中取出数据项进行消费与处理。</li>
+</ul>
+<p>​   根据缓冲区容量的限制，该模型分为两类：</p>
+<ul>
+<li><strong>无界缓冲区 (Unbounded-buffer)</strong>：缓冲区容量在逻辑上无上限。生产者只要生产了数据就可以直接放入，永远不会被阻塞；只有在缓冲区全空时，消费者才必须等待新数据的产生。</li>
+<li><strong>有界缓冲区 (Bounded-buffer)</strong>：缓冲区大小固定为 <code>BUFFER_SIZE</code>。缓冲区已满时生产者必须等待空位，缓冲区全空时消费者必须等待新数据。</li>
+</ul>
+<hr />
+<p><strong>3. 共享内存方案实现与代码分析</strong></p>
+<p>​   在有界缓冲区的经典实现中，通常借助操作系统提供的<strong>共享内存 (Shared Memory)</strong>，并采用<strong>环形循环数组 (Circular Array)</strong> 来组织数据。</p>
+<p><strong>共享数据结构定义</strong>：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#define BUFFER_SIZE 10</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="cm">/* 存放具体的数据项内容 */</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">item</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span><span class="w">  </span><span class="cm">/* 环形缓冲区数组 */</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="kt">int</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">   </span><span class="cm">/* 指向下一个可写入空槽位的下标 */</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kt">int</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 指向第一个可读取有效数据的槽位下标 */</span>
+</span></code></pre></div>
+<p><strong>生产者算法逻辑</strong>：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="cm">/* 1. 生产一个数据项 item */</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="cm">/* 2. 判断缓冲区是否已满：若满则忙等待 (Busy Waiting) */</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(((</span><span class="n">in</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">out</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="cm">/* 空转等待，当前没有空闲槽位 */</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="cm">/* 3. 将生产的数据写入当前空槽，并移动写入指针 */</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="n">buffer</span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>消费者算法逻辑</strong>：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="cm">/* 1. 判断缓冲区是否为空：若空则忙等待 */</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">out</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="cm">/* 空转等待，当前没有可消费的数据 */</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="cm">/* 2. 从当前槽位取出数据，并移动读取指针 */</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="n">out</span><span class="p">];</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">out</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="cm">/* 3. 消费并处理该数据项 item */</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<p><strong>4. 环形缓冲区的容量陷阱与计数器改进</strong></p>
+<p><strong>为什么上述经典解法只能容纳 <code>BUFFER_SIZE - 1</code> 个元素？</strong></p>
+<p>​   注意看生产者的判满条件：<code>((in + 1) % BUFFER_SIZE) == out</code>。</p>
+<p>​   当数组中还有最后一个空格子时，算法就判定为满并阻止继续写入。这是因为：如果把最后一个空格子也填满，<code>in</code> 循环递增后就会与 <code>out</code> 重合，即 <code>in == out</code>。</p>
+<p>​   此时就会产生二义性：系统无法单凭 <code>in == out</code> 区分当前缓冲区究竟是全空还是全满。为了用最简单的指针比较解决冲突，经典方案主动牺牲了一个槽位的存储空间。</p>
+<p><strong>计数器改进方案 (Counter Solution)</strong>：</p>
+<p>​   课件在后半部分给出了另一种更充分利用空间的解决思路：引入一个共享整型变量 <code>int count = 0;</code>，用来精确记录当前缓冲区内实际存放的数据项总数。</p>
+<ul>
+<li><strong>生产者代码调整</strong>：
+  <div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="cm">/* 生产 item */</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="cm">/* 缓冲区满，等待 */</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">buffer</span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="n">count</span><span class="o">++</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 元素个数加 1 */</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+</span></code></pre></div></li>
+<li><strong>消费者代码调整</strong>：
+  <div class="language-c highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="cm">/* 缓冲区空，等待 */</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="n">out</span><span class="p">];</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">out</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">BUFFER_SIZE</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">count</span><span class="o">--</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 元素个数减 1 */</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="cm">/* 消费 item */</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>​ <strong>伏笔与思考：并发安全问题</strong><br />
+​ 通过引入计数器变量 <code>count</code>，数组的全部 <code>BUFFER_SIZE</code> 个槽位得到了完全利用。但这也埋下了一个重大的隐患：<code>count++</code> 和 <code>count--</code> 在机器指令层面是由多条微指令构成的（读取寄存器、修改值、写回内存）。在多进程或多线程并发执行时，两个进程交替执行这些微指令会导致严重的<strong>竞态条件 (Race Condition)</strong>，破坏数据的准确性。这正是操作系统在后续进程同步章节中要重点解决的核心课题。</p>
+</blockquote>
+<hr />
+<h3 id="interprocess-communication-ipc">Interprocess Communication (IPC)</h3>
+<p>​   现代操作系统默认对每个进程的虚拟地址空间实施严格的内存隔离保护，一个进程无法直接访问另一个进程的内存。为了实现进程间的数据交互与动作协调，操作系统必须提供专门的<strong>进程间通信 (Interprocess Communication, IPC)</strong> 机制。</p>
+<p><strong>1. IPC 两大基本通信模型对比</strong></p>
+<p>​   操作系统中支持两类最基本的 IPC 架构模型：<strong>消息传递 (Message Passing)</strong> 与 <strong>共享内存 (Shared Memory)</strong>。</p>
+<p><img src="./assets/ch3_ipc_models.png" alt="ch3_ipc_models" style="zoom: 65%;" /></p>
+<ul>
+<li><strong>(a) 消息传递 (Message Passing)</strong>：<ul>
+<li><strong>通信方式</strong>：进程间不共享任何内存变量，而是通过操作系统内核提供的系统调用（如 <code>send</code> 与 <code>receive</code>）进行信息交换。</li>
+<li><strong>运行特征</strong>：发送进程将数据打包复制给内核，内核暂存到消息队列，再由内核复制给接收进程。</li>
+<li><strong>优缺点</strong>：需要频繁陷入内核态，伴随多次内存拷贝开销，在大数据量传输时较慢；但由操作系统统一调度管控，不会发生并发写冲突，特别适用于分布式网络环境或交换少量数据。</li>
+</ul>
+</li>
+<li><strong>(b) 共享内存 (Shared Memory)</strong>：<ul>
+<li><strong>通信方式</strong>：由通信双方发起系统调用，让操作系统将同一段物理内存同时映射到各自的虚拟地址空间中。</li>
+<li><strong>运行特征</strong>：内存区域建立后，数据的读写如同访问自己的普通变量一样，全在用户态直接操作。</li>
+<li><strong>优缺点</strong>：无需内核中转与数据拷贝，通信速度与数据吞吐率极高；缺点是操作系统退出介入，并发读写时的互斥访问与同步控制完全交由应用程序开发者自行负责。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>2. 消息传递系统的核心设计问题</strong></p>
+<p>​   在构建消息传递链路 (Communication Link) 时，操作系统必须在底层解决以下设计问题：</p>
+<ul>
+<li>链路如何建立？</li>
+<li>一条链路能否与两个以上的进程关联？</li>
+<li>每一对通信进程之间可以存在多少条链路？</li>
+<li>链路的缓冲区容量是多少？</li>
+<li>链路能够容纳的消息尺寸是固定长度还是可变长度？</li>
+<li>链路是单向通信还是双向通信？</li>
+</ul>
+<p>​   根据进程寻址方式的不同，消息传递分为直接通信与间接通信：</p>
+<p><strong>直接通信 (Direct Communication)</strong>：</p>
+<p>​   发送与接收双方必须显式指出通信对象的进程标识：</p>
+<ul>
+<li><code>send(P, message)</code>：直接向进程 P 发送消息；</li>
+<li><code>receive(Q, message)</code>：从进程 Q 接收消息。</li>
+</ul>
+<p>​   <strong>链路特征</strong>：通信进程之间会自动隐式建立物理或逻辑链路；每一条链路严格唯一绑定一对进程；两个进程之间只能存在一条通信链路；链路通常是全双工双向的。<br />
+​   <strong>局限性</strong>：高耦合。进程名称若因重启或重构发生变化，所有相关的调用代码都要修改。</p>
+<p><strong>间接通信 (Indirect Communication)</strong>：</p>
+<p>​   通过中介容器——<strong>邮箱或端口 (Mailbox / Port)</strong> 来解耦通信：</p>
+<ul>
+<li>每个邮箱拥有系统全局唯一的 ID；</li>
+<li>只有共享同一个邮箱的进程之间才能互相通信；</li>
+<li>原语定义：<code>send(A, message)</code> 发送消息至邮箱 A；<code>receive(A, message)</code> 从邮箱 A 读取消息。</li>
+</ul>
+<p>​   <strong>链路特征</strong>：只有当双方共享同一邮箱时链路才建立；一条链路可以关联多个不同的进程；一对进程之间可以通过多个不同邮箱建立多条通信链路；支持灵活的多对多通信模式。</p>
+<blockquote>
+<p>​ <strong>邮箱共享引发的归属争议与解决策略</strong>：<br />
+​ 若进程 P1 向邮箱 A 发送了一条消息，而进程 P2 和 P3 都在监听该邮箱，那么这条消息究竟应该分给谁？课件给出了三种经典解决策略：<br />
+​ 1. 限制链路规则：强制规定一条邮箱链路最多只能关联两个进程；<br />
+​ 2. 独占式接收：系统同一时刻只允许一个进程执行接收操作，其余排队；<br />
+​ 3. 系统随机仲裁：由操作系统随机指定一个接收方，并将接收者身份通知发送方。</p>
+</blockquote>
+<hr />
+<p><strong>3. 同步机制：阻塞与非阻塞 (Synchronization)</strong></p>
+<p>​   消息传递操作在执行时序上可以配置为阻塞或非阻塞模式，即同步 (Synchronous) 与异步 (Asynchronous)：</p>
+<ul>
+<li><strong>阻塞发送 (Blocking send / Synchronous)</strong>：发送方发出消息后，进程主动挂起等待，直到消息被接收方（或消息队列）确认接收后才恢复执行；</li>
+<li><strong>阻塞接收 (Blocking receive / Synchronous)</strong>：接收方调用接收原语后挂起等待，直到链路中有可用消息到达才被唤醒；</li>
+<li><strong>非阻塞发送 (Non-blocking send / Asynchronous)</strong>：发送方将消息移交给系统后立即返回，无需停顿，继续执行后续代码；</li>
+<li><strong>非阻塞接收 (Non-blocking receive / Asynchronous)</strong>：接收方尝试读取消息，若有则立即返回有效消息；若当前无消息则立刻返回一个空值 (null)，绝不卡顿进程。</li>
+</ul>
+<hr />
+<p><strong>4. 缓冲容量机制 (Buffering)</strong></p>
+<p>​   通信链路背后挂载的消息队列容量，直接决定了发送方的阻塞行为：</p>
+<ul>
+<li><strong>零容量 (Zero capacity)</strong>：链路队列长度为 0，即链路无法暂存任何消息。发送方必须阻塞等待，直到接收方正好也调用了接收。双方在同一时刻完成面对面交接，这种时序同步现象被称为<strong>会合 (Rendezvous)</strong>；</li>
+<li><strong>有界容量 (Bounded capacity)</strong>：链路配备长度为 <span class="arithmatex">\(n\)</span> 的固定队列。若队列未满，发送方将消息放入队列后即可离开；若队列已被塞满，发送方必须挂起等待空位；</li>
+<li><strong>无界容量 (Unbounded capacity)</strong>：链路队列在理论上具备无限容量。发送方发送任何消息均能立即放入队列，发送方永远不会因为缓冲区满而被阻塞。</li>
+</ul>
+<hr />
+<h3 id="client-server-communication">Client-Server Communication</h3>
+<p>​   前面的 IPC 机制多用于同一台主机内部的进程间通信。当进程分布在不同的物理计算机上，或者采用客户机-服务器 (Client-Server) 分布式架构时，操作系统与应用层提供了更高层级的通信抽象技术。</p>
+<p><strong>1. 套接字 (Sockets)</strong></p>
+<p>​   套接字是网络分布式通信的最底层基石，被严格定义为<strong>网络通信的端点 (Endpoint for communication)</strong>。</p>
+<ul>
+<li><strong>构成结构</strong>：套接字由 <strong>IP 地址</strong> 与 <strong>端口号 (Port)</strong> 拼接而成。例如 <code>161.25.19.8:1625</code> 表示主机 161.25.19.8 上监听或使用的 1625 号端口；</li>
+<li><strong>通信形式</strong>：网络上任意两个进程之间的通信，本质上都是由<strong>一对套接字</strong>（客户端套接字与服务端套接字）建立起的双向通信通道。</li>
+</ul>
+<p><img src="./assets/ch3_socket_comm.png" alt="ch3_socket_comm" style="zoom: 65%;" /></p>
+<ul>
+<li><strong>端口号划分惯例</strong>：<ul>
+<li>服务端公认端口 (Well-known ports)：系统通常为特定的标准网络服务保留小于 1024 的端口号。例如 HTTP 服务固定使用 80 端口，SSH 服务固定使用 22 端口，FTP 使用 21 端口；</li>
+<li>客户端临时端口 (Ephemeral ports)：当客户端发起连接时，操作系统会自动从大于 1024 的端口池中动态分配一个未被占用的端口号（例如图中客户端主机分配的 1625 端口）。</li>
+</ul>
+</li>
+<li><strong>底层特点</strong>：套接字传输的是底层的无格式无结构字节流 (TCP) 或数据报 (UDP)，上层应用程序需要自行制定协议来解析字节含义。</li>
+</ul>
+<hr />
+<p><strong>2. 远程过程调用 (Remote Procedure Calls, RPC)</strong></p>
+<p>​   为了让网络分布式通信更加符合程序员的编程直觉，RPC 将网络数据收发过程进行了高级封装，使得<strong>调用远程计算机上的函数就像调用本地普通函数一样透明自然</strong>。</p>
+<p><img src="./assets/ch3_rpc_execution.png" alt="ch3_rpc_execution" style="zoom: 65%;" /></p>
+<p>​   RPC 依赖客户端和服务端的一对<strong>存根 (Stub)</strong> 来屏蔽底层的网络通信细节，其完整的执行过程如下：</p>
+<ol>
+<li><strong>客户端调用</strong>：客户端用户程序像平常一样发起普通的本地函数调用，该调用直接进入客户端存根 (Client-side stub)；</li>
+<li><strong>参数封送 (Marshalling)</strong>：客户端存根在本地拦截该调用，负责查找目标服务器的网络地址，并将函数名、函数参数等包装为平台无关的标准网络数据包格式；</li>
+<li><strong>内核网络传输</strong>：客户端存根调用本地操作系统内核，通过网络将打包好的消息发送给远程服务器；</li>
+<li><strong>服务端接收</strong>：远程服务端的操作系统内核收到数据包，并将其转发给对应的服务端存根 (Server-side stub)；</li>
+<li><strong>解包执行 (Unmarshalling)</strong>：服务端存根拆解数据包，将参数还原出来，并在服务器本地调用真实的函数过程进行计算；</li>
+<li><strong>结果回传</strong>：服务端函数计算完毕后，将返回值交给服务端存根。服务端存根再次将执行结果封送打包，通过网络原路回传给客户端存根；</li>
+<li><strong>客户端接收</strong>：客户端存根解包结果，最终将结果作为函数返回值交付给最初的客户端调用方。</li>
+</ol>
+<hr />
+<p><strong>3. 远程方法调用 (Remote Method Invocation, RMI)</strong></p>
+<p>​   RMI 是 Java 语言体系中类似于 RPC 的远程通信机制，两者的核心区别在于编程范式：</p>
+<ul>
+<li><strong>RPC 基于面向过程 (Procedural-based)</strong>：主要用于 C 语言等传统系统编程，远程调用的是具体的函数过程；</li>
+<li><strong>RMI 基于面向对象 (Object-based)</strong>：专为 Java 设计，允许本地 Java 虚拟机上的程序直接调用位于远程服务器上的 <strong>Java 对象的成员方法</strong>。</li>
+</ul>
+<p><img src="./assets/ch3_rmi_marshalling.png" alt="ch3_rmi_marshalling" style="zoom: 65%;" /></p>
+<ul>
+<li><strong>参数传递差异</strong>：<ul>
+<li>在传统 RPC 中，传递给远程过程的参数只能是普通的基础数据类型（整型、字符、数组等）；</li>
+<li>在 Java RMI 中，除了基本数据类型外，还可以直接将<strong>完整的 Java 对象</strong>作为参数传递。如果传递的是本地对象，Java 会通过对象序列化 (Serialization) 将对象深度打包传过去；如果传递的是远程对象，则直接传递该远程对象的引用。</li>
+</ul>
+</li>
+<li><strong>架构演进</strong>：在早期 Java 体系中，服务端需要对应的骨架 (Skeleton) 类配合存根工作；自 Java 2 (JDK 1.2) 引入动态反射技术后，服务端已不再需要生成骨架组件。</li>
+</ul>
+<hr />
+<p><strong>4. 补充知识：macOS 中的 1 号根进程 launchd</strong></p>
+<p>​   课件最后展示了在苹果 macOS 操作系统中查看进程树根节点的实际命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>ps<span class="w"> </span>-eaf<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>launchd
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="m">0</span><span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">3</span><span class="w"> </span><span class="m">919</span><span class="w">  </span>??<span class="w">   </span><span class="m">33</span>:55.81<span class="w"> </span>/sbin/launchd
+</span></code></pre></div>
+<p>​   在类 UNIX 系统中，1 号根进程因系统分支而异：
+* 传统 Linux 系统：经典的 <code>init</code>；
+* 现代 Linux 发行版（如 Ubuntu、CentOS）：统一采用 <code>systemd</code>；
+* 苹果 macOS 系统：采用由苹果研发的 <code>/sbin/launchd</code> 作为 1 号进程，负责接管整个用户界面的启动、后台服务的编排调度，以及替系统中所有孤儿进程收尸领养。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

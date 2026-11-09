@@ -1,0 +1,1066 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/About_Lab/">
+      
+      
+        <link rel="prev" href="../ch4_Threads/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>实验 - 操作系统</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab0" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="操作系统" class="md-header__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            操作系统
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              实验
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="操作系统" class="md-nav__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    操作系统
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2_Structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    操作系统结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch3_Processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch4_Threads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实验
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lab0
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="lab0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        知识扩充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gcc-extended-asm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCC Extended Asm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        循环个几次,看返回的time的值
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        lab0
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="lab0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        知识扩充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gcc-extended-asm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCC Extended Asm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        循环个几次,看返回的time的值
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p>docker或者linux?</p>
+<ol>
+<li>实验验收到达即可</li>
+</ol>
+<h2 id="lab0">lab0</h2>
+<h3 id="_1">实验理解</h3>
+<ul>
+<li>
+<p>GDB Dashboard的状态理解:</p>
+<p><code>Assembly</code>: <strong>反汇编结果</strong>. 显示当前程序计数器PC正在执行的RISC-V汇编指令</p>
+<p><code>Breakpoints</code>: <strong>断点监控列表</strong>. 显示我当前设置了哪些断点, 以及对应的位置, 被触发的次数</p>
+<p><code>Expressions</code>: 自定义监视器. 类似 IDE 中的 Watch 窗口，用来追踪自定义表达式。</p>
+<p><code>History</code>: 命令历史. 记录最近瞧过的调试命令</p>
+<p><code>Memory</code>: 内存透视面板. 可用来指定监控某一块内存地址或栈顶内存. 比如: <code>dashboard memory watch $sp 32</code>: 即当前栈顶sp村的32字节内容</p>
+<p><code>Registers</code>: <strong>寄存器</strong>. 列出32个通用寄存器中的十六进制数值</p>
+<p><code>Source</code>: C语言源代码. 当拥有完整调试行号时, 此处会显示对应的C文件源码</p>
+<p><code>Stack</code>: <strong>函数调用栈帧</strong>. 显示当前函数是由谁调用的, 或者是从哪层函数跳进来的. 其中数字越大的对应外层, 数字0对应的是栈顶</p>
+<p><code>Threads</code>: <strong>线程</strong>. 显示正在调试的式哪一个物理核心(RISC-V称为Hart)</p>
+<p><code>Variables</code>: 局部变量. 打印当前C函数内部的局部变量以及取值</p>
+<p>更加详细的一些描述:</p>
+</li>
+</ul>
+<h3 id="_2">知识扩充</h3>
+<ol>
+<li>
+<p>Linux系统是由绝大部分的C语言加上部分汇编语言写成的</p>
+</li>
+<li>
+<p>镜像(Image). 这里的镜像, 指的是剥离了调试内容, 符号名, 端头部表, 测试元数据等的纯粹二进制机器码. 其体积更小, 专门喂给CPU/QEMU硬件执行, 比如实验中的: Image. 而实验中的vmlinux则是标准的ELF格式文件, 保留了上述提到的内容, 主要用来喂给GDB调试器.</p>
+<p>Kernel镜像, 即纯净CPU指令流二进制块: Image; </p>
+<p>磁盘根文件系统镜像, 即硬盘扇区的镜像: rootfs.img</p>
+</li>
+<li>
+<p>Shell和Ternimal的理解</p>
+<p>首先需要明确的是, Shell和Terminal是两个完全不同的东西, 但是二者的本质都是程序, 其中Terminal是一个GUI程序, 而Shell是一个CLI命令行程序: </p>
+<p>​   Terminal/终端的作用是: 申请一个窗口, 绘制文字像素, 以及监听鼠标和键盘事件; </p>
+<p>​   Shell则是用于接收终端传过来的字符, 并解析其中的含义, 再调动kernel去执行具体操作, 并将最终得到的结果返回. </p>
+<p>在计算机发展初期, 终端是一个独立的机器, 它通过电缆和计算机连接. 程序员通过终端向计算机发送命令和请求, 计算机处理后将结果返回终端, 终端再进行处理, 并将结果绘制到显示屏上. 而"终端"这个名称也很好理解, 它就相当于计算机系统的末端, 并在此与人进行交互.</p>
+<p>另外, 对于Shell, 也有两种角度去理解它在计算机系统中的定位:</p>
+<ul>
+<li>如果对于狭义的操作系统, 那么就特指内核kernel, 那么Shell则是运行在kernel上方的一个普通的用户态程序. </li>
+<li>如果对于广义的操作系统, 即我们熟悉的全家桶. 那么Shell则是跟随发布的一个基础组件</li>
+</ul>
+<p>但不论怎么讲, 如果从层级来看, Shell就是夹在人/终端和kernel之间的一个解释器, 充分发挥着"壳"的作用.</p>
+</li>
+<li>
+<p>如果用一句话来大致概括操作系统, 那就是: "<strong>操作系统就是一个程序, 并且是一个死循环</strong>"</p>
+<p>但是这句话没有提到一些比较细节的内容, 还需要注意以下几点:</p>
+<ul>
+<li>
+<p>操作系统是一个由硬件事件驱动的, 永不退出的特殊系统软件, 包含死循环操作. </p>
+<blockquote>
+<ol>
+<li>
+<p>为什么必须是死循环?</p>
+<p>因为操作系统本身是物理硬件的最后一道防线, 普通程序可以return 0退出, 将控制权还给操作系统. 但是OS不能随意退出, 这可能会导致CPU失去指令指针, 从而使得计算机死机</p>
+</li>
+<li>
+<p>具体如何驱动?</p>
+<p>平时休眠, 靠时钟中断, 键盘网卡等硬件中断, 以及用户程序的系统调用等来唤醒它</p>
+</li>
+<li>
+<p>为什么需要用中断来驱动, 不能顺序执行吗?</p>
+<p>首先, 因为CPU的速度是ns级, 而外设速度是ms级, 二者速度相差巨大</p>
+<p>其次, 如果没有中断, CPU需要执行轮询(Polling), 这会导致CPU大部分时间都在进行询问和检查, 算力被浪费.</p>
+<p>当有了中断, CPU空闲时直接进入idle状态. 如果正在做其他计算, 在收到一个中断后, 它会停止当前任务, 转头先处理新任务, 然后再回去接着执行</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>OS本身是程序, 但是是运行在内核态的拥有特权的程序. 它不依赖软件提供底层环境, 它本身是管理者, 创造环境</p>
+</li>
+</ul>
+</li>
+<li>
+<p>硬件的大致分类:</p>
+<ul>
+<li>
+<p>主机核心: CPU, 内存条(RAM), 主板芯片组以及总线</p>
+</li>
+<li>
+<p>主机控制与存储: 硬盘, 显卡, 各种控制芯片(USB主控芯片, 声卡芯片, 网卡芯片等)</p>
+</li>
+<li>
+<p>外设: </p>
+<p>​   输入: 键盘, 鼠标, 摄像头, 麦克风, 触摸板; </p>
+<p>​   输出: 显示器屏幕, 扬声器; </p>
+<p>​   物理接口: USB, HDMI, 音频3.5mm孔, type-c口等</p>
+</li>
+</ul>
+</li>
+<li>
+<p>什么是固件?</p>
+<p>​   如果用一句话总结: <strong>固件的本质是一个二进制程序, 编译后生成机器指令集. 又因为代码需要有物理载体, 固件代码就是通过物理芯片中的成千上万个特殊的晶体管开关状态给包装起来的.</strong> </p>
+<p>一个简单的对比: </p>
+<p>​   硬件: 看得见摸得着的物理电路;</p>
+<p>​   软件: 保存在电脑上的可以安装和卸载的高级应用</p>
+<p>​   固件: "固化"在硬件芯片里的软件 .</p>
+<p>​   它一般被直接烧录(Flash)在主板或设备的非易失性存储芯片(如 EEPROM / SPI Flash ROM)中. 计算机刚刚通电的一瞬间, 内存(RAM)里是空的, 硬盘还没被读取, CPU 也什么都不知道. 这时候最先跑起来的就是固件, 它主要做下面的一些事: </p>
+<ul>
+<li>硬件检查(POST, 上电自检): 检查 CPU 针脚是否正常、主板供电是否稳定、插了几根内存条、显卡是否点亮. </li>
+<li>初始化最基础的芯片配置: 把内存控制器配置好, 让 RAM 能存取数据；初始化简单的串口或屏幕输出. </li>
+<li>寻找并加载操作系统(Bootloader 职责): 固件去硬盘或网络上寻找操作系统的内核镜像, 把内核拷贝到内存中, 然后把 CPU 控制权交接(Jump)给内核, 固件的大部分初天使命就完成了. </li>
+</ul>
+<p>常见的固件有: </p>
+<ul>
+<li>PC 电脑上的: 经典的 <strong>BIOS</strong>(Basic Input/Output System)以及现代的 <strong>UEFI</strong>. </li>
+<li>路由器/嵌入式设备上的: U-Boot. </li>
+<li>外设里面的: 你的鼠标、键盘、固态硬盘(SSD 控制器)、显卡里面其实都运行着各自专属的固件微代码. </li>
+<li>实验中的例子: OpenSBI(Open Source Supervisor Binary Interface). </li>
+</ul>
+<p>在 RISC-V 架构下, 计算机一开机运行在最高权限的 <strong>M-mode(机器模式)</strong>, 运行的就是 OpenSBI 固件. 它负责把底层硬件垫平, 然后降权到 S-mode 启动 Linux 内核. </p>
+<blockquote>
+<p>至于为什么不将这一部分代码放入到硬盘, 这就牵扯到了先有鸡还是先有蛋的问题: </p>
+<ol>
+<li>现代的硬盘的通信协议很复杂, 需要硬盘主控芯片, 文件系统驱动才能读出里面的文件；</li>
+<li>所以要想读取硬盘中的操作系统代码, 首先需要读取硬盘驱动代码, 但是电脑刚启动时, 内存是空的, 所以也没有办法读取代码；而如果直接将驱动代码放入硬盘, 那么就会陷入死锁. </li>
+<li>只有一个电路极其简单, 接通电源就能直接读出字节的芯片才能够破局, 只要一通电, CPU无条件地从小芯片连接的物理地址抓取第一条指令；而这个芯片中的代码负责点亮内存, 初始化总线, 加载驱动, 最终解开硬盘, 成功唤醒操作系统</li>
+</ol>
+<p>这也是为什么启动系统叫做“Bootstrap”(拔着自己的鞋把自己提起来)</p>
+</blockquote>
+</li>
+<li>
+<p>什么是内核 kernel</p>
+<p>​   平时我们嘴里常说的“操作系统”(如 Ubuntu Linux、Windows 11、macOS), 实际上是一个庞大的全家桶(包含了图形桌面、终端命令、各种系统工具). 但操作系统的核心灵魂只有一个, 就是内核(Linux 内核、Windows NT 内核、XNU 内核). </p>
+</li>
+<li>
+<p>什么是核显?</p>
+<p>核显(integrated Graphics / iGPU) . 在CPU芯片内部的一块图形计算单元. 而独显是主板上独立的一大块芯片, 它的性能更强大, 同时功耗也更大. 平时静音省电时, 一般都是核显在工作.</p>
+</li>
+<li>
+<p><strong>什么是OpenSBI</strong></p>
+<p>SBI：supervisor binary interface，指的是运行在S态的操作系统内核如果通过ecall向运行在M态的底层固件（比如OpenSBI）申请服务的<strong>接口规范</strong>。</p>
+<p>而OpenSBI是一套固件软件，也就是根据上面提到的接口规范做出的一个固件程序。</p>
+</li>
+<li>
+<p>什么是Bootloader</p>
+<p>可以翻译为：引导加载程序。本质是一个固件程序</p>
+</li>
+</ol>
+<h2 id="lab1">Lab1</h2>
+<h3 id="_3">内容</h3>
+<h4 id="gcc-extended-asm">GCC Extended Asm</h4>
+<p><strong>扩展内联汇编</strong></p>
+<p>​   <code>spec</code>: specification 规范标准</p>
+<p>​   标准C中是没有asm这个关键字的，所以<strong>内联汇编说到底是编译器的扩展</strong>，而不是C语言本身的语法。GCC和Clang都提供了这个扩展，并且语法通用。MSVC在32位下也有支持，但是要粗略的多，并且和前二者语法不匹配；到了x64直接不支持内联汇编了。</p>
+<p>​   头文件中写的结构体，只是一个容器，用来将值装成C语言能够返回的东西；真正的核心是里面的内联汇编。</p>
+<p>​   要分清，sbi.h文件中最开始的struct是<strong>结构体</strong>，而后面的都是返回结构体的<strong>函数！！</strong></p>
+<p>​   <img src="./assets/image-20261020174847034.png" alt="image-20261020174847034" style="zoom:50%;" /></p>
+<p>mv ，是伪指令，即move。汇编器展开成：addi 目标，源，0；即将源寄存器的值抄到目标寄存器</p>
+<p>ecall，从S态切换到M态</p>
+<p>走完这八条，寄存器里的情况是：a7 里是 0x4442434e，a6 里是 0x2，a0 里是 0x30。</p>
+<p>然后执行 ecall。CPU 进 M 态，OpenSBI 一看 a7 是 0x4442434e，知道你要用 Debug Console；再看 a6 是 0x2，知道你要写一个字节；于是把 a0 里的 0x30 送到串口。终端收到 0x30，按 ASCII 显示成字符 0。</p>
+<p>不同的函数对应的功能不同，像sbi_debug_console_write_byte只写一个字节，后续的参数补0即可</p>
+<ol>
+<li>使用冒号来分隔汇编模板后面的各个操作数段；</li>
+</ol>
+<p>语法的两种形式，第一种是四段：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>__asm__ 限定符(
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    汇编指令
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    :输出操作数
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    [:输入操作数
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    [:破坏描述]])
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>比如:
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   __asm__ volatile (
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        "instruction1\n"
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        "instruction2\n"
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        ......
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        ......
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        "instruction3\n"
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        : [out1] "=r" (v1),[out2] "=r" (v2)
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        : [in1] "r" (v1), [in2] "r" (v2)
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        : "memory"
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    );
+</span></code></pre></div>
+<p>所谓破坏描述，指的就是：这段汇编会在执行过程中将某些寄存器或者内存的内容覆盖掉，原来的值不再可信</p>
+<p>第二种多一段，末尾加<code>:跳转标签</code>，这是asm goto用的，让一段汇编跳到C代码的某个标签；</p>
+<p>“r”：是约束。表示操作数必须放在一个通用寄存器里。</p>
+<p>“=”：是修饰符，不是约束。表示只写。</p>
+<p>只有一个r的时候，方向由它的位置决定，出现在输入段就是只读，出现在输出段并且没有修饰符的情况下默认也是只写，不过一般都习惯写上=</p>
+<p><strong>三个限定符</strong></p>
+<ul>
+<li>
+<p><code>volatile</code></p>
+<p>通常扩展汇编是用来做输入输出的计算的，但是语句也可能有副作用，这时需要用<code>volatile</code>关掉一些优化，防止编译器把它删掉或者挪用位置。</p>
+</li>
+<li>
+<p><code>inline</code></p>
+<p>用来告诉编译器这段汇编足够小，为了内联可以按最小尺寸计算。实际项目里很少用。</p>
+</li>
+<li>
+<p><code>goto</code></p>
+<p>只配合 asm goto 使用，声明这段汇编可能跳到后面列出的标签之一。</p>
+</li>
+</ul>
+<p>spec：specification，规范，也即官方发布的正式标准文档。</p>
+<p>四份手册文档的内容：</p>
+<ul>
+<li>Assembly Programmer's Manual 里主要是寄存器 ABI 命名、调用约定、CSR 编号表和重定位（%hi、%lo、%pcrel_hi 这些）；</li>
+<li>RISC-V Unprivileged Spec 是非特权指令集规范。它定义所有不带特权概念的指令，包括基础整数指令集、乘除扩展、原子扩展、浮点扩展、压缩指令，以及指令编码格式。它还定义了 csrrw、csrrs 这些访问 CSR 的指令本身，但不定义每个 CSR 里有什么位。</li>
+<li>RISC-V Privileged Spec 是特权级规范。它定义 M、S、U 三种模式怎么切换、trap 怎么发生怎么返回、每个 CSR 的位域含义，以及虚拟内存和页表格式。你 lab1 后半段用到的 sstatus、sie、stvec、scause、sepc，还有后面页表实验的 satp，全部以这份为准。我前面说 SIE 是 bit 1、STIE 是 bit 5，出处就是这里。</li>
+<li>
+<p>RISC-V SBI Specification 是 S 态二进制接口规范。它定义内核在 S 态怎么通过 ecall 请求 M 态固件服务，包括每个功能的 EID 和 FID、参数放哪个寄存器、返回值怎么解释。你的 sbi_ecall 和那几个常量 0x4442434e、0x53525354、0x54494d45 都出自这份。</p>
+</li>
+<li>
+<p>目录架构:</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>├── arch
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│   └── riscv
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│       ├── include
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│       │   ├── defs.h
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│       │   └── sbi.h
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│       ├── kernel
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│       │   ├── head.S
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│       │   ├── Makefile
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│       │   ├── sbi.c
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│       │   └── vmlinux.lds
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│       └── Makefile
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>├── include
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│   ├── printk.h
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│   ├── stddef.h
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│   └── stdint.h
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>├── init
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│   ├── main.c
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│   ├── Makefile
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│   └── test.c
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>├── lib
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│   ├── Makefile
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│   └── printk.c
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>└── Makefile
+</span></code></pre></div>
+<ol>
+<li>
+<p>arch，放和架构相关的内容</p>
+<p>其中include的两个文件，前者是CSR（Control and Status Register 控制状态寄存器）的宏，后者是OpenSBI接口用的声明；</p>
+<p>kernel里面是内核本体，head.S是汇编入口，sbi.c封装ecall，vmlinux.lds是链接脚本，Makefile负责自动化编译；</p>
+<p>高一层的Makefile，用来链接vmlinux、抽出Image等</p>
+</li>
+<li>
+<p>include，通用头文件</p>
+<p>printk.h 声明格式化输出函数</p>
+<p>后两个都是自己写的类型定义</p>
+</li>
+<li>
+<p>init，内核的C入口</p>
+<p>start_kernel以及test</p>
+</li>
+<li>
+<p>lib，库函数</p>
+<p>只有printk.c的实现</p>
+</li>
+<li>
+<p>head.S 文件</p>
+<p>​   <strong>内核第一条指令所在的地方</strong>。QEMU加载完镜像，OpenSBI初始化硬件后，跳到0x80200000，执行的第一段代码就在这里</p>
+<p>​   为什么要用汇编？</p>
+<p>​   A：C函数一开头要用栈。编译器给每个函数生成的序言里第一步通常是调整 sp，函数里的局部变量、保存的返回地址全在栈上。而在设置 sp 之前，sp 是 OpenSBI 留下的残留值，根本没有合法的栈可指向。</p>
+<p>​   boot_stack 标记这块区域的起点，.space 占出实际字节数，boot_stack_top 标记终点。链接脚本里 .bss 段的第一个收集项就是 <code>*(.bss.stack)</code>，所以这块栈会落在 .bss 的最开头。XYZ是占位符，要换成实际大小</p>
+<p>​   la 是加载地址的伪指令，它会被汇编器展开成一对 auipc 加 addi，相对于当前指令的位置算出 boot_stack_top 的绝对地址。这里不能用 li，li 是加载立即数的，只能处理常数，而 boot_stack_top 的地址要等链接器把所有段摆好才知道，是个链接期才确定的值。用 li 会报重定位错误。</p>
+<p>​   把地址装进 sp，栈就建好了。</p>
+<p>​   用栈顶而不是栈底，因为栈向低地址方向增长，push 相当于 sp 减。sp 指向栈顶，往下用才是空的地方，指到栈底的话第一条 push 就写到栈外面去了。</p>
+<p>​   call 是调用伪指令，展开成 auipc 加 jalr，同时把下一条指令的地址存进 ra。用 j 也能跳过去，但那不叫调用。start_kernel 是 C 函数，编译器按被调用的约定生成它，用 call 更规范。虽然它实际上永远不会返回。</p>
+</li>
+<li>
+<p>sbi.c</p>
+<p>​   SBI调用的封装层。内核跑在S态，但是输出字符，设置定时器这些事只能由M态的OpenSBI做，S态的唯一通路就是ecall指令。这个文件就是将这条通路包成几个好用的函数</p>
+<p><code>sbi_set_timer</code>：EID 0x54494d45 表示 TIME 扩展，FID 是 0 表示这个扩展里的设置定时器功能，arg0 是 stime_value 也就是下一次中断的目标时刻。</p>
+<p><strong>sbi_debug_console_write_byte</strong>：传的是：EID 表示 Debug Console 扩展，FID 是 2 表示写单个字节，arg0 是要写出去的那个字节。</p>
+</li>
+<li>
+<p>defs.h</p>
+<p>​   ({})是GNU的语句表达时扩展，<strong>不是标准C的语法，是GCC的</strong>，作用是将一段代码块当成一个值来用，块中最后一句的值就是表达式的值，最后的__v决定了csr_read(...)返回了什么。</p>
+<p>​   uint64_t __v：临时变量</p>
+<p>​   <code>"csrr %0, " #csr</code> 是指令模板。csrr 是读 CSR 的伪指令。%0 是占位符，对应后面第一个操作数。#csr 是字符串化，把宏参数直接变成字符串。所以 csr_read(sstatus) 展开后就是 <code>csrr %0, sstatus</code>。</p>
+<p>​   <code>"=r"(__v)</code> 是输出段，让编译器挑个寄存器接住读出来的值，过后写回 __v。</p>
+<p>​   中间那个冒号之间是空的，因为读 CSR 不需要输入操作数。</p>
+<p>​   <code>"memory"</code> 放在破坏描述里，防止编译器把这段汇编前后的访存顺序重排。</p>
+</li>
+<li>
+<p>时钟中断处理</p>
+</li>
+<li>
+<p>改vmlinux.lds以及head.S</p>
+<p><strong>lds是链接脚本</strong>，供连接器ld使用，通过-T参数传进去，用来指定每个段摆在哪个地址，怎么摆。</p>
+<p>head.S属于启动流程，OpenSBI跳过来后立刻执行</p>
+<p>entry.S里面的_traps是trap的入口，</p>
+<p>​   先说清楚为什么的段名要改。原来的 head.S 在 .text.entry 段，链接脚本把它排在第一个，所以 _start 正好在 0x80200000。现在 _traps 要用 .text.entry，head.S 就得让位，搬到 .text.init 去，同时链接脚本要把 .text.init 排到 .text.entry 前面</p>
+<p>​   顺序就是地址顺序。先 .text.init 再 .text.entry，_start 才在 0x80200000，_traps 紧随其后。</p>
+<p><strong>四个初始化</strong></p>
+<p>​        trap，即陷阱，指的是：<strong>CPU被打断，跳到别处执行，处理完再回来</strong>的过程</p>
+<p>​        首先第一行把entry.S中定义的 _traps 地址装进t0，第二行将它写进stvec，stvec的低两位是模式位，内部写的是函数真实地址，低两位天然为0，所以是Direct模式，<strong>意思是所有的trap一律跳到 _traps</strong>。</p>
+<p>​        第一行t0赋1，第二行左移5位，得到0x20，即一个只有bit5是1的掩码；第三行 csrs 表示按<strong>掩码置位</strong>，效果是将sie的 bit 5变为1，其他位不变。<strong>sie是“允许哪些类型的中断”</strong>，<strong>其中的bit 5叫SITE，supervisor timer interrupt enable，专门控制S态时钟中断</strong>，置1相当于打开开关，允许这个中断</p>
+<p>​        第一行将time寄存器的值读进a0，time是mtime的影子。第二行t-赋值10000000，对于10MHz时钟的一秒，第三行算出a0 =  现在+1秒；第四行call是调用函数，参数在a0里传，函数内部又走了sbi_ecall，最终由OpenSBI把a0的值写进<strong>stimecmp</strong>。写完之后闹钟就定在一秒后。是<strong>设置中断过程的第一次</strong>，点火</p>
+<p>这里直接把 10000000 写死了，等于 clock.c 里 TIMECLOCK 的值。你以后要是改了那个值，记得这里也改。</p>
+<p>​        和第二部分一样的置位套路，不过掩码是0x2，置 sstatus 的 SIE 位，sstatus 是<strong>全局开关</strong>。打开之后时钟中断CPU才会响应。SIE 在 bit 1。同样先 li 再 slli 再 csrs。</p>
+<p>​        最后call 跳转到main函数</p>
+<p>​        然后进入后面的栈空间创建</p>
+<p><strong>顺序不能乱</strong></p>
+<p>stvec 必须在开中断之前设。要是先开了 sstatus[SIE]，而 stvec 还是 0，之间来了一个时钟中断，CPU 就跳到地址 0 去执行，直接崩。</p>
+<p>sie 要在 sstatus 之前开，这是逻辑顺序：sie 决定哪类中断被允许，sstatus 决定总开关。先配好具体类别，再打开总闸，这样总闸一开就是确定的配置。</p>
+<p><strong>一个预期中的报错</strong></p>
+<p>改完 make，链接会失败，报 undefined reference to <code>_traps</code>。这是正常的，因为 entry.S 还没写，stvec 那个符号无处可寻。</p>
+</li>
+<li>
+<p>entry.S编写</p>
+<p>store doubleword</p>
+<ul>
+<li>
+<p>sd x1, 8(sp) 将x1的值写道sp+8的位置，占8个子节；</p>
+</li>
+<li>
+<p>sp执行完addi后是新值，所以要先减去264，回到中断前的值，再存入栈中；</p>
+</li>
+<li>
+<p>spec为什么存？</p>
+<p>sepc 是硬件在 trap 发生时自动写好的，存着被打断的那条指令的地址。</p>
+</li>
+<li>
+<p>csrr 是伪指令。 csrr rd, csr 展开成 csrrs rd, csr, x0，只读。x0恒为0</p>
+<p><img src="./assets/image-20261020192453459.png" alt="image-20261020192453459" style="zoom:50%;" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>trap处理函数</p>
+<p>先判断是中断还是异常，异常就打印未处理异常；是中断再看编号，等于5说明是时钟中断，打印并重设；否则是其他中断</p>
+<p>S态时钟中断编号</p>
+<p><img src="./assets/image-20261020193203882.png" alt="image-20261020193203882" style="zoom:50%;" /></p>
+<p><img src="./assets/image-20261020193101848.png" alt="image-20261020193101848" style="zoom:50%;" /></p>
+<p><strong>怎么判断是时钟中断</strong></p>
+<p>scause 的高位是标志位。最高位为 1 表示这次是 interrupt，为 0 表示 exception。</p>
+<p>剩下的低位是原因编号。S 态的时钟中断编号是 5，叫 STIP，也就是 supervisor timer interrupt pending。</p>
+<p>所以判断逻辑就是两步：先看最高位是不是 1，是的话再看低 8 位是不是 5。</p>
+</li>
+</ol>
+<p>​   </p>
+<p>Q6：</p>
+<ol>
+<li>
+<p>debug启动以及gdb；</p>
+</li>
+<li>
+<p>``` bash
+    b get_cycles() #函数前</p>
+<p>c
+finish</p>
+<h1 id="time">循环个几次,看返回的time的值</h1>
+<p>```</p>
+</li>
+</ol>
+<p>Q3：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>b<span class="w"> </span>sbi_ecall
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>c
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>disassemble<span class="w"> </span>sbi_ecall<span class="w"> </span><span class="c1">#找ecall地址</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>b<span class="w"> </span>*0x000000008020024c<span class="w"> </span><span class="c1">#ecall</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>c
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>info<span class="w"> </span>registers<span class="w"> </span>a0<span class="w"> </span>a1<span class="w"> </span>a6<span class="w"> </span>a7<span class="w"> </span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">#ecall后. a0-错误码 a1-返回值 a6-function ID a7-EID 扩展模块编号</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>c<span class="w"> </span>/<span class="w"> </span>si
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>info<span class="w"> </span>registers<span class="w"> </span>a0<span class="w"> </span>a1<span class="w"> </span>a6<span class="w"> </span>a7
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

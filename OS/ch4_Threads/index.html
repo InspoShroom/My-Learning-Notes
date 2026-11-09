@@ -1,0 +1,1424 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/ch4_Threads/">
+      
+      
+        <link rel="prev" href="../ch3_Processes/">
+      
+      
+        <link rel="next" href="../About_Lab/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>线程 - 操作系统</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch4" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="操作系统" class="md-header__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            操作系统
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              线程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="操作系统" class="md-nav__button md-logo" aria-label="操作系统" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    操作系统
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch2_Structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    操作系统结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch3_Processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Threads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 动机与背景：为什么需要线程？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-single-multithreaded-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 单线程进程与多线程进程 (Single &amp; Multithreaded Processes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多线程的四大核心收益 (Benefits)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs-concurrency-vs-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 并发 vs 并行 (Concurrency vs. Parallelism)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multithreading-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multithreading Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multithreading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 用户级线程与内核级线程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 生动比喻：运动会与班级比赛模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 三大经典多线程模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 三大经典多线程模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-to-one-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多对一模型 (Many-to-One Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-to-one-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一对一模型 (One-to-One Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#many-to-many-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多对多模型 (Many-to-Many Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-level-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二级模型 (Two-level Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threading-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threading Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Threading Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-fork-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. fork() 与 exec() 的语义分歧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-signal-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 信号处理 (Signal Handling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-thread-cancellation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 线程取消 (Thread Cancellation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-thread-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 线程池 (Thread Pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-thread-specific-data-tsd-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 线程特定数据 (Thread-Specific Data, TSD / TLS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-scheduler-activations-lwp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 调度器激活与轻量级进程 (Scheduler Activations &amp; LWP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-libraries-and-os-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Libraries and OS Implementations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Libraries and OS Implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-posix-pthreads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. POSIX Pthreads
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Windows 线程实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Linux 线程机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Java 线程与生命周期状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../About_Lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Threads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 动机与背景：为什么需要线程？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-single-multithreaded-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 单线程进程与多线程进程 (Single &amp; Multithreaded Processes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多线程的四大核心收益 (Benefits)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs-concurrency-vs-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 并发 vs 并行 (Concurrency vs. Parallelism)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multithreading-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multithreading Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multithreading Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 用户级线程与内核级线程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 生动比喻：运动会与班级比赛模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 三大经典多线程模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 三大经典多线程模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-to-one-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多对一模型 (Many-to-One Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-to-one-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一对一模型 (One-to-One Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#many-to-many-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        多对多模型 (Many-to-Many Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-level-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二级模型 (Two-level Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threading-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threading Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Threading Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-fork-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. fork() 与 exec() 的语义分歧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-signal-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 信号处理 (Signal Handling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-thread-cancellation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 线程取消 (Thread Cancellation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-thread-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 线程池 (Thread Pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-thread-specific-data-tsd-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 线程特定数据 (Thread-Specific Data, TSD / TLS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-scheduler-activations-lwp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 调度器激活与轻量级进程 (Scheduler Activations &amp; LWP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-libraries-and-os-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Libraries and OS Implementations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Libraries and OS Implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-posix-pthreads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. POSIX Pthreads
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Windows 线程实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Linux 线程机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Java 线程与生命周期状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch4">CH4</h1>
+<h2 id="threads">Threads</h2>
+<h3 id="overview">Overview</h3>
+<p>在现代操作系统中，绝大多数并发应用都是以多线程形式运行的。线程是 CPU 调度的基本单位，也是进程内部一条独立的执行流。</p>
+<h4 id="1">1. 动机与背景：为什么需要线程？</h4>
+<p>课件以开发一个 Web 浏览器为例展示了传统单线程设计的核心痛点：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">Main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">RetrieveData</span><span class="p">();</span><span class="w">    </span><span class="c1">// 从网络拉取数据，阻塞 1 秒</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">DisplayData</span><span class="p">();</span><span class="w">     </span><span class="c1">// 渲染并显示数据，阻塞 1 秒</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="n">GetInputEvents</span><span class="p">();</span><span class="w">  </span><span class="c1">// 获取用户输入事件，阻塞 1 秒</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>在单线程架构下，这三个操作只能串行排队。当用户点击界面按钮时，主循环可能正卡在网络阻塞中，导致界面失去响应长达数秒。</p>
+<p>如果试图将每个操作切成极小的碎片交替执行，代码中就会充斥着大量的状态轮询与条件检查，例如调用 <code>CheckData()</code>，这不仅使得逻辑极其冗杂低效，而且依然难以做到真正的实时响应。</p>
+<ul>
+<li><strong>核心矛盾</strong>：为了保证交互灵敏，希望将任务切得越细越好；为了保证系统吞吐与效率，又希望大段连续执行代码。</li>
+<li><strong>操作系统的解法</strong>：由操作系统引入<strong>线程 (Thread)</strong> 机制。程序只需为每个独立职能创建独立线程，具体的碎片切片与调度工作全权交由操作系统处理。</li>
+</ul>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">Main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">CreateThread</span><span class="p">(</span><span class="n">RetrieveData</span><span class="p">());</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">CreateThread</span><span class="p">(</span><span class="n">DisplayData</span><span class="p">());</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">CreateThread</span><span class="p">(</span><span class="n">GetInputEvents</span><span class="p">());</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">WaitForThreads</span><span class="p">();</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h4 id="2-single-multithreaded-processes">2. 单线程进程与多线程进程 (Single &amp; Multithreaded Processes)</h4>
+<p>进程是<strong>操作系统分配资源的基本单位</strong>，而线程是 <strong>CPU 调度的基本单位</strong>。</p>
+<div align="center">
+
+<img src="./assets/ch4_single_multithread.png" alt="ch4_single_multithread" style="zoom: 50%;" />
+
+</div>
+
+<p>同一个进程内部的所有线程共享该进程的系统资源，但每个线程必须维护自身独立的执行上下文：</p>
+<ul>
+<li><strong>同进程内所有线程共享的资源</strong>：<ul>
+<li><strong>代码段 (Code)</strong>：执行相同的程序指令；</li>
+<li><strong>数据段 (Data)</strong>：共享全局变量与静态变量；</li>
+<li><strong>操作系统资源 (Files)</strong>：共享打开的文件描述符、网络套接字等句柄。</li>
+</ul>
+</li>
+<li><strong>每个线程独占私有的执行状态</strong>：<ul>
+<li><strong>线程标识符 (Thread ID, TID)</strong>：用于唯一区分线程；</li>
+<li><strong>程序计数器 (Program Counter, PC)</strong>：记录当前线程下一条将要执行的指令地址；</li>
+<li><strong>寄存器集合 (Registers)</strong>：保存当前线程专属的工作寄存器内容；</li>
+<li><strong>运行时栈 (Stack)</strong>：存放该线程自身函数调用的局部变量与返回地址。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="3-benefits">3. 多线程的四大核心收益 (Benefits)</h4>
+<ul>
+<li><strong>响应性 (Responsiveness)</strong>：在交互式图形界面或网络服务中，耗时的后台任务，例如大文件下载或复杂计算，可以在专属工作线程中运行，主 UI 线程依然能够实时响应用户的按键与点击。</li>
+<li><strong>资源共享 (Resource Sharing)</strong>：进程间通信 (IPC) 必须借助内核管道、消息队列或显式申请共享内存，开销繁琐；而同一进程内的线程天然共享代码段与全局内存，数据交换直接高效。</li>
+<li><strong>经济性 (Economy)</strong>：创建进程需要分配完整的独立虚拟地址空间与 PCB，开销昂贵；而创建线程只需分配极小的栈和私有寄存器空间。同时，线程间的上下文切换无需刷新页表与清空快表 (TLB)，切换成本远低于进程上下文切换。</li>
+<li><strong>充分利用多处理器架构 (Utilization of MP Architectures)</strong>：单线程进程无论部署在拥有多少核 CPU 的超级计算机上，同一瞬间也只能跑在一个物理核心上；多线程技术使得进程内的多个线程能够真正分散到多个物理核心上并行奔跑。</li>
+</ul>
+<hr />
+<h4 id="4-vs-concurrency-vs-parallelism">4. 并发 vs 并行 (Concurrency vs. Parallelism)</h4>
+<div align="center">
+
+<img src="./assets/ch4_concurrency_parallelism.png" alt="ch4_concurrency_parallelism" style="zoom: 50%;" />
+
+</div>
+
+<ul>
+<li><strong>并发 (Concurrency)</strong>：在单核 CPU 上，操作系统通过时间片轮转等调度算法，在极短时间内快速交替执行多个任务。在宏观上看所有任务似乎都在同时进行，但在微观的某一瞬间，CPU 核心上只有一个任务真正在跑。</li>
+<li><strong>并行 (Parallelism)</strong>：在多核 CPU 上，硬件具备在物理同一瞬间让多个核心分别执行不同任务的能力。</li>
+<li><strong>本质区别</strong>：并发强调的是程序结构上能够同时推进多个任务，并行强调的是物理硬件在同一时刻真正同时执行。</li>
+</ul>
+<hr />
+<h3 id="multithreading-models">Multithreading Models</h3>
+<p>操作系统实现多线程时，存在用户空间与内核空间两个不同层级的线程概念。</p>
+<h4 id="1_1">1. 用户级线程与内核级线程</h4>
+<ul>
+<li><strong>用户线程 (User Threads)</strong>：<ul>
+<li>由位于用户空间的线程库负责创建与调度，例如 POSIX Pthreads、Win32 以及 Java 线程库；</li>
+<li>内核对其存在完全无感知，线程切换不需要陷入内核态，切换速度极快；</li>
+<li>致命缺陷：如果某个用户线程发起了一个阻塞式系统调用，例如读取磁盘，由于内核只认整个进程，会导致该进程内的所有其他线程全部被强制连带挂起。</li>
+</ul>
+</li>
+<li><strong>内核线程 (Kernel Threads)</strong>：<ul>
+<li>由操作系统内核直接提供支持与管理调度；</li>
+<li>现代绝大多数主流操作系统（Linux、Windows、macOS）均在内核层支持内核线程；</li>
+<li>优点是某个线程阻塞时内核可以调度同一进程的其他线程继续跑；缺点是线程创建、销毁和上下文切换必须通过系统调用陷入内核态，开销相对较大。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="2">2. 生动比喻：运动会与班级比赛模型</h4>
+<p>课件特别用运动会比赛的生动比喻阐明了进程、线程与 CPU 核心之间的映射本质：</p>
+<ul>
+<li><strong>参赛班级</strong> = 进程 (Process)，拥有专属的班级号 (Process ID)；</li>
+<li><strong>班级成员</strong> = 线程 (Thread)，班级内部可以有多名学生；</li>
+<li><strong>运动场跑道</strong> = CPU 核心 (CPU core)，每条跑道同一时刻只能容纳一名运动员跑步；</li>
+<li><strong>上场资格号码簿</strong> = 内核线程凭证 (Kernel Thread / LWP ID)，裁判即内核调度器只认号码簿，只调度佩戴号码簿的运动员上跑道；</li>
+<li><strong>跑步</strong> = 运行态 (Running)；</li>
+<li><strong>下场排队打水喝</strong> = 等待 I/O (Wait I/O)，打水过程处于阻塞等待状态，必须让出跑道；</li>
+<li><strong>等待上跑道</strong> = 就绪态 (Ready)。</li>
+</ul>
+<p>根据号码簿即内核凭证的发放与绑定规则，衍生出三种经典的多线程映射模型：</p>
+<hr />
+<h4 id="3">3. 三大经典多线程模型</h4>
+<h5 id="many-to-one-model">多对一模型 (Many-to-One Model)</h5>
+<p>将多个用户级线程全部映射到单个内核线程上。</p>
+<div align="center">
+
+<img src="./assets/ch4_many_to_one.png" alt="ch4_many_to_one" style="zoom: 45%;" />
+
+</div>
+
+<ul>
+<li><strong>班级比喻</strong>：组委会给整个班级只发了一张号码簿。班级内部自行选出一名成员佩戴号码簿上场。如果当前上场的成员跑累了去排队打水喝，由于全班只有这一张号码簿，其他同学全被卡在场下，谁也无法上跑道。</li>
+<li><strong>特征</strong>：线程管理在用户空间完成，调度极为高效；但完全无法发挥多核 CPU 的并行能力，且一个线程阻塞会导致整个进程全体阻塞。</li>
+<li><strong>典型实例</strong>：早期 Solaris Green Threads、GNU Portable Threads。</li>
+</ul>
+<h5 id="one-to-one-model">一对一模型 (One-to-One Model)</h5>
+<p>每一个用户级线程严格对应一个独立的内核级线程。</p>
+<div align="center">
+
+<img src="./assets/ch4_one_to_one.png" alt="ch4_one_to_one" style="zoom: 45%;" />
+
+</div>
+
+<ul>
+<li><strong>班级比喻</strong>：班级里的每位同学都可以向组委会申请专属号码簿。每个人都可以独立登上不同的跑道奔跑，某位同学去打水喝绝不影响其他同学继续跑步。</li>
+<li><strong>特征</strong>：并发度最高，能充分释放多核 CPU 的硬件性能；缺点是每创建一个用户线程都要在内核中分配对应的控制块与栈空间，线程数量过多时会给内核带来沉重开销，因此系统会对总线程数设有限制。</li>
+<li><strong>典型实例</strong>：现代主流操作系统事实上的通用标准，包括 Linux、Windows NT/2000/XP/10/11、Solaris 9 及以上。</li>
+</ul>
+<h5 id="many-to-many-model">多对多模型 (Many-to-Many Model)</h5>
+<p>将 <span class="arithmatex">\(M\)</span> 个用户级线程多路复用到 <span class="arithmatex">\(N\)</span> 个内核级线程上，通常满足 <span class="arithmatex">\(M \ge N\)</span>。</p>
+<div align="center">
+
+<img src="./assets/ch4_many_to_many.png" alt="ch4_many_to_many" style="zoom: 45%;" />
+
+</div>
+
+<ul>
+<li><strong>班级比喻</strong>：组委会为每个班级限量发放若干个号码簿，比如每班限发 2 个。班级内部自行挑选当前能跑的成员佩戴号码簿上场。内核依据号码簿在跑道上排班调度。</li>
+<li><strong>特征</strong>：兼具灵活性与高并发。开发者可以根据业务需要随心创建任意多的用户线程，而无需担心耗尽内核资源；内核只需维护适量数量的内核线程。</li>
+<li><strong>典型实例</strong>：Solaris 8 早期版本、Windows 线程纤程 (ThreadFiber)、Go 语言运行时的 GMP 协程调度模型。</li>
+</ul>
+<h5 id="two-level-model">二级模型 (Two-level Model)</h5>
+<p>多对多模型的一种特殊变体。在整体维持多对多复用的同时，允许对某些要求极高、不能被挤占的关键用户线程进行特批，将其永久绑定到某个专属的内核线程上。</p>
+<div align="center">
+
+<img src="./assets/ch4_two_level.png" alt="ch4_two_level" style="zoom: 45%;" />
+
+</div>
+
+<ul>
+<li><strong>典型实例</strong>：IRIX、HP-UX、Tru64 UNIX、Solaris 8 及更早版本。</li>
+</ul>
+<hr />
+<h3 id="threading-issues">Threading Issues</h3>
+<p>在多线程环境下，传统面向进程的机制设计会引发一系列新的边界问题与设计抉择。</p>
+<h4 id="1-fork-exec">1. fork() 与 exec() 的语义分歧</h4>
+<p>在多线程进程中，若某个线程调用了 <code>fork()</code> 系统调用，新派生出来的子进程应该复制什么？</p>
+<ul>
+<li>选项 A：完整克隆原父进程中的所有线程；</li>
+<li>选项 B：仅克隆调用了 <code>fork()</code> 的那一个单线程。</li>
+</ul>
+<p>部分 UNIX 系统同时提供了两套版本的 <code>fork()</code>。在实际工程中，通常遵循如下准则：
+- 如果 <code>fork()</code> 之后立即调用 <code>exec()</code>：则仅复制当前调用线程即可。因为 <code>exec()</code> 会立即用新程序彻底覆盖掉子进程的原有地址空间，提前克隆其他线程纯属无用功；
+- 如果 <code>fork()</code> 之后不调用 <code>exec()</code>：则子进程完整复制所有线程，以便继续并发执行。</p>
+<hr />
+<h4 id="2-signal-handling">2. 信号处理 (Signal Handling)</h4>
+<p>在 UNIX 系统中，<strong>信号 (Signal)</strong> 是一种向进程通知特定事件发生的异步通知机制。信号的处理遵循统一范式：事件产生信号 -&gt; 信号投递到进程 -&gt; 信号处理程序 (Signal Handler) 响应处理。</p>
+<p>当信号产生时，多线程进程面临四种投递策略抉择：</p>
+<ul>
+<li>投递给该信号专门适用的目标线程：主要针对由特定线程触发的同步错误信号，例如除以零浮点异常或非法内存访问；</li>
+<li>投递给进程内的所有线程，例如强制终止进程的 Ctrl+C 或 SIGKILL 信号；</li>
+<li>投递给进程内部的某几个特定线程；</li>
+<li>在进程内指定一个专门的控制线程，统一负责接收并分发进程的所有信号。</li>
+</ul>
+<hr />
+<h4 id="3-thread-cancellation">3. 线程取消 (Thread Cancellation)</h4>
+<p>线程取消指的是在某个工作线程尚未自然结束前，由外界主动提前终止它的操作。例如用户在 Web 页面点击取消加载按钮，或者多个并发线程搜索同一目标时，其中一个线程已经找到答案，其余线程需立即终止。</p>
+<p>线程取消存在两种截然不同的方式：</p>
+<ul>
+<li><strong>异步取消 (Asynchronous cancellation)</strong>：立即强制终止目标线程。这种方式极其危险，若目标线程正在更新共享数据或持有互斥锁，强行中断会导致系统数据毁损或发生死锁。</li>
+<li><strong>延迟取消 (Deferred cancellation)</strong>：目标线程定期主动检查一个取消标志位。目标线程只有在运行到明确预设的安全检查点 (Cancellation Point) 时，才体面地释放自身占用的资源并退出。</li>
+</ul>
+<hr />
+<h4 id="4-thread-pools">4. 线程池 (Thread Pools)</h4>
+<p>在传统的高并发服务端中，如果每来一个客户端请求就临时创建一个新线程，当并发量极大时会引发严重的性能瓶颈与内存耗尽风险。</p>
+<p><strong>线程池的工作机制</strong>：在系统启动时预先创建一定数量的工作线程放入池中处于待命状态。当任务到来时，从池中取出一个空闲线程服务该任务；任务处理完毕后，线程不被销毁，而是重新返回池中等待下一个任务分配。</p>
+<ul>
+<li><strong>核心优势</strong>：<ul>
+<li><strong>服务响应更迅速</strong>：省去了频繁创建与销毁线程的系统开销；</li>
+<li><strong>系统资源安全可控</strong>：将并发线程的总数严格限定在线程池容量之内，防止突发流量冲垮系统。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="5-thread-specific-data-tsd-tls">5. 线程特定数据 (Thread-Specific Data, TSD / TLS)</h4>
+<p>多线程的一大优势是共享全局变量，但在某些特殊业务场景下，每个线程需要拥有一份属于自己的私有全局变量副本，例如每个线程独立的事务 ID 或错误码 <code>errno</code>。</p>
+<p>现代系统通过<strong>线程局部存储 (Thread-Local Storage, TLS)</strong> 来满足这一需求。TLS 变量在生命周期上类似于静态全局数据，但在作用域上与具体线程严格绑定。在使用线程池等开发人员无法自由控制线程创建过程的架构中，TLS 尤为关键。</p>
+<hr />
+<h4 id="6-scheduler-activations-lwp">6. 调度器激活与轻量级进程 (Scheduler Activations &amp; LWP)</h4>
+<p>在多对多模型与二级模型中，为了维持用户态线程库与内核之间的协同平衡，操作系统引入了<strong>轻量级进程 (Lightweight Process, LWP)</strong> 机制。</p>
+<ul>
+<li><strong>LWP 的定位</strong>：位于用户空间线程库与内核线程之间的一种中间数据结构。对于用户线程而言，LWP 就像是一个虚拟的 CPU 处理器；而 LWP 底层直接绑定到一个内核线程上。</li>
+<li><strong>上呼机制 (Upcall)</strong>：当内核检测到某个用户线程即将执行阻塞操作时，内核会主动向上发送一个通信通知，称为<strong>上呼 (Upcall)</strong>。</li>
+<li><strong>上呼处理流程</strong>：用户空间的线程库通过上呼处理程序 (Upcall Handler) 在另一个新的可用 LWP 上激活运行，接管被阻塞线程的上下文，并将其他处于就绪队列的用户线程重新安排到空闲 LWP 上执行，从而避免因底层内核线程阻塞而浪费宝贵的 CPU 算力。</li>
+</ul>
+<hr />
+<h3 id="thread-libraries-and-os-implementations">Thread Libraries and OS Implementations</h3>
+<h4 id="1-posix-pthreads">1. POSIX Pthreads</h4>
+<p>Pthreads 是由 IEEE POSIX 1003.1c 规范定义的线程创建与同步标准 API。</p>
+<ul>
+<li><strong>标准性质</strong>：Pthreads 只是一个接口规范，仅规定了 API 函数的行为与调用签名，具体的底层实现既可以是用户级线程库，也可以是内核级线程库；</li>
+<li><strong>支持平台</strong>：在类 UNIX 操作系统中作为标准的系统线程库被原生支持，包括 Linux、macOS 与 Solaris。</li>
+</ul>
+<hr />
+<h4 id="2-windows">2. Windows 线程实现</h4>
+<p>Windows 系统严格采用<strong>一对一的多线程模型</strong>。每个线程拥有自身的独立线程上下文 (Thread Context)，包含唯一的 TID、寄存器集合、独立的用户栈与内核栈以及线程私有数据区。</p>
+<p>内核中主要由三个核心数据结构共同描述一个线程：</p>
+<ul>
+<li><strong>ETHREAD (Executive Thread Block)</strong>：执行体线程块，位于内核态空间，包含指向其所属进程的指针、线程起始地址等高级控制信息；</li>
+<li><strong>KTHREAD (Kernel Thread Block)</strong>：内核线程块，嵌入在 ETHREAD 内部，包含线程调度与同步所需的核心底层信息；</li>
+<li><strong>TEB (Thread Environment Block)</strong>：线程环境块，位于用户态空间，存放线程在用户模式下运行所需的私有数据，例如线程私有异常处理列表。</li>
+</ul>
+<hr />
+<h4 id="3-linux">3. Linux 线程机制</h4>
+<p>Linux 内核的设计哲学极为精炼，在底层并没有专门为线程定义一套完全异构的数据结构，而是统一将进程和线程都视为<strong>任务 (task)</strong>。</p>
+<ul>
+<li><strong>统一抽象</strong>：Linux 内核用同一个结构体 <code>struct task_struct</code> 来统一表示系统中的每一个任务；</li>
+<li><strong>clone() 系统调用</strong>：Linux 中线程的创建本质上通过 <code>clone()</code> 系统调用完成。<code>clone()</code> 极其灵活，通过传入不同组合的控制标志位，可以细粒度地定制子任务与父任务之间共享资源的边界：<ul>
+<li><code>CLONE_VM</code>：共享虚拟内存地址空间；</li>
+<li><code>CLONE_FS</code>：共享文件系统上下文信息；</li>
+<li><code>CLONE_FILES</code>：共享已打开的文件描述符表；</li>
+<li><code>CLONE_SIGHAND</code>：共享信号处理程序。</li>
+</ul>
+</li>
+<li>若上述标志位全部置位，则生成的子任务行为表现为轻量级线程；若全部不置位，则生成的子任务行为表现为完全隔离的独立子进程。</li>
+</ul>
+<hr />
+<h4 id="4-java">4. Java 线程与生命周期状态</h4>
+<p>Java 语言在语言运行时级别原生支持多线程，所有 Java 线程由 JVM 统一调度管理。</p>
+<ul>
+<li><strong>创建方式</strong>：<ol>
+<li>继承 <code>Thread</code> 类并重写 <code>run()</code> 方法；</li>
+<li>实现 <code>Runnable</code> 接口并传入 <code>Thread</code> 实例。</li>
+</ol>
+</li>
+<li><strong>线程生命周期状态转换</strong>：</li>
+</ul>
+<div align="center">
+
+<img src="./assets/ch4_java_thread_states.png" alt="ch4_java_thread_states" style="zoom: 50%;" />
+
+</div>
+
+<ul>
+<li><strong>New</strong>：线程对象通过 <code>new</code> 操作符创建完成，尚未调用 <code>start()</code>；</li>
+<li><strong>Runnable</strong>：调用 <code>start()</code> 后进入可运行状态，在 JVM 内部争夺 CPU 时间片执行；</li>
+<li><strong>Blocked / Waiting</strong>：线程因为等待 I/O 完成、获取同步锁失败，或主动调用了 <code>sleep()</code> / <code>wait()</code> 方法而进入阻塞挂起状态；当等待的事件就绪后，例如 I/O 资源到达或互斥锁被释放，重新回到 Runnable 状态；</li>
+<li><strong>Terminated / Dead</strong>：线程的 <code>run()</code> 方法正常执行完毕返回，或者抛出未捕获的异常退出，线程生命周期终止。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

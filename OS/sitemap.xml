@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>http://127.0.0.1:8000/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+    <url>
+         <loc>http://127.0.0.1:8000/About_Lab/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+    <url>
+         <loc>http://127.0.0.1:8000/ch1_Introduction/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+    <url>
+         <loc>http://127.0.0.1:8000/ch2_Structures/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+    <url>
+         <loc>http://127.0.0.1:8000/ch3_Processes/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+    <url>
+         <loc>http://127.0.0.1:8000/ch4_Threads/</loc>
+         <lastmod>2026-11-09</lastmod>
+    </url>
+</urlset>
