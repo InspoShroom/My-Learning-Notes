@@ -1,0 +1,687 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/%E4%BC%BD%E7%BD%97%E5%8D%8E%E5%9F%9F/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>伽罗华域 - 计算机网络</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="计算机网络" class="md-header__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机网络
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              伽罗华域
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to bright mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to bright mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="计算机网络" class="md-nav__button md-logo" aria-label="计算机网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    计算机网络
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相关概念
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gfp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GF(p)域
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        例子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        规约多项式的寻找
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>伽罗华域</h1>
+
+<h2 id="_1">相关概念</h2>
+<p>在了解Galois Field(GF)，伽罗华域之前，需要先简单介绍下面的概念：</p>
+<ol>
+<li>
+<p>Set：集合。</p>
+</li>
+<li>
+<p>Element：元素。</p>
+</li>
+<li>
+<p>Operation：运算。即：按照固定规则算出第三个元素的动作</p>
+</li>
+<li>
+<p>Close/Closure：封闭。即：算出来的结果依旧在这个集合里</p>
+</li>
+<li>
+<p>Identity element：单位元。单位元是运算中不改变其他元素的元素，例如：</p>
+<ul>
+<li>加法中任何数加0都不变，0就是加法单位元，也叫零元（Zero element/additive identity）；</li>
+<li>乘法中任何数乘1都不变，1就是乘法单位元，也叫一(yi)/幺元（unity / multiplicative identity）</li>
+</ul>
+</li>
+<li>
+<p>Inverse：逆元。逆元是能把对方抵消回单位元的元素，例如：</p>
+<ul>
+<li>加法中，3的逆元是-3，因为3+(-3)=0，回到了加法单位元；</li>
+<li>乘法中，3的逆元是1/3，<span class="arithmatex">\(3\times \frac{1}{3} = 1\)</span>，回到乘法单位元；</li>
+</ul>
+</li>
+<li>
+<p>primitive element：本原元。指的是能靠自身幂运算把域里所有的非零元素都走一遍的元素，因此它能生成全部，所以叫做本元。</p>
+<ul>
+<li>比如在GF(16)中，<span class="arithmatex">\(2^i\)</span>就能从1走一圈回到1，而且1～15的每个数只出现一次，没有重复和遗漏。</li>
+<li>本原元不止一个</li>
+</ul>
+</li>
+<li>
+<p>Order：阶。一个元素的幂第一次回到1，所需要的次数，叫它的阶。上面例子中2的阶就是15，而8的阶是5。关于本原元的一个判断方法：</p>
+<p><strong>阶等于<span class="arithmatex">\(2^m-1\)</span>的元素，才是本原元。</strong></p>
+<p>后续例子中的GF(16)就是GF(<span class="arithmatex">\(2^4\)</span>)，所以阶为16-1=15的元素才能算是本原元。而2的k次方中，和15互素的也是本原元，习惯用2是因为它的幂次好算。</p>
+</li>
+<li>
+<p>primitive polynomial：<strong>本元多项式</strong>。一个<strong>不可约</strong>的多项式，如果它的<strong>根恰好是本原元</strong>，那么这个多项式就叫本原多项式。</p>
+</li>
+<li>
+<p>group：群。一个集合配一种运算，能满足四个条件，就叫群：</p>
+<ol>
+<li>封闭，算完还在集合里；</li>
+<li>结合律，不论先算前两个还是先算后两个，结果一样；</li>
+<li>有单位元；</li>
+<li><strong>每个元素都有逆元。</strong></li>
+</ol>
+</li>
+<li>
+<p>Field：域。一个集合配加法和乘法两种运算，满足三条，就叫域：</p>
+<ol>
+<li>加法构成交换群；（交换群就是在群的基础上加一条交换律）</li>
+<li>去掉零之后，乘法构成交换群；</li>
+<li>乘法对加法满足分配律。</li>
+</ol>
+<p>简单来说，就是元素之间的加减乘随便做，除法中只要除数不为0也是随便做，结果都在集合中，并且符合平常的运算规律。</p>
+<p>为什么除法要去掉0？因为0乘任何数都为0，所以0没有乘法逆元，这是所有域的共性。</p>
+</li>
+<li>
+<p>模运算</p>
+<p>我们知道除法中存在余数，模运算就是取余数作为计算的结果。对于一个模n的运算，结果永远落在0到n-1之间；</p>
+<p>举个例子：13模12就是1，可以跟钟表联想，钟面只有12个刻度，到12是模0，到13是模1；</p>
+</li>
+</ol>
+<h2 id="gfp">GF(p)域</h2>
+<p>GF(p)的定义很简单：GF(p)的元素是0到p-1的这p个整数，加法和乘法都按模p计算。</p>
+<p>举个例子：GF(7)，元素是0～6，乘法表如下：</p>
+<table>
+<thead>
+<tr>
+<th>✖️</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>1</td>
+<td>5</td>
+<td>2</td>
+<td>6</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>由表可知：</p>
+<ol>
+<li>表对称，乘法满足交换律；</li>
+<li>表格中没有出现0，说明乘法对非0元素封闭；</li>
+<li>每行恰好出现一次1，说明每个元素都有乘法逆元；</li>
+</ol>
+<p>很容易能推出它确实是域。</p>
+<p>而这里我们用了GF(7)，7是素数，实际上p也只能是素数。</p>
+<p>我们假设p=6，加法是成立的，但是乘法中存在<span class="arithmatex">\(2\times3=6 \space mod \space 6 =0\)</span>，两个非零元素乘出了0，而且2找不到逆元，所以除法无法实现。实际上合数永远存在两个因子想乘等于0，必然会出现零因子。</p>
+<p>总结为一句话：<strong>模n的剩余类构成域，当且仅当n为素数。</strong></p>
+<p>我们想让这些数构成一个域，能加减乘除以及解方程。同样的数字集合0～6，配上普通的加法不构成域，配上模7加法才是域。</p>
+<hr />
+<p>现在拥有了域，但是元素个数都是素数，比如2、3、5、7、11等。而对于计算机，这其中的一个符号可以是若干比特，而且以2的幂为宜，比如16、256、1024等等，这些都不是素数。</p>
+<p><strong>尝试解决GF(16)</strong>，最简单的想法还是模16，和之前GF(6)的例子一样，它只满足加法，乘法中2没有逆元。所以模16得到的不是域。</p>
+<p>但是取余数这个想法并非不好，而是模合数取余数不好。换一个思路，将数对应到二进制中，于是这个整体的模就可以看作四件独立的事，每个比特只需要做2选1，最后4个比特拼起来就是16种结果。</p>
+<p>所以我们不再将每个元素看作一个数，而是看作四个位置，每个位置只能是0或者1，元素变成了：0000、0001、0011、1010...  一共16个</p>
+<hr />
+<p>元素确定后，需要定义运算，首先是加法。</p>
+<p>我们的规则是：<strong>对应位置相加，按模2计算，也就是异或运算。</strong></p>
+<p>检查四个要求：</p>
+<ol>
+<li>封闭：每个位置的二进制算出来还是一位二进制，四个拼起来永远在这16个结果里，满足；</li>
+<li>结合律和交换律：每一位都满足，4位自然满足；</li>
+<li>单位元：即0000，零元；</li>
+<li>逆元：因为异或运算，0+0=0，以及1+1=0，所以每个<strong>元素的加法逆元就是自己</strong></li>
+</ol>
+<p>这样一来，加法这边满足交换群，符合域的第一个要求。</p>
+<hr />
+<p>其次我们定义乘法：</p>
+<p>尝试和加法同样的逐位处理方法，比如1010和0100，按位相乘结果为0，又出现了两个非零数相乘为0的情况，这种方法行不通。</p>
+<p>这里用到了<strong>多项式</strong>的方法，将一个元素看作是一个多项式，位就是系数。</p>
+<p>1010就是<span class="arithmatex">\(1x^3+0\cdot x^2+1x+0\cdot 1 = x^3+x\)</span>；</p>
+<p>0011就是<span class="arithmatex">\(x+1\)</span></p>
+<p>两个元素相乘，就是两个多项式相乘，合并同类项时系数按模2相加，展开即可得到结果。</p>
+<p>但又有另一个麻烦：上面的两数相乘，得到<span class="arithmatex">\(x^4+x^3+x^2+x\)</span>，但是元素是四位，最高表示到3次方，这里的四次方溢出去了，所以还需要一条规则将高次项拉回来。</p>
+<p>数学上，现成的方法就是取余数，和整数取模是一个道理。整数除法中，余数一定小于除数，<strong>多项式除法中，余数的最高次一定低于除数的最高次。</strong></p>
+<p>我们将除数选为一个固定的四次多项式，那么余数最高只会是三次方，这个固定的除数，就叫做<strong>规约多项式</strong>。规定这个多项式等于0，即：凡是有这个成分的东西，都当它不存在，这就是一个规则。类比模运算，比如模5运算，就像我们说5、10、15是0一样。规约多项式的地位和模5运算的5是一样的。</p>
+<p>所以乘法完整包含三个过程：</p>
+<ol>
+<li>多项式乘法展开；</li>
+<li>同次项系数按模2合并；</li>
+<li>除以规约多项式取余，降次；</li>
+</ol>
+<hr />
+<p>规约多项式不能随便挑选，以一个错误的选择为例：<span class="arithmatex">\(x^4+1=0\)</span></p>
+<p>在模2运算中，和的四次方等于各项四次方的和，例如：<span class="arithmatex">\((x^2+x+1)^4 = x^8+x^4+1\)</span>。这是因为交叉项都是成对出现的，加起来就抵消了。</p>
+<p>但是看<span class="arithmatex">\((x+1)^4=x^4+1=0\)</span>，其中<span class="arithmatex">\(x+1\)</span>不是0，<span class="arithmatex">\((x+1)^2\)</span>也不是0，但是四次方是0。又出现了两个非0数相乘（平方）结果为0</p>
+<p>最终我们找到的选择是<span class="arithmatex">\(x^4+x+1=0\)</span>，它不可分解，叫做<strong>不可约</strong>，地位就相当于整数中的素数。移项后得到<span class="arithmatex">\(x^4=x+1\)</span>（模2里加就是减，移项不变号），实现了降次效果。</p>
+<p>至此，整个域才成立。</p>
+<h2 id="_2">例子</h2>
+<p>以上面推导的GF(16)为例，现在计算1011乘0011，即<span class="arithmatex">\(x^3+x+1\)</span>和<span class="arithmatex">\(x+1\)</span>
+$$
+\begin{aligned}
+(x^3+x+1)(x+1) &amp;= x<sup>4+x</sup>3+x^2+1\
+&amp;= x+1+x<sup>3+x</sup>2+1\
+&amp;= x<sup>3+x</sup>2+x\
+&amp;= 14
+\end{aligned}
+$$
+而1011是11，为2的7次方，0011是3，2的4次方。乘积指数相加为7+4=11，而2的11次方正好是14，完全对应。</p>
+<h2 id="_3">规约多项式的寻找</h2>
+<p>整理一下我们的需求：</p>
+<ol>
+<li>要造一个有16个元素的域，做法是拿GF(2)上的多项式做模运算；</li>
+<li>这个被当作模数用的多项式，叫做规约多项式，这里记作p；</li>
+</ol>
+<p>这个多项式要满足四个要求：</p>
+<ol>
+<li>最高次是4，因为余数的最高次一定小于4，可以落到符号中；</li>
+<li>最高次系数为1，因为要满足条件1；</li>
+<li>常数项不能为0，否则多项式会被x整除，又会导致两个非零数相乘为0的情况；</li>
+<li>必须不可约，是条件3的加强版；</li>
+</ol>
+<p>一个最高四次的多项式可以写成<span class="arithmatex">\(ax^4+bx^3+cx^2+dx+C\)</span>的形式，因为最高次和常数项已经固定，所以只有<span class="arithmatex">\(x^4+ax^3+bx^2+cx+1\)</span>这些组合。</p>
+<p>三个未知数，组合结果为<span class="arithmatex">\(2^3=8\)</span>种，这些就是候选多项式。</p>
+<p>还要验证不可约，有定理：<strong>一个多项式可约，就必然有次数不超过它的一半的因子。</strong>4次的一半是2次，所以只需要查看1次和2次因子。</p>
+<p>一次因子有两个：x和x+1。因为条件3的要求，x被排除，所以只剩x+1。而根据因式定理，如果x+1是一个因式，那么x+1=0，即x=1是多项式的一个根。将x=1带入候选多项式，如果结果为0，说明x+1是它的一个因式，该多项式可约，需要排除。</p>
+<p>再考虑二次因子，一共四个：<span class="arithmatex">\(x^2,\space x^2+1,\space x^2+x,\space x^2+x+1\)</span>，而<span class="arithmatex">\(x^2\)</span>和<span class="arithmatex">\(x^2+x\)</span>都有因式x，而<span class="arithmatex">\(x^2+1=(x+1)^2\)</span>，也带有一次因子，所以只剩下了<span class="arithmatex">\(x^2+x+1\)</span>；</p>
+<p>再让剩余的候选多项式除以这个式子，看是否有余数，最终产生余数的，就是我们的规约多项式。</p>
+<table>
+<thead>
+<tr>
+<th>候选</th>
+<th>代 1结果</th>
+<th>试除结果</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x^4+1\)</span></td>
+<td>0</td>
+<td>不用试</td>
+<td>可约，等于 x 加 1 的四次方</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x+1\)</span></td>
+<td>1</td>
+<td>余 1</td>
+<td>不可约✅</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^2+1\)</span></td>
+<td>1</td>
+<td>恰为 x 平方加 x 加 1 的平方</td>
+<td>可约</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^2+x+1\)</span></td>
+<td>0</td>
+<td>不用试</td>
+<td>可约</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^3+1\)</span></td>
+<td>1</td>
+<td>余 x</td>
+<td>不可约✅</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^3+x+1\)</span></td>
+<td>0</td>
+<td>不用试</td>
+<td>可约</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^3+x^2+1\)</span></td>
+<td>0</td>
+<td>不用试</td>
+<td>可约</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x^4+x^3+x^2+x+1\)</span></td>
+<td>1</td>
+<td>余 x 加 1</td>
+<td>不可约✅</td>
+</tr>
+</tbody>
+</table>
+<p>对于三个合法的规约多项式，选择第一个的理由是：</p>
+<ol>
+<li>最短、最简单；</li>
+<li>它是本原多项式</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
